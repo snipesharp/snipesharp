@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32126.317
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "snipesharp", "snipesharp.csproj", "{B37DE6E1-1A6A-458A-B268-2A7D6C7F486E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B37DE6E1-1A6A-458A-B268-2A7D6C7F486E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B37DE6E1-1A6A-458A-B268-2A7D6C7F486E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B37DE6E1-1A6A-458A-B268-2A7D6C7F486E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B37DE6E1-1A6A-458A-B268-2A7D6C7F486E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1F061062-D765-4A39-8F1C-7816919A7B6D}
+	EndGlobalSection
+EndGlobal
