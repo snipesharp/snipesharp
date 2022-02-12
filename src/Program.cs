@@ -1,4 +1,6 @@
 ﻿// welcome the user
+using snipesharp.Cli;
+
 Cli.Output.PrintLogo();
 
 // require initial information
@@ -9,4 +11,4 @@ int delay = Cli.Input.Request<int>("Custom delay in ms");
 // todo
 
 // inform the user
-Cli.Output.Inform($"Sniping {name} in 55 mins");
+Cli.Output.Inform($"Sniping {SetText.Blue}{name}{SetText.ResetAll} in 55 mins");

@@ -4,13 +4,13 @@ namespace Cli {
         public static T Request<T>(string requestMessage){
             while(true){
                 try {
-                    Cli.Output.Input(requestMessage);
+                    Output.Input(requestMessage);
                     var input = Console.ReadLine();
                     T? converted = (T)Convert.ChangeType(input, typeof(T));
                     if(converted != null) return converted;
                     throw new Exception();
                 } catch {
-                    Cli.Output.Error(Cli.Errors.ExpectedType("int"));
+                    Output.Error(Errors.ExpectedType("int"));
                 }
             }
         }
