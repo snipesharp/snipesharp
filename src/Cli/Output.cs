@@ -12,6 +12,12 @@ namespace Cli {
             var halfLength = crosshair.Length / 2;
             crosshair = $"{crosshair.Substring(0, halfLength)}+{crosshair.Substring(halfLength, halfLength)}";
 
+            // account for smaller terminal window
+            if(Console.WindowWidth < 65){
+                Console.WriteLine($"{SetText.Blue}snipe|{SetText.White}sharp".Centered());
+                return;
+            }
+
             // print
             Console.WriteLine("".Centered().Cross());
             Console.WriteLine(SetText.LightCyan +@"   ____ , __   ` \,___,   ___    ____ /        __   .___  \,___,".Centered().Cross());
