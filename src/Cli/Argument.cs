@@ -5,13 +5,13 @@ namespace Cli
         public string? data;
 
         public Argument(string arg){
-            var splited = arg.Split("=");
+            var splitted = arg.Split("=");
 
             // save the name of the argument
-            this.name = splited[0];
+            this.name = splitted[0];
 
             // if it has data (Ex: output=1)
-            if(splited.Length > 1) this.data = String.Join("=", splited.Skip(1));
+            if(splitted.Length > 1) this.data = String.Join("=", splitted.Skip(1));
         }
     }
 }
