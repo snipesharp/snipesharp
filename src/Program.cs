@@ -1,7 +1,7 @@
-﻿// welcome the user
-using StringExtensions;
-using Cli;
+﻿using Cli;
+using DataTypes.SetText;
 
+// welcome the user
 Output.PrintLogo();
 
 // require initial information
