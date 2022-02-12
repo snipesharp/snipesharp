@@ -18,8 +18,12 @@ var spinner = new Spinner();
 
 // you can cancel at any time
 // and it doesn't block the main thread <3
-Thread.Sleep(5000);
+Thread.Sleep(2000);
 spinner.Cancel();
+
+var rainbowText = new RainbowText("Rainbow Text");
+Thread.Sleep(6000);
+rainbowText.Cancel();
 
 // prepare the sniper
 // todo

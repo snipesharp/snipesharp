@@ -25,10 +25,10 @@ namespace DataTypes.SetText
         public static string UnderlineOff = "\x1b[24m";
         public static string Blink = "\x1b[5m";
         public static string BlinkOff = "\x1b[25m";
-        public static Func<int, string> MoveLeft = count => "\u001b[1D";
-        public static Func<int, string> MoveRight = count => "\u001b[1C";
-        public static Func<int, string> MoveDown = count => "\u001b[1B";
-        public static Func<int, string> MoveUp = count => "\u001b[1A";
+        public static Func<int, string> MoveLeft = count => $"\u001b[{count}D";
+        public static Func<int, string> MoveRight = count => $"\u001b[{count}C";
+        public static Func<int, string> MoveDown = count => $"\u001b[{count}B";
+        public static Func<int, string> MoveUp = count => $"\u001b[{count}A";
         public static Func<bool, bool> DisplayCursor = value => (Console.CursorVisible = value);
     }
 }

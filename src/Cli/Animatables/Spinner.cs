@@ -4,7 +4,7 @@ namespace Cli.Animatables
 {
     public class Spinner
     {
-        Animatable animation;
+        private Animatable animation;
 
         public Spinner() {
             this.animation = new Animatable(4, (frame) => {
