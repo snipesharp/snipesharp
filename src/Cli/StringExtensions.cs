@@ -36,12 +36,12 @@ namespace StringExtensions
         }
 
         /* Add basic responsive printing functionality */
-        public static string Centered(string text){
-            int spacesToAdd = text.Length % 2 != 0
-                ? (Console.WindowWidth - 1) - text.Length 
-                : Console.WindowWidth - text.Length;
+        public static string Centered(this string str){
+            int spacesToAdd = str.Length % 2 != 0
+                ? (Console.WindowWidth - 1) - str.Length 
+                : Console.WindowWidth - str.Length;
             string spaces = new string(' ', (spacesToAdd / 2));
-            return spaces + text + spaces;
+            return spaces + str + spaces;
         }
     }
 }

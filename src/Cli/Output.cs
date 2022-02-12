@@ -3,7 +3,7 @@ using StringExtensions;
 namespace Cli {
     class Output {
         public static void PrintLogo(){
-            Console.WriteLine("===== [SnipeSharp] =====");
+            Console.WriteLine("===== [SnipeSharp] =====".Centered());
         }
 
         public static void Inform(string message){
