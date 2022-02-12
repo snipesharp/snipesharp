@@ -33,7 +33,7 @@ namespace Cli.Animatables
             this.onFrame(frame);
         }
 
-        public void Cancel( ){
+        public void Cancel( ) {
             cancelation.Cancel();
         }
     }

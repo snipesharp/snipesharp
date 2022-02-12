@@ -21,6 +21,7 @@ namespace Cli.Animatables
 
         public void Cancel() {
             this.animation.Cancel();
+            SetText.DisplayCursor(true);
         }
     }
 }
