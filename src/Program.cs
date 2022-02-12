@@ -1,8 +1,10 @@
 ﻿using Cli;
+using Cli.Animatables;
 using DataTypes.SetText;
 
 // clear the console before execution
 Console.Clear();
+SetText.DisplayCursor(true);
 
 // welcome the user
 Output.PrintLogo();
@@ -11,8 +13,18 @@ Output.PrintLogo();
 string name = Input.Request<string>("What name would you like to snipe");
 int delay = Input.Request<int>("Custom delay in ms");
 
+// create a dummy spinner for testing
+var spinner = new Spinner();
+// you can cancel at any time
+// and it doesn't block the main thread <3
+// spinner.Cancel();
+
 // prepare the sniper
 // todo
 
 // inform the user
 Output.Inform($"Sniping {SetText.Blue}{name}{SetText.ResetAll} in 55 mins");
+
+// don't exit automatically
+// temp fix pls ignore
+while(true) Console.ReadKey();
