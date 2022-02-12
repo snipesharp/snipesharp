@@ -1,6 +1,9 @@
 ﻿using Cli;
 using DataTypes.SetText;
 
+// clear the console before execution
+Console.Clear();
+
 // welcome the user
 Output.PrintLogo();
 
