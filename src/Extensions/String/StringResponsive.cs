@@ -16,7 +16,7 @@ namespace StringExtensions
             int even = Convert.ToInt32(str.Length % 2 == 0);
             var left = str.Substring(0, str.Length / 2);
             var right = str.Substring(str.Length / 2, (str.Length / 2) - even);
-            return $"{left}{SetText.DarkRed}|{SetText.White}{right}";
+            return $"{left}{SetText.DarkRed}|{SetText.ResetAll}{right}";
         }
     }
 }

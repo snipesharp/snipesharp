@@ -9,6 +9,11 @@ SetText.DisplayCursor(true);
 // welcome the user
 Output.PrintLogo();
 
+// display prompt
+var prompt = new SelectionPrompt("Do you like fifa?", new string[] { "Yes", "No" });
+
+Console.WriteLine("You selected: " + prompt.result);
+
 // require initial information
 string name = Input.Request<string>("What name would you like to snipe");
 int delay = Input.Request<int>("Custom delay in ms");
