@@ -1,3 +1,5 @@
+using DataTypes.SetText;
+
 namespace StringExtensions
 {
     public static class StringResponsive
@@ -12,7 +14,9 @@ namespace StringExtensions
 
         public static string Cross(this string str){
             int even = Convert.ToInt32(str.Length % 2 == 0);
-            return $"{str.Substring(0, str.Length / 2)}{SetText.DarkRed}|{SetText.White}{str.Substring(str.Length / 2, (str.Length / 2) - even)}";
+            var left = str.Substring(0, str.Length / 2);
+            var right = str.Substring(str.Length / 2, (str.Length / 2) - even);
+            return $"{left}{SetText.DarkRed}|{SetText.White}{right}";
         }
     }
 }

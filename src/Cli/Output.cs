@@ -1,20 +1,26 @@
 using StringExtensions;
+using DataTypes.SetText;
 
 namespace Cli {
     class Output {
         public static void PrintLogo(){
-            var consoleWidth = Console.WindowWidth;
+            // account for smaller terminal window
+            if(Console.WindowWidth < 65){
+                Console.WriteLine($"{SetText.Blue}snipe{SetText.White}sharp".Centered());
+                return;
+            }
 
             // construct crosshair string
-            var crosshair = "";
-            int crosshairLength = (consoleWidth % 2 != 0) ? consoleWidth : consoleWidth - 1;
-            for (int i = 0; i < crosshairLength; i++) crosshair += i == consoleWidth / 2 ? "+" : "-";
+            var crosshair = new string('-', Console.WindowWidth);
+            var halfLength = crosshair.Length / 2;
+            var even = Convert.ToInt32(Console.WindowWidth % 2 == 0);
+            crosshair = $"{crosshair.Substring(0, halfLength)}+{crosshair.Substring(halfLength, halfLength - even)}";
 
             // print
             Console.WriteLine("".Centered().Cross());
             Console.WriteLine(SetText.LightCyan +@"   ____ , __   ` \,___,   ___    ____ /        __   .___  \,___,".Centered().Cross());
             Console.WriteLine(SetText.Cyan +     @"  (     |'  `. | |    \ .'  _/  (     |,---.  /  `. /   \ |    \".Centered().Cross());
-            Console.WriteLine(SetText.DarkRed + crosshair.Substring(0,crosshair.Length-1));
+            Console.WriteLine(SetText.DarkRed + crosshair);
             Console.WriteLine(SetText.Blue +     @" \___.' /    | / |`---' `.___, \___.' /    | `.__/| /     |`---'".Centered().Cross());
             Console.WriteLine(SetText.DarkBlue + @"                 \                                        \     ".Centered().Cross());
             Console.WriteLine("".Centered().Cross());
