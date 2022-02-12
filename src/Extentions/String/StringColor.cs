@@ -1,8 +1,7 @@
 namespace StringExtensions
 {
-    public static class StringExtension
+    public static class StringColor
     {
-        /* Add basic color support */
         public static string Black(this string str){
             return $"\u001b[30m{str}\u001b[0m";
         }
@@ -33,19 +32,6 @@ namespace StringExtensions
 
         public static string White(this string str){
             return $"\u001b[37m{str}\u001b[0m";
-        }
-
-        /* Add basic responsive printing functionality */
-        public static string Centered(this string str){
-            int spacesToAdd = str.Length % 2 != 0
-                ? (Console.WindowWidth - 1) - str.Length 
-                : Console.WindowWidth - str.Length;
-            string spaces = new string(' ', (spacesToAdd / 2));
-            return spaces + str + spaces;
-        }
-
-        public static string Cross(this string str){
-            return str.Substring(0, str.Length / 2) + "|".Red() + str.Substring(str.Length / 2, str.Length / 2);
         }
     }
 }
