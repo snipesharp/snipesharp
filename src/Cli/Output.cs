@@ -1,4 +1,3 @@
-using snipesharp.Cli;
 using StringExtensions;
 
 namespace Cli {
@@ -13,10 +12,10 @@ namespace Cli {
 
             // print
             Console.WriteLine("".Centered().Cross());
-            Console.WriteLine(SetText.LightCyan + @"   ____ , __   ` \,___,   ___    ____ /        __   .___  \,___,".Centered().Cross());
-            Console.WriteLine(SetText.Cyan + @"  (     |'  `. | |    \ .'  _/  (     |,---.  /  `. /   \ |    \".Centered().Cross());
+            Console.WriteLine(SetText.LightCyan +@"   ____ , __   ` \,___,   ___    ____ /        __   .___  \,___,".Centered().Cross());
+            Console.WriteLine(SetText.Cyan +     @"  (     |'  `. | |    \ .'  _/  (     |,---.  /  `. /   \ |    \".Centered().Cross());
             Console.WriteLine(SetText.DarkRed + crosshair.Substring(0,crosshair.Length-1));
-            Console.WriteLine(SetText.Blue + @" \___.' /    | / |`---' `.___, \___.' /    | `.__/| /     |`---'".Centered().Cross());
+            Console.WriteLine(SetText.Blue +     @" \___.' /    | / |`---' `.___, \___.' /    | `.__/| /     |`---'".Centered().Cross());
             Console.WriteLine(SetText.DarkBlue + @"                 \                                        \     ".Centered().Cross());
             Console.WriteLine("".Centered().Cross());
         }
