@@ -4,19 +4,17 @@ using DataTypes.SetText;
 namespace Cli {
     class Output {
         public static void PrintLogo(){
-            // construct crosshair string
-            var crosshair = new string('-', 
-                (Console.WindowWidth % 2 == 0)
-                ? Console.WindowWidth
-                : Console.WindowWidth - 1);
-            var halfLength = crosshair.Length / 2;
-            crosshair = $"{crosshair.Substring(0, halfLength)}+{crosshair.Substring(halfLength, halfLength)}";
-
             // account for smaller terminal window
             if(Console.WindowWidth < 65){
-                Console.WriteLine($"{SetText.Blue}snipe|{SetText.White}sharp".Centered());
+                Console.WriteLine($"{SetText.Blue}snipe{SetText.White}sharp".Centered());
                 return;
             }
+
+            // construct crosshair string
+            var crosshair = new string('-', Console.WindowWidth);
+            var halfLength = crosshair.Length / 2;
+            var even = Convert.ToInt32(Console.WindowWidth % 2 == 0);
+            crosshair = $"{crosshair.Substring(0, halfLength)}+{crosshair.Substring(halfLength, halfLength - even)}";
 
             // print
             Console.WriteLine("".Centered().Cross());
