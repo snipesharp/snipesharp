@@ -1,3 +1,5 @@
+using StringExtensions;
+
 namespace Cli {
     class Output {
         public static void PrintLogo(){
@@ -5,7 +7,19 @@ namespace Cli {
         }
 
         public static void Inform(string message){
-            Console.WriteLine($"[info] {message}");
+            Console.WriteLine("[info]".Blue() + $" {message}");
+        }
+
+        public static void Warn(string message){
+            Console.WriteLine("[warning]".Yellow() + $" {message}");
+        }
+
+        public static void Error(string message){
+            Console.WriteLine("[error]".Red() + $" {message}");
+        }
+
+        public static void Input(string message){
+            Console.Write("[input]".Blue() + $" {message}: ");
         }
     }
 }

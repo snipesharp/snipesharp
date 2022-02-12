@@ -17,12 +17,17 @@ namespace Cli {
 
         // small method for requesting input from the user
         public static T Request<T>(string requestMessage){
-            Console.Write($"[input] {requestMessage}: ");
-            var input = Console.ReadLine();
-
-            T? converted = (T)Convert.ChangeType(input, typeof(T));
-            if(converted != null) return converted;
-            throw new Exception();
+            while(true){
+                try {
+                    Cli.Output.Input(requestMessage);
+                    var input = Console.ReadLine();
+                    T? converted = (T)Convert.ChangeType(input, typeof(T));
+                    if(converted != null) return converted;
+                    throw new Exception();
+                } catch {
+                    Cli.Output.Error(Cli.Errors.ExpectedType("int"));
+                }
+            }
         }
     }
 }
