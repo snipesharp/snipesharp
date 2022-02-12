@@ -43,5 +43,9 @@ namespace StringExtensions
             string spaces = new string(' ', (spacesToAdd / 2));
             return spaces + str + spaces;
         }
+
+        public static string Cross(this string str){
+            return str.Substring(0, str.Length / 2) + "|".Red() + str.Substring(str.Length / 2, str.Length / 2);
+        }
     }
 }
