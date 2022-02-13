@@ -27,7 +27,7 @@ namespace Cli {
         }
 
         public static void Inform(string message){
-            Console.WriteLine($"{SetText.Blue}[info]{SetText.ResetAll} {message}");
+            Console.WriteLine($"{SetText.Gray}[{SetText.White}info{SetText.Gray}]{SetText.ResetAll} {message}");
         }
 
         public static void Warn(string message){
@@ -39,7 +39,7 @@ namespace Cli {
         }
 
         public static void Input(string message){
-            Console.Write($"{SetText.Blue}[input]{SetText.ResetAll} {message}: ");
+            Console.Write($"{SetText.DarkBlue}[{SetText.Blue}input{SetText.DarkBlue}]{SetText.ResetAll} {message}");
         }
     }
 }
