@@ -10,7 +10,7 @@ namespace Cli.Animatables
         private int answerIndex = -1;
         public string result = "";
 
-        public SelectionPrompt(string question, string[] options) {
+        public SelectionPrompt(string question, params string[] options) {
             this.options = options.ToList();
 
             // prompt the user
@@ -45,10 +45,15 @@ namespace Cli.Animatables
             // after that clear all lines for new output
             this.animation.Cancel();
             SetText.DisplayCursor(true);
-            Console.Write(SetText.MoveUp(options.Count() - 1));
             Console.Write(SetText.MoveLeft(1000));
             var emptyLine = new string(' ', Console.WindowWidth);
             for(int i = 0; i < options.Count(); i++) Console.WriteLine(emptyLine);
+            
+            // after you clear the console go back
+            // to remove emtpy space
+            Console.Write(SetText.MoveUp(options.Count()));
+
+            // finally save the result
             this.result = this.options[this.answerIndex];
         }
 

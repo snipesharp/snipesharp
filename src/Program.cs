@@ -10,7 +10,7 @@ SetText.DisplayCursor(true);
 Output.PrintLogo();
 
 // display prompt
-var prompt = new SelectionPrompt("Do you like fifa?", new string[] { "Yes", "No" });
+var prompt = new SelectionPrompt("Do you like fifa?", "Yes", "No", "Huh?", "Maybe");
 
 Console.WriteLine("You selected: " + prompt.result);
 
