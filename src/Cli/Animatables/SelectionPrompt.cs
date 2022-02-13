@@ -51,10 +51,13 @@ namespace Cli.Animatables
             
             // after you clear the console go back
             // to remove emtpy space
-            Console.Write(SetText.MoveUp(options.Count()));
+            Console.Write(SetText.MoveUp(options.Count() + 1));
 
-            // finally save the result
+            // save the result
             this.result = this.options[this.answerIndex];
+
+            // inform user for successful selection
+            Cli.Output.Inform($"{this.result} selected.");
         }
 
         public string PrintOptions(){

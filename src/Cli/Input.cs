@@ -3,16 +3,17 @@ using DataTypes.SetText;
 namespace Cli {
     class Input {
         // small method for requesting input from the user
-        public static T Request<T>(string requestMessage, bool hidden=false){
+        public static T Request<T>(string requestMessage, bool hidden=false, Func<T, bool> validator=null){
             while(true){
                 try {
                     Output.Input(requestMessage);
                     var input = !hidden ? Console.ReadLine() : ReadHidden();
                     T? converted = (T)Convert.ChangeType(input, typeof(T));
-                    if(converted != null) return converted;
-                    throw new Exception();
-                } catch {
-                    Output.Error(Errors.ExpectedType("int"));
+                    if(converted == null) throw new Exception(Errors.ExpectedType(typeof(T)));
+                    if(validator != null && !validator(converted)) throw new Exception("Invalid format");
+                    return converted;
+                } catch (Exception error){
+                    Output.Error(error.Message);
                 }
             }
         }

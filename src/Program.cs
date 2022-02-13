@@ -10,23 +10,28 @@ SetText.DisplayCursor(true);
 Output.PrintLogo();
 
 // display prompt
-var prompt = new SelectionPrompt("Login method: ", "Bearer Token", "Mojang Account");
+string loginMethod = new SelectionPrompt("Login method: ", "Bearer Token", "Mojang Account").result;
 
 // obtain login info based on login method choice
-if (prompt.result.Equals("Bearer Token"))
-{
-    string bearer = Input.Request<string>($"Paste your {SetText.Blue}Bearer Token{SetText.ResetAll}: ");
-    // authenticate
+// todo actual authentication part
+if (loginMethod == "Bearer Token") {
+    string bearer = Input.Request<string>(
+        $"Paste your {SetText.Blue}Bearer Token{SetText.ResetAll}: ",
+        validator: Validators.Credentials.Bearer
+    );
     Output.Inform($"{SetText.Blue}Successfully authenticated");
 }
-else if (prompt.result.Equals("Mojang Account"))
-{
-    string email = Input.Request<string>($"Enter your Mojang account {SetText.Blue}Email{SetText.ResetAll}: ");
+else if (loginMethod == "Mojang Account") {
+    string email = Input.Request<string>(
+        $"Enter your Mojang account {SetText.Blue}Email{SetText.ResetAll}: ",
+        validator:Validators.Credentials.Email
+    );
     string password = Input.Request<string>($"Enter your Mojang account {SetText.Blue}Password{SetText.ResetAll}: ", true);
-    
-    // authenticate
     Output.Inform($"{SetText.Blue}Successfully authenticated");
-} // else read from file
+}
+else {
+    // todo read from file
+}
 
 // require initial information
 string name = Input.Request<string>("Name to snipe: ");
