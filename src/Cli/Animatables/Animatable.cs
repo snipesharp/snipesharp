@@ -9,7 +9,7 @@ namespace Cli.Animatables
         CancellationTokenSource cancelation;
         CancellationToken cancelToken;
 
-        public Animatable(int framesCount, Action<int> onFrame, int delayFrame, bool mainThread=false) {
+        public Animatable(int framesCount, Action<int> onFrame, int delayFrame) {
             this.framesCount = framesCount;
             this.onFrame = onFrame;
 
