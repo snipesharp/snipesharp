@@ -22,7 +22,8 @@ if (prompt.result.Equals("Bearer Token"))
 else if (prompt.result.Equals("Mojang Account"))
 {
     string email = Input.Request<string>($"Enter your Mojang account {SetText.Blue}Email{SetText.ResetAll}: ");
-    string password = Input.Request<string>($"Enter your Mojang account {SetText.Blue}Password{SetText.ResetAll}: ");
+    string password = Input.Request<string>($"Enter your Mojang account {SetText.Blue}Password{SetText.ResetAll}: ", true);
+    
     // authenticate
     Output.Inform($"{SetText.Blue}Successfully authenticated");
 } // else read from file
