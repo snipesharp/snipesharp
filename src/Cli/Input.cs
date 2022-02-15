@@ -1,4 +1,5 @@
 using DataTypes.SetText;
+using Cli.Templates;
 
 namespace Cli {
     class Input {

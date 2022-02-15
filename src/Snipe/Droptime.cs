@@ -1,3 +1,4 @@
+using Cli.Templates;
 using System.Text.Json;
 using System.Net.Http.Headers;
 
@@ -33,7 +34,7 @@ namespace Snipe
             int timestamp = Math.Max(ckmData.unix, starData.unix);
 
             // couldn't find the timestamp
-            if(timestamp == 0) Cli.Output.ExitError(Cli.Errors.NoDroptime(username));
+            if(timestamp == 0) Cli.Output.ExitError(Errors.NoDroptime(username));
 
             // convert timstamp to time left (in ms) and return
             int now = (int) new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
