@@ -20,7 +20,6 @@ namespace Cli.Animatables
             this.animation = new Animatable(1, (frame) => {
                 // clear the current line
                 Console.Write(SetText.MoveLeft(1000) + new string(' ', Console.WindowWidth) + SetText.MoveLeft(1000));
-                if(Cli.Core.pid != PlatformID.Unix) Console.Write(SetText.MoveUp(1));
 
                 // prepare message
                 string timeLeft = DateFromMs(waitMs);

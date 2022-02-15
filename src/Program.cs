@@ -6,6 +6,10 @@ using DataTypes;
 using DataTypes.SetText;
 using Snipe;
 
+// create and load config
+Config config = FileSystem.GetConfig();
+FileSystem.SaveConfig(config);
+
 // attempt to fix windows cmd colors
 if (Cli.Core.pid != PlatformID.Unix)
 WindowsFix.FixCmd();
