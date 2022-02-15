@@ -5,7 +5,9 @@ namespace FS
 {
     public static class FileSystem
     {
-        static string snipesharpFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\.snipesharp\";
+        static string snipesharpFolder = Cli.Core.pid != PlatformID.Unix 
+            ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\.snipesharp\" 
+            : @"~/.snipesharp";
         static string accountJsonFile = snipesharpFolder + "account.json";
         
         // Saves the given string to the account.txt file
