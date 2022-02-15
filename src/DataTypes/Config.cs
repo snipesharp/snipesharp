@@ -1,6 +1,6 @@
 ﻿namespace DataTypes
 {
-    public struct Config
+    public class Config
     {
         public int SendPacketsCount { get; set; }
         public int MillisecondsBetweenPackets { get; set; }

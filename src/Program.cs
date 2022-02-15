@@ -89,10 +89,12 @@ var countDown = new CountDown(waitTime, $"Sniping {SetText.DarkBlue + SetText.Bo
 Thread.Sleep(waitTime);
 countDown.Cancel();
 
-// todo do the actual sniping here
-Output.Inform("Proceeding with sniping...");
+for (int i = 0; i < config.SendPacketsCount; i++)
+{
+    await ChangeName.Change(name, account.Bearer);
+    Thread.Sleep(config.MillisecondsBetweenPackets);
+}
 
 // don't exit automatically
 Output.Inform("Press any key to continue...");
-await ChangeName.Change(name, account.Bearer);
 Console.ReadKey();
