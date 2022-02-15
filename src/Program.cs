@@ -60,6 +60,8 @@ spinner.Cancel();
 // todo
 
 // inform the user
+Console.Clear();
+Output.PrintLogo();
 Output.Inform($"Sniping {SetText.DarkBlue + SetText.Bold}{name}{SetText.ResetAll} at {waitTime}");
 
 // don't exit automatically
