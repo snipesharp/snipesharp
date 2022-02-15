@@ -1,6 +1,8 @@
 ﻿using Cli;
 using Cli.Animatables;
+using DataTypes;
 using DataTypes.SetText;
+using FS;
 
 // clear the console before execution
 Console.Clear();
@@ -10,31 +12,49 @@ SetText.DisplayCursor(true);
 Output.PrintLogo();
 
 // display prompt
-string loginMethod = new SelectionPrompt("Login method: ", "Bearer Token", "Mojang Account").result;
+string loginMethod = FileSystem.AccountFileExists()
+    ? new SelectionPrompt("Login method: ", "From previous session", "Bearer Token", "Mojang Account").result
+    : new SelectionPrompt("Login method: ", "Bearer Token", "Mojang Account").result;
 
 // obtain login info based on login method choice
 // todo actual authentication part
+// todo add security questions
+var account = new Account();
 if (loginMethod == "Bearer Token") {
-    string bearer = Input.Request<string>(
+    account.Bearer = Input.Request<string>(
         $"Paste your {SetText.Blue}Bearer Token{SetText.ResetAll}: ",
         validator: Validators.Credentials.Bearer
     );
-    Output.Inform($"{SetText.Blue}Successfully authenticated");
+    Output.Success($"Successfully authenticated");
 }
 else if (loginMethod == "Mojang Account") {
-    string email = Input.Request<string>(
+    account.Email = Input.Request<string>(
         $"Enter your Mojang account {SetText.Blue}Email{SetText.ResetAll}: ",
         validator:Validators.Credentials.Email
     );
-    string password = Input.Request<string>(
+    account.Password = Input.Request<string>(
         $"Enter your Mojang account {SetText.Blue}Password{SetText.ResetAll}: ",
         hidden: true
     );
-    Output.Inform($"{SetText.Blue}Successfully authenticated");
+    Output.Success($"Successfully authenticated");
 }
 else {
     // todo read from file
+    var loadedAccount = FileSystem.GetAccount();
+    if (loadedAccount.Bearer != null)
+    {
+        // auth with bearer
+        Output.Success($"Successfully authenticated");
+    }
+    else
+    {
+        // mojang auth
+        Output.Success($"Successfully authenticated");
+    }
 }
+
+// save account
+if (loginMethod != "From previous session") FileSystem.SaveAccount(account);
 
 // require initial information
 string name = Input.Request<string>("Name to snipe: ");
@@ -49,7 +69,7 @@ spinner.Cancel();
 // todo
 
 // inform the user
-Output.Inform($"Sniping {SetText.DarkBlue + SetText.Bold}{name}{SetText.ResetAll} in 55 mins");
+Output.Inform($"Sniping {SetText.DarkBlue + SetText.Bold}{name}{SetText.ResetAll} at {waitTime}");
 
 // don't exit automatically
 Output.Inform("Press any key to continue...");
