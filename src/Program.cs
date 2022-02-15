@@ -5,6 +5,10 @@ using Cli.Animatables;
 using DataTypes;
 using DataTypes.SetText;
 
+// attempt to fix windows cmd colors
+if(Cli.Core.pid != PlatformID.Unix)
+WindowsFix.FixCmd();
+
 // clear the console before execution
 Console.Clear();
 SetText.DisplayCursor(true);

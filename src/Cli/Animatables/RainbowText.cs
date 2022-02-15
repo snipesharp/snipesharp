@@ -7,9 +7,10 @@ namespace Cli.Animatables
         private Animatable animation;
 
         public RainbowText(string text) {
+            SetText.DisplayCursor(false);
+
             this.animation = new Animatable(5, (frame) => {
                 Console.Write(this.Colorize(text));
-                SetText.DisplayCursor(false);
                 Console.Write(SetText.MoveLeft(text.Length));
             }, 300);
         }
