@@ -92,7 +92,7 @@ countDown.Cancel();
 
 for (int i = 0; i < config.SendPacketsCount; i++)
 {
-    await ChangeName.Change(name, account.Bearer);
+    ChangeName.Change(name, account.Bearer);
     Thread.Sleep(config.MillisecondsBetweenPackets);
 }
 
