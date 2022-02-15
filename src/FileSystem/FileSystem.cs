@@ -7,12 +7,13 @@ namespace FS
     {
         static string snipesharpFolder = Cli.Core.pid != PlatformID.Unix 
             ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\.snipesharp\" 
-            : @"~/.snipesharp";
+            : Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"/.snipesharp/";
         static string accountJsonFile = snipesharpFolder + "account.json";
         
         // Saves the given string to the account.txt file
         public static void SaveAccount(Account account){
             try {
+                if (!Directory.Exists(snipesharpFolder)) Directory.CreateDirectory(snipesharpFolder);
                 var json = JsonSerializer.Serialize(account, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(accountJsonFile, json);
             } catch (Exception e) { Cli.Output.Error(e.Message); }
