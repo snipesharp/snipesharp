@@ -42,6 +42,8 @@ namespace Cli {
             // go the next line after enter is pressed
             Console.WriteLine();
 
+            // password cleanup and return
+            result = result.Where(ch => ch != '\u0000').ToList();
             return String.Join("", result);
         }
     }

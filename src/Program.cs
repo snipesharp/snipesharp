@@ -80,13 +80,15 @@ var spinner = new Spinner();
 var waitTime = await Snipe.Droptime.GetMilliseconds(name) - delay;
 spinner.Cancel();
 
-// prepare the sniper
-// todo
+// countdown animation
+var countDown = new CountDown(waitTime, $"Sniping {SetText.DarkBlue + SetText.Bold}{name}{SetText.ResetAll} in " + "{TIME}");
 
-// inform the user
-Console.Clear();
-Output.PrintLogo();
-Output.Inform($"Sniping {SetText.DarkBlue + SetText.Bold}{name}{SetText.ResetAll} at {waitTime}");
+// actually wait for the wait time
+Thread.Sleep(waitTime);
+countDown.Cancel();
+
+// todo do the actual sniping here
+Output.Inform("Proceeding with sniping...");
 
 // don't exit automatically
 Output.Inform("Press any key to continue...");

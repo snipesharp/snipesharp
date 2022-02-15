@@ -1,4 +1,5 @@
 using DataTypes.SetText;
+using System.Text.RegularExpressions;
 
 namespace Cli.Animatables
 {
@@ -14,21 +15,32 @@ namespace Cli.Animatables
 
         private Animatable animation;
 
-        public CountDown() {
-            this.animation = new Animatable(2, (frame) => {
-                // switch(frame) {
-                //     case 0: Console.Write("/"); break;
-                //     case 1: Console.Write("—"); break;
-                //     case 2: Console.Write("\\"); break;
-                //     case 3: Console.Write("|"); break;
-                // }
-                // Console.Write(SetText.MoveLeft(1));
-                // todo
+        public CountDown(int waitMs, string placeholder="{TIME}") {
+            SetText.DisplayCursor(false);
+            this.animation = new Animatable(1, (frame) => {
+                // clear the current line
+                Console.Write(SetText.MoveLeft(1000) + new string(' ', Console.WindowWidth) + SetText.MoveLeft(1000));
+                if(Cli.Core.pid != PlatformID.Unix) Console.Write(SetText.MoveUp(1));
+
+                // prepare message
+                string timeLeft = DateFromMs(waitMs);
+                string msg = Regex.Replace(placeholder, @"{TIME}", timeLeft);
+
+                // print
+                Console.Write(msg);
+                Console.Write(SetText.MoveLeft(1000));
+
+                // fix weird windows only bug
+                Console.WriteLine();
+                Console.Write(SetText.MoveUp(1));
+                
+                waitMs -= 1000;
             }, 1000);
         }
 
         public void Cancel() {
             this.animation.Cancel();
+            SetText.DisplayCursor(true);
         }
     }
 }

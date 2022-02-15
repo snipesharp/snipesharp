@@ -15,12 +15,12 @@ namespace Cli.Animatables
 
             // prompt the user
             Console.WriteLine(question);
+            SetText.DisplayCursor(false);
 
             // setup animation
             this.animation = new Animatable(1, (frame) => {
                 string output = PrintOptions();
                 Console.WriteLine(output);
-                SetText.DisplayCursor(false);
                 Console.Write(SetText.MoveUp(options.Count()));
                 Console.Write(SetText.MoveLeft(1000));
             }, 1);
