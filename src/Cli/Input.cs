@@ -3,7 +3,7 @@ using Cli.Templates;
 
 namespace Cli {
     class Input {
-        // small method for requesting input from the user
+        // small method for requeting input from the user
         public static T Request<T>(string requestMessage, bool hidden=false, Func<T, bool> validator=null){
             while(true){
                 try {
@@ -25,9 +25,11 @@ namespace Cli {
             ConsoleKeyInfo input;
             while((input = Console.ReadKey()).Key != ConsoleKey.Enter){
                 if(input.Key == ConsoleKey.Backspace){
-                    if(result.Count() == 0) continue;
-                    result.RemoveAt(result.Count() - 1);
-                    Console.Write(SetText.MoveLeft(1) + " " + SetText.MoveLeft(1));
+                    if(result.Count() > 0){
+                        result.RemoveAt(result.Count() - 1);
+                        string inpt = Cli.Core.pid == PlatformID.Unix ? SetText.MoveLeft(1) + " " : " ";
+                        Console.Write(inpt + SetText.MoveLeft(1));
+                    }
                     continue;
                 }
 
