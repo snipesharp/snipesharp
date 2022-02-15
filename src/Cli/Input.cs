@@ -24,6 +24,7 @@ namespace Cli {
             ConsoleKeyInfo input;
             while((input = Console.ReadKey()).Key != ConsoleKey.Enter){
                 if(input.Key == ConsoleKey.Backspace){
+                    if(result.Count() == 0) continue;
                     result.RemoveAt(result.Count() - 1);
                     Console.Write(SetText.MoveLeft(1) + " " + SetText.MoveLeft(1));
                     continue;
