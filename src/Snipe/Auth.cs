@@ -15,7 +15,7 @@ namespace Snipe
         // todo
         public static async Task<string> AuthMojang(string email, string password, string sq1, string sq2, string sq3)
         {
-            return "";
+            return "not implemented";
         }
     }
 }
