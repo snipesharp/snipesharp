@@ -1,4 +1,4 @@
-namespace Cli
+namespace Cli.Templates
 {
     public class Errors
     {
