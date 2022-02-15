@@ -38,6 +38,11 @@ namespace Cli {
             Console.WriteLine($"{SetText.Red}[error]{SetText.ResetAll} {message}");
         }
 
+        public static void ExitError(string message){
+            Error(message);
+            Environment.Exit(1);
+        }
+
         public static void Input(string message){
             Console.Write($"{SetText.DarkBlue}[{SetText.Blue}input{SetText.DarkBlue}]{SetText.ResetAll} {message}");
         }

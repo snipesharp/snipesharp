@@ -26,7 +26,10 @@ else if (loginMethod == "Mojang Account") {
         $"Enter your Mojang account {SetText.Blue}Email{SetText.ResetAll}: ",
         validator:Validators.Credentials.Email
     );
-    string password = Input.Request<string>($"Enter your Mojang account {SetText.Blue}Password{SetText.ResetAll}: ", true);
+    string password = Input.Request<string>(
+        $"Enter your Mojang account {SetText.Blue}Password{SetText.ResetAll}: ",
+        hidden: true
+    );
     Output.Inform($"{SetText.Blue}Successfully authenticated");
 }
 else {
@@ -37,12 +40,9 @@ else {
 string name = Input.Request<string>("Name to snipe: ");
 int delay = Input.Request<int>("Custom delay in ms: ");
 
-// create a dummy spinner for testing
+// calculate total wait time
 var spinner = new Spinner();
-
-// you can cancel at any time
-// and it doesn't block the main thread <3
-Thread.Sleep(1000);
+var waitTime = await Snipe.Droptime.GetMilliseconds(name) - delay;
 spinner.Cancel();
 
 // prepare the sniper
