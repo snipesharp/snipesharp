@@ -2,14 +2,15 @@ namespace Snipe
 {
     public class Auth
     {
-        public static async Task<string> AuthWithBearer(string bearer)
+        public static async Task<bool> AuthWithBearer(string bearer)
         {
             using (HttpClient client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearer.Trim());
                 HttpResponseMessage response = await client.GetAsync("https://api.minecraftservices.com/minecraft/profile/namechange");
                 HttpContent content = response.Content;
-                return content.ReadAsStringAsync().Result;
+                if (response.IsSuccessStatusCode) return true;
+                else return false;
             }
         }
         // todo

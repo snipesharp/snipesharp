@@ -27,16 +27,15 @@ var account = new Account();
 if (loginMethod == "Bearer Token") {
     account.Bearer = Input.Request<string>(Requests.Bearer);
     var spinnerAuth = new Spinner();
-    string result = await Auth.AuthWithBearer(account.Bearer);
     spinnerAuth.Cancel();
-    if (String.IsNullOrEmpty(result))
-    {
-        Output.ExitError("Failed to authenticate using bearer");
-    }
-    else
+    if (await Auth.AuthWithBearer(account.Bearer))
     {
         Output.Success($"Successfully authenticated");
         Output.Warn("Bearer tokens reset every 24 hours & on login, sniping will fail if the bearer has expired at snipe time!");
+    }
+    else
+    {
+        Output.ExitError("Failed to authenticate using bearer");
     }
 }
 else if (loginMethod == "Mojang Account") {
@@ -49,17 +48,16 @@ else {
     var loadedAccount = FileSystem.GetAccount();
     if (loadedAccount.Bearer != null) {
         var spinnerAuth = new Spinner();
-        string result = await Auth.AuthWithBearer(loadedAccount.Bearer);
         spinnerAuth.Cancel();
-        if (String.IsNullOrEmpty(result))
-        {
-            Output.ExitError("Failed to authenticate using bearer");
-        }
-        else
+        if (await Auth.AuthWithBearer(loadedAccount.Bearer))
         {
             Output.Success($"Successfully authenticated");
             Output.Warn("Bearer tokens reset every 24 hours & on login, sniping will fail if the bearer has expired at snipe time!");
             account.Bearer = loadedAccount.Bearer;
+        }
+        else
+        {
+            Output.ExitError("Failed to authenticate using bearer");
         }
     }
     else {
