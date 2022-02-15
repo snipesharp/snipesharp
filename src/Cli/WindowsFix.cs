@@ -17,36 +17,17 @@ namespace Cli
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern IntPtr GetStdHandle(int nStdHandle);
 
-        [DllImport("kernel32.dll")]
-        private static extern uint GetLastError();
-
         public static void FixCmd() {
             var iStdIn = GetStdHandle(STD_INPUT_HANDLE);
             var iStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
-            if (!GetConsoleMode(iStdIn, out uint inConsoleMode)){
-                Console.WriteLine("failed to get input console mode");
-                Console.ReadKey();
-                return;
-            }
-            if (!GetConsoleMode(iStdOut, out uint outConsoleMode)){
-                Console.WriteLine("failed to get output console mode");
-                Console.ReadKey();
-                return;
-            }
+            if (!GetConsoleMode(iStdIn, out uint inConsoleMode)) return;
+            if (!GetConsoleMode(iStdOut, out uint outConsoleMode)) return;
 
             outConsoleMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
 
-            if (!SetConsoleMode(iStdIn, inConsoleMode)){
-                Console.WriteLine($"failed to set input console mode, error code: {GetLastError()}");
-                Console.ReadKey();
-                return;
-            }
-            if (!SetConsoleMode(iStdOut, outConsoleMode)){
-                Console.WriteLine($"failed to set output console mode, error code: {GetLastError()}");
-                Console.ReadKey();
-                return;
-            }
+            if (!SetConsoleMode(iStdIn, inConsoleMode)) return;
+            if (!SetConsoleMode(iStdOut, outConsoleMode)) return;
         }
     }
 }
