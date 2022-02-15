@@ -24,7 +24,7 @@ string loginMethod = FileSystem.AccountFileExists()
 // obtain login info based on login method choice
 var account = new Account();
 if (loginMethod == "Bearer Token") {
-    account.Bearer = Input.Request<string>(Requests.Bearer, validator: Validators.Credentials.Bearer);
+    account.Bearer = Input.Request<string>(Requests.Bearer);
     Output.Success($"Successfully authenticated");
 }
 else if (loginMethod == "Mojang Account") {
