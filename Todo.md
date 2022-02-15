@@ -1,4 +1,7 @@
 # List of ideas to be implemented:
+## Automatic offset
+Determine the best offset based on users ping to the name change API server
+- Make it absolutely impossible to snipe too early using the automatic offset since this would be a complete miss
 ## Better navigation
 Make it so that pressing `Esc` while in either `Mojang Account` or `Bearer Token` prompts; goes back to choosing one of the prompts again
 ## Discord Webhooks
