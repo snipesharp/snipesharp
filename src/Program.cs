@@ -1,8 +1,9 @@
-﻿using Cli;
+﻿using FS;
+using Cli;
+using Cli.Templates;
 using Cli.Animatables;
 using DataTypes;
 using DataTypes.SetText;
-using FS;
 
 // clear the console before execution
 Console.Clear();
@@ -17,40 +18,26 @@ string loginMethod = FileSystem.AccountFileExists()
     : new SelectionPrompt("Login method: ", "Bearer Token", "Mojang Account").result;
 
 // obtain login info based on login method choice
-// todo actual authentication part
-// todo add security questions
 var account = new Account();
 if (loginMethod == "Bearer Token") {
-    account.Bearer = Input.Request<string>(
-        $"Paste your {SetText.Blue}Bearer Token{SetText.ResetAll}: ",
-        validator: Validators.Credentials.Bearer
-    );
+    account.Bearer = Input.Request<string>(Requests.Bearer, validator: Validators.Credentials.Bearer);
     Output.Success($"Successfully authenticated");
 }
 else if (loginMethod == "Mojang Account") {
-    account.Email = Input.Request<string>(
-        $"Enter your Mojang account {SetText.Blue}Email{SetText.ResetAll}: ",
-        validator:Validators.Credentials.Email
-    );
-    account.Password = Input.Request<string>(
-        $"Enter your Mojang account {SetText.Blue}Password{SetText.ResetAll}: ",
-        hidden: true
-    );
+    account.Email = Input.Request<string>(Requests.Email, validator:Validators.Credentials.Email);
+    account.Password = Input.Request<string>(Requests.Password, hidden: true);
     Output.Success($"Successfully authenticated");
 }
 else {
-    // todo read from file
     var loadedAccount = FileSystem.GetAccount();
-    if (loadedAccount.Bearer != null)
-    {
-        // auth with bearer
-        Output.Success($"Successfully authenticated");
+    if (loadedAccount.Bearer != null) {
+        // todo auth with bearer
     }
-    else
-    {
-        // mojang auth
-        Output.Success($"Successfully authenticated");
+    else {
+        // todo mojang auth
     }
+
+    Output.Success($"Successfully authenticated");
 }
 
 // save account
