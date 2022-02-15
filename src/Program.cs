@@ -25,7 +25,18 @@ string loginMethod = FileSystem.AccountFileExists()
 var account = new Account();
 if (loginMethod == "Bearer Token") {
     account.Bearer = Input.Request<string>(Requests.Bearer);
-    Output.Success($"Successfully authenticated");
+    var spinnerAuth = new Spinner();
+    string result = await Snipe.Auth.AuthWithBearer(account.Bearer);
+    spinnerAuth.Cancel();
+    if (String.IsNullOrEmpty(result))
+    {
+        Output.ExitError("Failed to authenticate using bearer");
+    }
+    else
+    {
+        Output.Success($"Successfully authenticated");
+        Output.Warn("Bearer tokens reset every 24 hours & on login, sniping will fail if the bearer has expired at snipe time!");
+    }
 }
 else if (loginMethod == "Mojang Account") {
     account.Email = Input.Request<string>(Requests.Email, validator:Validators.Credentials.Email);
@@ -36,12 +47,22 @@ else {
     var loadedAccount = FileSystem.GetAccount();
     if (loadedAccount.Bearer != null) {
         // todo auth with bearer
+        var spinnerAuth = new Spinner();
+        string result = await Snipe.Auth.AuthWithBearer(loadedAccount.Bearer);
+        spinnerAuth.Cancel();
+        if (String.IsNullOrEmpty(result))
+        {
+            Output.ExitError("Failed to authenticate using bearer");
+        }
+        else
+        {
+            Output.Success($"Successfully authenticated");
+            Output.Warn("Bearer tokens reset every 24 hours & on login, sniping will fail if the bearer has expired at snipe time!");
+        }
     }
     else {
         // todo mojang auth
     }
-
-    Output.Success($"Successfully authenticated");
 }
 
 // save account
