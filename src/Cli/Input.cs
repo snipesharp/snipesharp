@@ -19,15 +19,16 @@ namespace Cli {
             }
         }
 
-        public static string ReadHidden(){
+        private static string ReadHidden(){
+            bool IsUnix = Cli.Core.pid == PlatformID.Unix; 
             var result = new List<char>();
-
             ConsoleKeyInfo input;
             while((input = Console.ReadKey()).Key != ConsoleKey.Enter){
                 if(input.Key == ConsoleKey.Backspace){
+                    if(result.Count() == 0 && !IsUnix) Console.Write(SetText.MoveRight(1));
                     if(result.Count() > 0){
                         result.RemoveAt(result.Count() - 1);
-                        string inpt = Cli.Core.pid == PlatformID.Unix ? SetText.MoveLeft(1) + " " : " ";
+                        string inpt = IsUnix ? SetText.MoveLeft(1) + " " : " ";
                         Console.Write(inpt + SetText.MoveLeft(1));
                     }
                     continue;
