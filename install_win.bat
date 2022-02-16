@@ -9,6 +9,7 @@ echo Set oWS = WScript.CreateObject("WScript.Shell") >> %SCRIPT%
 echo sLinkFile = "%USERPROFILE%\Desktop\snipesharp.lnk" >> %SCRIPT%
 echo Set oLink = oWS.CreateShortcut(sLinkFile) >> %SCRIPT%
 echo oLink.TargetPath = "%AppData%\.snipesharp\snipesharp.exe" >> %SCRIPT%
+echo oLink.WorkingDirectory = "%AppData%\.snipesharp\" >> %SCRIPT%
 echo oLink.Save >> %SCRIPT%
 
 cscript /nologo %SCRIPT%
