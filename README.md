@@ -1,23 +1,7 @@
 <p align="center">
-<<<<<<< HEAD
-<<<<<<< testing
-<<<<<<< testing
   <a href="#about">
-    <img src="https://user-images.githubusercontent.com/93228501/154116225-83e8ed48-cfc7-4311-96b3-65bee6729ab9.png">
+    <img src="https://user-images.githubusercontent.com/93228501/154115422-57cca957-4f1a-4cdf-93f5-18f9dd3cc13b.png">
   </a>
-=======
-  <img src="https://user-images.githubusercontent.com/93228501/154115422-57cca957-4f1a-4cdf-93f5-18f9dd3cc13b.png">
->>>>>>> Update README.md
-=======
-  <a href="#about">
-    <img src="https://user-images.githubusercontent.com/93228501/154116225-83e8ed48-cfc7-4311-96b3-65bee6729ab9.png">
-  </a>
->>>>>>> Update README.md
-=======
-  <a href="#about">
-    <img src="https://user-images.githubusercontent.com/93228501/154116225-83e8ed48-cfc7-4311-96b3-65bee6729ab9.png">
-  </a>
->>>>>>> main
 </p>
 <p align="center">
   <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.0.0/sha256sums.txt">
