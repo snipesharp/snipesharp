@@ -5,7 +5,7 @@ Determine the best offset based on users ping to the name change API server
 ## Automatic 24/7 sniping
 Useful if you are not using bearers which expire every 24h
 - Option to snipe a list of chosen names
-- Option to spnie every 3 letter name
+- Option to snipe every 3 letter name
 - Option to snipe every english name
 ## Better navigation
 Make it so that pressing `Esc` while in either `Mojang Account` or `Bearer Token` prompts; goes back to choosing one of the prompts again
