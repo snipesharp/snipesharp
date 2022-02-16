@@ -1,4 +1,6 @@
-# List of ideas to be implemented:
+# List of ideas/bug fixes to be implemented:
+## Fix countdown
+When a countdown is initialized after a name has already become available, the countdown starts counting in negative numbers instead of canceling itself instantly
 ## Fix console cursor on exit
 Console cursor doesn't reappear on exit, if exiting while in a Selection prompt
 ## Automatic offset

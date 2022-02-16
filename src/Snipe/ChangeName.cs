@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-
-namespace Snipe
+﻿namespace Snipe
 {
     internal class ChangeName
     {

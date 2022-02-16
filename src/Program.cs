@@ -6,11 +6,9 @@ using DataTypes;
 using DataTypes.SetText;
 using Snipe;
 using Utils;
-using ConfigExtensions;
 
 // create and load config
-Config config = FileSystem.GetConfig();
-config = config.Fix();
+Config config = FileSystem.GetConfig().Fix();
 FileSystem.SaveConfig(config);
 
 // attempt to fix windows cmd colors
@@ -99,9 +97,12 @@ for (int i = 0; i < config.sendPacketsCount; i++)
     Thread.Sleep(config.PacketSpreadMs);
 }
 
-// webhook
+// post success
 if (responseCodes.Contains(200))
+{
     Webhook.SendDiscordWebhooks(config, name);
+    ChangeSkin.Change(config.SkinUrl, config.SkinType, account.Bearer);
+}
 
 // don't exit automatically
 Output.Inform("Press any key to continue...");

@@ -31,7 +31,7 @@
                 }
             }, new JsonSerializerOptions { WriteIndented = true });
             if (config.SnipesharpServerWebhook) Send(config.snipesharpServerWebhook, json);
-            if (!String.IsNullOrEmpty(config.DiscordWebhookLink) && !String.IsNullOrEmpty(config.WebhookUsername)) Send(config.DiscordWebhookLink, json);
+            if (!String.IsNullOrEmpty(config.DiscordWebhookUrl) && !String.IsNullOrEmpty(config.WebhookUsername)) Send(config.DiscordWebhookUrl, json);
         }
     }
 }

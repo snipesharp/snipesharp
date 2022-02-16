@@ -7,13 +7,23 @@
         public int PacketSpreadMs { get; set; }
         public string WebhookUsername { get; set; }
         public bool SnipesharpServerWebhook { get; set; }
-        public string DiscordWebhookLink { get; set; }
+        public string DiscordWebhookUrl { get; set; }
+        public string SkinUrl { get; set; }
+        public string SkinType { get; set; }
         public Config()
         { 
             PacketSpreadMs = 31;
             WebhookUsername = Environment.UserName;
             SnipesharpServerWebhook = true;
-            DiscordWebhookLink = "";
+            DiscordWebhookUrl = "";
+            SkinUrl = "";
+            SkinType = "classic";
+        }
+        public Config Fix()
+        {
+            if (WebhookUsername.Length > 16) WebhookUsername = WebhookUsername.Substring(0, 16);
+            DiscordWebhookUrl = DiscordWebhookUrl.Replace("http:", "https:");
+            return this;
         }
     }
 }
