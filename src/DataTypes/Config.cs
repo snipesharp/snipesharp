@@ -2,12 +2,11 @@
 {
     public class Config
     {
-        public int SendPacketsCount { get; set; }
-        public int MillisecondsBetweenPackets { get; set; }
+        public int sendPacketsCount = 3; // anything above 3 results in TooManyPackets
+        public int PacketSpreadMs { get; set; }
         public Config()
-        {
-            SendPacketsCount = 3;
-            MillisecondsBetweenPackets = 98;
+        { 
+            PacketSpreadMs = 31;
         }
     }
 }

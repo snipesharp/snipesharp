@@ -11,7 +11,7 @@ Config config = FileSystem.GetConfig();
 FileSystem.SaveConfig(config);
 
 // attempt to fix windows cmd colors
-if (Cli.Core.pid != PlatformID.Unix)
+if (Core.pid != PlatformID.Unix)
 WindowsFix.FixCmd();
 
 // clear the console before execution
@@ -89,10 +89,10 @@ var countDown = new CountDown(waitTime, $"Sniping {SetText.DarkBlue + SetText.Bo
 Thread.Sleep(TimeSpan.FromMilliseconds(waitTime));
 countDown.Cancel();
 
-for (int i = 0; i < config.SendPacketsCount; i++)
+for (int i = 0; i < config.sendPacketsCount; i++)
 {
     ChangeName.Change(name, account.Bearer);
-    Thread.Sleep(config.MillisecondsBetweenPackets);
+    Thread.Sleep(config.PacketSpreadMs);
 }
 
 // don't exit automatically
