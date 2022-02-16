@@ -28,7 +28,7 @@ namespace Snipe
             catch { return default(T); }
         }
 
-        public static async Task<int> GetMilliseconds(string username){
+        public static async Task<long> GetMilliseconds(string username){
             var ckmData = await Fetch<UnixJSON>(UrlCkm(username));
             var starData = await Fetch<UnixJSON>(UrlStar(username));
             int timestamp = Math.Max(ckmData.unix, starData.unix);
@@ -37,8 +37,9 @@ namespace Snipe
             if(timestamp == 0) Cli.Output.ExitError(Errors.NoDroptime(username));
 
             // convert timstamp to time left (in ms) and return
-            int now = (int) new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
-            int msLeft = Math.Max(0, timestamp - now);
+            long now = DateTimeOffset.Now.ToUnixTimeSeconds();
+
+            long msLeft = Math.Max(0, timestamp - now) * 1000;
             return msLeft;
         }
     }

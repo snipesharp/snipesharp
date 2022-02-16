@@ -75,7 +75,7 @@ if (loginMethod != "From previous session") FileSystem.SaveAccount(account);
 
 // require initial information
 string name = Input.Request<string>("Name to snipe: ");
-int delay = Input.Request<int>("Custom delay in ms: ");
+long delay = Input.Request<long>("Custom delay in ms: ");
 
 // calculate total wait time
 var spinner = new Spinner();
@@ -86,7 +86,8 @@ spinner.Cancel();
 var countDown = new CountDown(waitTime, $"Sniping {SetText.DarkBlue + SetText.Bold}{name}{SetText.ResetAll} in " + "{TIME}");
 
 // actually wait for the wait time
-Thread.Sleep(waitTime);
+Console.WriteLine(waitTime);
+Thread.Sleep(TimeSpan.FromMilliseconds(waitTime));
 countDown.Cancel();
 
 for (int i = 0; i < config.SendPacketsCount; i++)

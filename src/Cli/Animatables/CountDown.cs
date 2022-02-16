@@ -5,7 +5,7 @@ namespace Cli.Animatables
 {
     public class CountDown
     {
-        public static string DateFromMs(int milliseconds){
+        public static string DateFromMs(long milliseconds){
             TimeSpan t = TimeSpan.FromMilliseconds(milliseconds);
             return string.Format("{0:D2}h:{1:D2}m:{2:D2}s", 
                 t.Hours, 
@@ -15,7 +15,7 @@ namespace Cli.Animatables
 
         private Animatable animation;
 
-        public CountDown(int waitMs, string placeholder="{TIME}") {
+        public CountDown(long waitMs, string placeholder="{TIME}") {
             SetText.DisplayCursor(false);
             this.animation = new Animatable(1, (frame) => {
                 // clear the current line
