@@ -75,7 +75,7 @@ if (loginMethod != "From previous session") FileSystem.SaveAccount(account);
 
 // require initial information
 string name = Input.Request<string>("Name to snipe: ");
-long delay = Input.Request<long>("Custom delay in ms: ");
+long delay = Input.Request<long>("Offset in ms: ");
 
 // calculate total wait time
 var spinner = new Spinner();
