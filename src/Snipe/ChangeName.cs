@@ -4,7 +4,7 @@ namespace Snipe
 {
     internal class ChangeName
     {
-        public static async Task<string> Change(string name, string bearer)
+        public static async Task<HttpResponseMessage> Change(string name, string bearer)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -14,7 +14,7 @@ namespace Snipe
                     Cli.Output.Success($"({(int)response.StatusCode} {response.StatusCode}) {GetResponseMessage((int)response.StatusCode)}");
                 else
                     Cli.Output.Error($"({(int)response.StatusCode} {response.StatusCode}) {GetResponseMessage((int)response.StatusCode)}");
-                return $"({(int)response.StatusCode} {response.StatusCode}) {GetResponseMessage((int)response.StatusCode)}";
+                return response;
             }
         }
         protected static string GetResponseMessage(int code)

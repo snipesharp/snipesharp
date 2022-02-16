@@ -5,9 +5,12 @@ using Cli.Animatables;
 using DataTypes;
 using DataTypes.SetText;
 using Snipe;
+using Utils;
+using ConfigExtensions;
 
 // create and load config
 Config config = FileSystem.GetConfig();
+config = config.Fix();
 FileSystem.SaveConfig(config);
 
 // attempt to fix windows cmd colors
@@ -89,11 +92,16 @@ var countDown = new CountDown(waitTime, $"Sniping {SetText.DarkBlue + SetText.Bo
 Thread.Sleep(TimeSpan.FromMilliseconds(waitTime));
 countDown.Cancel();
 
+int[] responseCodes = new int[config.sendPacketsCount];
 for (int i = 0; i < config.sendPacketsCount; i++)
 {
-    ChangeName.Change(name, account.Bearer);
+    responseCodes.Append((int)ChangeName.Change(name, account.Bearer).Result.StatusCode);
     Thread.Sleep(config.PacketSpreadMs);
 }
+
+// webhook
+if (responseCodes.Contains(200))
+    Webhook.SendDiscordWebhooks(config, name);
 
 // don't exit automatically
 Output.Inform("Press any key to continue...");
