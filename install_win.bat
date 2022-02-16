@@ -1,6 +1,6 @@
 cd src
 dotnet publish -c Release -r win-x64 -p:PublishSingleFile=true --self-contained true
-mkdir -p "%AppData%\.snipesharp\"
+mkdir "%AppData%\.snipesharp\"
 move /Y bin\Release\net6.0\win-x64\publish\snipesharp.exe %AppData%\.snipesharp\
 
 set SCRIPT="%TEMP%\%RANDOM%-%RANDOM%-%RANDOM%-%RANDOM%.vbs"
