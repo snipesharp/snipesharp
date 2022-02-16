@@ -86,7 +86,6 @@ spinner.Cancel();
 var countDown = new CountDown(waitTime, $"Sniping {SetText.DarkBlue + SetText.Bold}{name}{SetText.ResetAll} in " + "{TIME}");
 
 // actually wait for the wait time
-Console.WriteLine(waitTime);
 Thread.Sleep(TimeSpan.FromMilliseconds(waitTime));
 countDown.Cancel();
 
