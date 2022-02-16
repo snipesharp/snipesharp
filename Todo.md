@@ -1,4 +1,6 @@
 # List of ideas to be implemented:
+## Fix console cursor on exit
+Console cursor doesn't reappear on exit, if exiting while in a Selection prompt
 ## Automatic offset
 Determine the best offset based on users ping to the name change API server
 - Make it absolutely impossible to snipe too early using the automatic offset since this would be a complete miss
@@ -9,12 +11,6 @@ Useful if you are not using bearers which expire every 24h
 - Option to snipe every english name
 ## Better navigation
 Make it so that pressing `Esc` while in either `Mojang Account` or `Bearer Token` prompts; goes back to choosing one of the prompts again
-## Discord Webhooks
-Send a Discord Webhook once a name has been successfully sniped using snipesharp
-- Include the users name in the webhook
-- May include an image of the current skin equipped to the account which sniped the name
-- Send webhook to custom webhook
-- Option to send webhook to snipesharp discord as well
 ## Discord RPC
 Implement Discord RPC to work while using the program
 ## Auto skin change
