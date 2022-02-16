@@ -6,12 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <ApplicationIcon>snipesharp.ico</ApplicationIcon>
-    <PackageIcon>snipesharp.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <Content Include="snipesharp.ico" />
-    <Content Include="snipesharp.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,13 +25,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="snipesharp.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
   </ItemGroup>
 
 </Project>
