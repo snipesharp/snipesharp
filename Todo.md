@@ -21,3 +21,5 @@ Implement Discord RPC to work while using the program
 Automatically change to a given skin on the authenticated account after successfully sniping a name
 ## Mojang Login
 Implement Mojang Authentication & sniping with Mojang credentials
+## Microsoft Login
+Try to figure out if its possible to keep obtaining bearers with microsoft authentication (for 24/7 sniping usage)
