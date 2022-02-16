@@ -20,3 +20,10 @@
 
 # About
 Snipesharp is a Minecraft name Sniper coded in C# thats focused on both speed and user friendliness
+
+# How to use
+Start snipersharp and you will be asked to choose a login method.
+1. You can choose between a `Bearer Token` and a `Mojang Account` _(Only Bearer Token has been implemented)_ and, if you've already authenticated before, you will be able to choose `From previous session`
+2. Once you've successfully authenticated your account, you choose which `name` you want to snipe
+3. After that, choose the `Offset in ms`, this determines how early to start sniping the chosen name in milliseconds
+4. Wait for the sniper to obtain the chosen name
