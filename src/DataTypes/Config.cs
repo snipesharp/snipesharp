@@ -10,8 +10,8 @@
         public string DiscordWebhookUrl { get; set; }
         public string SkinUrl { get; set; }
         public string SkinType { get; set; }
-        public Config()
-        { 
+        
+        public Config() { 
             PacketSpreadMs = 31;
             WebhookUsername = Environment.UserName;
             SnipesharpServerWebhook = true;
@@ -19,8 +19,8 @@
             SkinUrl = "";
             SkinType = "classic";
         }
-        public Config Fix()
-        {
+        
+        public Config Fix() {
             if (WebhookUsername.Length > 16) WebhookUsername = WebhookUsername.Substring(0, 16);
             DiscordWebhookUrl = DiscordWebhookUrl.Replace("http:", "https:");
             return this;
