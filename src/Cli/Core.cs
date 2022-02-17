@@ -46,8 +46,8 @@ namespace Cli
                 }
             }
             else if (loginMethod == "Mojang Account") {
-                account.Email = Input.Request<string>(Requests.Email, validator:Validators.Credentials.Email);
-                account.Password = Input.Request<string>(Requests.Password, hidden: true);
+                account.MojangEmail = Input.Request<string>(Requests.Email, validator:Validators.Credentials.Email);
+                account.MojangPassword = Input.Request<string>(Requests.Password, hidden: true);
                 // todo mojang auth 
                 Output.Inform($"Not authenticated (Mojang login not implemented)");
             }
@@ -56,12 +56,14 @@ namespace Cli
                 if (loadedAccount.Bearer != null) {
                     var spinnerAuth = new Spinner();
                     spinnerAuth.Cancel();
-                    if (await Snipe.Auth.AuthWithBearer(loadedAccount.Bearer)){
+                    if (await Snipe.Auth.AuthWithBearer(loadedAccount.Bearer))
+                    {
                         Output.Success($"Successfully authenticated");
                         Output.Warn("Bearer tokens reset every 24 hours & on login, sniping will fail if the bearer has expired at snipe time!");
                         account.Bearer = loadedAccount.Bearer;
                     }
-                    else {
+                    else
+                    {
                         Output.ExitError("Failed to authenticate using bearer");
                     }
                 }

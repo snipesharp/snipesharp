@@ -5,8 +5,10 @@ namespace DataTypes
     public struct Account
     {
         public string Bearer { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public string MojangEmail { get; set; }
+        public string MojangPassword { get; set; }
+        public string MicrosoftEmail { get; set; }
+        public string MicrosoftPassword { get; set; }
         [JsonPropertyName("sq1")]
         public string SecurityQuestion1 { get; set; }
         [JsonPropertyName("sq2")]
