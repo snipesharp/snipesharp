@@ -1,8 +1,8 @@
 using System.Runtime.InteropServices;
 
-namespace Cli
+namespace Fix
 {
-    class WindowsFix
+    class Windows
     {
         private const int STD_INPUT_HANDLE = -10;
         private const int STD_OUTPUT_HANDLE = -11;

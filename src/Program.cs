@@ -6,13 +6,16 @@ using DataTypes.SetText;
 using Snipe;
 using Utils;
 
+// attempt to fix windows cmd colors
+if (Core.pid != PlatformID.Unix)
+Fix.Windows.FixCmd();
+
+// attempt to fix cursor not showing after close
+Fix.TerminateHandler.FixCursor();
+
 // create and load config
 Config config = FileSystem.GetConfig().Fix();
 FileSystem.SaveConfig(config);
-
-// attempt to fix windows cmd colors
-if (Core.pid != PlatformID.Unix)
-WindowsFix.FixCmd();
 
 // clear the console before execution
 Console.Clear();

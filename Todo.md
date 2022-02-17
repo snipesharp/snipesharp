@@ -1,8 +1,4 @@
 # List of ideas/bug fixes to be implemented:
-## Fix countdown
-When a countdown is initialized after a name has already become available, the countdown starts counting in negative numbers instead of canceling itself instantly
-## Fix console cursor on exit
-Console cursor doesn't reappear on exit, if exiting while in a Selection prompt
 ## Automatic offset
 Determine the best offset based on users ping to the name change API server
 - Make it absolutely impossible to snipe too early using the automatic offset since this would be a complete miss

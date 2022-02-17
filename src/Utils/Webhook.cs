@@ -3,8 +3,7 @@
     using System.Text.Json;
     public class Webhook
     {
-        public static void Send(string webhookLink, string content)
-        {
+        public static void Send(string webhookLink, string content) {
             try {
                 HttpClient client = new HttpClient();
                 StringContent stringContent = new StringContent(content, System.Text.Encoding.UTF8, "application/json");
@@ -12,8 +11,8 @@
             }
             catch (Exception ex) { Cli.Output.Error(ex.ToString()); }
         }
-        public static void SendDiscordWebhooks(DataTypes.Config config, string sniped)
-        {
+        
+        public static void SendDiscordWebhooks(DataTypes.Config config, string sniped) {
             string json = JsonSerializer.Serialize(new
             {
                 embeds = new[]

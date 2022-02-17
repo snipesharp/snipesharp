@@ -44,6 +44,7 @@ namespace Cli {
 
         public static void ExitError(string message){
             Error(message);
+            SetText.DisplayCursor(true);
             Environment.Exit(1);
         }
 

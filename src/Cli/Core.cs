@@ -28,53 +28,61 @@ namespace Cli
             string loginMethod = FileSystem.AccountFileExists()
                 ? new SelectionPrompt("Login method: ", "From previous session", "Bearer Token", "Mojang Account").result
                 : new SelectionPrompt("Login method: ", "Bearer Token", "Mojang Account").result;
-
+ 
             // obtain login info based on login method choice
-            var account = new Account();
-            if (loginMethod == "Bearer Token") {
-                account.Bearer = Input.Request<string>(Requests.Bearer);
-                var spinnerAuth = new Spinner();
-                spinnerAuth.Cancel();
-                if (await Snipe.Auth.AuthWithBearer(account.Bearer))
-                {
-                    Output.Success($"Successfully authenticated");
-                    Output.Warn("Bearer tokens reset every 24 hours & on login, sniping will fail if the bearer has expired at snipe time!");
-                }
-                else
-                {
-                    Output.ExitError("Failed to authenticate using bearer");
-                }
-            }
-            else if (loginMethod == "Mojang Account") {
-                account.MojangEmail = Input.Request<string>(Requests.Email, validator:Validators.Credentials.Email);
-                account.MojangPassword = Input.Request<string>(Requests.Password, hidden: true);
-                // todo mojang auth 
-                Output.Inform($"Not authenticated (Mojang login not implemented)");
-            }
-            else {
-                var loadedAccount = FileSystem.GetAccount();
-                if (loadedAccount.Bearer != null) {
-                    var spinnerAuth = new Spinner();
-                    spinnerAuth.Cancel();
-                    if (await Snipe.Auth.AuthWithBearer(loadedAccount.Bearer))
-                    {
-                        Output.Success($"Successfully authenticated");
-                        Output.Warn("Bearer tokens reset every 24 hours & on login, sniping will fail if the bearer has expired at snipe time!");
-                        account.Bearer = loadedAccount.Bearer;
-                    }
-                    else
-                    {
-                        Output.ExitError("Failed to authenticate using bearer");
-                    }
-                }
-                else {
-                    // todo mojang auth
-                    Output.Inform($"Not authenticated (Mojang login not implemented)");
-                }
-            }
+            Account account = new Account();
+            if (loginMethod == "Bearer Token") account = await HandleBearer(account);
+            else if (loginMethod == "Mojang Account") account = await HandleMojang(account);
+            else account = await HandleSavedSession();
 
             // save account
             if (loginMethod != "From previous session") FileSystem.SaveAccount(account);
+
+            return account;
+        }
+    
+        private static async Task<Account> HandleMojang(Account account){
+            account.MojangEmail = Input.Request<string>(Requests.Email, validator:Validators.Credentials.Email);
+            account.MojangPassword = Input.Request<string>(Requests.Password, hidden: true);
+
+            // todo, actual async stuff here
+            Output.Inform($"Not authenticated (Mojang login not implemented)");
+            return account;
+        }
+
+        private static async Task<Account> HandleBearer(Account account){
+            // prompt for bearer token
+            account.Bearer = Input.Request<string>(Requests.Bearer);
+            var spinnerAuth = new Spinner();
+            spinnerAuth.Cancel();
+
+            // exit if invalid bearer
+            if(!await Snipe.Auth.AuthWithBearer(account.Bearer)) Output.ExitError("Failed to authenticate using bearer");
+
+            // validate the token
+            Output.Success($"Successfully authenticated");
+            Output.Warn("Bearer tokens reset every 24 hours & on login, sniping will fail if the bearer has expired at snipe time!");
+        
+            return account;
+        }
+
+        private static async Task<Account> HandleSavedSession(){
+            var account = FileSystem.GetAccount();
+
+            // @demented Should that still be the HandleMojang, since you 
+            // also implemented both Account.MojangEmail/Pass and Microsoft
+
+            // for now leaving code logic as it was before
+            // please read and respond
+            if(account.Bearer == null) return await HandleMojang(new Account());
+
+            // if bearer is present proceed
+            var spinnerAuth = new Spinner();
+            if (!await Snipe.Auth.AuthWithBearer(account.Bearer)) Output.ExitError("Failed to authenticate using bearer");
+            Output.Success($"Successfully authenticated");
+            Output.Warn("Bearer tokens reset every 24 hours & on login, sniping will fail if the bearer has expired at snipe time!");
+            account.Bearer = account.Bearer;
+            spinnerAuth.Cancel();
 
             return account;
         }
