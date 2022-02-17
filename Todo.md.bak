@@ -1,4 +1,6 @@
 # List of ideas/bug fixes to be implemented:
+## Fix selection prompt bugs
+Make selection prompt self erase after completion and in the case of exiting the program during a selection prompt, erase a few lines to clear the screen of the selection prompt
 ## Automatic offset
 Determine the best offset based on users ping to the name change API server
 - Make it absolutely impossible to snipe too early using the automatic offset since this would be a complete miss
