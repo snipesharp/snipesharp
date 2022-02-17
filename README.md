@@ -24,9 +24,10 @@
 </p>
 
 # About
-Snipesharp is a Minecraft name Sniper coded in C# thats focused on both speed and user friendliness.
+Snipesharp is an easy to use Minecraft name Sniper coded in C# thats focused on both speed and user friendliness.
 
-Created by:
+## Created by:
+
 <p align="center">
 <a href="https://namemc.com/profile/dement6d.1">
 demented
@@ -37,9 +38,49 @@ demented
 </a>
 </p>
 
+# Features
+## Logging in
+- Features
+  - Completely possible through the Console Interface
+  - Re-use of previous credentials
+- Methods
+  - Microsoft Login
+  - Bearer Token Login
+  - Using previous session credentials/bearer
+- Configuration (account.json)
+  - All credentials (including Bearer Token) can be edited through account.json
+## Post sniping
+- Discord webhooks
+  - Features
+    - Webhooks contain your desired username & the name you sniped
+    - Webhooks contain Minecraft character head of the account which sniped the name
+  - Configuration (config.json)
+    - Custom username contained in webhook
+    - Enable/disable webhook to snipesharp Discord server
+    - Enable/disable webhook to custom Discord server
+- Automatic skin change
+  - Configuration (config.json)
+    - Custom skin
+
 # How to use
 Start snipersharp and you will be asked to choose a login method.
-1. You can choose between a `Bearer Token` and a `Mojang Account` _(Only Bearer Token has been implemented)_ and, if you've already authenticated before, you will be able to choose `From previous session`
+1. You can choose between a `Bearer Token` and a `Microsoft Account` and, if you've already authenticated before, you will be able to choose `From previous session`
 2. Once you've successfully authenticated your account, you choose which `name` you want to snipe
 3. After that, choose the `Offset in ms`, this determines how early to start sniping the chosen name in milliseconds
 4. Wait for the sniper to obtain the chosen name
+
+# Donate
+- To demented
+  - XMR: 89Gk3YiZGWnLsgGygzRg8Shqp1UyEuYGMbnrz3dLX9isbiLb5b8e6Zu4rT6NX5K5dsNtMb1WTyScqdYCsjxNfUFaRLcdeBk
+- To StiliyanKushev
+  - No donation methods implemented
+
+# Configuration file locations
+## Windows
+- %appdata% = WindowsPartition:\\Users\\{user}\\AppData\\Roaming
+- account.json = %appdata%\\.snipesharp\\account.json
+- config.json = %appdata%\\.snipesharp\\config.json
+## Linux
+- ~/ = /home/{user}
+- account.json = ~/.snipesharp/account.json
+- config.json = ~/.snipesharp/config.json
