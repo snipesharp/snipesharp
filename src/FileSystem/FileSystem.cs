@@ -11,7 +11,10 @@ namespace FS
         static string accountJsonFile = snipesharpFolder + "account.json";
         static string configJsonFile = snipesharpFolder + "config.json";
 
-        // Saves the given string to the account.txt file
+        /// <summary>
+        /// Saves given account to the account.json file
+        /// </summary>
+        /// <param name="account"></param>
         public static void SaveAccount(Account account){
             try {
                 if (!Directory.Exists(snipesharpFolder)) Directory.CreateDirectory(snipesharpFolder);

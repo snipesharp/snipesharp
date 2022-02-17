@@ -25,7 +25,7 @@ SetText.DisplayCursor(true);
 Output.PrintLogo();
 
 // let the user authenticate
-var account = await Cli.Core.Auth();
+var account = await Core.Auth();
 
 // require initial information
 string name = Input.Request<string>("Name to snipe: ");

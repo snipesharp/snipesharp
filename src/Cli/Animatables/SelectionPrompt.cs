@@ -63,7 +63,7 @@ namespace Cli.Animatables
         public string PrintOptions(){
             var final = new List<string>(); 
             for(int i = 0; i < options.Count(); i++)
-            final.Add((i == currentIndex ? SetText.Blue + "> " : "") + options[i] + "  " + SetText.ResetAll);
+            final.Add((i == currentIndex ? SetText.Blue + "  > " : "  ") + options[i] + "  " + SetText.ResetAll);
             return String.Join("\n", final);
         }
 
