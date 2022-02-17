@@ -16,7 +16,7 @@ namespace Cli.Animatables
                 }
                 SetText.DisplayCursor(false);
                 Console.Write(SetText.MoveLeft(1));
-            }, 300);
+            }, 100);
         }
 
         public void Cancel() {
