@@ -33,7 +33,7 @@ demented
   <img src="https://mc-heads.net/head/a5aee899-2d82-4594-aed1-f547178db6c0/100"></img>
 </a>
 <a href="https://github.com/StiliyanKushev">
-  <img src="https://mc-heads.net/head//100">StiliyanKushev</img>
+  <img src="https://user-images.githubusercontent.com/93228501/154389051-a3852ea7-5d2d-435c-9858-52c883d5d818.png">StiliyanKushev</img>
 </a>
 </p>
 
