@@ -21,3 +21,4 @@ Automatically change to a given skin on the authenticated account after successf
 Implement Mojang Authentication & sniping with Mojang credentials
 ## Microsoft Login
 Try to figure out if its possible to keep obtaining bearers with microsoft authentication (for 24/7 sniping usage)
+Help: https://mojang-api-docs.netlify.app/authentication/msa.html
