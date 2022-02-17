@@ -44,8 +44,8 @@ if (loginMethod == "Bearer Token") {
     }
 }
 else if (loginMethod == "Mojang Account") {
-    account.Email = Input.Request<string>(Requests.Email, validator:Validators.Credentials.Email);
-    account.Password = Input.Request<string>(Requests.Password, hidden: true);
+    account.MojangEmail = Input.Request<string>(Requests.Email, validator:Validators.Credentials.Email);
+    account.MojangPassword = Input.Request<string>(Requests.Password, hidden: true);
     // todo mojang auth 
     Output.Inform($"Not authenticated (Mojang login not implemented)");
 }
