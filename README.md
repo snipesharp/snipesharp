@@ -26,7 +26,7 @@
 # About
 Snipesharp is an easy to use Minecraft name Sniper coded in C# thats focused on both speed and user friendliness.
 
-## Created by:
+### Created by:
 
 <p align="center">
 <a href="https://namemc.com/profile/dement6d.1">
@@ -34,12 +34,12 @@ demented
   <img src="https://mc-heads.net/head/a5aee899-2d82-4594-aed1-f547178db6c0/100"></img>
 </a>
 <a href="https://github.com/StiliyanKushev">
-  <img src="https://i.imgur.com/ngrncXY.png">StiliyanKushev</img>
+  <img src="https://user-images.githubusercontent.com/93228501/154389051-a3852ea7-5d2d-435c-9858-52c883d5d818.png">StiliyanKushev</img>
 </a>
 </p>
 
 # Features
-## Logging in
+### Logging in
 - Features
   - Completely possible through the Console Interface
   - Re-use of previous credentials
@@ -47,19 +47,19 @@ demented
   - Microsoft Login
   - Bearer Token Login
   - Using previous session credentials/bearer
-- Configuration (account.json)
+- Configuration ([account.json](#configuration-file-locations))
   - All credentials (including Bearer Token) can be edited through account.json
-## Post sniping
+### Post sniping
 - Discord webhooks
   - Features
     - Webhooks contain your desired username & the name you sniped
     - Webhooks contain Minecraft character head of the account which sniped the name
-  - Configuration (config.json)
+  - Configuration ([config.json](#configuration-file-locations))
     - Custom username contained in webhook
     - Enable/disable webhook to snipesharp Discord server
     - Enable/disable webhook to custom Discord server
 - Automatic skin change
-  - Configuration (config.json)
+  - Configuration ([config.json](#configuration-file-locations))
     - Custom skin
 
 # How to use
@@ -76,11 +76,11 @@ Start snipersharp and you will be asked to choose a login method.
   - No donation methods implemented
 
 # Configuration file locations
-## Windows
-- %appdata% = WindowsPartition:\\Users\\{user}\\AppData\\Roaming
-- account.json = %appdata%\\.snipesharp\\account.json
-- config.json = %appdata%\\.snipesharp\\config.json
-## Linux
-- ~/ = /home/{user}
-- account.json = ~/.snipesharp/account.json
-- config.json = ~/.snipesharp/config.json
+### Windows
+- `%appdata%` = WindowsPartition:\\Users\\{user}\\AppData\\Roaming
+- `account.json` = %appdata%\\.snipesharp\\account.json
+- `config.json` = %appdata%\\.snipesharp\\config.json
+### Linux
+- `~/` = /home/{user}/
+- `account.json` = ~/.snipesharp/account.json
+- `config.json` = ~/.snipesharp/config.json
