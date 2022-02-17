@@ -24,7 +24,18 @@
 </p>
 
 # About
-Snipesharp is a Minecraft name Sniper coded in C# thats focused on both speed and user friendliness
+Snipesharp is a Minecraft name Sniper coded in C# thats focused on both speed and user friendliness.
+
+Created by:
+<p align="center">
+<a href="https://namemc.com/profile/dement6d.1">
+demented
+  <img src="https://mc-heads.net/head/a5aee899-2d82-4594-aed1-f547178db6c0/100"></img>
+</a>
+<a href="https://github.com/StiliyanKushev">
+  <img src="https://mc-heads.net/head//100">StiliyanKushev</img>
+</a>
+</p>
 
 # How to use
 Start snipersharp and you will be asked to choose a login method.
