@@ -71,9 +71,9 @@ Start snipersharp and you will be asked to choose a login method.
 
 # Donate
 - To demented
-  - XMR: 89Gk3YiZGWnLsgGygzRg8Shqp1UyEuYGMbnrz3dLX9isbiLb5b8e6Zu4rT6NX5K5dsNtMb1WTyScqdYCsjxNfUFaRLcdeBk
+  - Monero: 89Gk3YiZGWnLsgGygzRg8Shqp1UyEuYGMbnrz3dLX9isbiLb5b8e6Zu4rT6NX5K5dsNtMb1WTyScqdYCsjxNfUFaRLcdeBk
 - To StiliyanKushev
-  - No donation methods implemented
+  - No donation methods yet
 
 # Configuration file locations
 ### Windows
