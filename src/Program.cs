@@ -18,8 +18,7 @@ Config config = FileSystem.GetConfig().Fix();
 FileSystem.SaveConfig(config);
 
 // create and load name list
-List<string> names = FileSystem.GetNames();
-FileSystem.SaveNames(names);
+if (!FileSystem.NamesFileExists()) FileSystem.SaveNames(new List<string>());
 
 // create example names file
 FileSystem.SaveNames(new List<string> { "example1", "example2" }, "names.example.json");
@@ -34,35 +33,30 @@ Output.PrintLogo();
 // let the user authenticate
 var account = await Core.Auth();
 
-// require initial information
-string name = Input.Request<string>("Name to snipe: ");
+// set name
+string namesListAnswer = "No";
+var names = new List<string>();
+try { names = FileSystem.GetNames(); } catch(System.Text.Json.JsonException e) { Output.Error($"Error while reading {SetText.Red}names.json{SetText.ResetAll}: Invalid value at line {e.LineNumber+1}, column {e.BytePositionInLine}"); }
+if (names.Count > 0) namesListAnswer = new SelectionPrompt("Found names in names.json, use the list?", "Yes", "No").result;
+string name = namesListAnswer == "No" ? Input.Request<string>("Name to snipe: ") : names[0];
+
+// set delay
 long delay = Input.Request<long>("Offset in ms: ");
 
-// calculate total wait time
-var spinner = new Spinner();
-var waitTime = Math.Max(await Snipe.Droptime.GetMilliseconds(name) - delay, 0);
-spinner.Cancel();
+// wait for name to drop then shoot
+await Sniper.WaitForName(name, delay);
+Sniper.Shoot(config, account, name);
 
-// countdown animation
-var countDown = new CountDown(waitTime, $"Sniping {SetText.DarkBlue + SetText.Bold}{name}{SetText.ResetAll} in " + "{TIME}");
-
-// actually wait for the right time
-Thread.Sleep(TimeSpan.FromMilliseconds(waitTime));
-countDown.Cancel();
-
-// perform name sniping
-var success = false;
-for (int i = 0; (i < config.sendPacketsCount && !success); i++) {
-    success = (int)ChangeName.Change(name, account.Bearer).Result.StatusCode == 200;
-    Thread.Sleep(config.PacketSpreadMs);
-}
-
-// post success
-if (success) {
-    Webhook.SendDiscordWebhooks(config, name);
-    ChangeSkin.Change(config.SkinUrl, config.SkinType, account.Bearer);
+// snipe more if names list is in use
+if (namesListAnswer == "Yes")
+{
+    for (int i = 1; i < names.Count; i++)
+    {
+        await Sniper.WaitForName(names[i], delay);
+        Sniper.Shoot(config, account, names[i]);
+    }
 }
 
 // don't exit automatically
-Output.Inform("Press any key to continue...");
+Output.Inform("Finished sniping, press any key to exit");
 Console.ReadKey();

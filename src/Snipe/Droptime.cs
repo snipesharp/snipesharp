@@ -34,7 +34,7 @@ namespace Snipe
             int timestamp = Math.Max(ckmData.unix, starData.unix);
 
             // couldn't find the timestamp
-            if(timestamp == 0) Cli.Output.ExitError(Errors.NoDroptime(username));
+            if(timestamp == 0) Cli.Output.Error(Errors.NoDroptime(username));
 
             // convert timstamp to time left (in ms) and return
             long now = DateTimeOffset.Now.ToUnixTimeSeconds();
