@@ -67,14 +67,13 @@ namespace Cli
             return account;
         }
         private static async Task<Account> HandleMojang(Account account, bool newLogin = false) {
-            if (newLogin)
-            {
+            if (newLogin) {
                 account.MojangEmail = Input.Request<string>(Requests.MojangEmail, validator: Validators.Credentials.Email);
                 account.MojangPassword = Input.Request<string>(Requests.MojangPassword, hidden: true);
             }
 
             // todo, actual async stuff here
-            Output.Inform($"Not authenticated (Mojang login not implemented)");
+            Output.ExitError($"Not authenticated (Mojang login not implemented)");
             return account;
         }
         private static async Task<Account> HandleBearer(Account account, bool newBearer=false){
@@ -104,7 +103,7 @@ namespace Cli
             if (!String.IsNullOrEmpty(account.MojangPassword) && !String.IsNullOrEmpty(account.MojangEmail)) availableMethods.Add("Mojang Account");
 
             string choice = "";
-            if (availableMethods.Count > 1) choice = new SelectionPrompt("More than one login method previously used, choose one", availableMethods.ToArray()).result;
+            if (availableMethods.Count > 1) choice = new SelectionPrompt("More than one login method previously used, choose one:", availableMethods.ToArray()).result;
             else choice = availableMethods[0];
 
             // authenticate the chosen method

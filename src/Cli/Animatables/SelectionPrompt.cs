@@ -45,9 +45,10 @@ namespace Cli.Animatables
             // after that clear all lines for new output
             this.animation.Cancel();
             SetText.DisplayCursor(true);
+            Console.Write(SetText.MoveUp(1));
             Console.Write(SetText.MoveLeft(1000));
             var emptyLine = new string(' ', Console.WindowWidth);
-            for(int i = 0; i < options.Count(); i++) Console.WriteLine(emptyLine);
+            for(int i = 0; i < options.Count() + 1; i++) Console.WriteLine(emptyLine);
             
             // after you clear the console go back
             // to remove emtpy space
