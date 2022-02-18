@@ -41,7 +41,7 @@ if (names.Count > 0) namesListAnswer = new SelectionPrompt("Found names in names
 string name = namesListAnswer == "No" ? Input.Request<string>("Name to snipe: ") : names[0];
 
 // calculate suggested offset
-var suggestedOffset = await Utils.Offset.CalcSuggested();
+var suggestedOffset = await Offset.CalcSuggested();
 
 // require initial information
 long delay = Input.Request<long>($"Offset in ms [suggested: {suggestedOffset}ms]: ");
