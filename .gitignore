@@ -1,5 +1,6 @@
 src/.vs/
 src/bin/
 src/obj/
+.vs/
 README.md
 .vscode
