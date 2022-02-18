@@ -1,10 +1,9 @@
 # List of ideas/bug fixes to be implemented:
-## Automatic offset
-Determine the best offset based on users ping to the name change API server
-- Make it absolutely impossible to snipe too early using the automatic offset since this would be a complete miss
+## Encrypt account.json
+Add a config.json option which when enabled encrypts the account.json file. This would be disabled by default.
 ## Automatic 24/7 sniping
 Useful if you are not using bearers which expire every 24h
-- Option to snipe a list of chosen names
+- Option to snipe a list of chosen names [DONE]
 - Option to snipe every 3 letter name
 - Option to snipe every english name
 ## Better navigation
