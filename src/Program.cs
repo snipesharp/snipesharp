@@ -31,7 +31,8 @@ SetText.DisplayCursor(true);
 Output.PrintLogo();
 
 // let the user authenticate
-var account = await Core.Auth();
+var authResult = await Core.Auth();
+var account = authResult.account;
 
 // set name
 string namesListAnswer = "No";
@@ -55,6 +56,10 @@ if (namesListAnswer == "Yes")
 {
     for (int i = 1; i < names.Count; i++)
     {
+        if (authResult.loginMethod == "Microsoft Account") {
+            account.Bearer = await Snipe.Auth.AuthMicrosoft(account.MicrosoftEmail, account.MicrosoftPassword);
+            FileSystem.SaveAccount(account);
+        }
         await Sniper.WaitForName(names[i], delay);
         Sniper.Shoot(config, account, names[i]);
     }
