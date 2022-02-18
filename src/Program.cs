@@ -27,9 +27,12 @@ Output.PrintLogo();
 // let the user authenticate
 var account = await Core.Auth();
 
+// calculate suggested offset
+var suggestedOffset = await Utils.Offset.CalcSuggested();
+
 // require initial information
 string name = Input.Request<string>("Name to snipe: ");
-long delay = Input.Request<long>("Offset in ms: ");
+long delay = Input.Request<long>($"Offset in ms [suggested: {suggestedOffset}ms]: ");
 
 // calculate total wait time
 var spinner = new Spinner();
@@ -46,14 +49,14 @@ countDown.Cancel();
 // perform name sniping
 var success = false;
 for (int i = 0; (i < config.sendPacketsCount && !success); i++) {
-    success = (int)ChangeName.Change(name, account.Bearer).Result.StatusCode == 200;
+    success = (int)Name.Change(name, account.Bearer).Result.StatusCode == 200;
     Thread.Sleep(config.PacketSpreadMs);
 }
 
 // post success
 if (success) {
     Webhook.SendDiscordWebhooks(config, name);
-    ChangeSkin.Change(config.SkinUrl, config.SkinType, account.Bearer);
+    Skin.Change(config.SkinUrl, config.SkinType, account.Bearer);
 }
 
 // don't exit automatically

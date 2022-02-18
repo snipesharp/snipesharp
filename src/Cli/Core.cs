@@ -73,7 +73,7 @@ namespace Cli
             }
 
             // todo, actual async stuff here
-            Output.ExitError($"Not authenticated (Mojang login not implemented)");
+            Output.Error($"Not authenticated (Mojang login not implemented)");
             return account;
         }
         private static async Task<Account> HandleBearer(Account account, bool newBearer=false){
