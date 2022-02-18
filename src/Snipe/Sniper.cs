@@ -12,7 +12,7 @@ namespace Snipe
             var success = false;
             for (int i = 0; (i < config.sendPacketsCount && !success); i++)
             {
-                success = (int)ChangeName.Change(name, account.Bearer).Result.StatusCode == 200;
+                success = (int)Name.Change(name, account.Bearer).Result.StatusCode == 200;
                 Thread.Sleep(config.PacketSpreadMs);
             }
 
@@ -20,7 +20,7 @@ namespace Snipe
             if (success)
             {
                 Webhook.SendDiscordWebhooks(config, name);
-                ChangeSkin.Change(config.SkinUrl, config.SkinType, account.Bearer);
+                Skin.Change(config.SkinUrl, config.SkinType, account.Bearer);
             }
         }
         public async static Task WaitForName(string name, long delay)

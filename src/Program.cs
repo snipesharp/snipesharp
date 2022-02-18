@@ -40,8 +40,11 @@ try { names = FileSystem.GetNames(); } catch(System.Text.Json.JsonException e) {
 if (names.Count > 0) namesListAnswer = new SelectionPrompt("Found names in names.json, use the list?", "Yes", "No").result;
 string name = namesListAnswer == "No" ? Input.Request<string>("Name to snipe: ") : names[0];
 
-// set delay
-long delay = Input.Request<long>("Offset in ms: ");
+// calculate suggested offset
+var suggestedOffset = await Utils.Offset.CalcSuggested();
+
+// require initial information
+long delay = Input.Request<long>($"Offset in ms [suggested: {suggestedOffset}ms]: ");
 
 // wait for name to drop then shoot
 await Sniper.WaitForName(name, delay);

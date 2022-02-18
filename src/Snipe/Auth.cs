@@ -5,25 +5,15 @@ namespace Snipe
 {
     public class Auth
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bearer"></param>
-        /// <returns>true if bearer successfully authenticated</returns>
-        public static async Task<bool> AuthWithBearer(string bearer)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearer.Trim());
-                HttpResponseMessage response = await client.GetAsync("https://api.minecraftservices.com/minecraft/profile/namechange");
-                HttpContent content = response.Content;
-                if (response.IsSuccessStatusCode) return true;
-                else return false;
-            }
+        public static async Task<bool> AuthWithBearer(string bearer) {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearer.Trim());
+            HttpResponseMessage response = await client.GetAsync("https://api.minecraftservices.com/minecraft/profile/namechange");
+            HttpContent content = response.Content;
+            if (response.IsSuccessStatusCode) return true;
+            else return false;
         }
-        /// <summary>
-        /// Returns MC Bearer using Microsoft credentials
-        /// </summary>
+        
         /// <returns>MC Bearer using Microsoft credentials</returns>
         public static async Task<string> AuthMicrosoft(string email, string password)
         {
