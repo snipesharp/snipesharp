@@ -10,11 +10,25 @@ namespace FS
             : Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"/.snipesharp/";
         static string accountJsonFile = snipesharpFolder + "account.json";
         static string configJsonFile = snipesharpFolder + "config.json";
+        static string namesJsonFile = snipesharpFolder + "names.json";
 
+        /// <summary>
+        /// Saves given names object to the names.json file
+        /// </summary>
+        public static void SaveNames(List<string> names, string? path=null)
+        {
+            path = path == null ? namesJsonFile : snipesharpFolder + path;
+            try
+            {
+                if (!Directory.Exists(snipesharpFolder)) Directory.CreateDirectory(snipesharpFolder);
+                var json = JsonSerializer.Serialize(names, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(path, json);
+            }
+            catch (Exception e) { Cli.Output.Error(e.Message); }
+        }
         /// <summary>
         /// Saves given account to the account.json file
         /// </summary>
-        /// <param name="account"></param>
         public static void SaveAccount(Account account){
             try {
                 if (!Directory.Exists(snipesharpFolder)) Directory.CreateDirectory(snipesharpFolder);
@@ -22,7 +36,10 @@ namespace FS
                 File.WriteAllText(accountJsonFile, json);
             } catch (Exception e) { Cli.Output.Error(e.Message); }
         }
-        
+
+        /// <summary>
+        /// Saves given config to the config.json file
+        /// </summary>
         public static void SaveConfig(Config config){
             try {
                 if (!Directory.Exists(snipesharpFolder)) Directory.CreateDirectory(snipesharpFolder);
@@ -30,24 +47,46 @@ namespace FS
                 File.WriteAllText(configJsonFile, json);
             } catch (Exception e) { Cli.Output.Error(e.Message); }
         }
-        
+
+        /// <returns>a string array of names in the names.json file</returns>
+        public static List<string> GetNames()
+        {
+            if (!NamesFileExists()) return new List<string>();
+            return JsonSerializer.Deserialize<List<string>>(File.ReadAllText(namesJsonFile));
+        }
+
+        /// <returns>an existing or new config depending on whether one already exists</returns>
         public static Config GetConfig() {
             if (!ConfigFileExists()) return new Config();
             return JsonSerializer.Deserialize<Config>(File.ReadAllText(configJsonFile));
         }
 
+        /// <returns>an existing or new account config depending on whether one already exists</returns>
         public static Account GetAccount() {
             if (!AccountFileExists()) return new Account();
             return JsonSerializer.Deserialize<Account>(File.ReadAllText(accountJsonFile));
         }
 
-        // Checks whether the account.json exists in the snipesharp folder
+        /// <summary>
+        /// Checks whether the names.json file exists in the snipesharp folder
+        /// </summary>
+        public static bool NamesFileExists()
+        {
+            if (!Directory.Exists(snipesharpFolder)) return false;
+            return File.Exists(namesJsonFile);
+        }
+
+        /// <summary>
+        /// Checks whether the account.json file exists in the snipesharp folder
+        /// </summary>
         public static bool AccountFileExists() {
             if (!Directory.Exists(snipesharpFolder)) return false;
             return File.Exists(accountJsonFile);
         }
-        
-        // Checks whether the config.json exists in the snipesharp folder
+
+        /// <summary>
+        /// Checks whether the config.json file exists in the snipesharp folder
+        /// </summary>
         private static bool ConfigFileExists() {
             if (!Directory.Exists(snipesharpFolder)) return false;
             return File.Exists(configJsonFile);

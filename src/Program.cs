@@ -17,6 +17,13 @@ Fix.TerminateHandler.FixCursor();
 Config config = FileSystem.GetConfig().Fix();
 FileSystem.SaveConfig(config);
 
+// create and load name list
+List<string> names = FileSystem.GetNames();
+FileSystem.SaveNames(names);
+
+// create example names file
+FileSystem.SaveNames(new List<string> { "example1", "example2" }, "names.example.json");
+
 // clear the console before execution
 Console.Clear();
 SetText.DisplayCursor(true);
