@@ -20,7 +20,7 @@ namespace Snipe
             if (success)
             {
                 Webhook.SendDiscordWebhooks(config, name);
-                Skin.Change(config.SkinUrl, config.SkinType, account.Bearer);
+                if (config.AutoSkinChange) Skin.Change(config.SkinUrl, config.SkinType, account.Bearer);
             }
         }
         public async static Task WaitForName(string name, long delay, bool fromList=false)

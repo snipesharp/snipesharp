@@ -8,6 +8,7 @@
         public string WebhookUsername { get; set; }
         public bool SnipesharpServerWebhook { get; set; }
         public string DiscordWebhookUrl { get; set; }
+        public bool AutoSkinChange { get; set; }
         public string SkinUrl { get; set; }
         public string SkinType { get; set; }
         public bool NamesListAutoClean { get; set; }
@@ -17,7 +18,8 @@
             WebhookUsername = Environment.UserName;
             SnipesharpServerWebhook = true;
             DiscordWebhookUrl = "";
-            SkinUrl = "";
+            AutoSkinChange = false;
+            SkinUrl = "https://raw.githubusercontent.com/snipesharp/snipesharp/main/default_skin.png";
             SkinType = "classic";
             NamesListAutoClean = true;
         }
