@@ -53,10 +53,16 @@ demented
 - Features
   - Snipe custom name
   - Snipe from a custom name list
-    - Automatically clean name list of names which were already sniped
+    - Automatically clean name list of names which were already sniped, can be disabled from [config.json](#configuration-file-locations)
     - Supports sniping 24/7 (Bearer gets updated using Microsoft Account credentials)
     - Snipes in top to bottom order
   - Automatic (suggested) offset based on your ping and more math
+- Configuration ([config.json](#configuration-file-locations) & In App)
+  - Custom offset configured in app
+  - Custom name configured in app
+  - Custom name list configured in [config.json](#configuration-file-locations)
+  - Custom packets sent amount configured in [config.json](#configuration-file-locations)
+  - Custom delay between packets sent configured in [config.json](#configuration-file-locations)
 ### Post sniping
 - Discord webhooks
   - Features
@@ -69,6 +75,7 @@ demented
 - Automatic skin change
   - Configuration ([config.json](#configuration-file-locations))
     - Custom skin
+    - Custom skin type (classic/slim)
 
 # Donate
 - To demented
