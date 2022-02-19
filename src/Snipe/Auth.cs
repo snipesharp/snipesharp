@@ -19,6 +19,8 @@ namespace Snipe
         {
             using (HttpClient client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0");
+
                 HttpResponseMessage initGet = await client.GetAsync("https://login.live.com/oauth20_authorize.srf?client_id=000000004C12AE6F&redirect_uri=https://login.live.com/oauth20_desktop.srf&scope=service::user.auth.xboxlive.com::MBI_SSL&display=touch&response_type=token&locale=en");
                 string sFTTag = Validators.Auth.rSFTTagRegex.Matches(initGet.Content.ReadAsStringAsync().Result)[0].Value.Replace("value=\"", "").Replace("\"", "");
                 string urlPost = Validators.Auth.rUrlPostRegex.Matches(initGet.Content.ReadAsStringAsync().Result)[0].Value.Replace("urlPost:'", "").Replace("'", "");
