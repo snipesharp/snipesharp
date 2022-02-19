@@ -32,7 +32,6 @@ namespace Snipe
                 });
 
                 var postHttpResponse = await client.PostAsync(urlPost, requestContent);
-                Cli.Output.Inform(postHttpResponse.Content.ReadAsStringAsync().Result);
                 if (postHttpResponse.RequestMessage.RequestUri.AbsoluteUri.Contains("access_token"))
                 {
                     if (postHttpResponse.ToString().Contains("Sign in to")) { Cli.Output.ExitError("Wrong credentials, failed to login"); }

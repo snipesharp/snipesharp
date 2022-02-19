@@ -4,3 +4,5 @@ src/obj/
 .vs/
 README.md
 .vscode
+make_release.bat
+release/
