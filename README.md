@@ -4,17 +4,17 @@
   </a>
 </p>
 <p align="center">
-  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.2.0/sha256sums.txt">
+  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.3.0/sha256sums.txt">
     <img src="https://img.shields.io/badge/sha256sums-%231a6eef?style=flat-square"</img>
   </a>
-  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.2.0/snipesharp_linux-x86-64">
-    <img src="https://img.shields.io/badge/linux%20x86-v1.2.0-%231a6eef?style=flat-square"</img>
+  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.3.0/snipesharp_linux-x86-64">
+    <img src="https://img.shields.io/badge/linux%20x86-v1.3.0-%231a6eef?style=flat-square"</img>
   </a>
-  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.2.0/snipesharp_linux-arm64">
-    <img src="https://img.shields.io/badge/linux%20arm64-v1.2.0-%231a6eef?style=flat-square"</img>
+  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.3.0/snipesharp_linux-arm64">
+    <img src="https://img.shields.io/badge/linux%20arm64-v1.3.0-%231a6eef?style=flat-square"</img>
   </a>
-  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.2.0/snipesharp_win-x86-64.exe">
-    <img src="https://img.shields.io/badge/windows-v1.2.0-%231a6eef?style=flat-square"</img>
+  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.3.0/snipesharp_win-x86-64.exe">
+    <img src="https://img.shields.io/badge/windows-v1.3.0-%231a6eef?style=flat-square"</img>
   </a>
 </p>
 <p align="center">
@@ -49,6 +49,20 @@ demented
   - Using previous session credentials/bearer
 - Configuration ([account.json](#configuration-file-locations))
   - All credentials (including Bearer Token) can be edited through account.json
+### Sniping
+- Features
+  - Snipe custom name
+  - Snipe from a custom name list
+    - Automatically clean name list of names which were already sniped, can be disabled from [config.json](#configuration-file-locations)
+    - Supports sniping 24/7 (Bearer gets updated using Microsoft Account credentials)
+    - Snipes in top to bottom order
+  - Automatic (suggested) offset based on your ping and more math
+- Configuration ([config.json](#configuration-file-locations) & In App)
+  - Custom offset configured in app
+  - Custom name configured in app
+  - Custom name list configured in [config.json](#configuration-file-locations)
+  - Custom packets sent amount configured in [config.json](#configuration-file-locations)
+  - Custom delay between packets sent configured in [config.json](#configuration-file-locations)
 ### Post sniping
 - Discord webhooks
   - Features
@@ -61,6 +75,7 @@ demented
 - Automatic skin change
   - Configuration ([config.json](#configuration-file-locations))
     - Custom skin
+    - Custom skin type (classic/slim)
 
 # Donate
 - To demented
