@@ -13,6 +13,13 @@ Fix.Windows.FixCmd();
 // attempt to fix cursor not showing after close
 Fix.TerminateHandler.FixCursor();
 
+// clear the console before execution
+Console.Clear();
+SetText.DisplayCursor(true);
+
+// welcome the user
+Output.PrintLogo();
+
 // create and load config
 Config config = FileSystem.GetConfig().Fix();
 FileSystem.SaveConfig(config);
@@ -22,13 +29,6 @@ if (!FileSystem.NamesFileExists()) FileSystem.SaveNames(new List<string>());
 
 // create example names file
 FileSystem.SaveNames(new List<string> { "example1", "example2" }, "names.example.json");
-
-// clear the console before execution
-Console.Clear();
-SetText.DisplayCursor(true);
-
-// welcome the user
-Output.PrintLogo();
 
 // let the user authenticate
 var authResult = await Core.Auth();

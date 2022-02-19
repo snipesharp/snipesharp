@@ -13,6 +13,14 @@ namespace FS
         static string namesJsonFile = snipesharpFolder + "names.json";
 
         /// <summary>
+        /// Creates the .snipesharp folder and informs the user about it
+        /// </summary>
+        public static void CreateSnipesharpFolder()
+        {
+            Directory.CreateDirectory(snipesharpFolder);
+            Cli.Output.Inform($"All config files can be found in \"{DataTypes.SetText.SetText.Blue}{snipesharpFolder}{DataTypes.SetText.SetText.White}\"");
+        }
+        /// <summary>
         /// Saves given names object to the names.json file
         /// </summary>
         public static void SaveNames(List<string> names, string? path=null)
@@ -20,7 +28,7 @@ namespace FS
             path = path == null ? namesJsonFile : snipesharpFolder + path;
             try
             {
-                if (!Directory.Exists(snipesharpFolder)) Directory.CreateDirectory(snipesharpFolder);
+                if (!Directory.Exists(snipesharpFolder)) CreateSnipesharpFolder();
                 var json = JsonSerializer.Serialize(names, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(path, json);
             }
@@ -31,7 +39,7 @@ namespace FS
         /// </summary>
         public static void SaveAccount(Account account){
             try {
-                if (!Directory.Exists(snipesharpFolder)) Directory.CreateDirectory(snipesharpFolder);
+                if (!Directory.Exists(snipesharpFolder)) CreateSnipesharpFolder();
                 var json = JsonSerializer.Serialize(account, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(accountJsonFile, json);
             } catch (Exception e) { Cli.Output.Error(e.Message); }
@@ -42,7 +50,7 @@ namespace FS
         /// </summary>
         public static void SaveConfig(Config config){
             try {
-                if (!Directory.Exists(snipesharpFolder)) Directory.CreateDirectory(snipesharpFolder);
+                if (!Directory.Exists(snipesharpFolder)) CreateSnipesharpFolder();
                 var json = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(configJsonFile, json);
             } catch (Exception e) { Cli.Output.Error(e.Message); }
