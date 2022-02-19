@@ -1,13 +1,16 @@
 using DataTypes.SetText;
+using System.Text.RegularExpressions;
 
 namespace StringExtensions
 {
     public static class StringResponsive
     {
         public static string Centered(this string str){
-            int spacesToAdd = str.Length % 2 != 0
-                ? (Console.WindowWidth - 1) - str.Length 
-                : Console.WindowWidth - str.Length;
+            var clean = new Regex(@"\x1b\[\d+\w").Replace(str, "");
+
+            int spacesToAdd = clean.Length % 2 != 0
+                ? (Console.WindowWidth - 1) - clean.Length 
+                : Console.WindowWidth - clean.Length;
             string spaces = new string(' ', (spacesToAdd / 2));
             return spaces + str + spaces;
         }

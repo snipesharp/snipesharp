@@ -11,7 +11,7 @@ namespace DataTypes.SetText
         public static string Cyan = "\x1b[36m";
         public static string White = "\x1b[37m";
         public static string Gray = "\x1b[90m";
-        public static string Red = "\x1b[91m";
+        public static string Red = "\u001b[31m";
         public static string Green = "\x1b[92m";
         public static string Yellow = "\x1b[93m";
         public static string Blue = "\x1b[94m";
@@ -25,10 +25,10 @@ namespace DataTypes.SetText
         public static string UnderlineOff = "\x1b[24m";
         public static string Blink = "\x1b[5m";
         public static string BlinkOff = "\x1b[25m";
-        public static Func<int, string> MoveLeft = count => $"\u001b[{count}D";
-        public static Func<int, string> MoveRight = count => $"\u001b[{count}C";
-        public static Func<int, string> MoveDown = count => $"\u001b[{count}B";
-        public static Func<int, string> MoveUp = count => $"\u001b[{count}A";
+        public static Func<int, string> MoveLeft = count => $"\x1b[{count}D";
+        public static Func<int, string> MoveRight = count => $"\x1b[{count}C";
+        public static Func<int, string> MoveDown = count => $"\x1b[{count}B";
+        public static Func<int, string> MoveUp = count => $"\x1b[{count}A";
         public static Func<bool, bool> DisplayCursor = value => (Console.CursorVisible = value);
     }
 }
