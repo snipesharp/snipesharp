@@ -34,7 +34,7 @@
   </a>
 </p>
 <p align="center">
-  <a href="https://discord.com/ptFvZ8AYuU">
+  <a href="https://discord.gg/ptFvZ8AYuU">
     <img src="https://img.shields.io/discord/943483411597758494?color=567CFF&label=discord&logo=discord&logoColor=ffffff&style=for-the-badge">
   </a>
 </p>
@@ -101,9 +101,9 @@ demented
 
 # Troubleshooting
 If youre having trouble while using snipesharp, check for solutions on the [Wiki](https://github.com/snipesharp/snipesharp/wiki).
-If you still can't fix your issue or you just want to hang out, you can join [our Discord server](https://discord.com/ptFvZ8AYuU) 
+If you still can't fix your issue or you just want to hang out, you can join [our Discord server](https://discord.gg/ptFvZ8AYuU) 
 
-<a href="https://discord.com/ptFvZ8AYuU">
+<a href="https://discord.gg/ptFvZ8AYuU">
     <img src="https://img.shields.io/discord/943483411597758494?color=567CFF&label=discord&logo=discord&logoColor=ffffff&style=for-the-badge">
 </a>
 
