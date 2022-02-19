@@ -23,7 +23,6 @@ namespace Snipe
                 string sFTTag = Validators.Auth.rSFTTagRegex.Matches(initGet.Content.ReadAsStringAsync().Result)[0].Value.Replace("value=\"", "").Replace("\"", "");
                 string urlPost = Validators.Auth.rUrlPostRegex.Matches(initGet.Content.ReadAsStringAsync().Result)[0].Value.Replace("urlPost:'", "").Replace("'", "");
 
-                var stringContentPost = new StringContent($"login={email}&loginfmt={email}&passwd={password}&PPFT={sFTTag}", System.Text.Encoding.UTF8, "application/x-www-form-urlencoded");
                 var requestContent = new FormUrlEncodedContent(new[]
                 {
                     new KeyValuePair<string,string>("login",email),
@@ -32,10 +31,8 @@ namespace Snipe
                     new KeyValuePair<string, string>("PPFT",sFTTag)
                 });
 
-                HttpResponseMessage postHttpResponse = await client.PostAsync
-                    (urlPost, requestContent);
-                //Cli.Output.Inform($"SENDING TO: {urlPost}");
-                //Cli.Output.Inform($"postHttpResponse.RequestMessage.RequestUri.AbsoluteUri: \n{postHttpResponse.RequestMessage.RequestUri.AbsoluteUri}"); 
+                var postHttpResponse = await client.PostAsync(urlPost, requestContent);
+                Cli.Output.Inform(postHttpResponse.Content.ReadAsStringAsync().Result);
                 if (postHttpResponse.RequestMessage.RequestUri.AbsoluteUri.Contains("access_token"))
                 {
                     if (postHttpResponse.ToString().Contains("Sign in to")) { Cli.Output.ExitError("Wrong credentials, failed to login"); }
@@ -71,6 +68,10 @@ namespace Snipe
                         if (!String.IsNullOrEmpty(mcApiJsonResponse.access_token.ToString()) && await AuthWithBearer(mcApiJsonResponse.access_token.ToString())) return mcApiJsonResponse.access_token.ToString();
                     }
                     else Cli.Output.ExitError("Failed to get access_token");
+                }
+                else
+                {
+                    Cli.Output.Error($"Failed to login possibly due to Microsoft suspecting suspicious activities. Try following this tutorial to fix this: {DataTypes.SetText.SetText.Cyan}https://github.com/snipesharp/snipesharp/wiki/How-to-fix-failed-Microsoft-login {DataTypes.SetText.SetText.ResetAll}");
                 }
             }
             return null;

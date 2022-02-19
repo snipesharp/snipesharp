@@ -60,6 +60,8 @@ namespace Cli {
         public static void ExitError(string message){
             Error(message);
             SetText.DisplayCursor(true);
+            Inform("Press any key to exit");
+            Console.ReadKey();
             Environment.Exit(1);
         }
 
