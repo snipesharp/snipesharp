@@ -23,7 +23,13 @@ namespace Cli
             return parsedArguments;
         }
 
-        public static async Task<Account> Auth(){
+        public struct AuthResult
+        {
+            public Account account;
+            public string loginMethod;
+        }
+
+        public static async Task<AuthResult> Auth(){
             // display prompt
             string loginMethod = FileSystem.AccountFileExists()
                 ? new SelectionPrompt("Login method:", "From previous session", "Bearer Token", "Microsoft Account", "Mojang Account").result
@@ -39,7 +45,7 @@ namespace Cli
             // save account
             FileSystem.SaveAccount(account);
 
-            return account;
+            return new AuthResult { account = account, loginMethod = loginMethod };
         }
 
         private static async Task<Account> HandleMicrosoft(Account account, bool newLogin=false){

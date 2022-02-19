@@ -57,7 +57,7 @@ namespace Snipe
                         var mcApiJsonResponse = JsonSerializer.Deserialize<McApiResponse>
                             (mcApiHttpResponse.Result);
 
-                        if (!String.IsNullOrEmpty(mcApiJsonResponse.access_token.ToString())) return mcApiJsonResponse.access_token.ToString();
+                        if (!String.IsNullOrEmpty(mcApiJsonResponse.access_token.ToString()) && await AuthWithBearer(mcApiJsonResponse.access_token.ToString())) return mcApiJsonResponse.access_token.ToString();
                     }
                     else Cli.Output.ExitError("Failed to get access_token");
                 }

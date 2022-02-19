@@ -14,7 +14,7 @@ namespace Cli.Animatables
             this.options = options.ToList();
 
             // prompt the user
-            Console.WriteLine(question);
+            Console.WriteLine("\n"+question);
             SetText.DisplayCursor(false);
 
             // setup animation
@@ -52,7 +52,7 @@ namespace Cli.Animatables
             
             // after you clear the console go back
             // to remove emtpy space
-            Console.Write(SetText.MoveUp(options.Count() + 1));
+            Console.Write(SetText.MoveUp(options.Count() + 2));
 
             // save the result
             this.result = this.options[this.answerIndex];

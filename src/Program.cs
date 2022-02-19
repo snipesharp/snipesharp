@@ -13,17 +13,6 @@ Fix.Windows.FixCmd();
 // attempt to fix cursor not showing after close
 Fix.TerminateHandler.FixCursor();
 
-// create and load config
-Config config = FileSystem.GetConfig().Fix();
-FileSystem.SaveConfig(config);
-
-// create and load name list
-List<string> names = FileSystem.GetNames();
-FileSystem.SaveNames(names);
-
-// create example names file
-FileSystem.SaveNames(new List<string> { "example1", "example2" }, "names.example.json");
-
 // clear the console before execution
 Console.Clear();
 SetText.DisplayCursor(true);
@@ -31,41 +20,63 @@ SetText.DisplayCursor(true);
 // welcome the user
 Output.PrintLogo();
 
+// create and load config
+Config config = FileSystem.GetConfig().Fix();
+FileSystem.SaveConfig(config);
+
+// create and load name list
+if (!FileSystem.NamesFileExists()) FileSystem.SaveNames(new List<string>());
+
+// create example names file
+FileSystem.SaveNames(new List<string> { "example1", "example2" }, "names.example.json");
+
 // let the user authenticate
-var account = await Core.Auth();
+var authResult = await Core.Auth();
+var account = authResult.account;
+
+// set name
+string namesListAnswer = "No";
+var names = new List<string>();
+try { names = FileSystem.GetNames(); } catch(System.Text.Json.JsonException e) { Output.Error($"Error while reading {SetText.Red}names.json{SetText.ResetAll}: Invalid value at line {e.LineNumber+1}, column {e.BytePositionInLine}"); }
+if (names.Count > 0) namesListAnswer = new SelectionPrompt("Found names in names.json, use the list?", "Yes", "No").result;
+string name = namesListAnswer == "No" ? Input.Request<string>("Name to snipe: ") : names[0];
 
 // calculate suggested offset
-var suggestedOffset = await Utils.Offset.CalcSuggested();
+var suggestedOffset = await Offset.CalcSuggested();
 
 // require initial information
-string name = Input.Request<string>("Name to snipe: ");
 long delay = Input.Request<long>($"Offset in ms [suggested: {suggestedOffset}ms]: ");
 
-// calculate total wait time
-var spinner = new Spinner();
-var waitTime = Math.Max(await Snipe.Droptime.GetMilliseconds(name) - delay, 0);
-spinner.Cancel();
+// wait for name to drop then shoot
+await Sniper.WaitForName(name, delay);
+Sniper.Shoot(config, account, name);
 
-// countdown animation
-var countDown = new CountDown(waitTime, $"Sniping {SetText.DarkBlue + SetText.Bold}{name}{SetText.ResetAll} in " + "{TIME}");
+// snipe more if names list is in use
+if (namesListAnswer == "Yes")
+{
+    // remove sniped name from list and update the file
+    if (config.NamesListAutoClean) names.Remove(name);
+    FileSystem.SaveNames(names);
 
-// actually wait for the right time
-Thread.Sleep(TimeSpan.FromMilliseconds(waitTime));
-countDown.Cancel();
+    for (int i = config.NamesListAutoClean ? 0 : 1; i < names.Count; i++)
+    {
+        if (authResult.loginMethod == "Microsoft Account") {
+            account.Bearer = await Snipe.Auth.AuthMicrosoft(account.MicrosoftEmail, account.MicrosoftPassword);
+            FileSystem.SaveAccount(account);
+        }
+        await Sniper.WaitForName(names[i], delay);
+        Sniper.Shoot(config, account, names[i]);
 
-// perform name sniping
-var success = false;
-for (int i = 0; (i < config.sendPacketsCount && !success); i++) {
-    success = (int)Name.Change(name, account.Bearer).Result.StatusCode == 200;
-    Thread.Sleep(config.PacketSpreadMs);
-}
-
-// post success
-if (success) {
-    Webhook.SendDiscordWebhooks(config, name);
-    Skin.Change(config.SkinUrl, config.SkinType, account.Bearer);
+        // remove sniped name from list and update the file
+        if (config.NamesListAutoClean)
+        {
+            names.Remove(names[i]);
+            i--;
+        }
+        FileSystem.SaveNames(names);
+    }
 }
 
 // don't exit automatically
-Output.Inform("Press any key to continue...");
+Output.Inform("Finished sniping, press any key to exit");
 Console.ReadKey();

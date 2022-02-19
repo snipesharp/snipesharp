@@ -10,6 +10,7 @@
         public string DiscordWebhookUrl { get; set; }
         public string SkinUrl { get; set; }
         public string SkinType { get; set; }
+        public bool NamesListAutoClean { get; set; }
         
         public Config() { 
             PacketSpreadMs = 31;
@@ -18,6 +19,7 @@
             DiscordWebhookUrl = "";
             SkinUrl = "";
             SkinType = "classic";
+            NamesListAutoClean = true;
         }
         
         public Config Fix() {
