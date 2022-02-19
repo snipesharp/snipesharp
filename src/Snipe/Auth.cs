@@ -23,8 +23,19 @@ namespace Snipe
                 string sFTTag = Validators.Auth.rSFTTagRegex.Matches(initGet.Content.ReadAsStringAsync().Result)[0].Value.Replace("value=\"", "").Replace("\"", "");
                 string urlPost = Validators.Auth.rUrlPostRegex.Matches(initGet.Content.ReadAsStringAsync().Result)[0].Value.Replace("urlPost:'", "").Replace("'", "");
 
+                var stringContentPost = new StringContent($"login={email}&loginfmt={email}&passwd={password}&PPFT={sFTTag}", System.Text.Encoding.UTF8, "application/x-www-form-urlencoded");
+                var requestContent = new FormUrlEncodedContent(new[]
+                {
+                    new KeyValuePair<string,string>("login",email),
+                    new KeyValuePair<string,string>("loginfmt",email),
+                    new KeyValuePair<string, string>("passwd",password),
+                    new KeyValuePair<string, string>("PPFT",sFTTag)
+                });
+
                 HttpResponseMessage postHttpResponse = await client.PostAsync
-                    (urlPost, new StringContent($"login={email}&loginfmt={email}&passwd={password}&PPFT={sFTTag}", System.Text.Encoding.UTF8, "application/x-www-form-urlencoded"));
+                    (urlPost, requestContent);
+                //Cli.Output.Inform($"SENDING TO: {urlPost}");
+                //Cli.Output.Inform($"postHttpResponse.RequestMessage.RequestUri.AbsoluteUri: \n{postHttpResponse.RequestMessage.RequestUri.AbsoluteUri}"); 
                 if (postHttpResponse.RequestMessage.RequestUri.AbsoluteUri.Contains("access_token"))
                 {
                     if (postHttpResponse.ToString().Contains("Sign in to")) { Cli.Output.ExitError("Wrong credentials, failed to login"); }
