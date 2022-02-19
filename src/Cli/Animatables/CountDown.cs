@@ -7,11 +7,13 @@ namespace Cli.Animatables
     {
         public static string DateFromMs(long milliseconds){
             TimeSpan t = TimeSpan.FromMilliseconds(milliseconds);
-            return string.Format("{0:D2}d:{1:D2}h:{2:D2}m:{3:D2}s",
-                t.Days,
-                t.Hours, 
-                t.Minutes, 
-                t.Seconds);
+
+            string toFormat = t.Days.Equals(0) || t.Days.Equals(null) ? "" : $"{t.Days:D2}d:";
+            toFormat += t.Hours.Equals(0) || t.Hours.Equals(null) ? "" : $"{t.Hours:D2}h:";
+            toFormat += t.Minutes.Equals(0) || t.Minutes.Equals(null) ? "" : $"{t.Minutes:D2}m:";
+            toFormat += t.Seconds.Equals(0) || t.Seconds.Equals(null) ? "" : $"{t.Seconds:D2}s";
+
+            return string.Format(toFormat);
         }
 
         private Animatable animation;
