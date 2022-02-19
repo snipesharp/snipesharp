@@ -28,13 +28,14 @@ namespace Snipe
             catch { return default(T); }
         }
 
-        public static async Task<long> GetMilliseconds(string username){
+        public static async Task<long> GetMilliseconds(string username, bool exitOnError=true){
             var ckmData = await Fetch<UnixJSON>(UrlCkm(username));
             var starData = await Fetch<UnixJSON>(UrlStar(username));
             int timestamp = Math.Max(ckmData.unix, starData.unix);
 
             // couldn't find the timestamp
-            if(timestamp == 0) Cli.Output.Error(Errors.NoDroptime(username));
+            Action<string> errorFunction = exitOnError ? Cli.Output.ExitError : Cli.Output.Error;
+            if(timestamp == 0) errorFunction(Errors.NoDroptime(username));
 
             // convert timstamp to time left (in ms) and return
             long now = DateTimeOffset.Now.ToUnixTimeSeconds();

@@ -64,7 +64,7 @@ if (namesListAnswer == "Yes")
             account.Bearer = await Snipe.Auth.AuthMicrosoft(account.MicrosoftEmail, account.MicrosoftPassword);
             FileSystem.SaveAccount(account);
         }
-        await Sniper.WaitForName(names[i], delay);
+        await Sniper.WaitForName(names[i], delay, true);
         Sniper.Shoot(config, account, names[i]);
 
         // remove sniped name from list and update the file

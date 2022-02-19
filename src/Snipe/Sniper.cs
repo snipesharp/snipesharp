@@ -23,11 +23,11 @@ namespace Snipe
                 Skin.Change(config.SkinUrl, config.SkinType, account.Bearer);
             }
         }
-        public async static Task WaitForName(string name, long delay)
+        public async static Task WaitForName(string name, long delay, bool fromList=false)
         {
             // calculate total wait time
             var spinner = new Spinner();
-            var waitTime = Math.Max(await Droptime.GetMilliseconds(name) - delay, 0);
+            var waitTime = Math.Max(await Droptime.GetMilliseconds(name, !fromList) - delay, 0);
             spinner.Cancel();
 
             // countdown animation
