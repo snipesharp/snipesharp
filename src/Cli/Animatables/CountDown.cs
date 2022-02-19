@@ -11,7 +11,7 @@ namespace Cli.Animatables
             string toFormat = t.Days.Equals(0) || t.Days.Equals(null) ? "" : $"{t.Days:D2}d:";
             toFormat += t.Hours.Equals(0) || t.Hours.Equals(null) ? "" : $"{t.Hours:D2}h:";
             toFormat += t.Minutes.Equals(0) || t.Minutes.Equals(null) ? "" : $"{t.Minutes:D2}m:";
-            toFormat += t.Seconds.Equals(0) || t.Seconds.Equals(null) ? "" : $"{t.Seconds:D2}s";
+            toFormat += $"{t.Seconds:D2}s";
 
             return string.Format(toFormat);
         }

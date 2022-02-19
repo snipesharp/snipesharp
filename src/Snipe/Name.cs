@@ -26,8 +26,8 @@ namespace Snipe
         {
             switch (code)
             {
-                case 400: return "Name is invalid, longer than 16 characters or contains characters";
-                case 403: return "Name is either taken or has not become available";
+                case 400: return "Name is invalid";
+                case 403: return "Name is taken or has not become available";
                 case 401: return "Bearer token expired or is not correct";
                 case 429: return "Too many requests sent";
                 case 500: return "API Timed out";
