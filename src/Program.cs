@@ -39,6 +39,7 @@ string namesListAnswer = "No";
 var names = new List<string>();
 try { names = FileSystem.GetNames(); } catch(System.Text.Json.JsonException e) { Output.Error($"Error while reading {SetText.Red}names.json{SetText.ResetAll}: Invalid value at line {e.LineNumber+1}, column {e.BytePositionInLine}"); }
 if (names.Count > 0) namesListAnswer = new SelectionPrompt("Found names in names.json, use the list?", "Yes", "No").result;
+if (namesListAnswer == "Yes") names = FileSystem.GetNames();
 string name = namesListAnswer == "No" ? Input.Request<string>("Name to snipe: ") : names[0];
 
 // calculate suggested offset
