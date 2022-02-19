@@ -49,6 +49,14 @@ demented
   - Using previous session credentials/bearer
 - Configuration ([account.json](#configuration-file-locations))
   - All credentials (including Bearer Token) can be edited through account.json
+### Sniping
+- Features
+  - Snipe custom name
+  - Snipe from a custom name list
+    - Automatically clean name list of names which were already sniped
+    - Supports sniping 24/7 (Bearer gets updated using Microsoft Account credentials)
+    - Snipes in top to bottom order
+  - Automatic (suggested) offset based on your ping and more math
 ### Post sniping
 - Discord webhooks
   - Features
