@@ -28,7 +28,7 @@ namespace Snipe
             catch { return default(T); }
         }
 
-        public static async Task<long> GetMilliseconds(string username, bool exitOnError=true){
+        public static async Task<long> GetMilliseconds(string username, bool exitOnError=false){
             var ckmData = await Fetch<UnixJSON>(UrlCkm(username));
             var starData = await Fetch<UnixJSON>(UrlStar(username));
             int timestamp = Math.Max(ckmData.unix, starData.unix);

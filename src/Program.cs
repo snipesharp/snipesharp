@@ -48,14 +48,18 @@ var suggestedOffset = await Offset.CalcSuggested();
 long delay = Input.Request<long>($"Offset in ms [suggested: {suggestedOffset}ms]: ");
 
 // wait for name to drop then shoot
-await Sniper.WaitForName(name, delay);
+await Sniper.WaitForName(name, delay, namesListAnswer == "Yes");
 Sniper.Shoot(config, account, name);
 
 // snipe more if names list is in use
 if (namesListAnswer == "Yes")
 {
     // remove sniped name from list and update the file
-    if (config.NamesListAutoClean) names.Remove(name);
+    if (config.NamesListAutoClean)
+    {
+        names = FileSystem.GetNames(); // update from file before updating to file
+        names.Remove(name);
+    }
     FileSystem.SaveNames(names);
 
     for (int i = config.NamesListAutoClean ? 0 : 1; i < names.Count; i++)
@@ -70,6 +74,7 @@ if (namesListAnswer == "Yes")
         // remove sniped name from list and update the file
         if (config.NamesListAutoClean)
         {
+            names = FileSystem.GetNames();
             names.Remove(names[i]);
             i--;
         }
