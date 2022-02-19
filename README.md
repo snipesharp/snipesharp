@@ -62,18 +62,19 @@ demented
   - Configuration ([config.json](#configuration-file-locations))
     - Custom skin
 
-# How to use
-Start snipersharp and you will be asked to choose a login method.
-1. You can choose between a `Bearer Token` and a `Microsoft Account` and, if you've already authenticated before, you will be able to choose `From previous session`
-2. Once you've successfully authenticated your account, you choose which `name` you want to snipe
-3. After that, choose the `Offset in ms`, this determines how early to start sniping the chosen name in milliseconds
-4. Wait for the sniper to obtain the chosen name
-
 # Donate
 - To demented
   - Monero: 89Gk3YiZGWnLsgGygzRg8Shqp1UyEuYGMbnrz3dLX9isbiLb5b8e6Zu4rT6NX5K5dsNtMb1WTyScqdYCsjxNfUFaRLcdeBk
 - To StiliyanKushev
   - No donation methods yet
+
+# Troubleshooting
+If youre having trouble while using snipesharp, check for solutions on the [Wiki](https://github.com/snipesharp/snipesharp/wiki).
+If you still can't fix your issue or you just want to hang out, you can join [our Discord server](https://discord.com/ptFvZ8AYuU) 
+
+<a href="https://discord.com/ptFvZ8AYuU">
+    <img src="https://img.shields.io/discord/943483411597758494?color=567CFF&label=discord&logo=discord&logoColor=ffffff&style=for-the-badge">
+</a>
 
 # Configuration file locations
 ### Windows
