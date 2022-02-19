@@ -1,4 +1,6 @@
 # List of ideas/bug fixes to be implemented:
+## Giftcard sniping
+Giftcard sniping
 ## account.json screen viewing protection
 Hide account credentials below line 50 and fill the first 50 lines with a warning and empty space.
 Example:
