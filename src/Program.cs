@@ -6,32 +6,7 @@ using DataTypes.SetText;
 using Snipe;
 using Utils;
 
-// delete previous log file
-if (FileSystem.LogFileExists()) File.Delete(FileSystem.GetLatestLogPath());
-
-// attempt to fix windows cmd colors
-if (Core.pid != PlatformID.Unix)
-Fix.Windows.FixCmd();
-
-// attempt to fix cursor not showing after close
-Fix.TerminateHandler.FixCursor();
-
-// clear the console before execution
-Console.Clear();
-SetText.DisplayCursor(true);
-
-// welcome the user
-Output.PrintLogo();
-
-// create and load config
-Config config = FileSystem.GetConfig().Fix();
-FileSystem.SaveConfig(config);
-
-// create and load name list
-if (!FileSystem.NamesFileExists()) FileSystem.SaveNames(new List<string>());
-
-// create example names file
-FileSystem.SaveNames(new List<string> { "example1", "example2" }, "names.example.json");
+Config config = Initialize();
 
 // let the user authenticate
 var authResult = await Core.Auth();
@@ -85,3 +60,34 @@ if (namesListAnswer == "Yes") {
 // don't exit automatically
 Output.Inform("Finished sniping, press any key to exit");
 Console.ReadKey();
+
+static Config Initialize() {
+    // delete previous log file
+    if (FileSystem.LogFileExists()) File.Delete(FileSystem.GetLatestLogPath());
+
+    // attempt to fix windows cmd colors
+    if (Core.pid != PlatformID.Unix)
+    Fix.Windows.FixCmd();
+
+    // attempt to fix cursor not showing after close
+    Fix.TerminateHandler.FixCursor();
+
+    // clear the console before execution
+    Console.Clear();
+    SetText.DisplayCursor(true);
+
+    // welcome the user
+    Output.PrintLogo();
+
+    // create and load config
+    Config config = FileSystem.GetConfig().Fix();
+    FileSystem.SaveConfig(config);
+
+    // create and load name list
+    if (!FileSystem.NamesFileExists()) FileSystem.SaveNames(new List<string>());
+
+    // create example names file
+    FileSystem.SaveNames(new List<string> { "example1", "example2" }, "names.example.json");
+
+    return config;
+}

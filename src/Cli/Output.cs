@@ -62,6 +62,7 @@ namespace Cli {
             FS.FileSystem.Log($"ExitError: {message}");
             SetText.DisplayCursor(true);
             Inform("Press any key to exit");
+            Animatables.RainbowText exitText = new Animatables.RainbowText("RIp in Piece");
             Console.ReadKey();
             Environment.Exit(1);
         }

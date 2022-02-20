@@ -24,6 +24,8 @@ namespace Snipe
         /// <returns>MC Bearer using Microsoft credentials</returns>
         public static async Task<string> AuthMicrosoft(string email, string password)
         {
+            Cli.Animatables.Spinner spinner = new Cli.Animatables.Spinner();
+
             using (HttpClient client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0");
@@ -80,6 +82,7 @@ namespace Snipe
                         var mcApiJsonResponse = JsonSerializer.Deserialize<McApiResponse>
                             (mcApiHttpResponse.Result);
 
+                        spinner.Cancel();
                         // Check if account owns MC
                         if (!await OwnsMinecraft(mcApiJsonResponse.access_token))
                         {
@@ -114,9 +117,9 @@ namespace Snipe
             var mcOwnershipJsonResponse =
                 JsonSerializer.Deserialize<McOwnershipResponse>(await mcOwnershipHttpResponse.Content.ReadAsStringAsync());
 
-            if (mcOwnershipJsonResponse.items[0].name != "game_minecraft" && mcOwnershipJsonResponse.items[0].name != "product_minecraft") // If doesn't own minecraft, prompt to redeem a giftcard
+            FS.FileSystem.Log(JsonSerializer.Serialize(mcOwnershipJsonResponse, new JsonSerializerOptions { WriteIndented=true}));
+            if (mcOwnershipJsonResponse.items == null || mcOwnershipJsonResponse.items.Length < 1) // If doesn't own minecraft, prompt to redeem a giftcard
             {
-                FS.FileSystem.Log(JsonSerializer.Serialize(mcOwnershipJsonResponse, new JsonSerializerOptions { WriteIndented=true}));
                 string giftcode = Cli.Input.Request<string>("Your account doesn't own a copy of Minecraft, redeem a giftcard: ");
                 return await RedeemGiftcard(giftcode, bearer);
             }
@@ -129,7 +132,10 @@ namespace Snipe
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearer);
 
+            Cli.Animatables.Spinner spinner = new Cli.Animatables.Spinner();
             var response = await client.PutAsync($"https://api.minecraftservices.com/productvoucher/:{giftcode}", null);
+            spinner.Cancel();
+            if ((int)response.StatusCode!=200) Cli.Output.ExitError("Failed to redeem giftcard");
             return (int)response.StatusCode==200;
         }
     }
