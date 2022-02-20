@@ -1,4 +1,6 @@
 # List of ideas/bug fixes to be implemented:
+## Refresh bearer before sniping name
+If using Microsoft account, refresh bearer a few minutes before current name drops to ensure valid bearer is in use when sniping
 ## Giftcard sniping
 After logging in with an account which doesn't own Minecraft, prompt the user to enter and redeem a gift code https://mojang-api-docs.netlify.app/needs-auth/redeem-gc.html
 
