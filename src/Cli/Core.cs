@@ -60,6 +60,8 @@ namespace Cli
             
             // get bearer with microsoft credentials
             string bearer = await Snipe.Auth.AuthMicrosoft(account.MicrosoftEmail, account.MicrosoftPassword);
+            //string bearer = authResult.bearer;
+            //bool prename = authResult.prename;
 
             // if bearer not returned, exit
             if (String.IsNullOrEmpty(bearer)) Output.ExitError("Failed to authenticate Microsoft account");
@@ -96,7 +98,6 @@ namespace Cli
         
             return account;
         }
-
         private static async Task<Account> HandleFromFile() {
             var account = FileSystem.GetAccount();
 
