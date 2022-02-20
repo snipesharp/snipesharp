@@ -57,14 +57,36 @@ namespace Snipe
                         var xstsPayloadJsonResponse = JsonSerializer.Deserialize<XboxResponse>
                             (xstsPayloadHttpResponse.Result.Content.ReadAsStringAsync().Result);
 
+                        if (xstsPayloadJsonResponse.DisplayClaims == null)
+                        {
+                            Cli.Output.Error("Microsoft account not linked to an Xbox account");
+                            return null;
+                        }
+                        // Get MC Bearer
+
                         StringContent mcPayloadContent = McPayload.GetContent(McPayload.GenerateMcPayload(xstsPayloadJsonResponse.DisplayClaims.xui[0].uhs, xstsPayloadJsonResponse.Token));
                         HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, "https://api.minecraftservices.com/authentication/login_with_xbox");
                         requestMessage.Content = mcPayloadContent;
-
+                        
                         var mcApiHttpResponse =
                             client.SendAsync(requestMessage).Result.Content.ReadAsStringAsync();
                         var mcApiJsonResponse = JsonSerializer.Deserialize<McApiResponse>
                             (mcApiHttpResponse.Result);
+
+                        // Check if account owns MC
+                        client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", mcApiJsonResponse.access_token);
+
+                        var mcOwnershipHttpResponse
+                            = await client.GetAsync("https://api.minecraftservices.com/entitlements/mcstore");
+                        var mcOwnershipJsonResponse = 
+                            JsonSerializer.Deserialize<McOwnershipResponse>(await mcOwnershipHttpResponse.Content.ReadAsStringAsync());
+
+                        FS.FileSystem.Log(await mcOwnershipHttpResponse.Content.ReadAsStringAsync());
+                        if (mcOwnershipJsonResponse.items[0].name != "game_minecraft")
+                        {
+                            // Doesn't own minecraft
+                        }
 
                         if (!String.IsNullOrEmpty(mcApiJsonResponse.access_token.ToString()) && await AuthWithBearer(mcApiJsonResponse.access_token.ToString())) return mcApiJsonResponse.access_token.ToString();
                     }
@@ -83,7 +105,19 @@ namespace Snipe
             return false;
         }
     }
-    public class McApiResponse
+
+    public class Items
+    {
+        public string name { get; set; }
+        public string signature { get; set; }
+    }
+    public struct McOwnershipResponse
+    {
+        public Items[] items { get; set; }
+        public string signature { get; set; }
+        public string keyId { get; set; }
+    }
+    public struct McApiResponse
     {
         public string username { get; set; }
         public object roles { get; set; }
