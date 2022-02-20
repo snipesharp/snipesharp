@@ -6,6 +6,9 @@ using DataTypes.SetText;
 using Snipe;
 using Utils;
 
+// delete previous log file
+if (FileSystem.LogFileExists()) File.Delete(FileSystem.GetLatestLogPath());
+
 // attempt to fix windows cmd colors
 if (Core.pid != PlatformID.Unix)
 Fix.Windows.FixCmd();
