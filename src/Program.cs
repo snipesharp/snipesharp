@@ -44,7 +44,8 @@ if (namesListAnswer == "Yes")
     for (int i = config.NamesListAutoClean ? 0 : 1; i < names.Count; i++)
     {
         if (authResult.loginMethod == "Microsoft Account") {
-            account.Bearer = await Snipe.Auth.AuthMicrosoft(account.MicrosoftEmail, account.MicrosoftPassword);
+            var result = await Snipe.Auth.AuthMicrosoft(account.MicrosoftEmail, account.MicrosoftPassword);
+            account.Bearer = result.bearer;
             FileSystem.SaveAccount(account);
         }
         await Sniper.WaitForName(names[i], delay, true);

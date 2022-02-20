@@ -42,6 +42,8 @@ namespace Cli
             else if (loginMethod == "Microsoft Account") account = await HandleMicrosoft(account, true);
             else account = await HandleFromFile();
 
+            if (account.Prename) Output.Inform("No name history detected, will perform prename snipe");
+
             // save account
             FileSystem.SaveAccount(account);
 
@@ -59,14 +61,13 @@ namespace Cli
             }
             
             // get bearer with microsoft credentials
-            string bearer = await Snipe.Auth.AuthMicrosoft(account.MicrosoftEmail, account.MicrosoftPassword);
-            //string bearer = authResult.bearer;
-            //bool prename = authResult.prename;
+            var authResult = await Snipe.Auth.AuthMicrosoft(account.MicrosoftEmail, account.MicrosoftPassword);
 
             // if bearer not returned, exit
-            if (String.IsNullOrEmpty(bearer)) Output.ExitError("Failed to authenticate Microsoft account");
+            if (String.IsNullOrEmpty(authResult.bearer)) Output.ExitError("Failed to authenticate Microsoft account");
 
-            account.Bearer = bearer;
+            account.Bearer = authResult.bearer;
+            account.Prename = authResult.prename;
             Output.Success($"Successfully authenticated & updated bearer");
 
             return account;

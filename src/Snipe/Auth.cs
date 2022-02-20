@@ -22,7 +22,7 @@ namespace Snipe
         }
         
         /// <returns>MC Bearer using Microsoft credentials</returns>
-        public static async Task<string> AuthMicrosoft(string email, string password)
+        public static async Task<MsAuthResult> AuthMicrosoft(string email, string password)
         {
             Cli.Animatables.Spinner spinner = new Cli.Animatables.Spinner();
 
@@ -69,7 +69,7 @@ namespace Snipe
                         if (xstsPayloadJsonResponse.DisplayClaims == null)
                         {
                             Cli.Output.Error("Microsoft account not linked to an Xbox account");
-                            return null;
+                            return new MsAuthResult();
                         }
 
                         // Get MC Bearer
@@ -92,9 +92,8 @@ namespace Snipe
                             Cli.Output.ExitError("Account doesn't own Minecraft");
                         }
 
-                        //if (!await AuthWithBearer(mcApiJsonResponse.access_token.ToString()) && ownsMinecraft) return new MsAuthResult{bearer = mcApiJsonResponse.access_token.ToString(), prename = true};
-                        //if (!String.IsNullOrEmpty(mcApiJsonResponse.access_token.ToString())) return new MsAuthResult{bearer = mcApiJsonResponse.access_token.ToString(), prename = false};
-                        if (!String.IsNullOrEmpty(mcApiJsonResponse.access_token.ToString())) return mcApiJsonResponse.access_token.ToString();
+                        if (!await AuthWithBearer(mcApiJsonResponse.access_token.ToString()) && ownsMinecraft) return new MsAuthResult{bearer = mcApiJsonResponse.access_token.ToString(), prename = true};
+                        if (!String.IsNullOrEmpty(mcApiJsonResponse.access_token.ToString())) return new MsAuthResult{bearer = mcApiJsonResponse.access_token.ToString(), prename = false};
                     }
                     else Cli.Output.ExitError("Failed to get access_token");
                 }
@@ -111,7 +110,7 @@ namespace Snipe
                     Cli.Output.Error(error);
                 }
             }
-            return null;
+            return new MsAuthResult();
         }
         // todo
         public static async Task<bool> AuthMojang(string email, string password, string sq1, string sq2, string sq3)
@@ -151,10 +150,10 @@ namespace Snipe
             return (int)response.StatusCode==200;
         }
     }
-        public struct MsAuthResult {
-            public string bearer {get;set;}
-            public bool prename {get;set;}
-        }
+    public struct MsAuthResult {
+        public string bearer {get;set;}
+        public bool prename {get;set;}
+    }
     public class Items
     {
         public string name { get; set; }

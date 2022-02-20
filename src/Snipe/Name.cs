@@ -5,7 +5,7 @@ namespace Snipe
 {
     internal class Name
     {
-        public static async Task<HttpResponseMessage> Change(string name, string bearer, bool prename=false) {
+        public static async Task<HttpResponseMessage> Change(string name, string bearer, bool prename) {
             try
             {
                 // prepare the http packet
