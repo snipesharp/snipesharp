@@ -116,10 +116,18 @@ namespace FS
             return File.Exists(logFile);
         }
 
+        /// <summary>
+        /// appends the given string to the latest.log file
+        /// </summary>
         public static void Log(string toLog)
         {
             if (!Directory.Exists(logsFolder)) Directory.CreateDirectory(logsFolder);
             File.AppendAllText(logFile, $"[{DateTime.Now}] {toLog}");
+        }
+        /// <returns>path to latest.log file</returns>
+        public static string GetLatestLogPath()
+        {
+            return logFile;
         }
     }
 }

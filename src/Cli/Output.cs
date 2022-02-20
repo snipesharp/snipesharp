@@ -59,6 +59,7 @@ namespace Cli {
 
         public static void ExitError(string message){
             Error(message);
+            FS.FileSystem.Log($"ExitError: {message}");
             SetText.DisplayCursor(true);
             Inform("Press any key to exit");
             Console.ReadKey();
