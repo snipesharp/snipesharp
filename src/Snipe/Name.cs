@@ -1,26 +1,40 @@
 ﻿using System.Net.Http.Headers;
+using System.Text.Json;
 
 namespace Snipe
 {
     internal class Name
     {
-        public static async Task<HttpResponseMessage> Change(string name, string bearer) {
-            // prepare the http packet
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer.Trim());
+        public static async Task<HttpResponseMessage> Change(string name, string bearer, bool prename=false) {
+            try
+            {
+                // prepare the http packet
+                var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer.Trim());
 
-            // get response and set packet sent time and reply time
-            string timeSent = $"sent@{DateTime.Now.Hour}h{DateTime.Now.Minute}m{DateTime.Now.Second}s{DateTime.Now.Millisecond}ms";
-            HttpResponseMessage response = await client.PutAsync($"https://api.minecraftservices.com/minecraft/profile/name/{name}", null);
-            string timeRecieved = $"reply@{DateTime.Now.Hour}h{DateTime.Now.Minute}m{DateTime.Now.Second}s{DateTime.Now.Millisecond}ms";
+                StringContent content = null;
+                if (prename) content = new StringContent(JsonSerializer.Serialize(new { profileName = name }));
 
-            // inform the user for the response
-            var responseString = $"({(int)response.StatusCode}) {GetResponseMessage((int)response.StatusCode)}";
-            if (response.IsSuccessStatusCode) Cli.Output.Success($"{responseString} [{timeSent}->{timeRecieved}]");
-            else Cli.Output.Error($"{responseString} [{timeSent}->{timeRecieved}]");
+                // get response and set packet sent time and reply time
+                string timeSent = $"sent@{DateTime.Now.Hour}h{DateTime.Now.Minute}m{DateTime.Now.Second}s{DateTime.Now.Millisecond}ms";
+                HttpResponseMessage response = prename
+                    ? await client.PostAsync($"https://api.minecraftservices.com/minecraft/profile", content)
+                    : await client.PutAsync($"https://api.minecraftservices.com/minecraft/profile/name/{name}", null);
+                string timeRecieved = $"reply@{DateTime.Now.Hour}h{DateTime.Now.Minute}m{DateTime.Now.Second}s{DateTime.Now.Millisecond}ms";
 
-            // return
-            return response;
+                // inform the user for the response
+                var responseString = $"({(int)response.StatusCode}) {GetResponseMessage((int)response.StatusCode)}";
+                if (response.IsSuccessStatusCode) Cli.Output.Success($"{responseString} [{timeSent}->{timeRecieved}]");
+                else Cli.Output.Error($"{responseString} [{timeSent}->{timeRecieved}]");
+
+                // return
+                return response;
+            }
+            catch (Exception ex)
+            {
+                FS.FileSystem.Log($"Crashed while trying to change name: {ex.ToString()}");
+                throw;
+            }
         }
         protected static string GetResponseMessage(int code)
         {
