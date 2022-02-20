@@ -67,6 +67,7 @@ demented
   - All credentials (including Bearer Token) can be edited through account.json
 ### Sniping
 - Features
+  - Giftcard (prename) sniping
   - Snipe custom name
   - Snipe from a custom name list
     - Automatically clean name list of names which were already sniped, can be disabled from [config.json](#configuration-file-locations)
