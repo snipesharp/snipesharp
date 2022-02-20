@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using DataTypes;
+using Cli.Templates;
 
 namespace FS
 {
@@ -41,7 +42,8 @@ namespace FS
             try {
                 if (!Directory.Exists(snipesharpFolder)) CreateSnipesharpFolder();
                 var json = JsonSerializer.Serialize(account, new JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(accountJsonFile, json);
+                var warning = string.Concat(Enumerable.Repeat(Warnings.AccountSafety, 50));
+                File.WriteAllText(warning + accountJsonFile, json);
             } catch (Exception e) { Cli.Output.Error(e.Message); }
         }
 
@@ -72,7 +74,9 @@ namespace FS
         /// <returns>an existing or new account config depending on whether one already exists</returns>
         public static Account GetAccount() {
             if (!AccountFileExists()) return new Account();
-            return JsonSerializer.Deserialize<Account>(File.ReadAllText(accountJsonFile));
+            var allLines = File.ReadAllLines(accountJsonFile).ToList();
+            allLines.RemoveRange(0,50);
+            return JsonSerializer.Deserialize<Account>(String.Join('\n', allLines));
         }
 
         /// <summary>

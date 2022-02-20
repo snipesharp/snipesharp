@@ -53,18 +53,15 @@ await Sniper.WaitForName(name, delay, namesListAnswer == "Yes");
 Sniper.Shoot(config, account, name);
 
 // snipe more if names list is in use
-if (namesListAnswer == "Yes")
-{
+if (namesListAnswer == "Yes") {
     // remove sniped name from list and update the file
-    if (config.NamesListAutoClean)
-    {
+    if (config.NamesListAutoClean) {
         names = FileSystem.GetNames(); // update from file before updating to file
         names.Remove(name);
     }
     FileSystem.SaveNames(names);
 
-    for (int i = config.NamesListAutoClean ? 0 : 1; i < names.Count; i++)
-    {
+    for (int i = config.NamesListAutoClean ? 0 : 1; i < names.Count; i++) {
         if (authResult.loginMethod == "Microsoft Account") {
             account.Bearer = await Snipe.Auth.AuthMicrosoft(account.MicrosoftEmail, account.MicrosoftPassword);
             FileSystem.SaveAccount(account);
@@ -73,8 +70,7 @@ if (namesListAnswer == "Yes")
         Sniper.Shoot(config, account, names[i]);
 
         // remove sniped name from list and update the file
-        if (config.NamesListAutoClean)
-        {
+        if (config.NamesListAutoClean) {
             names = FileSystem.GetNames();
             names.Remove(names[i]);
             i--;
