@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using DataTypes;
+using DataTypes.SetText;
 
 namespace FS
 {
@@ -57,26 +58,50 @@ namespace FS
                 if (!Directory.Exists(snipesharpFolder)) CreateSnipesharpFolder();
                 var json = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(configJsonFile, json);
-            } catch (Exception e) { Cli.Output.Error(e.Message); }
+            } catch (Exception e) { Cli.Output.ExitError(e.Message); }
         }
 
         /// <returns>a string array of names in the names.json file</returns>
         public static List<string> GetNames()
         {
-            if (!NamesFileExists()) return new List<string>();
-            return JsonSerializer.Deserialize<List<string>>(File.ReadAllText(namesJsonFile));
+            try
+            {
+                if (!NamesFileExists()) return new List<string>();
+                return JsonSerializer.Deserialize<List<string>>(File.ReadAllText(namesJsonFile));
+            }
+            catch (JsonException e)
+            {
+                Cli.Output.Error($"Error while reading {SetText.Red}names.json{SetText.ResetAll}: Invalid value at line {e.LineNumber + 1}, column {e.BytePositionInLine}");
+                return new List<string>();
+            }
         }
 
         /// <returns>an existing or new config depending on whether one already exists</returns>
         public static Config GetConfig() {
-            if (!ConfigFileExists()) return new Config();
-            return JsonSerializer.Deserialize<Config>(File.ReadAllText(configJsonFile));
+            try
+            {
+                if (!ConfigFileExists()) return new Config();
+                return JsonSerializer.Deserialize<Config>(File.ReadAllText(configJsonFile));
+            }
+            catch (JsonException e)
+            {
+                Cli.Output.Error($"Error while reading {SetText.Red}config.json{SetText.ResetAll}: Invalid value at line {e.LineNumber + 1}, column {e.BytePositionInLine}");
+                return new Config();
+            }
         }
 
         /// <returns>an existing or new account config depending on whether one already exists</returns>
         public static Account GetAccount() {
-            if (!AccountFileExists()) return new Account();
-            return JsonSerializer.Deserialize<Account>(File.ReadAllText(accountJsonFile));
+            try
+            {
+                if (!AccountFileExists()) return new Account();
+                return JsonSerializer.Deserialize<Account>(File.ReadAllText(accountJsonFile));
+            }
+            catch (JsonException e)
+            {
+                Cli.Output.Error($"Error while reading {SetText.Red}account.json{SetText.ResetAll}: Invalid value at line {e.LineNumber + 1}, column {e.BytePositionInLine}");
+                return new Account();
+            }
         }
 
         /// <summary>

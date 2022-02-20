@@ -6,19 +6,15 @@ namespace Snipe
     public class Auth
     {
         public static async Task<bool> AuthWithBearer(string bearer) {
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearer.Trim());
-            HttpResponseMessage response = await client.GetAsync("https://api.minecraftservices.com/minecraft/profile/namechange");
-            HttpContent content = response.Content;
-
-            // Check if account owns MC
+            Cli.Animatables.Spinner spinner = new Cli.Animatables.Spinner();
             if (!await OwnsMinecraft(bearer))
             {
+                spinner.Cancel();
                 Cli.Output.ExitError("Account doesn't own Minecraft");
+                return false;
             }
-
-            if (response.IsSuccessStatusCode) return true;
-            else return false;
+            spinner.Cancel();
+            return true;
         }
         
         /// <returns>MC Bearer using Microsoft credentials</returns>
