@@ -2,6 +2,7 @@
 ## Giftcard sniping
 Giftcard sniping
 Create profile with giftcard: https://mojang-api-docs.netlify.app/needs-auth/create-profile.html
+
 Redeem giftcard: https://mojang-api-docs.netlify.app/needs-auth/redeem-gc.html
 ## Check if account owns minecraft
 https://mojang-api-docs.netlify.app/needs-auth/check-if-owns-minecraft.html
