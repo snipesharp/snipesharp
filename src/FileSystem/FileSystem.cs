@@ -8,9 +8,13 @@ namespace FS
         static string snipesharpFolder = Cli.Core.pid != PlatformID.Unix 
             ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\.snipesharp\" 
             : Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"/.snipesharp/";
+        static string logsFolder = Cli.Core.pid != PlatformID.Unix
+            ? snipesharpFolder + @"\logs\"
+            : snipesharpFolder + @"/logs/";
         static string accountJsonFile = snipesharpFolder + "account.json";
         static string configJsonFile = snipesharpFolder + "config.json";
         static string namesJsonFile = snipesharpFolder + "names.json";
+        static string logFile = logsFolder + @"latest.log";
 
         /// <summary>
         /// Creates the .snipesharp folder and informs the user about it
@@ -95,9 +99,23 @@ namespace FS
         /// <summary>
         /// Checks whether the config.json file exists in the snipesharp folder
         /// </summary>
-        private static bool ConfigFileExists() {
+        public static bool ConfigFileExists() {
             if (!Directory.Exists(snipesharpFolder)) return false;
             return File.Exists(configJsonFile);
+        }
+        /// <summary>
+        /// Checks whether the latest.log file exists in the snipesharp folder
+        /// </summary>
+        public static bool LogFileExists()
+        {
+            if (!Directory.Exists(logsFolder)) return false;
+            return File.Exists(logFile);
+        }
+
+        public static void Log(string toLog)
+        {
+            if (!Directory.Exists(logsFolder)) Directory.CreateDirectory(logsFolder);
+            File.AppendAllText(logFile, $"[{DateTime.Now}] {toLog}");
         }
     }
 }
