@@ -1,6 +1,10 @@
 # List of ideas/bug fixes to be implemented:
 ## Giftcard sniping
 Giftcard sniping
+Create profile with giftcard: https://mojang-api-docs.netlify.app/needs-auth/create-profile.html
+Redeem giftcard: https://mojang-api-docs.netlify.app/needs-auth/redeem-gc.html
+## Check if account owns minecraft
+https://mojang-api-docs.netlify.app/needs-auth/check-if-owns-minecraft.html
 ## account.json screen viewing protection
 Hide account credentials below line 50 and fill the first 50 lines with a warning and empty space.
 Example:
