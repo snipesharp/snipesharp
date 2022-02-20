@@ -6,16 +6,17 @@ using DataTypes.SetText;
 using Snipe;
 using Utils;
 
-Config config = Initialize();
+Initialize();
 
 // let the user authenticate
 var authResult = await Core.Auth();
 var account = authResult.account;
+Config config = FileSystem.GetConfig().Fix();
+if (account.Prename) config.sendPacketsCount = 6;
 
 // set name
 string namesListAnswer = "No";
-var names = new List<string>();
-try { names = FileSystem.GetNames(); } catch(System.Text.Json.JsonException e) { Output.Error($"Error while reading {SetText.Red}names.json{SetText.ResetAll}: Invalid value at line {e.LineNumber+1}, column {e.BytePositionInLine}"); }
+var names = FileSystem.GetNames();
 if (names.Count > 0) namesListAnswer = new SelectionPrompt("Found names in names.json, use the list?", "Yes", "No").result;
 if (namesListAnswer == "Yes") names = FileSystem.GetNames();
 string name = namesListAnswer == "No" ? Input.Request<string>("Name to snipe: ") : names[0];
@@ -27,7 +28,8 @@ var suggestedOffset = await Offset.CalcSuggested();
 long delay = Input.Request<long>($"Offset in ms [suggested: {suggestedOffset}ms]: ");
 
 // wait for name to drop then shoot
-await Sniper.WaitForName(name, delay, namesListAnswer == "Yes");
+// another implementation: if (delay <= 300000) Sniper.Reauthenticate(account, delay - 300000); // async but not awaited
+await Sniper.WaitForName(name, delay, authResult.loginMethod, account, namesListAnswer == "Yes");
 Sniper.Shoot(config, account, name);
 
 // snipe more if names list is in use
@@ -39,13 +41,9 @@ if (namesListAnswer == "Yes") {
     }
     FileSystem.SaveNames(names);
 
-    for (int i = config.NamesListAutoClean ? 0 : 1; i < names.Count; i++) {
-        if (authResult.loginMethod == "Microsoft Account") {
-            var result = await Snipe.Auth.AuthMicrosoft(account.MicrosoftEmail, account.MicrosoftPassword);
-            account.Bearer = result.bearer;
-            FileSystem.SaveAccount(account);
-        }
-        await Sniper.WaitForName(names[i], delay, true);
+    for (int i = config.NamesListAutoClean ? 0 : 1; i < names.Count; i++)
+    {
+        await Sniper.WaitForName(names[i], delay, authResult.loginMethod, account, true);
         Sniper.Shoot(config, account, names[i]);
 
         // remove sniped name from list and update the file
@@ -62,7 +60,7 @@ if (namesListAnswer == "Yes") {
 Output.Inform("Finished sniping, press any key to exit");
 Console.ReadKey();
 
-static Config Initialize() {
+static void Initialize() {
     // delete previous log file
     if (FileSystem.LogFileExists()) File.Delete(FileSystem.GetLatestLogPath());
 
@@ -88,7 +86,5 @@ static Config Initialize() {
     if (!FileSystem.NamesFileExists()) FileSystem.SaveNames(new List<string>());
 
     // create example names file
-    FileSystem.SaveNames(new List<string> { "example1", "example2" }, "names.example.json");
-
-    return config;
+    FileSystem.SaveNames(new List<string> { "example1", "example2", "example3" }, "names.example.json");
 }

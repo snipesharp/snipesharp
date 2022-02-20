@@ -42,7 +42,7 @@ namespace Cli
             else if (loginMethod == "Microsoft Account") account = await HandleMicrosoft(account, true);
             else account = await HandleFromFile();
 
-            if (account.Prename) Output.Inform("No name history detected, will perform prename snipe");
+            if (account.Prename) Output.Inform("No name history detected, will perform prename snipe and send 6 packets instead of 3");
 
             // save account
             FileSystem.SaveAccount(account);
@@ -86,12 +86,8 @@ namespace Cli
             // prompt for bearer token
             if (newBearer) account.Bearer = Input.Request<string>(Requests.Bearer);
 
-            var spinnerAuth = new Spinner();
-
             // exit if invalid bearer
             if(!await Snipe.Auth.AuthWithBearer(account.Bearer)) Output.ExitError("Failed to authenticate using bearer");
-
-            spinnerAuth.Cancel();
 
             // validate the token
             Output.Warn("Bearer tokens reset every 24 hours & on login, sniping will fail if the bearer has expired at snipe time!");
