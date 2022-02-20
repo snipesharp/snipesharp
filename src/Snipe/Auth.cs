@@ -114,8 +114,9 @@ namespace Snipe
             var mcOwnershipJsonResponse =
                 JsonSerializer.Deserialize<McOwnershipResponse>(await mcOwnershipHttpResponse.Content.ReadAsStringAsync());
 
-            if (mcOwnershipJsonResponse.items[0].name != "game_minecraft") // If doesn't own minecraft, prompt to redeem a giftcard
+            if (mcOwnershipJsonResponse.items[0].name != "game_minecraft" && mcOwnershipJsonResponse.items[0].name != "product_minecraft") // If doesn't own minecraft, prompt to redeem a giftcard
             {
+                FS.FileSystem.Log(JsonSerializer.Serialize(mcOwnershipJsonResponse, new JsonSerializerOptions { WriteIndented=true}));
                 string giftcode = Cli.Input.Request<string>("Your account doesn't own a copy of Minecraft, redeem a giftcard: ");
                 return await RedeemGiftcard(giftcode, bearer);
             }
