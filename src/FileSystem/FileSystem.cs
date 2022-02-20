@@ -48,7 +48,7 @@ namespace FS
                 if (!Directory.Exists(snipesharpFolder)) CreateSnipesharpFolder();
                 var json = JsonSerializer.Serialize(account, new JsonSerializerOptions { WriteIndented = true });
                 var warning = string.Concat(Enumerable.Repeat(Warnings.AccountSafety, 50));
-                File.WriteAllText(warning + accountJsonFile, json);
+                File.WriteAllText(accountJsonFile, warning + json);
             } catch (Exception e) { Cli.Output.Error(e.Message); }
         }
 
@@ -97,9 +97,9 @@ namespace FS
             try
             {
                 if (!AccountFileExists()) return new Account();
-                var allLines = File.ReadAllLines(accountJsonFile).ToList();
-                allLines.RemoveRange(0,50);
-                return JsonSerializer.Deserialize<Account>(String.Join('\n', allLines));
+                var fileContents = File.ReadAllText(accountJsonFile);
+                var splitted = fileContents.Split(new[] { '{' }, 2);
+                return JsonSerializer.Deserialize<Account>("{"+splitted[1]);
             }
             catch (JsonException e)
             {

@@ -50,6 +50,7 @@ namespace Cli {
         }
 
         public static void Error(string message){
+            FS.FileSystem.Log($"Error: {message}");
             Console.WriteLine($"{SetText.Red}[error]{SetText.ResetAll} {message}");
         }
         public static void Success(string message)
