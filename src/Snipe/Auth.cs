@@ -10,6 +10,13 @@ namespace Snipe
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearer.Trim());
             HttpResponseMessage response = await client.GetAsync("https://api.minecraftservices.com/minecraft/profile/namechange");
             HttpContent content = response.Content;
+
+            // Check if account owns MC
+            if (!await OwnsMinecraft(bearer))
+            {
+                Cli.Output.ExitError("Account doesn't own Minecraft");
+            }
+
             if (response.IsSuccessStatusCode) return true;
             else return false;
         }
@@ -74,18 +81,9 @@ namespace Snipe
                             (mcApiHttpResponse.Result);
 
                         // Check if account owns MC
-                        client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", mcApiJsonResponse.access_token);
-
-                        var mcOwnershipHttpResponse
-                            = await client.GetAsync("https://api.minecraftservices.com/entitlements/mcstore");
-                        var mcOwnershipJsonResponse = 
-                            JsonSerializer.Deserialize<McOwnershipResponse>(await mcOwnershipHttpResponse.Content.ReadAsStringAsync());
-
-                        FS.FileSystem.Log(await mcOwnershipHttpResponse.Content.ReadAsStringAsync());
-                        if (mcOwnershipJsonResponse.items[0].name != "game_minecraft")
+                        if (!await OwnsMinecraft(mcApiJsonResponse.access_token))
                         {
-                            // Doesn't own minecraft
+                            Cli.Output.ExitError("Account doesn't own Minecraft");
                         }
 
                         if (!String.IsNullOrEmpty(mcApiJsonResponse.access_token.ToString()) && await AuthWithBearer(mcApiJsonResponse.access_token.ToString())) return mcApiJsonResponse.access_token.ToString();
@@ -103,6 +101,35 @@ namespace Snipe
         public static async Task<bool> AuthMojang(string email, string password, string sq1, string sq2, string sq3)
         {
             return false;
+        }
+        public async static Task<bool> OwnsMinecraft(string bearer)
+        {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0");
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearer);
+
+            var mcOwnershipHttpResponse
+                = await client.GetAsync("https://api.minecraftservices.com/entitlements/mcstore");
+            var mcOwnershipJsonResponse =
+                JsonSerializer.Deserialize<McOwnershipResponse>(await mcOwnershipHttpResponse.Content.ReadAsStringAsync());
+
+            if (mcOwnershipJsonResponse.items[0].name != "game_minecraft") // If doesn't own minecraft, prompt to redeem a giftcard
+            {
+                string giftcode = Cli.Input.Request<string>("Your account doesn't own a copy of Minecraft, redeem a giftcard: ");
+                return await RedeemGiftcard(giftcode, bearer);
+            }
+            return true;
+        }
+        public async static Task<bool> RedeemGiftcard(string giftcode, string bearer)
+        {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0");
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearer);
+
+            var response = await client.PutAsync($"https://api.minecraftservices.com/productvoucher/:{giftcode}", null);
+            return (int)response.StatusCode==200;
         }
     }
 
