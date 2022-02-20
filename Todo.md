@@ -1,9 +1,9 @@
 # List of ideas/bug fixes to be implemented:
 ## Giftcard sniping
-Giftcard sniping
-Create profile with giftcard: https://mojang-api-docs.netlify.app/needs-auth/create-profile.html
+After logging in with an account which doesn't own Minecraft, prompt the user to enter and redeem a gift code https://mojang-api-docs.netlify.app/needs-auth/redeem-gc.html
 
-Redeem giftcard: https://mojang-api-docs.netlify.app/needs-auth/redeem-gc.html
+If or after the user has redeemed copy of Minecraft and has not set a username, prename sniping is available https://mojang-api-docs.netlify.app/needs-auth/create-profile.html
+
 ## Check if account owns minecraft
 https://mojang-api-docs.netlify.app/needs-auth/check-if-owns-minecraft.html
 ## account.json screen viewing protection
