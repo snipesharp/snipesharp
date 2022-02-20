@@ -97,9 +97,9 @@ namespace FS
             try
             {
                 if (!AccountFileExists()) return new Account();
-                var allLines = File.ReadAllLines(accountJsonFile).ToList();
-                allLines.RemoveRange(0,50);
-                return JsonSerializer.Deserialize<Account>(String.Join('\n', allLines));
+                var parts = File.ReadAllText(accountJsonFile).Split('{').ToList();
+                parts.RemoveAt(0);
+                return JsonSerializer.Deserialize<Account>(String.Join('{', parts));
             }
             catch (JsonException e)
             {
