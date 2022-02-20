@@ -57,17 +57,14 @@ namespace Cli
                 account.MicrosoftEmail = Input.Request<string>(Requests.MicrosoftEmail, validator: Validators.Credentials.Email);
                 account.MicrosoftPassword = Input.Request<string>(Requests.MicrosoftPassword, hidden: true);
             }
-
-            var spinnerAuth = new Spinner();
             
             // get bearer with microsoft credentials
-            string bearerFromMsAuth = await Snipe.Auth.AuthMicrosoft(account.MicrosoftEmail, account.MicrosoftPassword);
+            string bearer = await Snipe.Auth.AuthMicrosoft(account.MicrosoftEmail, account.MicrosoftPassword);
 
             // if bearer not returned, exit
-            if (String.IsNullOrEmpty(bearerFromMsAuth)) Output.ExitError("Failed to authenticate Microsoft account"); spinnerAuth.Cancel();
+            if (String.IsNullOrEmpty(bearer)) Output.ExitError("Failed to authenticate Microsoft account");
 
-            spinnerAuth.Cancel();
-            account.Bearer = bearerFromMsAuth;
+            account.Bearer = bearer;
             Output.Success($"Successfully authenticated & updated bearer");
 
             return account;
