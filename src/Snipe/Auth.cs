@@ -71,6 +71,7 @@ namespace Snipe
                             Cli.Output.Error("Microsoft account not linked to an Xbox account");
                             return null;
                         }
+
                         // Get MC Bearer
 
                         StringContent mcPayloadContent = McPayload.GetContent(McPayload.GenerateMcPayload(xstsPayloadJsonResponse.DisplayClaims.xui[0].uhs, xstsPayloadJsonResponse.Token));
@@ -83,19 +84,31 @@ namespace Snipe
                             (mcApiHttpResponse.Result);
 
                         spinner.Cancel();
+
                         // Check if account owns MC
-                        if (!await OwnsMinecraft(mcApiJsonResponse.access_token))
+                        bool ownsMinecraft = await OwnsMinecraft(mcApiJsonResponse.access_token);
+                        if (!ownsMinecraft)
                         {
                             Cli.Output.ExitError("Account doesn't own Minecraft");
                         }
 
-                        if (!String.IsNullOrEmpty(mcApiJsonResponse.access_token.ToString()) && await AuthWithBearer(mcApiJsonResponse.access_token.ToString())) return mcApiJsonResponse.access_token.ToString();
+                        //if (!await AuthWithBearer(mcApiJsonResponse.access_token.ToString()) && ownsMinecraft) return new MsAuthResult{bearer = mcApiJsonResponse.access_token.ToString(), prename = true};
+                        //if (!String.IsNullOrEmpty(mcApiJsonResponse.access_token.ToString())) return new MsAuthResult{bearer = mcApiJsonResponse.access_token.ToString(), prename = false};
+                        if (!String.IsNullOrEmpty(mcApiJsonResponse.access_token.ToString())) return mcApiJsonResponse.access_token.ToString();
                     }
                     else Cli.Output.ExitError("Failed to get access_token");
                 }
                 else
                 {
-                    Cli.Output.Error($"Failed to login possibly due to Microsoft suspecting suspicious activities. Try following this tutorial to fix this: {DataTypes.SetText.SetText.Cyan}https://github.com/snipesharp/snipesharp/wiki/How-to-fix-failed-Microsoft-login {DataTypes.SetText.SetText.ResetAll}");
+                    spinner.Cancel();
+                    string result = await postHttpResponse.Content.ReadAsStringAsync();
+                    string error = "";
+
+                    if (result.Contains("That Microsoft account doesn\\'t exist")) error = "That Microsoft account doesn't exist";
+                    if (result.Contains("incorrect")) error = "Wrong password";
+                    if (!result.Contains("incorrect") && !result.Contains("That Microsoft account doesn\\'t exist")) error = $"Failed due to Microsoft suspecting suspicious activities. Try following this tutorial to fix this: {DataTypes.SetText.SetText.Cyan}https://github.com/snipesharp/snipesharp/wiki/How-to-fix-failed-Microsoft-login {DataTypes.SetText.SetText.ResetAll}";
+                    
+                    Cli.Output.Error(error);
                 }
             }
             return null;
@@ -117,7 +130,6 @@ namespace Snipe
             var mcOwnershipJsonResponse =
                 JsonSerializer.Deserialize<McOwnershipResponse>(await mcOwnershipHttpResponse.Content.ReadAsStringAsync());
 
-            FS.FileSystem.Log(JsonSerializer.Serialize(mcOwnershipJsonResponse, new JsonSerializerOptions { WriteIndented=true}));
             if (mcOwnershipJsonResponse.items == null || mcOwnershipJsonResponse.items.Length < 1) // If doesn't own minecraft, prompt to redeem a giftcard
             {
                 string giftcode = Cli.Input.Request<string>("Your account doesn't own a copy of Minecraft, redeem a giftcard: ");
@@ -139,7 +151,10 @@ namespace Snipe
             return (int)response.StatusCode==200;
         }
     }
-
+        public struct MsAuthResult {
+            public string bearer {get;set;}
+            public bool prename {get;set;}
+        }
     public class Items
     {
         public string name { get; set; }
