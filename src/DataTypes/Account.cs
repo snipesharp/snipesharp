@@ -4,6 +4,7 @@ namespace DataTypes
 {
     public struct Account
     {
+        public bool Prename { get; set; }
         public string Bearer { get; set; }
         public string MojangEmail { get; set; }
         public string MojangPassword { get; set; }

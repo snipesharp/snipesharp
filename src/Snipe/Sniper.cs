@@ -12,7 +12,7 @@ namespace Snipe
             var success = false;
             for (int i = 0; (i < config.sendPacketsCount && !success); i++)
             {
-                success = (int)Name.Change(name, account.Bearer).Result.StatusCode == 200;
+                success = (int)Name.Change(name, account.Bearer, account.Prename).Result.StatusCode == 200;
                 Thread.Sleep(config.PacketSpreadMs);
             }
 
