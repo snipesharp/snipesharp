@@ -2,6 +2,7 @@ using FS;
 using DataTypes;
 using Cli.Templates;
 using Cli.Animatables;
+using DataTypes.Auth;
 
 namespace Cli
 {
@@ -23,104 +24,105 @@ namespace Cli
             return parsedArguments;
         }
 
-        public struct AuthResult
-        {
-            public Account account;
-            public string loginMethod;
-        }
-
         public static async Task<AuthResult> Auth(){
             // display prompt
             string loginMethod = FileSystem.AccountFileExists()
-                ? new SelectionPrompt("Login method:", "From previous session", "Bearer Token", "Microsoft Account", "Mojang Account").result
-                : new SelectionPrompt("Login method:", "Bearer Token", "Microsoft Account", "Mojang Account").result;
+                ? new SelectionPrompt("Login method:", 
+                    TAuth.AuthOptions.PreviousSession,
+                    TAuth.AuthOptions.BearerToken,
+                    TAuth.AuthOptions.Microsoft
+                ).result
+                : new SelectionPrompt("Login method:", 
+                    TAuth.AuthOptions.BearerToken,
+                    TAuth.AuthOptions.Microsoft
+                ).result;
  
             // obtain login info based on login method choice
             Account account = FileSystem.AccountFileExists() ? FileSystem.GetAccount() : new Account();
-            if (loginMethod == "Bearer Token") account = await HandleBearer(account, true);
-            else if (loginMethod == "Mojang Account") account = await HandleMojang(account, true);
-            else if (loginMethod == "Microsoft Account") account = await HandleMicrosoft(account, true);
-            else
-            {
+            if (loginMethod == TAuth.AuthOptions.BearerToken) account = await HandleBearer(account, true);
+            else if (loginMethod == TAuth.AuthOptions.Microsoft) account = await HandleMicrosoft(account, true);
+            else {
                 var handleFromFileResult = await HandleFromFile();
                 account = handleFromFileResult.Account;
-                if (!String.IsNullOrEmpty(loginMethod)) loginMethod = handleFromFileResult.Choice;
+                loginMethod = handleFromFileResult.Choice;
             }
 
-            if (account.Prename) Output.Inform("No name history detected, will perform prename snipe and send 6 packets instead of 3");
-
-            // save account
+            // save account and return
             FileSystem.SaveAccount(account);
-
             return new AuthResult { account = account, loginMethod = loginMethod };
         }
 
         private static async Task<Account> HandleMicrosoft(Account account, bool newLogin=false){
             // warn about 2fa
-            Output.Warn("Make sure 2 Factor Authentication (2FA) is turned off in your Microsoft account settings");
+            Output.Warn(TAuth.AuthInforms.Warn2FA);
 
             // get new credentials
             if (newLogin) {
-                account.MicrosoftEmail = Input.Request<string>(Requests.MicrosoftEmail, validator: Validators.Credentials.Email);
-                account.MicrosoftPassword = Input.Request<string>(Requests.MicrosoftPassword, hidden: true);
+                account.MicrosoftEmail = Input.Request<string>(
+                    TRequests.MicrosoftEmail, 
+                    validator: Validators.Credentials.Email
+                );
+                account.MicrosoftPassword = Input.Request<string>(
+                    TRequests.MicrosoftPassword,
+                    hidden: true
+                );
             }
             
             // get bearer with microsoft credentials
             var authResult = await Snipe.Auth.AuthMicrosoft(account.MicrosoftEmail, account.MicrosoftPassword);
 
             // if bearer not returned, exit
-            if (String.IsNullOrEmpty(authResult.bearer)) Output.ExitError("Failed to authenticate Microsoft account");
+            if (String.IsNullOrEmpty(authResult.bearer)) Output.ExitError(TAuth.AuthInforms.FailedMicrosoft);
 
             account.Bearer = authResult.bearer;
             account.Prename = authResult.prename;
-            Output.Success($"Successfully authenticated & updated bearer");
+            Output.Success(TAuth.AuthInforms.SuccessAuth);
 
             return account;
         }
-        private static async Task<Account> HandleMojang(Account account, bool newLogin = false) {
-            if (newLogin) {
-                account.MojangEmail = Input.Request<string>(Requests.MojangEmail, validator: Validators.Credentials.Email);
-                account.MojangPassword = Input.Request<string>(Requests.MojangPassword, hidden: true);
-            }
 
-            // todo, actual async stuff here
-            Output.Error($"Not authenticated (Mojang login not implemented)");
-            return account;
-        }
         private static async Task<Account> HandleBearer(Account account, bool newBearer=false){
             // prompt for bearer token
-            if (newBearer) account.Bearer = Input.Request<string>(Requests.Bearer);
+            if (newBearer) account.Bearer = Input.Request<string>(TRequests.Bearer);
 
             // exit if invalid bearer
-            if(!await Snipe.Auth.AuthWithBearer(account.Bearer)) Output.ExitError("Failed to authenticate using bearer");
+            if(!await Snipe.Auth.AuthWithBearer(account.Bearer)) Output.ExitError(TAuth.AuthInforms.FailedBearer);
 
             // validate the token
-            Output.Warn("Bearer tokens reset every 24 hours & on login, sniping will fail if the bearer has expired at snipe time!");
-            Output.Success($"Successfully authenticated");
+            Output.Warn(TAuth.AuthInforms.WarnBearer);
+            Output.Success(TAuth.AuthInforms.SuccessAuth);
         
             return account;
         }
+
         private static async Task<HandleFromFileResult> HandleFromFile() {
             var account = FileSystem.GetAccount();
 
+            // determine available methods
             List<string> availableMethods = new List<string>();
-            if (!String.IsNullOrEmpty(account.Bearer)) availableMethods.Add("Bearer Token");
-            if (!String.IsNullOrEmpty(account.MicrosoftPassword) && !String.IsNullOrEmpty(account.MicrosoftEmail)) availableMethods.Add("Microsoft Account");
-            if (!String.IsNullOrEmpty(account.MojangPassword) && !String.IsNullOrEmpty(account.MojangEmail)) availableMethods.Add("Mojang Account");
+            if (!String.IsNullOrEmpty(account.Bearer))
+                availableMethods.Add(TAuth.AuthOptions.BearerToken);
+            if (
+                !String.IsNullOrEmpty(account.MicrosoftPassword) && 
+                !String.IsNullOrEmpty(account.MicrosoftEmail)
+            ) availableMethods.Add(TAuth.AuthOptions.Microsoft);
 
-            string choice = "";
-            if (availableMethods.Count > 1) choice = new SelectionPrompt("More than one login method previously used, choose one:", availableMethods.ToArray()).result;
-            else choice = availableMethods[0];
+            // determine final auth method
+            string choice = availableMethods.Count > 1
+                ? new SelectionPrompt(
+                    TAuth.AuthInforms.ManyLoginMethods,
+                    availableMethods.ToArray()).result
+                : availableMethods[0];
 
             // authenticate the chosen method
-            if (choice == "Bearer Token") account = await HandleBearer(account);
-            if (choice == "Mojang Account") account = await HandleMojang(account);
-            if (choice == "Microsoft Account") account = await HandleMicrosoft(account);
+            if (choice == TAuth.AuthOptions.BearerToken) account = await HandleBearer(account);
+            if (choice == TAuth.AuthOptions.Microsoft) account = await HandleMicrosoft(account);
 
             return new HandleFromFileResult { Account = account, Choice = choice };
         }
-        private struct HandleFromFileResult
-        {
+
+        // return type of handlefromFile
+        private struct HandleFromFileResult {
             public Account Account { get; set; }
             public string Choice { get; set; }
         }

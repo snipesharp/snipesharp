@@ -5,7 +5,7 @@ namespace Fix
     public class TerminateHandler
     {
         // makes it so that the console cursor appears
-        // after snipe craft is closed
+        // after snipesharp is closed
         public static void FixCursor(){
             Console.CancelKeyPress += (s, ev) =>
             {

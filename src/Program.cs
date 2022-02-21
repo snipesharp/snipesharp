@@ -1,57 +1,61 @@
 ﻿using FS;
 using Cli;
-using Cli.Animatables;
-using DataTypes;
-using DataTypes.SetText;
-using Snipe;
 using Utils;
+using Snipe;
+using DataTypes;
+using Cli.Templates;
+using Cli.Animatables;
+using DataTypes.SetText;
 
-Initialize();
+// prepare everything and welcome the user
+Config config = Initialize();
 
 // let the user authenticate
 var authResult = await Core.Auth();
-var account = authResult.account;
-Config config = FileSystem.GetConfig().Fix();
-if (account.Prename) config.sendPacketsCount = 6;
+Account account = authResult.account;
+String loginMethod = authResult.loginMethod;
 
-// set name
-string namesListAnswer = "No";
-var names = FileSystem.GetNames();
-if (names.Count > 0) namesListAnswer = new SelectionPrompt("Found names in names.json, use the list?", "Yes", "No").result;
-if (namesListAnswer == "Yes") names = FileSystem.GetNames();
-string name = namesListAnswer == "No" ? Input.Request<string>("Name to snipe: ") : names[0];
+// handle prename account and change config (runtime only)
+if (account.Prename) {
+    config.sendPacketsCount = 6;
+    Output.Inform(TAuth.AuthInforms.NoNameHistory);
+}
 
-// calculate suggested offset
+// handle names.json file
+var useNamesList = false;
+var namesList = FileSystem.GetNames();
+if (namesList.Count > 0) useNamesList = Convert.ToBoolean(
+    new SelectionPrompt("Found names in names.json, use the list?", "Yes", "No").answerIndex);
+
+// set name to either first of list or prompted
+string name = !useNamesList ? Input.Request<string>("Name to snipe: ") : namesList[0];
+
+// prompt for delay (offset)
 var suggestedOffset = await Offset.CalcSuggested();
-
-// require initial information
 long delay = Input.Request<long>($"Offset in ms [suggested: {suggestedOffset}ms]: ");
 
 // wait for name to drop then shoot
-await Sniper.WaitForName(name, delay, account, authResult.loginMethod, namesListAnswer == "Yes");
+await Sniper.WaitForName(name, delay, account, authResult.loginMethod, useNamesList);
 Sniper.Shoot(config, account, name);
 
 // snipe more if names list is in use
-if (namesListAnswer == "Yes") {
+if (useNamesList) {
     // remove sniped name from list and update the file
     if (config.NamesListAutoClean) {
-        names = FileSystem.GetNames(); // update from file before updating to file
-        names.Remove(name);
+        namesList.Remove(name);
+        FileSystem.SaveNames(namesList);
     }
-    FileSystem.SaveNames(names);
 
-    for (int i = config.NamesListAutoClean ? 0 : 1; i < names.Count; i++)
-    {
-        await Sniper.WaitForName(names[i], delay, account, authResult.loginMethod, true);
-        Sniper.Shoot(config, account, names[i]);
+    for (int i = config.NamesListAutoClean ? 0 : 1; i < namesList.Count; i++) {
+        await Sniper.WaitForName(namesList[i], delay, account, authResult.loginMethod, true);
+        Sniper.Shoot(config, account, namesList[i]);
 
         // remove sniped name from list and update the file
         if (config.NamesListAutoClean) {
-            names = FileSystem.GetNames();
-            names.Remove(names[i]);
-            i--;
+            namesList = FileSystem.GetNames();
+            namesList.Remove(namesList[i--]);
         }
-        FileSystem.SaveNames(names);
+        FileSystem.SaveNames(namesList);
     }
 }
 
@@ -59,9 +63,9 @@ if (namesListAnswer == "Yes") {
 Output.Inform("Finished sniping, press any key to exit");
 Console.ReadKey();
 
-static void Initialize() {
+static Config Initialize() {
     // delete previous log file
-    if (FileSystem.LogFileExists()) File.Delete(FileSystem.GetLatestLogPath());
+    if (FileSystem.LogFileExists()) File.Delete(FileSystem.logFile);
 
     // attempt to fix windows cmd colors
     if (Core.pid != PlatformID.Unix)
@@ -78,7 +82,7 @@ static void Initialize() {
     Output.PrintLogo();
 
     // create and load config
-    Config config = FileSystem.GetConfig().Fix();
+    Config config = FileSystem.GetConfig().Prepare();
     FileSystem.SaveConfig(config);
 
     // create and load name list
@@ -86,4 +90,6 @@ static void Initialize() {
 
     // create example names file
     FileSystem.SaveNames(new List<string> { "example1", "example2", "example3" }, "names.example.json");
+
+    return config;
 }

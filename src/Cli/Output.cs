@@ -1,3 +1,4 @@
+using Cli.Templates;
 using StringExtensions;
 using DataTypes.SetText;
 
@@ -53,17 +54,15 @@ namespace Cli {
             FS.FileSystem.Log($"Error: {message}");
             Console.WriteLine($"{SetText.Red}[error]{SetText.ResetAll} {message}");
         }
-        public static void Success(string message)
-        {
+        public static void Success(string message){
             Console.WriteLine($"{SetText.DarkGreen}[{SetText.Green}success{SetText.DarkGreen}]{SetText.ResetAll} {message}");
         }
 
         public static void ExitError(string message){
             Error(message);
-            FS.FileSystem.Log($"ExitError: {message}");
             SetText.DisplayCursor(true);
-            Inform("Press any key to exit");
-            Animatables.RainbowText exitText = new Animatables.RainbowText("RIp in Piece");
+            FS.FileSystem.Log($"ExitError: {message}");
+            new Animatables.RainbowText(TErrors.PressAnyKey);
             Console.ReadKey();
             Environment.Exit(1);
         }

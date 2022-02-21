@@ -1,6 +1,7 @@
-﻿namespace Utils
+﻿using System.Text.Json;
+
+namespace Utils
 {
-    using System.Text.Json;
     public class Webhook
     {
         public static void Send(string webhookLink, string content) {
@@ -14,20 +15,11 @@
         
         public static void SendDiscordWebhooks(DataTypes.Config config, string sniped) {
             string json = JsonSerializer.Serialize(new
-            {
-                embeds = new[]
-                {
-                    new
-                    {
-                        description = $"`{config.WebhookUsername}` sniped [{sniped}](https://namemc.com/{sniped})",
-                        title = "snipesharp snipe :tada:",
-                        color = 1211647,
-                        image = new
-                        {
-                            url = $"https://mc-heads.net/head/{sniped}"
-                        }
-                    }
-                }
+            { embeds = new[] { new {
+                description = $"`{config.WebhookUsername}` sniped [{sniped}](https://namemc.com/{sniped})",
+                title = "snipesharp snipe :tada:",
+                color = 1211647,
+                image = new { url = $"https://mc-heads.net/head/{sniped}" } } }
             }, new JsonSerializerOptions { WriteIndented = true });
             if (config.SnipesharpServerWebhook) Send(config.snipesharpServerWebhook, json);
             if (!String.IsNullOrEmpty(config.DiscordWebhookUrl) && !String.IsNullOrEmpty(config.WebhookUsername)) Send(config.DiscordWebhookUrl, json);

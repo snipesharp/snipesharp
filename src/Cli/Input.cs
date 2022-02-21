@@ -10,7 +10,7 @@ namespace Cli {
                     Output.Input(requestMessage);
                     var input = !hidden ? Console.ReadLine() : ReadHidden();
                     T? converted = (T)Convert.ChangeType(input, typeof(T));
-                    if(converted == null) throw new Exception(Errors.ExpectedType(typeof(T)));
+                    if(converted == null) throw new Exception(TErrors.ExpectedType(typeof(T)));
                     if(validator != null && !validator(converted)) throw new Exception("Invalid format");
                     return converted;
                 } catch (Exception error){

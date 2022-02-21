@@ -7,7 +7,7 @@ namespace Cli.Animatables
         private Animatable animation;
         private List<string> options;
         private int currentIndex = 0;
-        private int answerIndex = -1;
+        public int answerIndex = -1;
         public string result = "";
 
         public SelectionPrompt(string question, params string[] options) {

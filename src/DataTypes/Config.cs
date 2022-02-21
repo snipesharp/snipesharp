@@ -13,7 +13,7 @@
         public string SkinType { get; set; } = "classic";
         public bool NamesListAutoClean { get; set; } = true;
         
-        public Config Fix() {
+        public Config Prepare() {
             if (WebhookUsername.Length > 16) WebhookUsername = WebhookUsername.Substring(0, 16);
             DiscordWebhookUrl = DiscordWebhookUrl.Replace("http:", "https:");
             return this;

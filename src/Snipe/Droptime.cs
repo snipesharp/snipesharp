@@ -35,7 +35,7 @@ namespace Snipe
 
             // couldn't find the timestamp
             Action<string> errorFunction = exitOnError ? Cli.Output.ExitError : Cli.Output.Error;
-            if(timestamp == 0) errorFunction(Errors.NoDroptime(username));
+            if(timestamp == 0) errorFunction(TErrors.NoDroptime(username));
 
             // convert timstamp to time left (in ms) and return
             long now = DateTimeOffset.Now.ToUnixTimeSeconds();

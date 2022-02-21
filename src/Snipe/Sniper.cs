@@ -7,24 +7,21 @@ namespace Snipe
 {
     public class Sniper
     {
-        public static void Shoot(Config config, Account account, string name)
-        {
+        public static void Shoot(Config config, Account account, string name) {
             var success = false;
-            for (int i = 0; (i < config.sendPacketsCount && !success); i++)
-            {
+            for (int i = 0; (i < config.sendPacketsCount && !success); i++) {
                 success = (int)Name.Change(name, account.Bearer, account.Prename).Result.StatusCode == 200;
                 Thread.Sleep(config.PacketSpreadMs);
             }
 
             // post success
-            if (success)
-            {
+            if (success) {
                 Webhook.SendDiscordWebhooks(config, name);
                 if (config.AutoSkinChange) Skin.Change(config.SkinUrl, config.SkinType, account.Bearer);
             }
         }
-        public async static Task WaitForName(string name, long delay, Account account, string loginMethod, bool fromList=false)
-        {
+
+        public async static Task WaitForName(string name, long delay, Account account, string loginMethod, bool fromList=false) {
             // calculate total wait time
             var waitTime = Math.Max(await Droptime.GetMilliseconds(name, !fromList) - delay, 0);
 
@@ -42,8 +39,7 @@ namespace Snipe
             return;
         }
 
-        public async static Task<Account> Reauthenticate(Account account, long waitTime)
-        {
+        public async static Task<Account> Reauthenticate(Account account, long waitTime) {
             // sleep until 5 mins before
             Thread.Sleep((int)waitTime - 299990);
 

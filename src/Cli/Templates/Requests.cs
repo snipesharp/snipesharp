@@ -2,7 +2,7 @@ using DataTypes.SetText;
 
 namespace Cli.Templates
 {
-    public class Requests
+    public class TRequests
     {
         public static string Bearer = $"Paste your {SetText.Blue}Bearer Token{SetText.ResetAll}: ";
         public static string MojangEmail = $"Enter your Mojang account {SetText.Blue}Email{SetText.ResetAll}: ";
