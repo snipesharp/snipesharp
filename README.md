@@ -59,6 +59,7 @@ demented
 - Features
   - Completely possible through the Console Interface
   - Re-use of previous credentials
+  - Giftcode redeeming when logging in with accounts which don't own Minecraft
 - Methods
   - Microsoft Login
   - Bearer Token Login
@@ -68,6 +69,7 @@ demented
 ### Sniping
 - Features
   - Giftcard (prename) sniping
+  - Reliable bearer refreshing for 24/7 sniping support (Only works when using Microsoft accounts)
   - Snipe custom name
   - Snipe from a custom name list
     - Automatically clean name list of names which were already sniped, can be disabled from [config.json](#configuration-file-locations)
