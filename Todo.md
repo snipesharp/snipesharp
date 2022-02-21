@@ -16,5 +16,3 @@ Useful if you are not using bearers which expire every 24h
 Make it so that pressing `Esc` while in either `Mojang Account` or `Bearer Token` prompts; goes back to choosing one of the prompts again
 ## Discord RPC
 Implement Discord RPC to work while using the program
-## Mojang Login
-Implement Mojang Authentication & sniping with Mojang credentials
