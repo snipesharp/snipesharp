@@ -1,6 +1,8 @@
 # List of ideas/bug fixes to be implemented:
 ## Option to disable bearer refresh
 In case someone feels like a bearer refresh could slow the sniper, there will be an option to disable it
+## Prename sniping send packet count
+Set send packet count to 2 when using prename account
 ## Add spare account option
 After successfully sniping a name, switch to another account since the current one can't change it's name again for the next 30 days
 ## Automatic 24/7 sniping
