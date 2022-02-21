@@ -1,8 +1,6 @@
 # List of ideas/bug fixes to be implemented:
 ## Name sniping availability
 Check whether the currently signed in account can change it's Minecraft username
-## Option to disable bearer refresh
-In case someone feels like a bearer refresh could slow the sniper, there will be an option to disable it
 ## Prename sniping send packet count
 Set send packet count to 2 when using prename account
 ## Add spare account option

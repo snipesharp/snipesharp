@@ -47,7 +47,7 @@ namespace Cli
                 if (!String.IsNullOrEmpty(loginMethod)) loginMethod = handleFromFileResult.Choice;
             }
 
-            if (account.Prename) Output.Inform("No name history detected, will perform prename snipe and send 6 packets instead of 3");
+            if (account.Prename) Output.Inform("No name history detected, will perform prename snipe and send 2 packets instead of 3");
 
             // save account
             FileSystem.SaveAccount(account);

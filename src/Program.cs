@@ -12,7 +12,7 @@ Initialize();
 var authResult = await Core.Auth();
 var account = authResult.account;
 Config config = FileSystem.GetConfig().Fix();
-if (account.Prename) config.sendPacketsCount = 6;
+if (account.Prename) config.sendPacketsCount = 2;
 
 // set name
 string namesListAnswer = "No";
