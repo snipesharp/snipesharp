@@ -119,3 +119,6 @@ If you still can't fix your issue or you just want to hang out, you can join [ou
 - `~/` = /home/{user}/
 - `account.json` = ~/.snipesharp/account.json
 - `config.json` = ~/.snipesharp/config.json
+
+
+![ss_animation](https://user-images.githubusercontent.com/93228501/154988945-88f627f2-30bb-4411-9fd2-7477e4c6f55a.gif)
