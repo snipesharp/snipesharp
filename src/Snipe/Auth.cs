@@ -88,7 +88,7 @@ namespace Snipe
                             Cli.Output.ExitError("Account doesn't own Minecraft");
                         }
 
-                        if (!await AuthWithBearer(mcApiJsonResponse.access_token.ToString()) && ownsMinecraft) return new MsAuthResult{bearer = mcApiJsonResponse.access_token.ToString(), prename = true};
+                        if (!await HasNameHistory(mcApiJsonResponse.access_token) && ownsMinecraft) return new MsAuthResult{bearer = mcApiJsonResponse.access_token.ToString(), prename = true};
                         if (!String.IsNullOrEmpty(mcApiJsonResponse.access_token.ToString())) return new MsAuthResult{bearer = mcApiJsonResponse.access_token.ToString(), prename = false};
                     }
                     else Cli.Output.ExitError("Failed to get access_token");
@@ -99,9 +99,12 @@ namespace Snipe
                     string result = await postHttpResponse.Content.ReadAsStringAsync();
                     string error = "";
 
+                    FS.FileSystem.Log(result);
+
                     if (result.Contains("That Microsoft account doesn\\'t exist")) error = "That Microsoft account doesn't exist";
                     if (result.Contains("incorrect")) error = "Wrong password";
-                    if (!result.Contains("incorrect") && !result.Contains("That Microsoft account doesn\\'t exist")) error = $"Failed due to Microsoft suspecting suspicious activities. Try following this tutorial to fix this: {DataTypes.SetText.SetText.Cyan}https://github.com/snipesharp/snipesharp/wiki/How-to-fix-failed-Microsoft-login {DataTypes.SetText.SetText.ResetAll}";
+                    if (result.Contains("Please enter the password for your Microsoft account")) error = "Password can't be empty";
+                    if (!result.Contains("Please enter the password for your Microsoft account") && !result.Contains("incorrect") && !result.Contains("That Microsoft account doesn\\'t exist")) error = $"Failed due to Microsoft suspecting suspicious activities. Try following this tutorial to fix this: {DataTypes.SetText.SetText.Cyan}https://github.com/snipesharp/snipesharp/wiki/How-to-fix-failed-Microsoft-login {DataTypes.SetText.SetText.ResetAll}";
                     
                     Cli.Output.Error(error);
                 }
@@ -112,6 +115,14 @@ namespace Snipe
         public static async Task<bool> AuthMojang(string email, string password, string sq1, string sq2, string sq3)
         {
             return false;
+        }
+        public async static Task<bool> HasNameHistory(string bearer)
+        {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearer);
+
+            var response = await client.GetAsync("https://api.minecraftservices.com/minecraft/profile");
+            return (int)response.StatusCode == 200;
         }
         public async static Task<bool> OwnsMinecraft(string bearer)
         {
