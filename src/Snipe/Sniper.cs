@@ -33,7 +33,6 @@ namespace Snipe
 
             // wait for the time minus 5 minutes then reauthenticate
             if (loginMethod == "Microsoft Account" && waitTime > 300000) Reauthenticate(account, waitTime); // async but not awaited
-            else Cli.Output.Inform(loginMethod);
 
             // actually wait for the time
             int msToSleep = (int)TimeSpan.FromMilliseconds(waitTime).TotalMilliseconds;
