@@ -1,4 +1,6 @@
 # List of ideas/bug fixes to be implemented:
+## Option to disable bearer refresh
+In case someone feels like a bearer refresh could slow the sniper, there will be an option to disable it
 ## Automatic 24/7 sniping
 Useful if you are not using bearers which expire every 24h
 - Option to snipe a list of chosen names [DONE]
