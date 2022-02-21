@@ -121,4 +121,5 @@ If you still can't fix your issue or you just want to hang out, you can join [ou
 - `config.json` = ~/.snipesharp/config.json
 
 
-![ss_animation](https://user-images.githubusercontent.com/93228501/154988945-88f627f2-30bb-4411-9fd2-7477e4c6f55a.gif)
+
+![Untitled](https://user-images.githubusercontent.com/93228501/155002588-ab6d285d-2a5d-4ba1-86ac-85a35a253289.gif)
