@@ -146,8 +146,12 @@ namespace FS
         /// </summary>
         public static void Log(string toLog)
         {
-            if (!Directory.Exists(logsFolder)) Directory.CreateDirectory(logsFolder);
-            File.AppendAllText(logFile, $"[{DateTime.Now}] {toLog}\n");
+            try
+            {
+                if (!Directory.Exists(logsFolder)) Directory.CreateDirectory(logsFolder);
+                File.AppendAllText(logFile, $"[{DateTime.Now}] {toLog}\n");
+            }
+            catch { }
         }
         /// <returns>path to latest.log file</returns>
         public static string GetLatestLogPath()

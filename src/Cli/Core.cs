@@ -40,7 +40,12 @@ namespace Cli
             if (loginMethod == "Bearer Token") account = await HandleBearer(account, true);
             else if (loginMethod == "Mojang Account") account = await HandleMojang(account, true);
             else if (loginMethod == "Microsoft Account") account = await HandleMicrosoft(account, true);
-            else account = await HandleFromFile();
+            else
+            {
+                var handleFromFileResult = await HandleFromFile();
+                account = handleFromFileResult.Account;
+                if (!String.IsNullOrEmpty(loginMethod)) loginMethod = handleFromFileResult.Choice;
+            }
 
             if (account.Prename) Output.Inform("No name history detected, will perform prename snipe and send 6 packets instead of 3");
 
@@ -95,7 +100,7 @@ namespace Cli
         
             return account;
         }
-        private static async Task<Account> HandleFromFile() {
+        private static async Task<HandleFromFileResult> HandleFromFile() {
             var account = FileSystem.GetAccount();
 
             List<string> availableMethods = new List<string>();
@@ -112,7 +117,12 @@ namespace Cli
             if (choice == "Mojang Account") account = await HandleMojang(account);
             if (choice == "Microsoft Account") account = await HandleMicrosoft(account);
 
-            return account;
+            return new HandleFromFileResult { Account = account, Choice = choice };
+        }
+        private struct HandleFromFileResult
+        {
+            public Account Account { get; set; }
+            public string Choice { get; set; }
         }
     }
 }

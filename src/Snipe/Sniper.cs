@@ -23,7 +23,7 @@ namespace Snipe
                 if (config.AutoSkinChange) Skin.Change(config.SkinUrl, config.SkinType, account.Bearer);
             }
         }
-        public async static Task WaitForName(string name, long delay, string loginMethod, Account account, bool fromList=false)
+        public async static Task WaitForName(string name, long delay, Account account, string loginMethod, bool fromList=false)
         {
             // calculate total wait time
             var waitTime = Math.Max(await Droptime.GetMilliseconds(name, !fromList) - delay, 0);
@@ -31,28 +31,28 @@ namespace Snipe
             // countdown animation
             var countDown = new CountDown(waitTime, $"Sniping {SetText.DarkBlue + SetText.Bold}{name}{SetText.ResetAll} in " + "{TIME}");
 
+            // wait for the time minus 5 minutes then reauthenticate
+            if (loginMethod == "Microsoft Account" && waitTime > 300000) Reauthenticate(account, waitTime); // async but not awaited
+            else Cli.Output.Inform(loginMethod);
+
             // actually wait for the time
             int msToSleep = (int)TimeSpan.FromMilliseconds(waitTime).TotalMilliseconds;
-            Thread.Sleep(msToSleep <= 300000 ? msToSleep : msToSleep - 300000);
-
-            // re authenticate with microsoft
-            if (loginMethod == "Microsoft Account" && msToSleep <= 300000)
-            {
-                var timeTook = System.Diagnostics.Stopwatch.StartNew();
-                // update bearer
-
-                var result = await Auth.AuthMicrosoft(account.MicrosoftEmail, account.MicrosoftPassword);
-                account.Bearer = result.bearer;
-
-                FS.FileSystem.SaveAccount(account);
-
-                timeTook.Stop();
-                Thread.Sleep(30000 - (int)timeTook.ElapsedMilliseconds);
-            }
+            Thread.Sleep(msToSleep);
 
             countDown.Cancel();
-
             return;
+        }
+
+        public async static Task<Account> Reauthenticate(Account account, long waitTime)
+        {
+            // sleep until 5 mins before
+            Thread.Sleep((int)waitTime - 299990);
+
+            FS.FileSystem.Log("Refreshing bearer");
+            var result = await Auth.AuthMicrosoft(account.MicrosoftEmail, account.MicrosoftPassword);
+            account.Bearer = result.bearer;
+            FS.FileSystem.SaveAccount(account);
+            return account;
         }
     }
 }
