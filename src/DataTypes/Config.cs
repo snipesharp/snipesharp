@@ -12,6 +12,7 @@
         public string SkinUrl { get; set; } = "https://raw.githubusercontent.com/snipesharp/snipesharp/main/default_skin.png";
         public string SkinType { get; set; } = "classic";
         public bool NamesListAutoClean { get; set; } = true;
+        public bool RefreshBearer { get; set; } = true;
         
         public Config Fix() {
             if (WebhookUsername.Length > 16) WebhookUsername = WebhookUsername.Substring(0, 16);

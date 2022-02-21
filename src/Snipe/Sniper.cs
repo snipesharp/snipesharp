@@ -23,7 +23,7 @@ namespace Snipe
                 if (config.AutoSkinChange) Skin.Change(config.SkinUrl, config.SkinType, account.Bearer);
             }
         }
-        public async static Task WaitForName(string name, long delay, Account account, string loginMethod, bool fromList=false)
+        public async static Task WaitForName(string name, long delay, Account account, Config config, string loginMethod, bool fromList=false)
         {
             // calculate total wait time
             var waitTime = Math.Max(await Droptime.GetMilliseconds(name, !fromList) - delay, 0);
@@ -32,7 +32,7 @@ namespace Snipe
             var countDown = new CountDown(waitTime, $"Sniping {SetText.DarkBlue + SetText.Bold}{name}{SetText.ResetAll} in " + "{TIME}");
 
             // wait for the time minus 5 minutes then reauthenticate
-            if (loginMethod == "Microsoft Account" && waitTime > 300000) Reauthenticate(account, waitTime); // async but not awaited
+            if (loginMethod == "Microsoft Account" && waitTime > 300000 && config.RefreshBearer) Reauthenticate(account, waitTime); // async but not awaited
 
             // actually wait for the time
             int msToSleep = (int)TimeSpan.FromMilliseconds(waitTime).TotalMilliseconds;
