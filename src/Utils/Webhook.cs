@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using DataTypes;
 
 namespace Utils
 {
@@ -13,16 +14,20 @@ namespace Utils
             catch (Exception ex) { Cli.Output.Error(ex.ToString()); }
         }
         
-        public static void SendDiscordWebhooks(DataTypes.Config config, string sniped) {
+        public static void SendDiscordWebhooks(string sniped) {
             string json = JsonSerializer.Serialize(new
             { embeds = new[] { new {
-                description = $"`{config.WebhookUsername}` sniped [{sniped}](https://namemc.com/{sniped})",
+                description = $"`{Config.v.WebhookUsername}` sniped [{sniped}](https://namemc.com/{sniped})",
                 title = "snipesharp snipe :tada:",
                 color = 1211647,
                 image = new { url = $"https://mc-heads.net/head/{sniped}" } } }
             }, new JsonSerializerOptions { WriteIndented = true });
-            if (config.SnipesharpServerWebhook) Send(config.snipesharpServerWebhook, json);
-            if (!String.IsNullOrEmpty(config.DiscordWebhookUrl) && !String.IsNullOrEmpty(config.WebhookUsername)) Send(config.DiscordWebhookUrl, json);
+            if (Config.v.SnipesharpServerWebhook) 
+                Send(Config.v.snipesharpServerWebhook, json);
+            if (
+                !String.IsNullOrEmpty(Config.v.DiscordWebhookUrl) &&
+                !String.IsNullOrEmpty(Config.v.WebhookUsername)
+            )   Send(Config.v.DiscordWebhookUrl, json);
         }
     }
 }

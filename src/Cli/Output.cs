@@ -60,10 +60,10 @@ namespace Cli {
 
         public static void ExitError(string message){
             Error(message);
-            SetText.DisplayCursor(true);
-            FS.FileSystem.Log($"ExitError: {message}");
             new Animatables.RainbowText(TErrors.PressAnyKey);
             Console.ReadKey();
+            
+            SetText.DisplayCursor(true);
             Environment.Exit(1);
         }
 

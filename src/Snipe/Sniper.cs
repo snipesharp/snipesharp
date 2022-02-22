@@ -7,17 +7,17 @@ namespace Snipe
 {
     public class Sniper
     {
-        public static void Shoot(Config config, Account account, string name) {
+        public static void Shoot(Account account, string name) {
             var success = false;
-            for (int i = 0; (i < config.sendPacketsCount && !success); i++) {
+            for (int i = 0; (i < Config.v.sendPacketsCount && !success); i++) {
                 success = (int)Name.Change(name, account.Bearer, account.Prename).Result.StatusCode == 200;
-                Thread.Sleep(config.PacketSpreadMs);
+                Thread.Sleep(Config.v.PacketSpreadMs);
             }
 
             // post success
             if (success) {
-                Webhook.SendDiscordWebhooks(config, name);
-                if (config.AutoSkinChange) Skin.Change(config.SkinUrl, config.SkinType, account.Bearer);
+                Webhook.SendDiscordWebhooks(name);
+                if (Config.v.AutoSkinChange) Skin.Change(Config.v.SkinUrl, Config.v.SkinType, account.Bearer);
             }
         }
 

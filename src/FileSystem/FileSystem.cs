@@ -47,12 +47,11 @@ namespace FS
             } catch (Exception e) { Cli.Output.Error(e.Message); }
         }
 
-        // Saves given config to the config.json file
-        public static void SaveConfig(Config config){
+        // Saves the state of the config to the config file
+        public static void UpdateConfig(){
             try {
                 if (!Directory.Exists(snipesharpFolder)) CreateSnipesharpFolder();
-                var json = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(configJsonFile, json);
+                Utils.ConfigSerialization.Serialize(configJsonFile);
             } catch (Exception e) { Cli.Output.ExitError(e.Message); }
         }
 
@@ -68,15 +67,19 @@ namespace FS
             }
         }
 
-        /// <returns>Existing or new config depending on whether one already exists</returns>
-        public static Config GetConfig() {
+        // used to prepare the config before using it
+        public static void PrepareConfig() {
             try {
-                if (!ConfigFileExists()) return new Config();
-                return JsonSerializer.Deserialize<Config>(File.ReadAllText(configJsonFile))!;
+                if (!ConfigFileExists()) {
+                    UpdateConfig();
+                    return;
+                }
+                Utils.ConfigSerialization.Deserialize(File.ReadAllText(configJsonFile));
+                Config.Prepare();
+                UpdateConfig();
             }
             catch (JsonException e) {
                 Cli.Output.Error(TFileSystem.FSInforms.CannotReadFile(new Tuple<string, JsonException>("config.json", e)));
-                return new Config();
             }
         }
 

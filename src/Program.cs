@@ -8,7 +8,7 @@ using Cli.Animatables;
 using DataTypes.SetText;
 
 // prepare everything and welcome the user
-Config config = Initialize();
+Initialize();
 
 // let the user authenticate
 var authResult = await Core.Auth();
@@ -17,7 +17,7 @@ String loginMethod = authResult.loginMethod;
 
 // handle prename account and change config (runtime only)
 if (account.Prename) {
-    config.sendPacketsCount = 6;
+    Config.v.sendPacketsCount =  6;
     Output.Inform(TAuth.AuthInforms.NoNameHistory);
 }
 
@@ -36,22 +36,22 @@ long delay = Input.Request<long>($"Offset in ms [suggested: {suggestedOffset}ms]
 
 // wait for name to drop then shoot
 await Sniper.WaitForName(name, delay, account, authResult.loginMethod, useNamesList);
-Sniper.Shoot(config, account, name);
+Sniper.Shoot(account, name);
 
 // snipe more if names list is in use
 if (useNamesList) {
     // remove sniped name from list and update the file
-    if (config.NamesListAutoClean) {
+    if (Config.v.NamesListAutoClean) {
         namesList.Remove(name);
         FileSystem.SaveNames(namesList);
     }
 
-    for (int i = config.NamesListAutoClean ? 0 : 1; i < namesList.Count; i++) {
+    for (int i = Config.v.NamesListAutoClean ? 0 : 1; i < namesList.Count; i++) {
         await Sniper.WaitForName(namesList[i], delay, account, authResult.loginMethod, true);
-        Sniper.Shoot(config, account, namesList[i]);
+        Sniper.Shoot(account, namesList[i]);
 
         // remove sniped name from list and update the file
-        if (config.NamesListAutoClean) {
+        if (Config.v.NamesListAutoClean) {
             namesList = FileSystem.GetNames();
             namesList.Remove(namesList[i--]);
         }
@@ -63,7 +63,7 @@ if (useNamesList) {
 Output.Inform("Finished sniping, press any key to exit");
 Console.ReadKey();
 
-static Config Initialize() {
+static void Initialize() {
     // delete previous log file
     if (FileSystem.LogFileExists()) File.Delete(FileSystem.logFile);
 
@@ -82,14 +82,11 @@ static Config Initialize() {
     Output.PrintLogo();
 
     // create and load config
-    Config config = FileSystem.GetConfig().Prepare();
-    FileSystem.SaveConfig(config);
+    FileSystem.PrepareConfig();
 
     // create and load name list
     if (!FileSystem.NamesFileExists()) FileSystem.SaveNames(new List<string>());
 
     // create example names file
     FileSystem.SaveNames(new List<string> { "example1", "example2", "example3" }, "names.example.json");
-
-    return config;
 }
