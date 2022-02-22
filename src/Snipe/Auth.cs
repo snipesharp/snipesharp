@@ -153,8 +153,7 @@ namespace Snipe
         }
     }
 
-    public class McPayload
-    {
+    public class McPayload {
         public string? identityToken { get; set; }
         public bool ensureLegacyEnabled { get; set; }
         public static McPayload GenerateMcPayload(string userHash, string xstsToken) {
@@ -169,8 +168,7 @@ namespace Snipe
                 System.Text.Encoding.UTF8, "application/json");
         }
     }
-    public class XboxPayload
-    {
+    public class XboxPayload {
         public object? Properties { get; set; }
         public string? RelyingParty { get; set; }
         public string? TokenType { get; set; }

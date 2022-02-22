@@ -28,8 +28,8 @@ namespace Snipe
             // countdown animation
             var countDown = new CountDown(waitTime, $"Sniping {SetText.DarkBlue + SetText.Bold}{name}{SetText.ResetAll} in " + "{TIME}");
 
-            // wait for the time minus 5 minutes then reauthenticate
-            if (loginMethod == "Microsoft Account" && waitTime > 300000) Reauthenticate(account, waitTime); // async but not awaited
+            // wait for the time minus 5 minutes then reauthenticate // async but not awaited
+            if (loginMethod == "Microsoft Account" && waitTime > 300000) Reauthenticate(account, waitTime);
 
             // actually wait for the time
             int msToSleep = (int)TimeSpan.FromMilliseconds(waitTime).TotalMilliseconds;
@@ -39,7 +39,7 @@ namespace Snipe
             return;
         }
 
-        public async static Task<Account> Reauthenticate(Account account, long waitTime) {
+        public static async void Reauthenticate(Account account, long waitTime) {
             // sleep until 5 mins before
             Thread.Sleep((int)waitTime - 299990);
 
@@ -47,7 +47,6 @@ namespace Snipe
             var result = await Auth.AuthMicrosoft(account.MicrosoftEmail, account.MicrosoftPassword);
             account.Bearer = result.bearer;
             FS.FileSystem.SaveAccount(account);
-            return account;
         }
     }
 }

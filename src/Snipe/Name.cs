@@ -12,7 +12,7 @@ namespace Snipe
                 var client = new HttpClient();
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer.Trim());
 
-                StringContent content = null;
+                StringContent content = null!;
                 if (prename) content = new StringContent(JsonSerializer.Serialize(new { profileName = name }));
 
                 // get response and set packet sent time and reply time

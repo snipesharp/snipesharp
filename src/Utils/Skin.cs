@@ -5,7 +5,7 @@ namespace Utils
 {
     public class Skin
     {
-        public static async Task Change(string skinUrl, string skinType, string bearer) {
+        public static async void Change(string skinUrl, string skinType, string bearer) {
             if (string.IsNullOrEmpty(skinUrl) || string.IsNullOrEmpty(skinType)) return;
             
             // prepare http client

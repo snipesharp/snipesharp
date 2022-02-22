@@ -4,12 +4,12 @@ using Cli.Templates;
 namespace Cli {
     class Input {
         // small method for requeting input from the user
-        public static T Request<T>(string requestMessage, bool hidden=false, Func<T, bool> validator=null){
+        public static T Request<T>(string requestMessage, bool hidden=false, Func<T, bool> validator=null!){
             while(true){
                 try {
                     Output.Input(requestMessage);
                     var input = !hidden ? Console.ReadLine() : ReadHidden();
-                    T? converted = (T)Convert.ChangeType(input, typeof(T));
+                    T? converted = (T)Convert.ChangeType(input, typeof(T))!;
                     if(converted == null) throw new Exception(TErrors.ExpectedType(typeof(T)));
                     if(validator != null && !validator(converted)) throw new Exception("Invalid format");
                     return converted;

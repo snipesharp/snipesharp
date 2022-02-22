@@ -60,7 +60,7 @@ namespace FS
         public static List<string> GetNames() {
             try {
                 if (!NamesFileExists()) return new List<string>();
-                return JsonSerializer.Deserialize<List<string>>(File.ReadAllText(namesJsonFile));
+                return JsonSerializer.Deserialize<List<string>>(File.ReadAllText(namesJsonFile))!;
             }
             catch (JsonException e) {
                 Cli.Output.Error(TFileSystem.FSInforms.CannotReadFile(new Tuple<string, JsonException>("names.json", e)));
@@ -72,7 +72,7 @@ namespace FS
         public static Config GetConfig() {
             try {
                 if (!ConfigFileExists()) return new Config();
-                return JsonSerializer.Deserialize<Config>(File.ReadAllText(configJsonFile));
+                return JsonSerializer.Deserialize<Config>(File.ReadAllText(configJsonFile))!;
             }
             catch (JsonException e) {
                 Cli.Output.Error(TFileSystem.FSInforms.CannotReadFile(new Tuple<string, JsonException>("config.json", e)));
