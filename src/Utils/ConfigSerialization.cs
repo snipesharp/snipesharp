@@ -6,7 +6,6 @@ namespace Utils
     public static class ConfigSerialization
     {
         public static void Serialize(string path){
-            // serialize and save
             var json = JsonSerializer.Serialize(Config.v, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(path, json);
         }

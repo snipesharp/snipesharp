@@ -24,7 +24,7 @@ if (account.Prename) {
 // handle names.json file
 var useNamesList = false;
 var namesList = FileSystem.GetNames();
-if (namesList.Count > 0) useNamesList = Convert.ToBoolean(
+if (namesList.Count > 0) useNamesList = !Convert.ToBoolean(
     new SelectionPrompt("Found names in names.json, use the list?", "Yes", "No").answerIndex);
 
 // set name to either first of list or prompted
