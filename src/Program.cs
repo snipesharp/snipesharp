@@ -17,7 +17,9 @@ String loginMethod = authResult.loginMethod;
 
 // handle prename account and change config (runtime only)
 if (account.Prename) {
-    Config.v.sendPacketsCount =  6;
+    var maxPackets2 = !Convert.ToBoolean(
+    new SelectionPrompt("Sniping using a prename account, switch to 2 max packets sent?", "Yes", "No").answerIndex);
+    Config.v.sendPacketsCount = maxPackets2 ? 2 : Config.v.sendPacketsCount;
     Output.Inform(TAuth.AuthInforms.NoNameHistory);
 }
 
