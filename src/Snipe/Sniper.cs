@@ -1,4 +1,5 @@
 ﻿using Cli.Animatables;
+using Cli.Templates;
 using DataTypes;
 using DataTypes.SetText;
 using Utils;
@@ -21,22 +22,21 @@ namespace Snipe
             }
         }
 
-        public async static Task WaitForName(string name, long delay, Account account, string loginMethod, bool fromList=false) {
+        public static void WaitForName(string name, long droptime, Account account, string loginMethod) {
             // calculate total wait time
-            var waitTime = Math.Max(await Droptime.GetMilliseconds(name, !fromList) - delay, 0);
+            var waitTime = Math.Max(droptime, 0);
 
             // countdown animation
             var countDown = new CountDown(waitTime, $"Sniping {SetText.DarkBlue + SetText.Bold}{name}{SetText.ResetAll} in " + "{TIME}");
 
             // wait for the time minus 5 minutes then reauthenticate // async but not awaited
-            if (loginMethod == "Microsoft Account" && waitTime > 300000) Reauthenticate(account, waitTime);
+            if (loginMethod == TAuth.AuthOptions.Microsoft && waitTime > 300000) Reauthenticate(account, waitTime);
 
             // actually wait for the time
             int msToSleep = (int)TimeSpan.FromMilliseconds(waitTime).TotalMilliseconds;
             Thread.Sleep(msToSleep);
 
             countDown.Cancel();
-            return;
         }
 
         public static async void Reauthenticate(Account account, long waitTime) {

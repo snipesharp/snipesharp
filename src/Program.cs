@@ -37,8 +37,11 @@ var suggestedOffset = await Offset.CalcSuggested();
 long delay = Input.Request<long>($"Offset in ms [suggested: {suggestedOffset}ms]: ");
 
 // wait for name to drop then shoot
-await Sniper.WaitForName(name, delay, account, authResult.loginMethod, useNamesList);
-Sniper.Shoot(account, name);
+var dropTime = Math.Max(0, await Droptime.GetMilliseconds(name, !useNamesList) - delay);
+if(dropTime > 0){
+    Sniper.WaitForName(name, dropTime, account, authResult.loginMethod);
+    Sniper.Shoot(account, name);
+}
 
 // snipe more if names list is in use
 if (useNamesList) {
@@ -49,8 +52,11 @@ if (useNamesList) {
     }
 
     for (int i = Config.v.NamesListAutoClean ? 0 : 1; i < namesList.Count; i++) {
-        await Sniper.WaitForName(namesList[i], delay, account, authResult.loginMethod, true);
-        Sniper.Shoot(account, namesList[i]);
+        dropTime = Math.Max(0, await Droptime.GetMilliseconds(namesList[i], !useNamesList) - delay);
+        if(dropTime > 0){
+            Sniper.WaitForName(namesList[i], dropTime, account, authResult.loginMethod);
+            Sniper.Shoot(account, namesList[i]);
+        }
 
         // remove sniped name from list and update the file
         if (Config.v.NamesListAutoClean) {
