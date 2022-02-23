@@ -100,7 +100,7 @@ demented
 - To demented
   - Monero: 89Gk3YiZGWnLsgGygzRg8Shqp1UyEuYGMbnrz3dLX9isbiLb5b8e6Zu4rT6NX5K5dsNtMb1WTyScqdYCsjxNfUFaRLcdeBk
 - To StiliyanKushev
-  - No donation methods yet
+  - Paypal: https://www.paypal.com/donate/?hosted_button_id=GXK6UYPH5SK5C
 
 # Troubleshooting
 If youre having trouble while using snipesharp, check for solutions on the [Wiki](https://github.com/snipesharp/snipesharp/wiki).
