@@ -15,6 +15,10 @@ var authResult = await Core.Auth();
 Account account = authResult.account;
 String loginMethod = authResult.loginMethod;
 
+if(!await Stats.CanChangeName(account.Bearer)){
+    Cli.Output.ExitError($"{account.MicrosoftEmail} cannot change username yet.");
+}
+
 // handle prename account and change config (runtime only)
 if (account.Prename) {
     var maxPackets2 = !Convert.ToBoolean(
