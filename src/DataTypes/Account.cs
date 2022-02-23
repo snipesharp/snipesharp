@@ -6,8 +6,6 @@ namespace DataTypes
     {
         public bool Prename { get; set; }
         public string Bearer { get; set; }
-        public string MojangEmail { get; set; }
-        public string MojangPassword { get; set; }
         public string MicrosoftEmail { get; set; }
         public string MicrosoftPassword { get; set; }
         [JsonPropertyName("sq1")]
