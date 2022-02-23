@@ -24,7 +24,7 @@ namespace Utils
                 // exit if account cant change name
                 if (!jsonRes.nameChangeAllowed) { 
                     DateTime.TryParse(jsonRes.changedAt, out DateTime changedAt);
-                    var cooldownExpiryDate = changedAt.AddMonths(30);
+                    var cooldownExpiryDate = changedAt.AddDays(30);
                     Cli.Output.ExitError($"Account can't change name until {cooldownExpiryDate.ToString()}");
                 }
                 return jsonRes.nameChangeAllowed;
