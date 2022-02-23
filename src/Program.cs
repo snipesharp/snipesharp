@@ -23,7 +23,7 @@ if(!await Stats.CanChangeName(account.Bearer)){
 if (account.Prename) {
     var maxPackets2 = !Convert.ToBoolean(
     new SelectionPrompt("Sniping using a prename account, switch to 2 max packets sent?", "Yes", "No").answerIndex);
-    Config.v.sendPacketsCount = maxPackets2 ? 2 : Config.v.sendPacketsCount;
+    Config.v.SendPacketsCount = maxPackets2 ? 2 : Config.v.SendPacketsCount;
     Output.Inform(TAuth.AuthInforms.NoNameHistory);
 }
 

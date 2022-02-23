@@ -7,8 +7,8 @@
     // Also, each property should have { get; set; } for the deserialization to work.
     public class ConfigSettings
     {
-        public int sendPacketsCount { get; set; } = 3; // anything above 3 results in TooManyPackets
         public string snipesharpServerWebhook = "https://discord.com/api/webhooks/943491871731228742/cgUCq2maxb7cTW-SNCjD-e8wMxJYZB4Dgzb62YNdSjGeQS3dgPbDayUzP4u8S4oJXdc9";
+        public int SendPacketsCount { get; set; } = 3;
         public int PacketSpreadMs { get; set; } = 31;
         public string WebhookUsername { get; set; } = Environment.UserName;
         public bool SnipesharpServerWebhook { get; set; }= true;

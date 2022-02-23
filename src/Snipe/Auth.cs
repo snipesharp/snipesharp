@@ -7,7 +7,8 @@ namespace Snipe
     public class Auth
     {
         public static async Task<bool> AuthWithBearer(string bearer) {
-            if (!await OwnsMinecraft(bearer)) Cli.Output.ExitError("Account doesn't own Minecraft");
+            if (!await Utils.Stats.OwnsMinecraft(bearer)) Cli.Output.ExitError("Account doesn't own Minecraft");
+            await Utils.Stats.CanChangeName(bearer);
             return true;
         }
         
@@ -72,10 +73,13 @@ namespace Snipe
                     spinner.Cancel();
 
                     // Check if account owns MC
-                     bool ownsMinecraft = await OwnsMinecraft(mcApiJsonResponse.access_token);
+                     bool ownsMinecraft = await Utils.Stats.OwnsMinecraft(mcApiJsonResponse.access_token);
                     if (!ownsMinecraft) {
                         Cli.Output.ExitError("Account doesn't own Minecraft");
                     }
+
+                    // Check if account can change name
+                    await Utils.Stats.CanChangeName(mcApiJsonResponse.access_token);
 
                     if (!await HasNameHistory(mcApiJsonResponse.access_token) && ownsMinecraft) return new MsAuthResult{bearer = mcApiJsonResponse.access_token.ToString(), prename = true};
                     if (!String.IsNullOrEmpty(mcApiJsonResponse.access_token.ToString())) return new MsAuthResult{bearer = mcApiJsonResponse.access_token.ToString(), prename = false};
@@ -106,30 +110,6 @@ namespace Snipe
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
             var response = await client.GetAsync("https://api.minecraftservices.com/minecraft/profile");
             return (int)response.StatusCode == 200;
-        }
-
-        // return true if user owns minecraft, false otherwise
-        public async static Task<bool> OwnsMinecraft(string bearer) {
-            // prepare http call using the bearer
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0");
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
-
-            // get json response
-            var mcOwnershipHttpResponse = await client.GetAsync("https://api.minecraftservices.com/entitlements/mcstore");
-            if (!mcOwnershipHttpResponse.IsSuccessStatusCode) Cli.Output.ExitError(Cli.Templates.TAuth.AuthInforms.FailedBearer);
-            var mcOwnershipJsonResponse = JsonSerializer.Deserialize<McOwnershipResponse>(
-                await mcOwnershipHttpResponse.Content.ReadAsStringAsync()
-            );
-
-            // If doesn't own minecraft, prompt to redeem a giftcard 
-            if (mcOwnershipJsonResponse.items == null || mcOwnershipJsonResponse.items.Length < 1) {
-                bool redeemResult;
-                while (redeemResult = !await RedeemGiftcard(Cli.Input.Request<string>(Cli.Templates.TRequests.Giftcode), bearer));
-                return redeemResult;
-            }
-            return true;
         }
 
         // redeen a giftcard from given giftcode. Returns true or false based on success.
@@ -202,15 +182,6 @@ namespace Snipe
     public struct MsAuthResult {
         public string bearer { get;set; }
         public bool prename { get;set; }
-    }
-    public class Items {
-        public string? name { get; set; }
-        public string? signature { get; set; }
-    }
-    public struct McOwnershipResponse {
-        public Items[] items { get; set; }
-        public string signature { get; set; }
-        public string keyId { get; set; }
     }
     public struct McApiResponse {
         public string username { get; set; }
