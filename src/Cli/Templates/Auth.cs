@@ -10,7 +10,7 @@ namespace Cli.Templates
 
         public struct AuthInforms {
             public static string SuccessAuth = "Successfully authenticated";
-            public static string SuccessAuthBearer = "Successfully authenticated & updated bearer";
+            public static string SuccessAuthMicrosoft = "Successfully authenticated & updated bearer";
             public static string FailedMicrosoft = "Failed to authenticate Microsoft account";
             public static string FailedBearer = "Failed to authenticate using bearer";
             public static string Warn2FA = "Make sure 2 Factor Authentication (2FA) is turned off in your Microsoft account settings";

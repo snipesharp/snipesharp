@@ -7,13 +7,7 @@ namespace Snipe
     public class Auth
     {
         public static async Task<bool> AuthWithBearer(string bearer) {
-            var spinner = new Spinner();
-            if (!await OwnsMinecraft(bearer)) {
-                spinner.Cancel();
-                Cli.Output.ExitError("Account doesn't own Minecraft");
-                return false;
-            }
-            spinner.Cancel();
+            if (!await OwnsMinecraft(bearer)) Cli.Output.ExitError("Account doesn't own Minecraft");
             return true;
         }
         
@@ -124,6 +118,7 @@ namespace Snipe
 
             // get json response
             var mcOwnershipHttpResponse = await client.GetAsync("https://api.minecraftservices.com/entitlements/mcstore");
+            if (!mcOwnershipHttpResponse.IsSuccessStatusCode) Cli.Output.ExitError(Cli.Templates.TAuth.AuthInforms.FailedBearer);
             var mcOwnershipJsonResponse = JsonSerializer.Deserialize<McOwnershipResponse>(
                 await mcOwnershipHttpResponse.Content.ReadAsStringAsync()
             );

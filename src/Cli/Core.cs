@@ -76,7 +76,7 @@ namespace Cli
 
             account.Bearer = authResult.bearer;
             account.Prename = authResult.prename;
-            Output.Success(TAuth.AuthInforms.SuccessAuth);
+            Output.Success(TAuth.AuthInforms.SuccessAuthMicrosoft);
 
             return account;
         }

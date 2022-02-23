@@ -6,7 +6,9 @@ namespace Cli.Templates
             "One of us really sucks at this",
             "RIp in piece",
             "L + Ratio",
+            ":pensive:",
             "Who let the dogs out",
+            "U a bitch and yo mama fat",
             "Next! Meme!"
         }.ToList();
 
