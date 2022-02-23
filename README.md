@@ -30,7 +30,7 @@
 </p>
 <p align="center">
   <a href="https://github.com/snipesharp/snipesharp/releases/tag/v1.4.0">
-    <img src="https://img.shields.io/badge/latest_release-%23015fa1?style=flat-square"</img>
+    <img src="https://img.shields.io/badge/latest_release-v1.4.0-%23015fa1?style=flat-square"</img>
   </a>
 </p>
 <p align="center">
