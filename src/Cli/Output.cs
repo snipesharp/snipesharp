@@ -60,7 +60,7 @@ namespace Cli {
 
         public static void ExitError(string message){
             Error(message);
-            new Animatables.RainbowText(TErrors.PressAnyKey);
+            new Animatables.RainbowText(TFunnyErrors.GetRandom());
             Console.ReadKey();
             
             SetText.DisplayCursor(true);
