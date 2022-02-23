@@ -54,7 +54,7 @@ if (useNamesList) {
         namesList.Remove(name);
         FileSystem.SaveNames(namesList);
     }
-
+    
     for (int i = Config.v.NamesListAutoClean ? 0 : 1; i < namesList.Count; i++) {
         dropTime = Math.Max(0, await Droptime.GetMilliseconds(namesList[i], !useNamesList) - delay);
         if(dropTime > 0){
