@@ -1,11 +1,6 @@
 # List of ideas/bug fixes to be implemented:
 ## Name sniping availability
 Check whether the currently signed in account can change it's Minecraft username
-## Option to disable bearer refresh
-In case someone feels like a bearer refresh could slow the sniper, there will be an option to disable it
-## Prename sniping send packet count
-Set send packet count to 2 when using prename account
-## Add spare account option
 After successfully sniping a name, switch to another account since the current one can't change it's name again for the next 30 days
 ## Automatic 24/7 sniping
 Useful if you are not using bearers which expire every 24h
@@ -16,5 +11,3 @@ Useful if you are not using bearers which expire every 24h
 Make it so that pressing `Esc` while in either `Mojang Account` or `Bearer Token` prompts; goes back to choosing one of the prompts again
 ## Discord RPC
 Implement Discord RPC to work while using the program
-## Mojang Login
-Implement Mojang Authentication & sniping with Mojang credentials
