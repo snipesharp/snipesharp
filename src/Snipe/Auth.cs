@@ -130,8 +130,9 @@ namespace Snipe
 
             // If doesn't own minecraft, prompt to redeem a giftcard 
             if (mcOwnershipJsonResponse.items == null || mcOwnershipJsonResponse.items.Length < 1) {
-                string giftcode = Cli.Input.Request<string>("Your account doesn't own a copy of Minecraft, redeem a giftcard: ");
-                return await RedeemGiftcard(giftcode, bearer);
+                bool redeemResult;
+                while (redeemResult = !await RedeemGiftcard(Cli.Input.Request<string>(Cli.Templates.TRequests.Giftcode), bearer));
+                return redeemResult;
             }
             return true;
         }
@@ -148,7 +149,7 @@ namespace Snipe
             var spinner = new Spinner();
             var response = await client.PutAsync($"https://api.minecraftservices.com/productvoucher/:{giftcode}", null);
             spinner.Cancel();
-            if ((int)response.StatusCode!=200) Cli.Output.ExitError("Failed to redeem giftcard");
+            if ((int)response.StatusCode!=200) Cli.Output.Error("Failed to redeem giftcard, try again");
             return (int)response.StatusCode==200;
         }
     }
