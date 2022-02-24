@@ -21,7 +21,7 @@ namespace Cli.Names
             Sniper.Shoot(account, name);
         }
 
-        public static async Task handleNamesJson(AuthResult authResult, Account account, List<string> namesList){
+        public static async Task handleNamesList(AuthResult authResult, Account account, List<string> namesList){
             long delay = await GetDelay();
             for (int i = 0; i < namesList.Count; i++) {
                 var dropTime = Math.Max(0, await Droptime.GetMilliseconds(namesList[i], false) - delay);
@@ -40,11 +40,17 @@ namespace Cli.Names
         }
 
         public static async Task handleThreeLetter(AuthResult authResult, Account account){
-            // todo
+            // todo scrape list of names
+            var scraped = new List<string>();
+
+            await handleNamesList(authResult, account, scraped);
         }
 
         public static async Task handleEnglishNames(AuthResult authResult, Account account){
-            // todo
+            // todo scrape list of names
+            var scraped = new List<string>();
+
+            await handleNamesList(authResult, account, scraped);
         }
     }
 }

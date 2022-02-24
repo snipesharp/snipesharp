@@ -49,7 +49,7 @@ var nameOption = new SelectionPrompt("What name/s would you like to snipe?",
 
 // handle each option individualy
 if(nameOption == TNames.LetMePick) await Names.handleSingleName(authResult, account);
-if(nameOption == TNames.UseNamesJson) await Names.handleNamesJson(authResult, account, namesList);
+if(nameOption == TNames.UseNamesJson) await Names.handleNamesList(authResult, account, namesList);
 if(nameOption == TNames.ThreeLetterNames) await Names.handleThreeLetter(authResult, account);
 if(nameOption == TNames.EnglishNames) await Names.handleEnglishNames(authResult, account);
 
