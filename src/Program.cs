@@ -30,7 +30,7 @@ if (account.Prename) {
 // handle names.json file
 var useNamesList = false;
 var namesList = FileSystem.GetNames();
-if (namesList.Count > 0) useNamesList = !Convert.ToBoolean(
+if(namesList.Count > 0) useNamesList = !Convert.ToBoolean(
     new SelectionPrompt("Found names in names.json, use the list?", "Yes", "No").answerIndex);
 
 // set name to either first of list or prompted
@@ -86,6 +86,9 @@ static void Initialize() {
     // attempt to fix cursor not showing after close
     Fix.TerminateHandler.FixCursor();
 
+    // dispose discord rpc on close
+    Fix.TerminateHandler.FixRpc();
+
     // clear the console before execution
     Console.Clear();
     SetText.DisplayCursor(true);
@@ -101,4 +104,7 @@ static void Initialize() {
 
     // create example names file
     FileSystem.SaveNames(new List<string> { "example1", "example2", "example3" }, "names.example.json");
+
+    // start discord rpc
+    Utils.DiscordRPC.Initialize();
 }

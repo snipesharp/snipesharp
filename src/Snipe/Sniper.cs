@@ -23,6 +23,9 @@ namespace Snipe
         }
 
         public static void WaitForName(string name, long droptime, Account account, string loginMethod) {
+            // update discord rpc
+            Utils.DiscordRPC.SetSniping(name, droptime);
+
             // calculate total wait time
             var waitTime = Math.Max(droptime, 0);
 

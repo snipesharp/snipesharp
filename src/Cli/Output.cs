@@ -63,7 +63,7 @@ namespace Cli {
 
         public static void ExitError(string message){
             Error(message);
-            FS.FileSystem.Log($"ExitError: {message}");
+            Utils.DiscordRPC.Deinitialize();
             new Animatables.RainbowText(TFunnyErrors.GetRandom());
             Console.ReadKey();
             
