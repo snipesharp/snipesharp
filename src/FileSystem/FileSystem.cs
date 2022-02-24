@@ -18,7 +18,7 @@ namespace FS
         public static string accountJsonFile = snipesharpFolder + "account.json";
         public static string configJsonFile = snipesharpFolder + "config.json";
         public static string namesJsonFile = snipesharpFolder + "names.json";
-        public static string logFile = logsFolder + $"{DateTime.Now.ToString("MM-dd-yyyy")}-{new Random().Next()}.log";
+        public static string logFile = logsFolder + $"{DateTime.Now.ToString("MM-dd-yyyy_hh-mm-ss")}.log";
 
         // Creates the .snipesharp folder and informs the user
         public static void CreateSnipesharpFolder() {
