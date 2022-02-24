@@ -76,9 +76,6 @@ Output.Inform("Finished sniping, press any key to exit");
 Console.ReadKey();
 
 static void Initialize() {
-    // delete previous log file
-    if (FileSystem.LogFileExists()) File.Delete(FileSystem.logFile);
-
     // attempt to fix windows cmd colors
     if (Core.pid != PlatformID.Unix)
     Fix.Windows.FixCmd();

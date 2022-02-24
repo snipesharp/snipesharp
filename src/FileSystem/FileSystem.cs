@@ -18,7 +18,7 @@ namespace FS
         public static string accountJsonFile = snipesharpFolder + "account.json";
         public static string configJsonFile = snipesharpFolder + "config.json";
         public static string namesJsonFile = snipesharpFolder + "names.json";
-        public static string logFile = logsFolder + @"latest.log";
+        public static string logFile = logsFolder + $"{DateTime.Now.ToString("MM-dd-yyyy")}-{new Random().Next()}.log";
 
         // Creates the .snipesharp folder and informs the user
         public static void CreateSnipesharpFolder() {
@@ -114,18 +114,12 @@ namespace FS
             if (!Directory.Exists(snipesharpFolder)) return false;
             return File.Exists(configJsonFile);
         }
-        
-        // Checks whether the latest.log file exists in the snipesharp folder
-        public static bool LogFileExists() {
-            if (!Directory.Exists(logsFolder)) return false;
-            return File.Exists(logFile);
-        }
 
         // appends the given string to the latest.log file
-        public static void Log(string toLog) {
+        public static void Log(string log) {
             try {
                 if (!Directory.Exists(logsFolder)) Directory.CreateDirectory(logsFolder);
-                File.AppendAllText(logFile, $"[{DateTime.Now}] {toLog}\n");
+                File.AppendAllText(logFile, $"[{DateTime.Now}] {log}\n");
             }
             catch { Cli.Output.Warn("Log file is busy"); }
         }
