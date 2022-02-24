@@ -1,12 +1,12 @@
 ﻿using FS;
 using Cli;
 using Utils;
-using Snipe;
 using DataTypes;
 using DataTypes.Auth;
 using Cli.Templates;
 using Cli.Animatables;
 using DataTypes.SetText;
+using Cli.Names;
 
 // prepare everything and welcome the user
 Initialize();
@@ -48,10 +48,10 @@ var nameOption = new SelectionPrompt("What name/s would you like to snipe?",
 ).result;
 
 // handle each option individualy
-if(nameOption == TNames.LetMePick) await handleSingleName(authResult, account);
-if(nameOption == TNames.UseNamesJson) await handleNamesJson(authResult, account, namesList);
-if(nameOption == TNames.ThreeLetterNames) await handleThreeLetter(authResult, account);
-if(nameOption == TNames.EnglishNames) await handleEnglishNames(authResult, account);
+if(nameOption == TNames.LetMePick) await Names.handleSingleName(authResult, account);
+if(nameOption == TNames.UseNamesJson) await Names.handleNamesJson(authResult, account, namesList);
+if(nameOption == TNames.ThreeLetterNames) await Names.handleThreeLetter(authResult, account);
+if(nameOption == TNames.EnglishNames) await Names.handleEnglishNames(authResult, account);
 
 // don't exit automatically
 Output.Inform("Finished sniping, press any key to exit");
@@ -89,44 +89,4 @@ static void Initialize() {
 
     // start discord rpc
     Utils.DiscordRPC.Initialize();
-}
-
-
-static async Task<long> GetDelay(){
-    var suggestedOffset = await Offset.CalcSuggested();
-    return Input.Request<long>($"Offset in ms [suggested: {suggestedOffset}ms]: ");
-}
-
-static async Task handleSingleName(AuthResult authResult, Account account){
-    string name = Input.Request<string>("Name to snipe: ");
-    long delay = await GetDelay();
-    var dropTime = Math.Max(0, await Droptime.GetMilliseconds(name, true) - delay);
-    Sniper.WaitForName(name, dropTime, account, authResult.loginMethod);
-    Sniper.Shoot(account, name);
-}
-
-static async Task handleNamesJson(AuthResult authResult, Account account, List<string> namesList){
-    long delay = await GetDelay();
-    for (int i = 0; i < namesList.Count; i++) {
-        var dropTime = Math.Max(0, await Droptime.GetMilliseconds(namesList[i], false) - delay);
-        if(dropTime > 0){
-            Sniper.WaitForName(namesList[i], dropTime, account, authResult.loginMethod);
-            Sniper.Shoot(account, namesList[i]);
-        }
-
-        // remove sniped name from list and update the file
-        if (Config.v.NamesListAutoClean) {
-            namesList = FileSystem.GetNames();
-            namesList.Remove(namesList[i--]);
-        }
-        FileSystem.SaveNames(namesList);
-    }
-}
-
-static async Task handleThreeLetter(AuthResult authResult, Account account){
-    // todo
-}
-
-static async Task handleEnglishNames(AuthResult authResult, Account account){
-    // todo
 }
