@@ -40,9 +40,7 @@ namespace Cli.Names
         }
 
         public static async Task handleThreeLetter(AuthResult authResult, Account account){
-            // todo scrape list of names
-            var scraped = new List<string>();
-
+            var scraped = await Scrape.Get3LetterNames();
             await handleNamesList(authResult, account, scraped);
         }
 

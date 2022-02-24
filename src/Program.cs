@@ -42,7 +42,6 @@ var nameOption = new SelectionPrompt("What name/s would you like to snipe?",
     },
     new string[] {
         namesList.Count == 0 ? TNames.UseNamesJson : "",
-        TNames.ThreeLetterNames,
         TNames.EnglishNames
     }
 ).result;
