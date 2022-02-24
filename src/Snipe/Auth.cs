@@ -90,7 +90,6 @@ namespace Snipe
                 // log the response for later debug
                 spinner.Cancel();
                 string result = await postHttpResponse.Content.ReadAsStringAsync();
-                FS.FileSystem.Log(result);
 
                 // handle error
                 string error = "";

@@ -12,6 +12,7 @@ namespace Cli {
                     T? converted = (T)Convert.ChangeType(input, typeof(T))!;
                     if(converted == null) throw new Exception(TErrors.ExpectedType(typeof(T)));
                     if(validator != null && !validator(converted)) throw new Exception("Invalid format");
+                    if (!hidden) FS.FileSystem.Log($"{requestMessage} {converted}");
                     return converted;
                 } catch (Exception error){
                     Output.Error(error.Message);

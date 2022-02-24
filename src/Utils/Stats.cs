@@ -38,6 +38,8 @@ namespace Utils
 
         // return true if user owns minecraft, false otherwise
         public async static Task<bool> OwnsMinecraft(string bearer) {
+            // create spinner
+            Cli.Animatables.Spinner spinner = new Cli.Animatables.Spinner();
             // prepare http call using the bearer
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0");
@@ -46,7 +48,10 @@ namespace Utils
 
             // get json response
             var mcOwnershipHttpResponse = await client.GetAsync("https://api.minecraftservices.com/entitlements/mcstore");
-            if (!mcOwnershipHttpResponse.IsSuccessStatusCode) Cli.Output.ExitError(Cli.Templates.TAuth.AuthInforms.FailedBearer);
+            if (!mcOwnershipHttpResponse.IsSuccessStatusCode) {
+                spinner.Cancel();
+                Cli.Output.ExitError(Cli.Templates.TAuth.AuthInforms.FailedBearer);
+            }
             var mcOwnershipJsonResponse = JsonSerializer.Deserialize<McOwnershipResponse>(
                 await mcOwnershipHttpResponse.Content.ReadAsStringAsync()
             );
@@ -55,8 +60,10 @@ namespace Utils
             if (mcOwnershipJsonResponse.items == null || mcOwnershipJsonResponse.items.Length < 1) {
                 bool redeemResult;
                 while (redeemResult = !await Snipe.Auth.RedeemGiftcard(Cli.Input.Request<string>(Cli.Templates.TRequests.Giftcode), bearer));
+                spinner.Cancel();
                 return redeemResult;
             }
+            spinner.Cancel();
             return true;
         }
         public class Items {
