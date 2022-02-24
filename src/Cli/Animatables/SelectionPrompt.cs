@@ -6,12 +6,14 @@ namespace Cli.Animatables
     {
         private Animatable animation;
         private List<string> options;
+        private List<string> disabled;
         private int currentIndex = 0;
         public int answerIndex = -1;
         public string result = "";
 
-        public SelectionPrompt(string question, params string[] options) {
+        public SelectionPrompt(string question, string[] options, string[]? disabled=null) {
             this.options = options.ToList();
+            this.disabled = disabled != null ? disabled.ToList() : new List<string>();
 
             // prompt the user
             Console.WriteLine("\n"+question);
@@ -31,7 +33,8 @@ namespace Cli.Animatables
                 var input = Console.ReadKey().Key;
                 if(input == ConsoleKey.UpArrow) this.currentIndex--;
                 if(input == ConsoleKey.DownArrow) this.currentIndex++;
-                if(input == ConsoleKey.Enter) this.answerIndex = this.currentIndex;
+                if(input == ConsoleKey.Enter && 
+                    !this.disabled.Contains(options[this.currentIndex])) this.answerIndex = this.currentIndex;
 
                 // make sure the user can't go out of the range
                 if(this.currentIndex < 0) this.currentIndex = 0;
@@ -62,9 +65,16 @@ namespace Cli.Animatables
         }
 
         public string PrintOptions(){
-            var final = new List<string>(); 
+            // used to gray out disabled options
+            Func<int, string> c = (i) => {
+                if(disabled.Contains(options[i])) return SetText.Gray;
+                if(i == currentIndex) return SetText.Blue;
+                return "";
+            };
+
+            var final = new List<string>();
             for(int i = 0; i < options.Count(); i++)
-            final.Add((i == currentIndex ? SetText.Blue + "  > " : "  ") + options[i] + "  " + SetText.ResetAll);
+            final.Add((i == currentIndex ? c(i) + "  > " : c(i) + "  ") + options[i] + "  " + SetText.ResetAll);
             return String.Join("\n", final);
         }
 

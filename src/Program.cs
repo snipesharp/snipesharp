@@ -3,6 +3,7 @@ using Cli;
 using Utils;
 using Snipe;
 using DataTypes;
+using DataTypes.Auth;
 using Cli.Templates;
 using Cli.Animatables;
 using DataTypes.SetText;
@@ -11,9 +12,8 @@ using DataTypes.SetText;
 Initialize();
 
 // let the user authenticate
-var authResult = await Core.Auth();
+AuthResult authResult = await Core.Auth();
 Account account = authResult.account;
-String loginMethod = authResult.loginMethod;
 
 if(!await Stats.CanChangeName(account.Bearer)){
     Cli.Output.ExitError($"{account.MicrosoftEmail} cannot change username yet.");
@@ -22,54 +22,36 @@ if(!await Stats.CanChangeName(account.Bearer)){
 // handle prename account and change config (runtime only)
 if (account.Prename) {
     var maxPackets2 = !Convert.ToBoolean(
-    new SelectionPrompt("Sniping using a prename account, switch to 2 max packets sent?", "Yes", "No").answerIndex);
+    new SelectionPrompt("Sniping using a prename account, switch to 2 max packets sent?", 
+        new string[] { "Yes [suggested]", "No" }).answerIndex);
     Config.v.SendPacketsCount = maxPackets2 ? 2 : Config.v.SendPacketsCount;
     Output.Inform(TAuth.AuthInforms.NoNameHistory);
 }
 
-// handle names.json file
-var useNamesList = false;
-var namesList = FileSystem.GetNames();
-if(namesList.Count > 0) useNamesList = !Convert.ToBoolean(
-    new SelectionPrompt("Found names in names.json, use the list?", "Yes", "No").answerIndex);
+// fetch names list now to see if they are empty or not
+// will be used later if needed
+List<string> namesList = FileSystem.GetNames();
 
-// set name to either first of list or prompted
-string name = !useNamesList ? Input.Request<string>("Name to snipe: ") : namesList[0];
-
-// prompt for delay (offset)
-var suggestedOffset = await Offset.CalcSuggested();
-long delay = Input.Request<long>($"Offset in ms [suggested: {suggestedOffset}ms]: ");
-
-// wait for name to drop then shoot
-var dropTime = Math.Max(0, await Droptime.GetMilliseconds(name, !useNamesList) - delay);
-if(dropTime > 0){
-    Sniper.WaitForName(name, dropTime, account, authResult.loginMethod);
-    Sniper.Shoot(account, name);
-}
-
-// snipe more if names list is in use
-if (useNamesList) {
-    // remove sniped name from list and update the file
-    if (Config.v.NamesListAutoClean) {
-        namesList.Remove(name);
-        FileSystem.SaveNames(namesList);
+// prompt the user for name choices
+var nameOption = new SelectionPrompt("What name/s would you like to snipe?",
+    new string[] {
+        TNames.LetMePick,
+        TNames.UseNamesJson,
+        TNames.ThreeLetterNames,
+        TNames.EnglishNames
+    },
+    new string[] {
+        namesList.Count == 0 ? TNames.UseNamesJson : "",
+        TNames.ThreeLetterNames,
+        TNames.EnglishNames
     }
-    
-    for (int i = Config.v.NamesListAutoClean ? 0 : 1; i < namesList.Count; i++) {
-        dropTime = Math.Max(0, await Droptime.GetMilliseconds(namesList[i], !useNamesList) - delay);
-        if(dropTime > 0){
-            Sniper.WaitForName(namesList[i], dropTime, account, authResult.loginMethod);
-            Sniper.Shoot(account, namesList[i]);
-        }
+).result;
 
-        // remove sniped name from list and update the file
-        if (Config.v.NamesListAutoClean) {
-            namesList = FileSystem.GetNames();
-            namesList.Remove(namesList[i--]);
-        }
-        FileSystem.SaveNames(namesList);
-    }
-}
+// handle each option individualy
+if(nameOption == TNames.LetMePick) await handleSingleName(authResult, account);
+if(nameOption == TNames.UseNamesJson) await handleNamesJson(authResult, account, namesList);
+if(nameOption == TNames.ThreeLetterNames) await handleThreeLetter(authResult, account);
+if(nameOption == TNames.EnglishNames) await handleEnglishNames(authResult, account);
 
 // don't exit automatically
 Output.Inform("Finished sniping, press any key to exit");
@@ -107,4 +89,44 @@ static void Initialize() {
 
     // start discord rpc
     Utils.DiscordRPC.Initialize();
+}
+
+
+static async Task<long> GetDelay(){
+    var suggestedOffset = await Offset.CalcSuggested();
+    return Input.Request<long>($"Offset in ms [suggested: {suggestedOffset}ms]: ");
+}
+
+static async Task handleSingleName(AuthResult authResult, Account account){
+    string name = Input.Request<string>("Name to snipe: ");
+    long delay = await GetDelay();
+    var dropTime = Math.Max(0, await Droptime.GetMilliseconds(name, true) - delay);
+    Sniper.WaitForName(name, dropTime, account, authResult.loginMethod);
+    Sniper.Shoot(account, name);
+}
+
+static async Task handleNamesJson(AuthResult authResult, Account account, List<string> namesList){
+    long delay = await GetDelay();
+    for (int i = 0; i < namesList.Count; i++) {
+        var dropTime = Math.Max(0, await Droptime.GetMilliseconds(namesList[i], false) - delay);
+        if(dropTime > 0){
+            Sniper.WaitForName(namesList[i], dropTime, account, authResult.loginMethod);
+            Sniper.Shoot(account, namesList[i]);
+        }
+
+        // remove sniped name from list and update the file
+        if (Config.v.NamesListAutoClean) {
+            namesList = FileSystem.GetNames();
+            namesList.Remove(namesList[i--]);
+        }
+        FileSystem.SaveNames(namesList);
+    }
+}
+
+static async Task handleThreeLetter(AuthResult authResult, Account account){
+    // todo
+}
+
+static async Task handleEnglishNames(AuthResult authResult, Account account){
+    // todo
 }

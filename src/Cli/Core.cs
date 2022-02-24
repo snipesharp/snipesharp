@@ -27,15 +27,15 @@ namespace Cli
         public static async Task<AuthResult> Auth(){
             // display prompt
             string loginMethod = FileSystem.AccountFileExists()
-                ? new SelectionPrompt("Login method:", 
+                ? new SelectionPrompt("Login method:", new string[] {
                     TAuth.AuthOptions.PreviousSession,
                     TAuth.AuthOptions.BearerToken,
                     TAuth.AuthOptions.Microsoft
-                ).result
-                : new SelectionPrompt("Login method:", 
+                }).result
+                : new SelectionPrompt("Login method:", new string[] { 
                     TAuth.AuthOptions.BearerToken,
                     TAuth.AuthOptions.Microsoft
-                ).result;
+                }).result;
  
             // obtain login info based on login method choice
             Account account = FileSystem.AccountFileExists() ? FileSystem.GetAccount() : new Account();
