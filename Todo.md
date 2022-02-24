@@ -1,6 +1,5 @@
 # List of ideas/bug fixes to be implemented:
 ## Multiple Accounts support
-## Add spare account option
 After successfully sniping a name, switch to another account since the current one can't change it's name again for the next 30 days
 ## Automatic 24/7 sniping
 Useful if you are not using bearers which expire every 24h
