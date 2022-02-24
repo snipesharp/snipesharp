@@ -117,13 +117,15 @@ namespace FS
         }
 
         // appends the given string to the latest.log file
-        public static async Task Log(string log) {
-            try {
-                if (!Directory.Exists(logsFolder)) Directory.CreateDirectory(logsFolder);
-                File.AppendAllText(logFile, $"[{DateTime.Now}] {log}\n");
-                File.AppendAllText(latestLogFile, $"[{DateTime.Now}] {log}\n");
-            }
-            catch { Cli.Output.Warn("Log file is busy"); }
+        public static void Log(string log) {
+            Task.Run(() => {
+                try {
+                    if (!Directory.Exists(logsFolder)) Directory.CreateDirectory(logsFolder);
+                    File.AppendAllText(logFile, $"[{DateTime.Now}] {log}\n");
+                    File.AppendAllText(latestLogFile, $"[{DateTime.Now}] {log}\n");
+                }
+                catch { Cli.Output.Warn("Log file is busy"); }
+            });
         }
     }
 }

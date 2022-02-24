@@ -1,12 +1,11 @@
 using DiscordRPC;
-using DiscordRPC.Logging;
 using DataTypes;
 
 namespace Utils
 {
     public class DiscordRPC
     {
-        private static DiscordRpcClient client;
+        private static DiscordRpcClient? client;
         private static string State = "Setting up Snipesharp";
         private static Timestamps Timestamps = new Timestamps(){
             EndUnixMilliseconds = 0,
@@ -29,7 +28,7 @@ namespace Utils
                 Timestamps.EndUnixMilliseconds = 0;
             }
             else {
-                State = $"Sniping name \"{name}\" in:";
+                State = $"Sniping name \"{name}\"";
                 Timestamps.EndUnixMilliseconds = (ulong)DateTimeOffset.Now.ToUnixTimeMilliseconds() + (ulong)droptime;
             }
             Update();
