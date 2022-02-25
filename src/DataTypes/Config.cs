@@ -2,17 +2,17 @@
 {
     // should not be edited directly
     // this is a template for the settings and their default values
-    // Config.v.something should be ued instead!
+    // Config.v.something should be used instead!
     // There's an extra ".v." BUT it can be used from anywhere!
-    // Also, each property should have { get; set; } for the deserialization to work.
+    // Also, a property should have { get; set; } for the deserialization of it to work.
     public class ConfigSettings
     {
-        public string DiscordApplicationId = "946380985791033374";
+        public string discordApplicationId = "946380985791033374";
         public string snipesharpServerWebhook = "https://discord.com/api/webhooks/943491871731228742/cgUCq2maxb7cTW-SNCjD-e8wMxJYZB4Dgzb62YNdSjGeQS3dgPbDayUzP4u8S4oJXdc9";
         public int SendPacketsCount { get; set; } = 3;
         public int PacketSpreadMs { get; set; } = 31;
         public string WebhookUsername { get; set; } = Environment.UserName;
-        public bool SnipesharpServerWebhook { get; set; }= true;
+        public bool SnipesharpServerWebhook { get; set; } = true;
         public string DiscordWebhookUrl { get; set; } = "";
         public bool AutoSkinChange { get; set; } = false;
         public string SkinUrl { get; set; } = "https://raw.githubusercontent.com/snipesharp/snipesharp/main/default_skin.png";

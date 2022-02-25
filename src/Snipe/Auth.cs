@@ -95,8 +95,9 @@ namespace Snipe
                 string error = "";
                 if (result.Contains("That Microsoft account doesn\\'t exist")) error = "That Microsoft account doesn't exist";
                 if (result.Contains("incorrect")) error = "Wrong password";
+                if (result.Contains("Sign in to")) error = "Account 2-factor authentication enabled";
                 if (result.Contains("Please enter the password for your Microsoft account")) error = "Password can't be empty";
-                if (!result.Contains("Please enter the password for your Microsoft account") && !result.Contains("incorrect") && !result.Contains("That Microsoft account doesn\\'t exist")) error = $"Failed due to Microsoft suspecting suspicious activities. Try following this tutorial to fix this: {DataTypes.SetText.SetText.Cyan}https://github.com/snipesharp/snipesharp/wiki/How-to-fix-failed-Microsoft-login {DataTypes.SetText.SetText.ResetAll}";
+                if (!result.Contains("Sign in to") && !result.Contains("Please enter the password for your Microsoft account") && !result.Contains("incorrect") && !result.Contains("That Microsoft account doesn\\'t exist")) error = $"Failed due to Microsoft suspecting suspicious activities. Try following this tutorial to fix this: {DataTypes.SetText.SetText.Cyan}https://github.com/snipesharp/snipesharp/wiki/How-to-fix-failed-Microsoft-login {DataTypes.SetText.SetText.ResetAll}";
                 Cli.Output.Error(error);
             }
 

@@ -84,7 +84,7 @@ static void Initialize() {
     if (!FileSystem.NamesFileExists()) FileSystem.SaveNames(new List<string>());
 
     // create example names file
-    FileSystem.SaveNames(new List<string> { "example1", "example2", "example3" }, "names.example.json");
+    FileSystem.SaveNames(new List<string> { "example1", "example2", "example3" }, "example.names.json");
 
     // start discord rpc
     Utils.DiscordRPC.Initialize();
