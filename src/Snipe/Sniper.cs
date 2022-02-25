@@ -26,17 +26,14 @@ namespace Snipe
             // update discord rpc
             Utils.DiscordRPC.SetSniping(name, droptime);
 
-            // calculate total wait time
-            var waitTime = Math.Max(droptime, 0);
-
             // countdown animation
-            var countDown = new CountDown(waitTime, $"Sniping {SetText.DarkBlue + SetText.Bold}{name}{SetText.ResetAll} in " + "{TIME}");
+            var countDown = new CountDown(droptime, $"Sniping {SetText.DarkBlue + SetText.Bold}{name}{SetText.ResetAll} in " + "{TIME}");
 
             // wait for the time minus 5 minutes then reauthenticate // async but not awaited
-            if (loginMethod == TAuth.AuthOptions.Microsoft && waitTime > 300000) Reauthenticate(account, waitTime);
+            if (loginMethod == TAuth.AuthOptions.Microsoft && droptime > 300000) Reauthenticate(account, droptime);
 
             // actually wait for the time
-            int msToSleep = (int)TimeSpan.FromMilliseconds(waitTime).TotalMilliseconds;
+            int msToSleep = (int)TimeSpan.FromMilliseconds(droptime).TotalMilliseconds;
             Thread.Sleep(msToSleep);
 
             countDown.Cancel();
@@ -44,7 +41,7 @@ namespace Snipe
 
         public static async void Reauthenticate(Account account, long waitTime) {
             // sleep until 5 mins before
-            Thread.Sleep((int)waitTime - 299990);
+            await Task.Delay((int)waitTime - 299990);
 
             FS.FileSystem.Log("Refreshing bearer");
             var result = await Auth.AuthMicrosoft(account.MicrosoftEmail, account.MicrosoftPassword);

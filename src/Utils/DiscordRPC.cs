@@ -12,7 +12,7 @@ namespace Utils
         };
 
         public static void Deinitialize(){
-            client.Dispose();
+            client!.Dispose();
         }
 
         public static void Initialize(){
@@ -35,7 +35,7 @@ namespace Utils
         }
 
         private static void Update(){
-            client.SetPresence(new RichPresence() {
+            client!.SetPresence(new RichPresence() {
                 Details = "A minecraft name sniper/grabber",
                 State = State,
                 Timestamps = Timestamps.EndUnixMilliseconds > 0 ? Timestamps : null,
