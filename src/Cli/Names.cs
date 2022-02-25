@@ -21,7 +21,7 @@ namespace Cli.Names
             Sniper.Shoot(account, name);
         }
 
-        public static async Task handleNamesList(AuthResult authResult, Account account, List<string> namesList){
+        public static async Task handleNamesList(AuthResult authResult, Account account, List<string> namesList, bool fromJsonFile=true){
             long delay = await GetDelay();
             for (int i = 0; i < namesList.Count; i++) {
                 var dropTime = Math.Max(0, await Droptime.GetMilliseconds(namesList[i], false) - delay);
@@ -32,23 +32,23 @@ namespace Cli.Names
 
                 // remove sniped name from list and update the file
                 if (Config.v.NamesListAutoClean) {
-                    namesList = FileSystem.GetNames();
+                    if(fromJsonFile) namesList = FileSystem.GetNames();
                     namesList.Remove(namesList[i--]);
                 }
-                FileSystem.SaveNames(namesList);
+                if(fromJsonFile) FileSystem.SaveNames(namesList);
             }
         }
 
         public static async Task handleThreeLetter(AuthResult authResult, Account account){
             var scraped = await Scrape.Get3LetterNames();
-            await handleNamesList(authResult, account, scraped);
+            await handleNamesList(authResult, account, scraped, false);
         }
 
         public static async Task handleEnglishNames(AuthResult authResult, Account account){
             // todo scrape list of names
             var scraped = new List<string>();
 
-            await handleNamesList(authResult, account, scraped);
+            await handleNamesList(authResult, account, scraped, false);
         }
     }
 }
