@@ -16,7 +16,7 @@ namespace Utils
         }
 
         public static void Initialize(){
-            client = new DiscordRpcClient(Config.v.DiscordApplicationId);		
+            client = new DiscordRpcClient(Config.v.discordApplicationId);		
             client.Initialize();
             Update();
         }
