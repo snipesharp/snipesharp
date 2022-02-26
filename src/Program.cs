@@ -18,6 +18,7 @@ Account account = authResult.account;
 if(!await Stats.CanChangeName(account.Bearer)){
     Cli.Output.ExitError($"{account.MicrosoftEmail} cannot change username yet.");
 }
+string? username = await Utils.Stats.GetUsername(account.Bearer);
 
 // handle prename account and change config (runtime only)
 if (account.Prename) {
@@ -26,7 +27,9 @@ if (account.Prename) {
         new string[] { "Yes [suggested]", "No" }).answerIndex);
     Config.v.SendPacketsCount = maxPackets2 ? 2 : Config.v.SendPacketsCount;
     Output.Inform(TAuth.AuthInforms.NoNameHistory);
+    Console.Title = $"snipesharp - Logged in with a prename account";
 }
+else if (!String.IsNullOrEmpty(username)) Console.Title = $"snipesharp - Logged in as {username}";
 
 // fetch names list now to see if they are empty or not
 // will be used later if needed

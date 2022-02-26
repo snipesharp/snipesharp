@@ -8,6 +8,15 @@ namespace Utils
         private static string NameChangeEndpoint = "https://api.minecraftservices.com/minecraft/profile/namechange";
         private static JsonSerializerOptions JsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
+        public static async Task<string?> GetUsername(string bearer) {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {bearer}");
+
+            var result = await client.GetAsync("https://api.minecraftservices.com/minecraft/profile");
+            var jsonResult = JsonSerializer.Deserialize<ProfileInformation>(await result.Content.ReadAsStringAsync());
+            if (jsonResult != null) return jsonResult.name;
+            return null;
+        }
         public static async Task<bool> CanChangeName(string bearer){
             HttpClient httpClient = new HttpClient();
 
@@ -35,7 +44,6 @@ namespace Utils
 
             return false;
         }
-
         // return true if user owns minecraft, false otherwise
         public async static Task<bool> OwnsMinecraft(string bearer) {
             // create spinner
@@ -65,6 +73,10 @@ namespace Utils
             }
             spinner.Cancel();
             return true;
+        }
+        public class ProfileInformation {
+            public string? id { get; set; }
+            public string? name { get; set; }
         }
         public class Items {
             public string? name { get; set; }
