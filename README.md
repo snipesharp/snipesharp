@@ -40,7 +40,7 @@
 </p>
 
 # About
-Snipesharp is an easy to use Minecraft name Sniper featuring 24/7 giftcard & normal sniping, Discord RPC & more! Snipesharp is coded in .NET C# and is focused on both speed and user friendliness.
+Snipesharp is an easy to use Minecraft name Sniper featuring 24/7 giftcard & normal sniping, Discord RPC & more! Snipesharp is coded in [.NET](https://dotnet.microsoft.com/en-us/) C# and is focused on both speed and user friendliness.
 
 ### Created by:
 
@@ -101,8 +101,8 @@ demented
     - Custom skin type (classic/slim)
 
 # Installing
-To use snipesharp you can just download an executable from the latest release or by pressing one of the buttons according to your operating system, located at the top of this document.
-You can compile & install snipesharp using the install scripts that come with the repository. The only dependency/requirement for this is to have .NET installed.
+To use snipesharp you can just download an executable from the [latest release](https://github.com/snipesharp/snipesharp/releases/tag/v1.5.0) or by pressing one of the buttons according to your operating system, located at the top of this document.
+You can compile & install snipesharp using the install scripts that come with the repository. The only dependency/requirement for this is to have [.NET](https://dotnet.microsoft.com/en-us/) installed.
 
 # Donate
 - To demented
