@@ -101,7 +101,7 @@ demented
     - Custom skin type (classic/slim)
 
 # Installing
-To use snipesharp you can just download an executable from the [latest release](https://github.com/snipesharp/snipesharp/releases/tag/v1.5.0) or by pressing one of the buttons according to your operating system, located at the top of this document.
+To use snipesharp you can just download an executable from the [latest release](https://github.com/snipesharp/snipesharp/releases/tag/v1.5) or by pressing one of the buttons according to your operating system, located at the top of this document.
 You can compile & install snipesharp using the install scripts that come with the repository. The only dependency/requirement for this is to have [.NET](https://dotnet.microsoft.com/en-us/) installed.
 
 # Donate
