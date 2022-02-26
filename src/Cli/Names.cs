@@ -43,12 +43,5 @@ namespace Cli.Names
             var scraped = await Scrape.Get3LetterNames();
             await handleNamesList(authResult, account, scraped, false);
         }
-
-        public static async Task handleEnglishNames(AuthResult authResult, Account account){
-            // todo scrape list of names
-            var scraped = new List<string>();
-
-            await handleNamesList(authResult, account, scraped, false);
-        }
     }
 }

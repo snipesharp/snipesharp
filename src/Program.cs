@@ -38,11 +38,9 @@ var nameOption = new SelectionPrompt("What name/s would you like to snipe?",
         TNames.LetMePick,
         TNames.UseNamesJson,
         TNames.ThreeLetterNames,
-        TNames.EnglishNames
     },
     new string[] {
         namesList.Count == 0 ? TNames.UseNamesJson : "",
-        TNames.EnglishNames
     }
 ).result;
 
@@ -50,7 +48,6 @@ var nameOption = new SelectionPrompt("What name/s would you like to snipe?",
 if(nameOption == TNames.LetMePick) await Names.handleSingleName(authResult, account);
 if(nameOption == TNames.UseNamesJson) await Names.handleNamesList(authResult, account, namesList);
 if(nameOption == TNames.ThreeLetterNames) await Names.handleThreeLetter(authResult, account);
-if(nameOption == TNames.EnglishNames) await Names.handleEnglishNames(authResult, account);
 
 // don't exit automatically
 Output.Inform("Finished sniping, press any key to exit");
