@@ -119,12 +119,8 @@ namespace Snipe
 
             // get json response
             var mcOwnershipHttpResponse = await client.GetAsync("https://api.minecraftservices.com/entitlements/mcstore");
-            if (!mcOwnershipHttpResponse.IsSuccessStatusCode) {
-                spinner.Cancel();
-                return false;
-            }
             spinner.Cancel();
-            return true;
+            return mcOwnershipHttpResponse.IsSuccessStatusCode;
         }
         
         ///<returns>True if user has name history, false otherwise</returns>
