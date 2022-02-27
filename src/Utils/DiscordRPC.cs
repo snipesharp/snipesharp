@@ -7,6 +7,7 @@ namespace Utils
     {
         private static DiscordRpcClient? client;
         private static string State = "Setting up Snipesharp";
+        private static string Details = "A minecraft name sniper/grabber";
         private static Timestamps Timestamps = new Timestamps(){
             EndUnixMilliseconds = 0,
         };
@@ -34,9 +35,14 @@ namespace Utils
             Update();
         }
 
+        public static void SetDescription(string description) {
+            Details = description;
+            Update();
+        }
+
         private static void Update(){
             client!.SetPresence(new RichPresence() {
-                Details = "A minecraft name sniper/grabber",
+                Details = Details,
                 State = State,
                 Timestamps = Timestamps.EndUnixMilliseconds > 0 ? Timestamps : null,
                 Assets = new Assets() {

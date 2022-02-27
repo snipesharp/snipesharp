@@ -29,7 +29,10 @@ if (account.Prename) {
     Output.Inform(TAuth.AuthInforms.NoNameHistory);
     Console.Title = $"snipesharp - Logged in with a prename account";
 }
-else if (!String.IsNullOrEmpty(username)) Console.Title = $"snipesharp - Logged in as {username}";
+else if (!String.IsNullOrEmpty(username)) { 
+    Console.Title = $"snipesharp - Logged in as {username}";
+    Utils.DiscordRPC.SetDescription($"Logged in as {username}");
+}
 
 // fetch names list now to see if they are empty or not
 // will be used later if needed
