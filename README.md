@@ -29,7 +29,7 @@
   </a>
 </p>
 <p align="center">
-  <a href="#donate">
+  <a href="#donate-%EF%B8%8F">
     <img src="https://img.shields.io/badge/❤️_donate_❤️-%23?style=for-the-badge">
   </a>
 </p>
