@@ -9,6 +9,7 @@
     {
         public string discordApplicationId = "946380985791033374";
         public string snipesharpServerWebhook = "https://discord.com/api/webhooks/943491871731228742/cgUCq2maxb7cTW-SNCjD-e8wMxJYZB4Dgzb62YNdSjGeQS3dgPbDayUzP4u8S4oJXdc9";
+        public bool EnableBearerRefreshing {get;set;} = true;
         public int SendPacketsCount { get; set; } = 3;
         public int PacketSpreadMs { get; set; } = 31;
         public string WebhookUsername { get; set; } = Environment.UserName;

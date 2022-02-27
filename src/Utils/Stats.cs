@@ -40,6 +40,7 @@ namespace Utils
             }
             catch (Exception e){
                 Console.WriteLine(e);
+                FS.FileSystem.Log(e.ToString());
             }
 
             return false;

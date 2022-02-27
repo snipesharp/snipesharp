@@ -10,7 +10,6 @@ namespace Snipe
         public static async Task<bool> AuthWithBearer(string bearer) {
             if (!await IsWorkingBearer(bearer)) return false;
             if (!await Utils.Stats.OwnsMinecraft(bearer)) Cli.Output.ExitError("Account doesn't own Minecraft");
-            await Utils.Stats.CanChangeName(bearer);
             return true;
         }
         

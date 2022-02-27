@@ -15,7 +15,7 @@ Initialize();
 AuthResult authResult = await Core.Auth();
 Account account = authResult.account;
 
-if(!await Stats.CanChangeName(account.Bearer)){
+if(!account.Prename && !await Stats.CanChangeName(account.Bearer)){
     Cli.Output.ExitError($"{account.MicrosoftEmail} cannot change username yet.");
 }
 string? username = await Utils.Stats.GetUsername(account.Bearer);

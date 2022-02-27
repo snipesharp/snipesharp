@@ -30,7 +30,7 @@ namespace Snipe
             var countDown = new CountDown(droptime, $"Sniping {SetText.DarkBlue + SetText.Bold}{name}{SetText.ResetAll} in " + "{TIME}");
 
             // wait for the time minus 5 minutes then reauthenticate // async but not awaited
-            if (loginMethod == TAuth.AuthOptions.Microsoft && droptime > 300000) Reauthenticate(account, droptime);
+            if (Config.v.EnableBearerRefreshing && loginMethod == TAuth.AuthOptions.Microsoft && droptime > 300000) Reauthenticate(account, droptime);
 
             // actually wait for the time
             int msToSleep = (int)TimeSpan.FromMilliseconds(droptime).TotalMilliseconds;
