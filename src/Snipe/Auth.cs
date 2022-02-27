@@ -102,8 +102,8 @@ namespace Snipe
                 if (result.Contains("Please enter the password for your Microsoft account")) error = "Password can't be empty";
                 if (!result.Contains("Help us protect your account") && !result.Contains("Please enter the password for your Microsoft account") && !result.Contains("incorrect") && !result.Contains("That Microsoft account doesn\\'t exist")) error = $"Failed due to Microsoft suspecting suspicious activities. Try following this tutorial to fix this: {DataTypes.SetText.SetText.Cyan}https://github.com/snipesharp/snipesharp/wiki/How-to-fix-failed-Microsoft-login {DataTypes.SetText.SetText.ResetAll}";
                 Cli.Output.Error(error);
+                return new MsAuthResult{error = error};
             }
-
             return new MsAuthResult();
         }
 
@@ -203,6 +203,7 @@ namespace Snipe
     public struct MsAuthResult {
         public string bearer { get;set; }
         public bool prename { get;set; }
+        public string error {get;set;}
     }
     public struct McApiResponse {
         public string username { get; set; }

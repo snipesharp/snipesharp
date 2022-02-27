@@ -52,13 +52,13 @@ namespace Cli
             return new AuthResult { account = account, loginMethod = loginMethod };
         }
 
-        private static async Task<Account> HandleMicrosoft(Account account, int attempt, bool newLogin=false){
+        private static async Task<Account> HandleMicrosoft(Account account, int attempt, bool newLogin=false, bool askForEmail=true){
             // warn about 2fa
             if (attempt == 1) Output.Warn(TAuth.AuthInforms.Warn2FA);
 
             // get new credentials
             if (newLogin) {
-                account.MicrosoftEmail = Input.Request<string>(
+                if (askForEmail) account.MicrosoftEmail = Input.Request<string>(
                     TRequests.MicrosoftEmail, 
                     validator: Validators.Credentials.Email
                 );
@@ -74,7 +74,7 @@ namespace Cli
             // if bearer not returned, retry
             if (String.IsNullOrEmpty(authResult.bearer)) {
                 FS.FileSystem.Log(TAuth.AuthInforms.FailedMicrosoft + $" - attempt {attempt}");
-                return await HandleMicrosoft(account, ++attempt, newLogin);
+                return await HandleMicrosoft(account, ++attempt, newLogin, authResult.error != "Wrong password");
             }
 
             account.Bearer = authResult.bearer;
