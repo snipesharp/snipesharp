@@ -39,8 +39,8 @@ namespace Cli
  
             // obtain login info based on login method choice
             Account account = FileSystem.AccountFileExists() ? FileSystem.GetAccount() : new Account();
-            if (loginMethod == TAuth.AuthOptions.BearerToken) account = await HandleBearer(account, true);
-            else if (loginMethod == TAuth.AuthOptions.Microsoft) account = await HandleMicrosoft(account, true);
+            if (loginMethod == TAuth.AuthOptions.BearerToken) account = await HandleBearer(account, 1, true);
+            else if (loginMethod == TAuth.AuthOptions.Microsoft) account = await HandleMicrosoft(account, 1, true);
             else {
                 var handleFromFileResult = await HandleFromFile();
                 account = handleFromFileResult.Account;
@@ -52,7 +52,7 @@ namespace Cli
             return new AuthResult { account = account, loginMethod = loginMethod };
         }
 
-        private static async Task<Account> HandleMicrosoft(Account account, bool newLogin=false){
+        private static async Task<Account> HandleMicrosoft(Account account, int attempt, bool newLogin=false){
             // warn about 2fa
             Output.Warn(TAuth.AuthInforms.Warn2FA);
 
@@ -74,29 +74,29 @@ namespace Cli
             // if bearer not returned, retry
             if (String.IsNullOrEmpty(authResult.bearer)) {
                 Output.Error(TAuth.AuthInforms.FailedMicrosoft);
-                return await HandleMicrosoft(account, newLogin);
+                return await HandleMicrosoft(account, ++attempt, newLogin);
             }
 
             account.Bearer = authResult.bearer;
             account.Prename = authResult.prename;
-            Output.Success(TAuth.AuthInforms.SuccessAuthMicrosoft);
+            Output.Success(attempt == 3 ? TAuth.AuthInforms.SuccessAuthMicrosoft + ", third time's a charm" : TAuth.AuthInforms.SuccessAuthMicrosoft);
 
             return account;
         }
 
-        private static async Task<Account> HandleBearer(Account account, bool newBearer=false){
+        private static async Task<Account> HandleBearer(Account account, int attempt, bool newBearer=false){
             // prompt for bearer token
             if (newBearer) account.Bearer = Input.Request<string>(TRequests.Bearer);
 
             // retry if invalid bearer
             if(!await Snipe.Auth.AuthWithBearer(account.Bearer)) {
                 Output.Error(TAuth.AuthInforms.FailedBearer);
-                return await HandleBearer(account, newBearer);
+                return await HandleBearer(account, ++attempt, newBearer);
             }
 
             // validate the token
             Output.Warn(TAuth.AuthInforms.WarnBearer);
-            Output.Success(TAuth.AuthInforms.SuccessAuth);
+            Output.Success(attempt == 3 ? TAuth.AuthInforms.SuccessAuth + ", third time's a charm" : TAuth.AuthInforms.SuccessAuth);
         
             return account;
         }
@@ -121,8 +121,8 @@ namespace Cli
                 : availableMethods[0];
 
             // authenticate the chosen method
-            if (choice == TAuth.AuthOptions.BearerToken) account = await HandleBearer(account);
-            if (choice == TAuth.AuthOptions.Microsoft) account = await HandleMicrosoft(account);
+            if (choice == TAuth.AuthOptions.BearerToken) account = await HandleBearer(account, 1);
+            if (choice == TAuth.AuthOptions.Microsoft) account = await HandleMicrosoft(account, 1);
 
             return new HandleFromFileResult { Account = account, Choice = choice };
         }
