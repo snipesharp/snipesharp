@@ -6,13 +6,15 @@ namespace Snipe
 {
     public class Auth
     {
+        /// <summary>Verifies whether the current bearer works & returns true if the account owns Minecraft & can change its username</summary>
         public static async Task<bool> AuthWithBearer(string bearer) {
+            if (!await IsWorkingBearer(bearer)) return false;
             if (!await Utils.Stats.OwnsMinecraft(bearer)) Cli.Output.ExitError("Account doesn't own Minecraft");
             await Utils.Stats.CanChangeName(bearer);
             return true;
         }
         
-        /// <returns>MC Bearer using Microsoft credentials</returns>
+        /// <returns>MC Bearer using Microsoft credentials if successful, or an empty MsAuthResult object if not</returns>
         public static async Task<MsAuthResult> AuthMicrosoft(string email, string password) {
             var spinner = new Spinner();
 
@@ -104,7 +106,28 @@ namespace Snipe
             return new MsAuthResult();
         }
 
-        // return true if user has name history, false otherwise
+        /// <summary>Verifies whether the given bearer can be used to Authorize</summary>
+        public static async Task<bool> IsWorkingBearer(string bearer) {
+            // create spinner
+            Cli.Animatables.Spinner spinner = new Cli.Animatables.Spinner();
+            
+            // prepare http call using the bearer
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
+
+            // get json response
+            var mcOwnershipHttpResponse = await client.GetAsync("https://api.minecraftservices.com/entitlements/mcstore");
+            if (!mcOwnershipHttpResponse.IsSuccessStatusCode) {
+                spinner.Cancel();
+                return false;
+            }
+            spinner.Cancel();
+            return true;
+        }
+        
+        ///<returns>True if user has name history, false otherwise</returns>
         public async static Task<bool> HasNameHistory(string bearer) {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
@@ -112,7 +135,8 @@ namespace Snipe
             return (int)response.StatusCode == 200;
         }
 
-        // redeen a giftcard from given giftcode. Returns true or false based on success.
+        /// <summary>Redeems a giftcard from given giftcode.</summary>
+        /// <returns>True or false based on success</returns>
         public async static Task<bool> RedeemGiftcard(string giftcode, string bearer) {
             // prepare the http request
             HttpClient client = new HttpClient();

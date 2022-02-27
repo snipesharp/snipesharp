@@ -71,8 +71,11 @@ namespace Cli
             // get bearer with microsoft credentials
             var authResult = await Snipe.Auth.AuthMicrosoft(account.MicrosoftEmail, account.MicrosoftPassword);
 
-            // if bearer not returned, exit
-            if (String.IsNullOrEmpty(authResult.bearer)) Output.ExitError(TAuth.AuthInforms.FailedMicrosoft);
+            // if bearer not returned, retry
+            if (String.IsNullOrEmpty(authResult.bearer)) {
+                Output.Error(TAuth.AuthInforms.FailedMicrosoft);
+                return await HandleMicrosoft(account, newLogin);
+            }
 
             account.Bearer = authResult.bearer;
             account.Prename = authResult.prename;
@@ -85,8 +88,11 @@ namespace Cli
             // prompt for bearer token
             if (newBearer) account.Bearer = Input.Request<string>(TRequests.Bearer);
 
-            // exit if invalid bearer
-            if(!await Snipe.Auth.AuthWithBearer(account.Bearer)) Output.ExitError(TAuth.AuthInforms.FailedBearer);
+            // retry if invalid bearer
+            if(!await Snipe.Auth.AuthWithBearer(account.Bearer)) {
+                Output.Error(TAuth.AuthInforms.FailedBearer);
+                return await HandleBearer(account, newBearer);
+            }
 
             // validate the token
             Output.Warn(TAuth.AuthInforms.WarnBearer);
