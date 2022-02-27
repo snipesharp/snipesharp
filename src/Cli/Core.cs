@@ -54,7 +54,7 @@ namespace Cli
 
         private static async Task<Account> HandleMicrosoft(Account account, int attempt, bool newLogin=false){
             // warn about 2fa
-            Output.Warn(TAuth.AuthInforms.Warn2FA);
+            if (attempt == 1) Output.Warn(TAuth.AuthInforms.Warn2FA);
 
             // get new credentials
             if (newLogin) {
@@ -73,7 +73,7 @@ namespace Cli
 
             // if bearer not returned, retry
             if (String.IsNullOrEmpty(authResult.bearer)) {
-                Output.Error(TAuth.AuthInforms.FailedMicrosoft);
+                FS.FileSystem.Log(TAuth.AuthInforms.FailedMicrosoft + $" - attempt {attempt}");
                 return await HandleMicrosoft(account, ++attempt, newLogin);
             }
 

@@ -15,9 +15,7 @@ Initialize();
 AuthResult authResult = await Core.Auth();
 Account account = authResult.account;
 
-if(!account.Prename && !await Stats.CanChangeName(account.Bearer)){
-    Cli.Output.ExitError($"{account.MicrosoftEmail} cannot change username yet.");
-}
+if(!account.Prename) if (!await Stats.CanChangeName(account.Bearer)) Cli.Output.ExitError($"{account.MicrosoftEmail} cannot change username yet.");
 string? username = await Utils.Stats.GetUsername(account.Bearer);
 
 // handle prename account and change config (runtime only)
@@ -31,7 +29,7 @@ if (account.Prename) {
 }
 else if (!String.IsNullOrEmpty(username)) { 
     Console.Title = $"snipesharp - Logged in as {username}";
-    Utils.DiscordRPC.SetDescription($"Logged in as {username}");
+    if (Config.v.ShowUsernameDRPC) Utils.DiscordRPC.SetDescription($"Logged in as {username}");
 }
 
 // fetch names list now to see if they are empty or not
@@ -90,5 +88,5 @@ static void Initialize() {
     FileSystem.SaveNames(new List<string> { "example1", "example2", "example3" }, "example.names.json");
 
     // start discord rpc
-    Utils.DiscordRPC.Initialize();
+    if (Config.v.EnableDiscordRPC) Utils.DiscordRPC.Initialize();
 }

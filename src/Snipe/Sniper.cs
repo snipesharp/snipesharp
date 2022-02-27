@@ -24,7 +24,7 @@ namespace Snipe
 
         public static void WaitForName(string name, long droptime, Account account, string loginMethod) {
             // update discord rpc
-            Utils.DiscordRPC.SetSniping(name, droptime);
+            if (Config.v.ShowTargetNameDRPC) Utils.DiscordRPC.SetSniping(name, droptime);
 
             // countdown animation
             var countDown = new CountDown(droptime, $"Sniping {SetText.DarkBlue + SetText.Bold}{name}{SetText.ResetAll} in " + "{TIME}");
