@@ -29,8 +29,8 @@
   </a>
 </p>
 <p align="center">
-  <a href="https://github.com/snipesharp/snipesharp/releases/tag/v1.5">
-    <img src="https://img.shields.io/badge/latest_release-v1.5-%23015fa1?style=flat-square"</img>
+  <a href="#donate">
+    <img src="https://img.shields.io/badge/❤️_donate_❤️-%23?style=for-the-badge">
   </a>
 </p>
 <p align="center">
@@ -104,7 +104,7 @@ demented
 To use snipesharp you can just download an executable from the [latest release](https://github.com/snipesharp/snipesharp/releases/tag/v1.5) or by pressing one of the buttons according to your operating system, located at the top of this document.
 You can compile & install snipesharp using the install scripts that come with the repository. The only dependency/requirement for this is to have [.NET](https://dotnet.microsoft.com/en-us/) installed.
 
-# Donate
+# Donate ❤️
 - To demented
   - Monero: 89Gk3YiZGWnLsgGygzRg8Shqp1UyEuYGMbnrz3dLX9isbiLb5b8e6Zu4rT6NX5K5dsNtMb1WTyScqdYCsjxNfUFaRLcdeBk
 - To StiliyanKushev
