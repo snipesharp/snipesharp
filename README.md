@@ -36,7 +36,6 @@
   </a>
   <br/><br/>
   <img src="https://img.shields.io/github/contributors/snipesharp/snipesharp?style=flat&color=e17800&label=developers&logo=github">
-  <img src="https://img.shields.io/github/sponsors/snipesharp?style=flat&logo=github">
   <img src="https://img.shields.io/github/downloads/snipesharp/snipesharp/total?color=1aaf19&logo=github&label=downloads&style=flat">
   <img src="https://img.shields.io/github/stars/snipesharp?color=d7b608&logo=github&style=flat">
   <img src="https://img.shields.io/github/issues/snipesharp/snipesharp?style=flat&color=0e3351&logo=github">
