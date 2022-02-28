@@ -99,7 +99,16 @@ Snipesharp is an easy to use Minecraft name Sniper featuring 24/7 giftcard & nor
 
 # Installing ✅
 To use snipesharp you can just download an executable from the [latest release](https://github.com/snipesharp/snipesharp/releases/tag/v1.5.1) or by pressing one of the buttons according to your operating system, located at the top of this document.
-You can compile & install snipesharp using the install scripts that come with the repository. The only dependency/requirement for this is to have [.NET](https://dotnet.microsoft.com/en-us/) installed.
+
+Optionally, you can compile & install snipesharp using the install scripts that come with the repository. The only **dependency/requirement** for this is to have **[.NET](https://dotnet.microsoft.com/en-us/)** installed.
+
+### Windows
+To use the **Windows** install script, all you have to do is double click the `install_win.bat` file.
+
+### Linux
+On **Linux** you will have to make the `install_linux.sh` file executable by running `chmod +x install_linux.sh`, if it's not already executable. After that you run it with superuser privileges by running `sudo install_linux.sh`.
+
+Similarly, if you have an **arm64/aarch64 architecture CPU**, you will have to make the file executable the same way you would normally, but run it without superuser privileges by running `./install_linux.sh`
 
 # Donate ❤️
 - ### To demented
