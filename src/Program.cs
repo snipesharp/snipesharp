@@ -58,6 +58,9 @@ Output.Inform("Finished sniping, press any key to exit");
 Console.ReadKey();
 
 static void Initialize() {
+    // set console window title
+    Console.Title = "snipesharp";
+
     // delete latest log file
     if (File.Exists(FileSystem.latestLogFile)) File.Delete(FileSystem.latestLogFile);
 
