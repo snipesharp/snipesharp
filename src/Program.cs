@@ -37,11 +37,11 @@ else if (!String.IsNullOrEmpty(username)) {
 List<string> namesList = FileSystem.GetNames();
 
 // prompt the user for name choices
-var nameOption = new SelectionPrompt("What name/s would you like to snipe?",
+var nameOption = new SelectionPrompt("What name(s) would you like to snipe?",
     new string[] {
         TNames.LetMePick,
         TNames.UseNamesJson,
-        TNames.ThreeLetterNames,
+        TNames.ThreeCharNames,
     },
     new string[] {
         namesList.Count == 0 ? TNames.UseNamesJson : "",
@@ -51,7 +51,7 @@ var nameOption = new SelectionPrompt("What name/s would you like to snipe?",
 // handle each option individualy
 if(nameOption == TNames.LetMePick) await Names.handleSingleName(authResult, account);
 if(nameOption == TNames.UseNamesJson) await Names.handleNamesList(authResult, account, namesList);
-if(nameOption == TNames.ThreeLetterNames) await Names.handleThreeLetter(authResult, account);
+if(nameOption == TNames.ThreeCharNames) await Names.handleThreeLetter(authResult, account);
 
 // don't exit automatically
 Output.Inform("Finished sniping, press any key to exit");
