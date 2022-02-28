@@ -1,6 +1,7 @@
 <p align="center">
+
   <a href="#about">
-    <img src="https://user-images.githubusercontent.com/93228501/154115422-57cca957-4f1a-4cdf-93f5-18f9dd3cc13b.png">
+    <img src="https://user-images.githubusercontent.com/93228501/155908335-803039d4-85bc-4407-9a59-5de88ec49d40.png" height="196" width="196">
   </a>
 </p>
 <p align="center">
@@ -30,7 +31,7 @@
 </p>
 <p align="center">
   <a href="#donate-%EF%B8%8F">
-    <img src="https://img.shields.io/badge/❤️_donate_❤️-%23?style=for-the-badge">
+    <img src="https://img.shields.io/badge/❤️_donate_❤️-%230b2a53?style=for-the-badge">
   </a>
 </p>
 <p align="center">
