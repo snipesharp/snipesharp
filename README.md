@@ -107,7 +107,8 @@ You can compile & install snipesharp using the install scripts that come with th
 
 # Donate ❤️
 - ### To demented
-  - **Monero**: 89Gk3YiZGWnLsgGygzRg8Shqp1UyEuYGMbnrz3dLX9isbiLb5b8e6Zu4rT6NX5K5dsNtMb1WTyScqdYCsjxNfUFaRLcdeBk
+  - **Monero/XMR**: 89Gk3YiZGWnLsgGygzRg8Shqp1UyEuYGMbnrz3dLX9isbiLb5b8e6Zu4rT6NX5K5dsNtMb1WTyScqdYCsjxNfUFaRLcdeBk
+  - **Bitcoin/BTC**: bc1qfppf2n4qe4qcsehlh66gg4dz6qv7m3dd7fsam3
   - **[Paypal](https://paypal.me/dement6d)**: _https://paypal.me/dement6d_
 - ### To StiliyanKushev
   - **[Paypal](https://www.paypal.com/donate/?hosted_button_id=GXK6UYPH5SK5C)**: _https://www.paypal.com/donate/?hosted_button_id=GXK6UYPH5SK5C_
