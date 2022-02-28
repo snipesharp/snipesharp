@@ -35,10 +35,10 @@
     <img src="https://img.shields.io/discord/943483411597758494?color=567CFF&label=discord&logo=discord&logoColor=ffffff&style=for-the-badge">
   </a>
   <br/><br/>
-  <img src="https://img.shields.io/github/contributors/snipesharp/snipesharp?style=flat&color=e17800&label=developers&logo=github">
-  <img src="https://img.shields.io/github/downloads/snipesharp/snipesharp/total?color=1aaf19&logo=github&label=downloads&style=flat">
-  <img src="https://img.shields.io/github/stars/snipesharp?color=d7b608&logo=github&style=flat">
-  <img src="https://img.shields.io/github/issues/snipesharp/snipesharp?style=flat&color=0e3351&logo=github">
+  <a href="https://github.com/snipesharp/snipesharp/graphs/contributors"><img src="https://img.shields.io/github/contributors/snipesharp/snipesharp?style=flat&color=e17800&label=developers&logo=github"></a>
+  <a href"https://github.com/snipesharp/snipesharp/releases"><img src="https://img.shields.io/github/downloads/snipesharp/snipesharp/total?color=1aaf19&logo=github&label=downloads&style=flat"><a/>
+  <a href"https://github.com/snipesharp/snipesharp/stargazers"><img src="https://img.shields.io/github/stars/snipesharp?color=d7b608&logo=github&style=flat"><a/>
+  <a href"https://github.com/snipesharp/snipesharp/issues"><img src="https://img.shields.io/github/issues/snipesharp/snipesharp?style=flat&color=0e3351&logo=github"><a/>
 </p>
 
 # About ❓
@@ -136,7 +136,6 @@ If you still can't fix your issue or you just want to hang out, you can join [ou
 - `account.json` = ~/.snipesharp/account.json
 - `config.json` = ~/.snipesharp/config.json
 - `names.json` = ~/.snipesharp/names.json
-
 
 
 ![Untitled](https://user-images.githubusercontent.com/93228501/155002588-ab6d285d-2a5d-4ba1-86ac-85a35a253289.gif)
