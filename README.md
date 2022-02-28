@@ -1,24 +1,22 @@
 <p align="center">
-
-  <a href="#about">
+  <a href="#about-">
     <img src="https://user-images.githubusercontent.com/93228501/155908335-803039d4-85bc-4407-9a59-5de88ec49d40.png" height="196" width="196">
   </a>
-</p>
-<p align="center">
+  <br/>
+  
   <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.5.1/sha256sums.txt">
     <img src="https://img.shields.io/badge/sha256sums-%231a6eef?style=flat-square"</img>
   </a>
   <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.5.1/snipesharp_linux-x86-64-v1.5.1">
-    <img src="https://img.shields.io/badge/_linux-v1.5.1-%231a6eef?style=flat-square?style=for-the-badge&logo=linux&logoWidth=20&logoColor=white"</img>
+    <img src="https://img.shields.io/badge/_linux-v1.5.1-%231a6eef?style=flat-square&logo=linux&logoWidth=20&logoColor=white"</img>
   </a>
   <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.5.1/snipesharp_mac-os-x86-64-v1.5.1">
-    <img src="https://img.shields.io/badge/_mac_os-v1.5.1-%231a6eef?style=flat-square?style=for-the-badge&logo=apple&logoWidth=20&logoColor=white"</img>
+    <img src="https://img.shields.io/badge/_mac_os-v1.5.1-%231a6eef?style=flat-square&logo=apple&logoWidth=20&logoColor=white"</img>
   </a>
   <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.5.1/snipesharp_win-x86-64-v1.5.1.exe">
-    <img src="https://img.shields.io/badge/_windows-v1.5.1-%231a6eef?style=flat-square?style=for-the-badge&logo=windows&logoWidth=20&logoColor=white"</img>
+    <img src="https://img.shields.io/badge/_windows-v1.5.1-%231a6eef?style=flat-square&logo=windows&logoWidth=20&logoColor=white"</img>
   </a>
-</p>
-<p align="center">
+  <br/>
   <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.5.1/snipesharp_linux-arm64-v1.5.1">
     <img src="https://img.shields.io/badge/linux_arm64-v1.5.1-%23015fa1?style=flat-square&logo=linux&logoWidth=20&logoColor=white"</img>
   </a>
@@ -28,16 +26,20 @@
   <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.5.1/snipesharp_win-arm64-v1.5.1.exe">
     <img src="https://img.shields.io/badge/windows_arm64-v1.5.1-%23015fa1?style=flat-square&logo=windows&logoWidth=20&logoColor=white"</img>
   </a>
-</p>
-<p align="center">
+  <br><br>
   <a href="#donate-%EF%B8%8F">
     <img src="https://img.shields.io/badge/❤️_donate_❤️-%230b2a53?style=for-the-badge">
   </a>
-</p>
-<p align="center">
+  <br/><br/>
   <a href="https://discord.gg/ptFvZ8AYuU">
     <img src="https://img.shields.io/discord/943483411597758494?color=567CFF&label=discord&logo=discord&logoColor=ffffff&style=for-the-badge">
   </a>
+  <br/><br/>
+  <img src="https://img.shields.io/github/contributors/snipesharp/snipesharp?style=flat&color=e17800&label=developers&logo=github">
+  <img src="https://img.shields.io/github/sponsors/snipesharp?style=flat&logo=github">
+  <img src="https://img.shields.io/github/downloads/snipesharp/snipesharp/total?color=1aaf19&logo=github&label=downloads&style=flat">
+  <img src="https://img.shields.io/github/stars/snipesharp?color=d7b608&logo=github&style=flat">
+  <img src="https://img.shields.io/github/issues/snipesharp/snipesharp?style=flat&color=0e3351&logo=github">
 </p>
 
 # About ❓
