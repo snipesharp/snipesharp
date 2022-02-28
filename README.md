@@ -36,9 +36,9 @@
   </a>
   <br/><br/>
   <a href="https://github.com/snipesharp/snipesharp/graphs/contributors"><img src="https://img.shields.io/github/contributors/snipesharp/snipesharp?style=flat&color=e17800&label=developers&logo=github"></a>
-  <a href"https://github.com/snipesharp/snipesharp/releases"><img src="https://img.shields.io/github/downloads/snipesharp/snipesharp/total?color=1aaf19&logo=github&label=downloads&style=flat"><a/>
-  <a href"https://github.com/snipesharp/snipesharp/stargazers"><img src="https://img.shields.io/github/stars/snipesharp?color=d7b608&logo=github&style=flat"><a/>
-  <a href"https://github.com/snipesharp/snipesharp/issues"><img src="https://img.shields.io/github/issues/snipesharp/snipesharp?style=flat&color=0e3351&logo=github"><a/>
+  <a href"https://github.com/snipesharp/snipesharp/releases"><img src="https://img.shields.io/github/downloads/snipesharp/snipesharp/total?color=1aaf19&logo=github&label=downloads&style=flat"></a>
+  <a href"https://github.com/snipesharp/snipesharp/stargazers"><img src="https://img.shields.io/github/stars/snipesharp?color=d7b608&logo=github&style=flat"></a>
+  <a href"https://github.com/snipesharp/snipesharp/issues"><img src="https://img.shields.io/github/issues/snipesharp/snipesharp?style=flat&color=0e3351&logo=github"></a>
 </p>
 
 # About ❓
