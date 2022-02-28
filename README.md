@@ -76,8 +76,8 @@ demented
   - Giftcard (prename) sniping
   - Seamless bearer reauthentication for 24/7 sniping support (Only works when using Microsoft accounts)
   - Snipe custom name
-  - Snipe from a custom name list
-    - Automatically clean name list of names which were already sniped, can be disabled from [config.json](#configuration-file-locations)
+  - Snipe from a [custom name list](#configuration-file-locations)
+    - Automatically clean [name list of names](#configuration-file-locations) which were already sniped, can be disabled from [config.json](#configuration-file-locations)
     - Supports sniping 24/7 (Bearer gets updated using Microsoft Account credentials)
     - Snipes in top to bottom order
   - Automatic (suggested) offset based on your ping and more math
