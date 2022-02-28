@@ -69,35 +69,35 @@ demented
   - Microsoft Login
   - Bearer Token Login
   - Using previous session credentials/bearer
-- Configuration ([account.json](#configuration-file-locations))
+- Configuration ([account.json](#configuration-file-locations-%EF%B8%8F))
   - All credentials (including Bearer Token) can be edited through account.json
 ### Sniping
 - Features
   - Giftcard (prename) sniping
   - Seamless bearer reauthentication for 24/7 sniping support (Only works when using Microsoft accounts)
   - Snipe custom name
-  - Snipe from a [custom name list](#configuration-file-locations)
-    - Automatically clean [name list of names](#configuration-file-locations) which were already sniped, can be disabled from [config.json](#configuration-file-locations)
+  - Snipe from a [custom name list](#configuration-file-locations-%EF%B8%8F)
+    - Automatically clean [name list of names](#configuration-file-locations-%EF%B8%8F) which were already sniped, can be disabled from [config.json](#configuration-file-locations-%EF%B8%8F)
     - Supports sniping 24/7 (Bearer gets updated using Microsoft Account credentials)
     - Snipes in top to bottom order
   - Automatic (suggested) offset based on your ping and more math
-- Configuration ([config.json](#configuration-file-locations) & In App)
+- Configuration ([config.json](#configuration-file-locations-%EF%B8%8F) & In App)
   - Custom offset configured in app
   - Custom name configured in app
-  - Custom name list configured in [config.json](#configuration-file-locations)
-  - Custom packets sent amount configured in [config.json](#configuration-file-locations)
-  - Custom delay between packets sent configured in [config.json](#configuration-file-locations)
+  - Custom name list configured in [config.json](#configuration-file-locations-%EF%B8%8F)
+  - Custom packets sent amount configured in [config.json](#configuration-file-locations-%EF%B8%8F)
+  - Custom delay between packets sent configured in [config.json](#configuration-file-locations-%EF%B8%8F)
 ### Post sniping
 - Discord webhooks
   - Features
     - Webhooks contain your desired username & the name you sniped
     - Webhooks contain Minecraft character head of the account which sniped the name
-  - Configuration ([config.json](#configuration-file-locations))
+  - Configuration ([config.json](#configuration-file-locations-%EF%B8%8F)
     - Custom username contained in webhook
     - Enable/disable webhook to snipesharp Discord server
     - Enable/disable webhook to custom Discord server
 - Automatic skin change
-  - Configuration ([config.json](#configuration-file-locations))
+  - Configuration ([config.json](#configuration-file-locations-%EF%B8%8F)
     - Custom skin
     - Custom skin type (classic/slim)
 
