@@ -112,8 +112,8 @@ You can compile & install snipesharp using the install scripts that come with th
 - To StiliyanKushev
   - [Paypal](https://www.paypal.com/donate/?hosted_button_id=GXK6UYPH5SK5C): https://www.paypal.com/donate/?hosted_button_id=GXK6UYPH5SK5C
 
-# Troubleshooting
-If youre having trouble while using snipesharp, check for solutions on the [Wiki](https://github.com/snipesharp/snipesharp/wiki).
+# Troubleshooting & FAQ
+If youre having trouble while using snipesharp, check for solutions of frequently asked questions on the [Wiki](https://github.com/snipesharp/snipesharp/wiki).
 If you still can't fix your issue or you just want to hang out, you can join [our Discord server](https://discord.gg/ptFvZ8AYuU) and ask for help in the [#help](https://discord.com/channels/943483411597758494/943583091878932491) channel
 
 <a href="https://discord.gg/ptFvZ8AYuU">
