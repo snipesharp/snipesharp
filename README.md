@@ -30,7 +30,7 @@
   </a>
 </p>
 <p align="center">
-  <a href="#%EF%B8%8F-donate-%EF%B8%8F">
+  <a href="#donate-%EF%B8%8F">
     <img src="https://img.shields.io/badge/❤️_donate_❤️-%230b2a53?style=for-the-badge">
   </a>
 </p>
@@ -40,7 +40,7 @@
   </a>
 </p>
 
-# About
+# About ❓
 Snipesharp is an easy to use Minecraft name Sniper featuring 24/7 giftcard & normal sniping, Discord RPC & more! Snipesharp is coded in [.NET](https://dotnet.microsoft.com/en-us/) C# and is focused on both speed and user friendliness.
 
 ### Created by:
@@ -55,7 +55,7 @@ demented
 </a>
 </p>
 
-# Features
+# Features ⚡
 ### General
 - Discord RPC
     - ![image](https://user-images.githubusercontent.com/93228501/155626988-fed009c7-9e79-47a9-9d9d-22b86e3295eb.png)
@@ -101,18 +101,18 @@ demented
     - Custom skin
     - Custom skin type (classic/slim)
 
-# Installing
+# Installing ✅
 To use snipesharp you can just download an executable from the [latest release](https://github.com/snipesharp/snipesharp/releases/tag/v1.5.1) or by pressing one of the buttons according to your operating system, located at the top of this document.
 You can compile & install snipesharp using the install scripts that come with the repository. The only dependency/requirement for this is to have [.NET](https://dotnet.microsoft.com/en-us/) installed.
 
-# ❤️ Donate ❤️
-- To demented
-  - Monero: 89Gk3YiZGWnLsgGygzRg8Shqp1UyEuYGMbnrz3dLX9isbiLb5b8e6Zu4rT6NX5K5dsNtMb1WTyScqdYCsjxNfUFaRLcdeBk
-  - [Paypal](https://paypal.me/dement6d): https://paypal.me/dement6d
-- To StiliyanKushev
-  - [Paypal](https://www.paypal.com/donate/?hosted_button_id=GXK6UYPH5SK5C): https://www.paypal.com/donate/?hosted_button_id=GXK6UYPH5SK5C
+# Donate ❤️
+- ### To demented
+  - **Monero**: 89Gk3YiZGWnLsgGygzRg8Shqp1UyEuYGMbnrz3dLX9isbiLb5b8e6Zu4rT6NX5K5dsNtMb1WTyScqdYCsjxNfUFaRLcdeBk
+  - **[Paypal](https://paypal.me/dement6d)**: _https://paypal.me/dement6d_
+- ### To StiliyanKushev
+  - **[Paypal](https://www.paypal.com/donate/?hosted_button_id=GXK6UYPH5SK5C)**: _https://www.paypal.com/donate/?hosted_button_id=GXK6UYPH5SK5C_
 
-# Troubleshooting & FAQ
+# Troubleshooting & FAQ 🪛
 If youre having trouble while using snipesharp, check for solutions of frequently asked questions on the [Wiki](https://github.com/snipesharp/snipesharp/wiki).
 If you still can't fix your issue or you just want to hang out, you can join [our Discord server](https://discord.gg/ptFvZ8AYuU) and ask for help in the [#help](https://discord.com/channels/943483411597758494/943583091878932491) channel
 
@@ -120,7 +120,7 @@ If you still can't fix your issue or you just want to hang out, you can join [ou
     <img src="https://img.shields.io/discord/943483411597758494?color=567CFF&label=discord&logo=discord&logoColor=ffffff&style=for-the-badge">
 </a>
 
-# Configuration file locations
+# Configuration file locations ⚙️
 ### Windows
 - `%appdata%` = WindowsPartition:\\Users\\{user}\\AppData\\Roaming
 - `account.json` = %appdata%\\.snipesharp\\account.json
