@@ -1,8 +1,8 @@
 ---
 name: Suggestion
-about: Short description of the suggestion
+about: Suggestion of a new feature or different implementation of existing feature
 title: ''
-labels: ''
+labels: enhancement
 assignees: ''
 
 ---
