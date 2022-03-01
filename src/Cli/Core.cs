@@ -78,7 +78,7 @@ namespace Cli
             }
 
             account.Bearer = authResult.bearer;
-            account.Prename = authResult.prename;
+            account.prename = authResult.prename;
             Output.Success(attempt == 3 ? TAuth.AuthInforms.SuccessAuthMicrosoft + ", third time's a charm" : TAuth.AuthInforms.SuccessAuthMicrosoft);
 
             return account;

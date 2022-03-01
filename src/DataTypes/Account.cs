@@ -4,7 +4,7 @@ namespace DataTypes
 {
     public struct Account
     {
-        public bool Prename { get; set; }
+        public bool prename;
         public string Bearer { get; set; }
         public string MicrosoftEmail { get; set; }
         public string MicrosoftPassword { get; set; }

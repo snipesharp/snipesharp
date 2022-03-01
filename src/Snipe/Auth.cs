@@ -8,7 +8,9 @@ namespace Snipe
     {
         /// <summary>Verifies whether the current bearer works & returns true if the account owns Minecraft & can change its username</summary>
         public static async Task<bool> AuthWithBearer(string bearer) {
-            if (!await IsWorkingBearer(bearer)) return false;
+            // todo: add bearer regex
+            if (bearer.Length < 280) DataTypes.Config.v.yggdrasilToken = true;
+            if (!await IsWorkingBearer(bearer, DataTypes.Config.v.yggdrasilToken)) return false;
             if (!await Utils.Stats.OwnsMinecraft(bearer)) Cli.Output.ExitError("Account doesn't own Minecraft");
             return true;
         }
@@ -108,7 +110,7 @@ namespace Snipe
         }
 
         /// <summary>Verifies whether the given bearer can be used to Authorize</summary>
-        public static async Task<bool> IsWorkingBearer(string bearer) {
+        public static async Task<bool> IsWorkingBearer(string bearer, bool yggdrasilToken=false) {
             // create spinner
             Cli.Animatables.Spinner spinner = new Cli.Animatables.Spinner();
             
@@ -116,10 +118,19 @@ namespace Snipe
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
+            
 
-            // get json response
+            // mojang bearer
+            if (yggdrasilToken) {
+                StringContent content = JsonSerializer.Deserialize<MojangPayload>(MojangPayload.GenerateMojangPayload());
+                var mojangAuthHttpResponse = await client.PostAsync("https://authserver.mojang.com/validate", content);
+                return mojangAuthHttpResponse.IsSuccessStatusCode;
+            }
+
+            // get MS json response
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
             var mcOwnershipHttpResponse = await client.GetAsync("https://api.minecraftservices.com/entitlements/mcstore");
+            FS.FileSystem.Log(JsonSerializer.Serialize(mcOwnershipHttpResponse, new JsonSerializerOptions { WriteIndented = true}));
             spinner.Cancel();
             return mcOwnershipHttpResponse.IsSuccessStatusCode;
         }
@@ -163,6 +174,16 @@ namespace Snipe
             return new StringContent(
                 JsonSerializer.Serialize(payload, new JsonSerializerOptions { WriteIndented=true}),
                 System.Text.Encoding.UTF8, "application/json");
+        }
+    }
+    public class MojangPayload {
+        public string clientToken {get;set;}
+        public string accessToken {get;set;}
+        public static MojangPayload GenerateMojangPayload(string clientToken, string accessToken) {
+            return new MojangPayload {
+                clientToken = clientToken,
+                accessToken = accessToken
+            };
         }
     }
     public class XboxPayload {

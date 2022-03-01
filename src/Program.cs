@@ -15,11 +15,11 @@ Initialize();
 AuthResult authResult = await Core.Auth();
 Account account = authResult.account;
 
-if(!account.Prename) if (!await Stats.CanChangeName(account.Bearer)) Cli.Output.ExitError($"{account.MicrosoftEmail} cannot change username yet.");
+if(!account.prename) if (!await Stats.CanChangeName(account.Bearer)) Cli.Output.ExitError($"{account.MicrosoftEmail} cannot change username yet.");
 string? username = await Utils.Stats.GetUsername(account.Bearer);
 
 // handle prename account and change config (runtime only)
-if (account.Prename) {
+if (account.prename) {
     var maxPackets2 = !Convert.ToBoolean(
     new SelectionPrompt("Sniping using a prename account, switch to 2 max packets sent?", 
         new string[] { "Yes [suggested]", "No" }).answerIndex);
