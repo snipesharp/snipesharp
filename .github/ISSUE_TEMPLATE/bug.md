@@ -1,8 +1,8 @@
 ---
 name: Bug
-about: Short description of the bug
+about: Unwanted behavior within snipesharp
 title: ''
-labels: ''
+labels: bug
 assignees: ''
 
 ---
