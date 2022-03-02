@@ -34,7 +34,8 @@ namespace Utils
                 if (!jsonRes.nameChangeAllowed) { 
                     DateTime.TryParse(jsonRes.changedAt, out DateTime changedAt);
                     var cooldownExpiryDate = changedAt.AddDays(30);
-                    Cli.Output.ExitError($"Account can't change name until {cooldownExpiryDate.ToString()}");
+
+                    Cli.Output.ExitError($"{await GetUsername(bearer)} can't change name until {cooldownExpiryDate.ToString()}");
                 }
                 return jsonRes.nameChangeAllowed;
             }
