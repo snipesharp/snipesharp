@@ -72,7 +72,7 @@ namespace Cli
             // if bearer not returned, retry
             if (String.IsNullOrEmpty(authResult.bearer)) {
                 FS.FileSystem.Log(TAuth.AuthInforms.FailedMicrosoft + $" - attempt {attempt}");
-                return await HandleMicrosoft(account, ++attempt, newLogin, authResult.error != "Wrong password");
+                return await HandleMicrosoft(account, ++attempt, true, authResult.error != "Wrong password");
             }
 
             account.Bearer = authResult.bearer;
@@ -88,9 +88,8 @@ namespace Cli
 
             // retry if invalid bearer
             if(!await Snipe.Auth.AuthWithBearer(account.Bearer)) {
-                if (!newBearer) Output.ExitError(TAuth.AuthInforms.FailedBearer); // if reading from file failed, exit
                 Output.Error(TAuth.AuthInforms.FailedBearer);
-                return await HandleBearer(account, ++attempt, newBearer);
+                return await HandleBearer(account, ++attempt, true);
             }
 
             // validate the token
