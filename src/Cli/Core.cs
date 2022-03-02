@@ -88,6 +88,7 @@ namespace Cli
 
             // retry if invalid bearer
             if(!await Snipe.Auth.AuthWithBearer(account.Bearer)) {
+                if (!newBearer) Output.ExitError(TAuth.AuthInforms.FailedBearer); // if reading from file failed, exit
                 Output.Error(TAuth.AuthInforms.FailedBearer);
                 return await HandleBearer(account, ++attempt, newBearer);
             }
