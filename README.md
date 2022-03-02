@@ -131,11 +131,13 @@ If you still can't fix your issue or you just want to hang out, you can join [ou
 - `account.json` = %appdata%\\.snipesharp\\account.json
 - `config.json` = %appdata%\\.snipesharp\\config.json
 - `names.json` = %appdata%\\.snipesharp\\names.json
+- `latest.log` = %appdata%\\.snipesharp\\logs\\latest.log
 ### Linux
 - `~/` = `echo $HOME`
 - `account.json` = ~/.snipesharp/account.json
 - `config.json` = ~/.snipesharp/config.json
 - `names.json` = ~/.snipesharp/names.json
+- `latest.log` = ~/.snipesharp/logs/latest.log
 
 
 ![Untitled](https://user-images.githubusercontent.com/93228501/155002588-ab6d285d-2a5d-4ba1-86ac-85a35a253289.gif)
