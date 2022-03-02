@@ -7,3 +7,4 @@ README.md
 release*/
 make_release.bat
 src/Properties/
+.github/
