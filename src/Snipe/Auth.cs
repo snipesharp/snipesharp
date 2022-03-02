@@ -8,10 +8,10 @@ namespace Snipe
     {
         /// <summary>Verifies whether the current bearer works & returns true if the account owns Minecraft & can change its username</summary>
         public static async Task<bool> AuthWithBearer(string bearer) {
-            // todo: add bearer regex
+            bearer = bearer.Trim(); // todo and regex
             if (bearer.Length < 280) DataTypes.Config.v.yggdrasilToken = true;
-            if (!await IsWorkingBearer(bearer, DataTypes.Config.v.yggdrasilToken)) return false;
-            if (!await Utils.Stats.OwnsMinecraft(bearer)) Cli.Output.ExitError("Account doesn't own Minecraft");
+            if (!await IsWorkingBearer(bearer)) return false;
+            if (!DataTypes.Config.v.yggdrasilToken) if (!await Utils.Stats.OwnsMinecraft(bearer)) Cli.Output.ExitError("Account doesn't own Minecraft");
             return true;
         }
         
@@ -110,27 +110,30 @@ namespace Snipe
         }
 
         /// <summary>Verifies whether the given bearer can be used to Authorize</summary>
-        public static async Task<bool> IsWorkingBearer(string bearer, bool yggdrasilToken=false) {
+        public static async Task<bool> IsWorkingBearer(string bearer) {
             // create spinner
             Cli.Animatables.Spinner spinner = new Cli.Animatables.Spinner();
             
-            // prepare http call using the bearer
+            // prepare http client
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0");
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            
 
             // mojang bearer
-            if (yggdrasilToken) {
-                StringContent content = JsonSerializer.Deserialize<MojangPayload>(MojangPayload.GenerateMojangPayload());
+            if (DataTypes.Config.v.yggdrasilToken) {
+                StringContent content = new StringContent(JsonSerializer.Serialize(MojangPayload.GenerateMojangPayload(bearer), new JsonSerializerOptions {WriteIndented=true}), System.Text.Encoding.UTF8, "application/json");
                 var mojangAuthHttpResponse = await client.PostAsync("https://authserver.mojang.com/validate", content);
+
+                // return Mojang response
+                spinner.Cancel();
                 return mojangAuthHttpResponse.IsSuccessStatusCode;
             }
 
             // get MS json response
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             var mcOwnershipHttpResponse = await client.GetAsync("https://api.minecraftservices.com/entitlements/mcstore");
-            FS.FileSystem.Log(JsonSerializer.Serialize(mcOwnershipHttpResponse, new JsonSerializerOptions { WriteIndented = true}));
+
+            // return MS response
             spinner.Cancel();
             return mcOwnershipHttpResponse.IsSuccessStatusCode;
         }
@@ -160,7 +163,14 @@ namespace Snipe
             return (int)response.StatusCode==200;
         }
     }
-
+    public class MojangPayload {
+        public string accessToken {get;set;}
+        public static MojangPayload GenerateMojangPayload(string accessToken) {
+            return new MojangPayload {
+                accessToken = accessToken
+            };
+        }
+    }
     public class McPayload {
         public string? identityToken { get; set; }
         public bool ensureLegacyEnabled { get; set; }
@@ -174,16 +184,6 @@ namespace Snipe
             return new StringContent(
                 JsonSerializer.Serialize(payload, new JsonSerializerOptions { WriteIndented=true}),
                 System.Text.Encoding.UTF8, "application/json");
-        }
-    }
-    public class MojangPayload {
-        public string clientToken {get;set;}
-        public string accessToken {get;set;}
-        public static MojangPayload GenerateMojangPayload(string clientToken, string accessToken) {
-            return new MojangPayload {
-                clientToken = clientToken,
-                accessToken = accessToken
-            };
         }
     }
     public class XboxPayload {

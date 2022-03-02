@@ -53,9 +53,7 @@ namespace Cli
         }
 
         private static async Task<Account> HandleMicrosoft(Account account, int attempt, bool newLogin=false, bool askForEmail=true){
-            // warn about 2fa
-            if (attempt == 1) Output.Warn(TAuth.AuthInforms.Warn2FA);
-
+            
             // get new credentials
             if (newLogin) {
                 if (askForEmail) account.MicrosoftEmail = Input.Request<string>(

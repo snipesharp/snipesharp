@@ -59,7 +59,7 @@ namespace Utils
             var mcOwnershipHttpResponse = await client.GetAsync("https://api.minecraftservices.com/entitlements/mcstore");
             if (!mcOwnershipHttpResponse.IsSuccessStatusCode) {
                 spinner.Cancel();
-                Cli.Output.ExitError(Cli.Templates.TAuth.AuthInforms.FailedBearer);
+                Cli.Output.ExitError(Cli.Templates.TAuth.AuthInforms.FailedBearer); // ! exits when using mojang bearer
             }
             var mcOwnershipJsonResponse = JsonSerializer.Deserialize<McOwnershipResponse>(
                 await mcOwnershipHttpResponse.Content.ReadAsStringAsync()
