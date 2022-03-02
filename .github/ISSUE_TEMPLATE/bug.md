@@ -7,24 +7,26 @@ assignees: ''
 
 ---
 
-### Bug description
+## Bug description
 A clear and concise description of what the bug is.
 
-### How to reproduce
+## How to reproduce
 Steps to reproduce the bug:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
+1. Go to ..
+2. Click on ..
+3. Scroll down to ..
 4. See error
 
-### Expected behavior
+## Expected behavior
 A clear and concise description of what you expected to happen.
 
-### Screenshots
-If applicable, add screenshots to help explain your problem.
-
-### Environment
+## Environment
  - OS: [example: Windows]
 
-### Additional context
-Add any other context about the problem here.
+## Screenshots
+If applicable, add screenshots to help explain your problem.
+
+## Log file
+[latest.log](https://github.com/snipesharp/snipesharp#configuration-file-locations-%EF%B8%8F) (May be modified to exclude private information):
+
+**Exclude private information such as credentials if included, before uploading**
