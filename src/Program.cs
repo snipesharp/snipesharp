@@ -81,9 +81,10 @@ static void Initialize() {
     // welcome the user
     Output.PrintLogo();
 
-    // create and load config
+    // create, load and log config
     FileSystem.PrepareConfig();
-
+    FS.FileSystem.Log("Using config: " + System.Text.Json.JsonSerializer.Serialize(Config.v, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
+    
     // create and load name list
     if (!FileSystem.NamesFileExists()) FileSystem.SaveNames(new List<string>());
 
