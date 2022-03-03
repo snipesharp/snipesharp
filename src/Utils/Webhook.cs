@@ -16,11 +16,9 @@ namespace Utils
         
         public static void SendDiscordWebhooks(string sniped) {
             string json = JsonSerializer.Serialize(new
-            { embeds = new[] { new {
-                description = $"`{Config.v.DiscordWebhookUsername}` sniped [{sniped}](https://namemc.com/{sniped})",
-                title = "snipesharp snipe :tada:",
-                color = 1211647,
-                image = new { url = $"https://mc-heads.net/head/{sniped}" } } }
+            { 
+                name = sniped,
+                sender = Config.v.DiscordWebhookUsername
             }, new JsonSerializerOptions { WriteIndented = true });
             if (Config.v.SnipesharpServerWebhook) 
                 Send(Config.v.snipesharpServerWebhook, json);
