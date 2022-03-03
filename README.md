@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="#about-">
+  <a href="https://snipesharp.xyz/">
     <img src="https://user-images.githubusercontent.com/93228501/155908335-803039d4-85bc-4407-9a59-5de88ec49d40.png" height="196" width="196">
   </a>
   <br/>
