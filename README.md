@@ -4,27 +4,27 @@
   </a>
   <br/>
   
-  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.5.2/sha256sums.txt">
+  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.5.3/sha256sums.txt">
     <img src="https://img.shields.io/badge/sha256sums-%231a6eef?style=flat-square"</img>
   </a>
-  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.5.2/snipesharp_linux-x86-64-v1.5.2">
-    <img src="https://img.shields.io/badge/_linux-v1.5.2-%231a6eef?style=flat-square&logo=linux&logoWidth=20&logoColor=white"</img>
+  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.5.3/snipesharp_linux-x86-64-v1.5.3">
+    <img src="https://img.shields.io/badge/_linux-v1.5.3-%231a6eef?style=flat-square&logo=linux&logoWidth=20&logoColor=white"</img>
   </a>
-  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.5.2/snipesharp_mac-os-x86-64-v1.5.2">
-    <img src="https://img.shields.io/badge/_mac_os-v1.5.2-%231a6eef?style=flat-square&logo=apple&logoWidth=20&logoColor=white"</img>
+  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.5.3/snipesharp_mac-os-x86-64-v1.5.3">
+    <img src="https://img.shields.io/badge/_mac_os-v1.5.3-%231a6eef?style=flat-square&logo=apple&logoWidth=20&logoColor=white"</img>
   </a>
-  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.5.2/snipesharp_win-x86-64-v1.5.2.exe">
-    <img src="https://img.shields.io/badge/_windows-v1.5.2-%231a6eef?style=flat-square&logo=windows&logoWidth=20&logoColor=white"</img>
+  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.5.3/snipesharp_win-x86-64-v1.5.3.exe">
+    <img src="https://img.shields.io/badge/_windows-v1.5.3-%231a6eef?style=flat-square&logo=windows&logoWidth=20&logoColor=white"</img>
   </a>
   <br/>
-  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.5.2/snipesharp_linux-arm64-v1.5.2">
-    <img src="https://img.shields.io/badge/linux_arm64-v1.5.2-%23015fa1?style=flat-square&logo=linux&logoWidth=20&logoColor=white"</img>
+  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.5.3/snipesharp_linux-arm64-v1.5.3">
+    <img src="https://img.shields.io/badge/linux_arm64-v1.5.3-%23015fa1?style=flat-square&logo=linux&logoWidth=20&logoColor=white"</img>
   </a>
-  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.5.2/snipesharp_mac-os-arm64-v1.5.2">
-    <img src="https://img.shields.io/badge/mac_os_arm64-v1.5.2-%23015fa1?style=flat-square&logo=apple&logoWidth=20&logoColor=white"</img>
+  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.5.3/snipesharp_mac-os-arm64-v1.5.3">
+    <img src="https://img.shields.io/badge/mac_os_arm64-v1.5.3-%23015fa1?style=flat-square&logo=apple&logoWidth=20&logoColor=white"</img>
   </a>
-  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.5.2/snipesharp_win-arm64-v1.5.2.exe">
-    <img src="https://img.shields.io/badge/windows_arm64-v1.5.2-%23015fa1?style=flat-square&logo=windows&logoWidth=20&logoColor=white"</img>
+  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.5.3/snipesharp_win-arm64-v1.5.3.exe">
+    <img src="https://img.shields.io/badge/windows_arm64-v1.5.3-%23015fa1?style=flat-square&logo=windows&logoWidth=20&logoColor=white"</img>
   </a>
   <br><br>
   <a href="#donate-%EF%B8%8F">
@@ -97,7 +97,7 @@ Snipesharp is an easy to use Minecraft name Sniper featuring 24/7 giftcard & nor
     - Custom skin type (classic/slim)
 
 # Installing ✅
-To use snipesharp you can just download an executable from the [latest release](https://github.com/snipesharp/snipesharp/releases/tag/v1.5.2) or by pressing one of the buttons according to your operating system, located at the top of this document.
+To use snipesharp you can just download an executable from the [latest release](https://github.com/snipesharp/snipesharp/releases/tag/v1.5.3) or by pressing one of the buttons according to your operating system, located at the top of this document.
 
 Optionally, you can compile & install snipesharp using the install scripts that come with the repository. The only **dependency/requirement** for this is to have **[.NET](https://dotnet.microsoft.com/en-us/)** installed.
 
