@@ -8,6 +8,21 @@ using Cli.Animatables;
 using DataTypes.SetText;
 using Cli.Names;
 			
+if(Core.arguments.ContainsKey("--email") && Core.arguments.ContainsKey("--password")){
+    Config.v.EnableDiscordRPC = false;
+    Initialize();
+    var temp = new AuthResult {
+        account = await Core.HandleMicrosoft(new Account() {
+            MicrosoftEmail = Core.arguments["--email"].data!,
+            MicrosoftPassword = Core.arguments["--password"].data!
+        }, 1),
+        loginMethod = TAuth.AuthOptions.Microsoft
+    };
+    await Names.handleThreeLetter(temp, temp.account);
+    Console.ReadKey();
+    return;
+}
+
 // prepare everything and welcome the user
 Initialize();
 

@@ -52,7 +52,7 @@ namespace Cli
             return new AuthResult { account = account, loginMethod = loginMethod };
         }
 
-        private static async Task<Account> HandleMicrosoft(Account account, int attempt, bool newLogin=false, bool askForEmail=true){
+        public static async Task<Account> HandleMicrosoft(Account account, int attempt, bool newLogin=false, bool askForEmail=true){
             
             // get new credentials
             if (newLogin) {

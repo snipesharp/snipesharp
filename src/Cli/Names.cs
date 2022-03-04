@@ -10,6 +10,7 @@ namespace Cli.Names
     {
         static async Task<long> GetDelay(){
             var suggestedOffset = await Offset.CalcSuggested();
+            if(Core.arguments.ContainsKey("--email") && Core.arguments.ContainsKey("--password")) return suggestedOffset;
             return Input.Request<long>($"Offset in ms [suggested: {suggestedOffset}ms]: ");
         }
 
