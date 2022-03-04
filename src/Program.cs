@@ -10,6 +10,8 @@ using Cli.Names;
 			
 if(Core.arguments.ContainsKey("--email") && Core.arguments.ContainsKey("--password")){
     Config.v.EnableDiscordRPC = false;
+    Config.v.ShowTargetNameDRPC = false;
+    Config.v.ShowUsernameDRPC = false;
     Initialize();
     var temp = new AuthResult {
         account = await Core.HandleMicrosoft(new Account() {
@@ -25,6 +27,8 @@ if(Core.arguments.ContainsKey("--email") && Core.arguments.ContainsKey("--passwo
 
 if(Core.arguments.ContainsKey("--bearer")){
     Config.v.EnableDiscordRPC = false;
+    Config.v.ShowTargetNameDRPC = false;
+    Config.v.ShowUsernameDRPC = false;
     Initialize();
     var temp = new AuthResult {
         account = await Core.HandleBearer(new Account() {
