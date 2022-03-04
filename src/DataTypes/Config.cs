@@ -9,7 +9,7 @@
     {
         public bool yggdrasilToken = false;
         public string discordApplicationId = "946380985791033374";
-        public string snipesharpServerWebhook = "http://snipesharp.xyz:5150";
+        public string snipesharpServerWebhook = "http://webhooks.snipesharp.xyz:5150";
         public bool EnableDiscordRPC {get;set;} = true;
         public bool ShowUsernameDRPC {get;set;} = true;
         public bool ShowTargetNameDRPC {get;set;} = true;
