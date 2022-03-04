@@ -27,7 +27,7 @@
     <img src="https://img.shields.io/badge/windows_arm64-v1.5.5-%23015fa1?style=flat-square&logo=windows&logoWidth=20&logoColor=white"</img>
   </a>
   <br><br>
-  <a href="#donate-%EF%B8%8F">
+  <a href="https://snipesharp.xyz/donate/">
     <img src="https://img.shields.io/badge/❤️_donate_❤️-%230b2a53?style=for-the-badge">
   </a>
   <br/><br/>
@@ -109,7 +109,7 @@ On **Linux** you will have to make the `install_linux.sh` file executable by run
 
 Similarly, if you have an **arm64/aarch64 architecture CPU**, you will have to make the file executable the same way you would normally, but run it without superuser privileges by running `./install_linux.sh`
 
-# Donate ❤️
+# <a href="https://snipesharp.xyz/donate/">Donate ❤️</a>
 - ### To demented
   - **Monero/XMR**: 89Gk3YiZGWnLsgGygzRg8Shqp1UyEuYGMbnrz3dLX9isbiLb5b8e6Zu4rT6NX5K5dsNtMb1WTyScqdYCsjxNfUFaRLcdeBk
   - **Bitcoin/BTC**: bc1qfppf2n4qe4qcsehlh66gg4dz6qv7m3dd7fsam3
