@@ -58,7 +58,7 @@ namespace Utils
                 Buttons = new Button[] {
                     new Button() {
                         Label = "Snipesharp",
-                        Url = "https://github.com/snipesharp/snipesharp"
+                        Url = "https://snipesharp.xyz"
                     }
                 }
             });	
