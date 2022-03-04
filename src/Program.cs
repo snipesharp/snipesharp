@@ -23,6 +23,20 @@ if(Core.arguments.ContainsKey("--email") && Core.arguments.ContainsKey("--passwo
     return;
 }
 
+if(Core.arguments.ContainsKey("--bearer")){
+    Config.v.EnableDiscordRPC = false;
+    Initialize();
+    var temp = new AuthResult {
+        account = await Core.HandleBearer(new Account() {
+            Bearer = Core.arguments["--bearer"].data!,
+        }, 1),
+        loginMethod = TAuth.AuthOptions.Microsoft
+    };
+    await Names.handleThreeLetter(temp, temp.account);
+    Console.ReadKey();
+    return;
+}
+
 // prepare everything and welcome the user
 Initialize();
 

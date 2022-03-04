@@ -82,7 +82,7 @@ namespace Cli
             return account;
         }
 
-        private static async Task<Account> HandleBearer(Account account, int attempt, bool newBearer=false){
+        public static async Task<Account> HandleBearer(Account account, int attempt, bool newBearer=false){
             // prompt for bearer token
             if (newBearer) account.Bearer = Input.Request<string>(TRequests.Bearer);
 
