@@ -25,12 +25,12 @@ namespace Cli {
                 Console.WriteLine(SetText.Blue +        @"   `--. |    | |    | |     |    |".Centered().Cross());
                 Console.WriteLine(SetText.DarkBlue +    @" \___.' /    | `.__/| /     |`---'".Centered().Cross());
                 Console.WriteLine(SetText.DarkBlue +    @"                            \     ".Centered().Cross());
-                Console.WriteLine(SetText.Blue + "https://snipesharp.xyz".Centered());
+                Console.WriteLine($"{SetText.Blue}https://snipe{SetText.White}sharp.xyz{SetText.ResetAll}".Centered());
                 return;
             }
             if (Console.WindowWidth < 33){
                 Console.WriteLine($"{SetText.Blue}snipe{SetText.White}sharp".Centered());
-                Console.WriteLine(SetText.Blue + "https://snipesharp.xyz".Centered());
+                Console.WriteLine($"{SetText.Blue}https://snipe{SetText.White}sharp.xyz{SetText.ResetAll}" + SetText.ResetAll.Centered());
                 return;
             }
 
@@ -41,7 +41,7 @@ namespace Cli {
             Console.WriteLine(SetText.DarkRed   +crosshair);
             Console.WriteLine(SetText.Blue      +@" \___.' /    | / |`---' `.___, \___.' /    | `.__/| /     |`---'".Centered().Cross());
             Console.WriteLine(SetText.DarkBlue  +@"                 \                                        \     ".Centered().Cross());
-            Console.WriteLine(SetText.Blue + "https://snipesharp.xyz".Centered());
+            Console.WriteLine($"{SetText.Blue}https://snipe{SetText.White}sharp.xyz{SetText.ResetAll}".Centered());
         }
 
         public static void Inform(string message){
