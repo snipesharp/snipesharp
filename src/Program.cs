@@ -69,6 +69,9 @@ else if (!String.IsNullOrEmpty(username)) {
 // will be used later if needed
 List<string> namesList = FileSystem.GetNames();
 
+// first time setup
+if (DataTypes.Config.v.firstTime) Cli.Output.Inform(Cli.Templates.TFileSystem.FSInforms.Names);
+
 // prompt the user for name choices
 var nameOption = new SelectionPrompt("What name(s) would you like to snipe?",
     new string[] {

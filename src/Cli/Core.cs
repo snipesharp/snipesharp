@@ -25,6 +25,9 @@ namespace Cli
         }
 
         public static async Task<AuthResult> Auth(){
+            // first time setup
+            if (DataTypes.Config.v.firstTime) Cli.Output.Inform(Cli.Templates.TFileSystem.FSInforms.SelectionPromptUsage);
+            
             // display prompt
             string loginMethod = FileSystem.AccountFileExists()
                 ? new SelectionPrompt("Login method:", new string[] {

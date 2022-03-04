@@ -7,6 +7,7 @@
     // Also, a property should have { get; set; } for the deserialization of it to work.
     public class ConfigSettings
     {
+        public bool firstTime = false;
         public bool yggdrasilToken = false;
         public string discordApplicationId = "946380985791033374";
         public string snipesharpServerWebhook = "http://webhooks.snipesharp.xyz:5150";
