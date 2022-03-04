@@ -41,6 +41,8 @@ namespace Utils
         }
 
         private static void Update(){
+            if(Cli.Core.arguments.ContainsKey("--email") && Cli.Core.arguments.ContainsKey("--password")) return;
+            if(Cli.Core.arguments.ContainsKey("--bearer")) return;
             client!.SetPresence(new RichPresence() {
                 Details = Details,
                 State = State,
