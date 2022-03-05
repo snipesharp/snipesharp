@@ -42,7 +42,7 @@
 </p>
 
 # About ❓
-Snipesharp is an easy to use Minecraft name Sniper featuring 24/7 giftcard & normal sniping, Discord RPC & more! Snipesharp is coded in [.NET](https://dotnet.microsoft.com/en-us/) C# and is focused on both speed and user friendliness.
+Snipesharp is an Open Source & easy to use Minecraft name Sniper featuring 24/7 giftcard & normal sniping, Discord RPC & more! Snipesharp is coded in [.NET](https://dotnet.microsoft.com/en-us/) C# and is focused on both speed and user friendliness.
 
 ### Created by:
 
