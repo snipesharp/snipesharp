@@ -42,7 +42,7 @@
 </p>
 
 # About ❓
-Snipesharp is an Open Source & easy to use Minecraft name Sniper featuring 24/7 giftcard & normal sniping, Discord RPC & more! Snipesharp is coded in [.NET](https://dotnet.microsoft.com/en-us/) C# and is focused on both speed and user friendliness.
+<a href="https://snipesharp.xyz/">Snipesharp</a> is an Open Source & easy to use Minecraft name Sniper featuring 24/7 giftcard & normal sniping, Discord RPC & more! Snipesharp is coded in [.NET](https://dotnet.microsoft.com/en-us/) C# and is focused on both speed and user friendliness.
 
 ### Created by:
 
@@ -139,5 +139,4 @@ If you still can't fix your issue or you just want to hang out, you can join [ou
 - `names.json` = ~/.snipesharp/names.json
 - `latest.log` = ~/.snipesharp/logs/latest.log
 
-
-![Untitled](https://user-images.githubusercontent.com/93228501/155002588-ab6d285d-2a5d-4ba1-86ac-85a35a253289.gif)
+<a href="https://snipesharp.xyz/">![Untitled](https://user-images.githubusercontent.com/93228501/155002588-ab6d285d-2a5d-4ba1-86ac-85a35a253289.gif)</a>
