@@ -40,7 +40,7 @@ namespace FS
         }
 
         // Saves given account to the account.json file
-        public static void SaveAccount(){
+        public static void UpdateAccount(){
             try {
                 if (!Directory.Exists(snipesharpFolder)) CreateSnipesharpFolder();
                 Utils.ConfigSerialization.Serialize(accountJsonFile);
@@ -83,17 +83,19 @@ namespace FS
             }
         }
 
-        /// <returns>Existing or new account config depending on whether one already exists</returns>
-        public static Account GetAccount() {
+        /// <summary>Prepares existing or new account config depending on whether one already exists</summary>
+        public static void PrepareAccount() {
             try {
-                if (!AccountFileExists()) return new Account();
+                if (!AccountFileExists()) {
+                    UpdateAccount();
+                    return;
+                }
                 var fileContents = File.ReadAllText(accountJsonFile);
                 var splitted = fileContents.Split(new[] { '{' }, 2);
-                return JsonSerializer.Deserialize<Account>("{"+splitted[1]);
+                Utils.AccountSerialization.Deserialize("{"+splitted[1]);
             }
             catch (JsonException e) {
                 Cli.Output.Error(TFileSystem.FSInforms.CannotReadFile(new Tuple<string, JsonException>("account.json", e)));
-                return new Account();
             }
         }
 

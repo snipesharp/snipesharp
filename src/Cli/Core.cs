@@ -41,77 +41,71 @@ namespace Cli
                 }).result;
  
             // obtain login info based on login method choice
-            Account account = FileSystem.AccountFileExists() ? FileSystem.GetAccount() : new Account();
-            if (loginMethod == TAuth.AuthOptions.BearerToken) account = await HandleBearer(account, 1, true);
-            else if (loginMethod == TAuth.AuthOptions.Microsoft) account = await HandleMicrosoft(account, 1, true);
+            if (loginMethod == TAuth.AuthOptions.BearerToken) await HandleBearer(1, true);
+            else if (loginMethod == TAuth.AuthOptions.Microsoft) await HandleMicrosoft(1, true);
             else {
                 var handleFromFileResult = await HandleFromFile();
-                account = handleFromFileResult.Account;
                 loginMethod = handleFromFileResult.Choice;
             }
 
             // save account and return
-            FileSystem.SaveAccount(account);
-            return new AuthResult { account = account, loginMethod = loginMethod };
+            FileSystem.SaveAccount();
+            return new AuthResult { loginMethod = loginMethod };
         }
 
-        public static async Task<Account> HandleMicrosoft(Account account, int attempt, bool newLogin=false, bool askForEmail=true){
+        public static async Task HandleMicrosoft(int attempt, bool newLogin=false, bool askForEmail=true){
             
             // get new credentials
             if (newLogin) {
-                if (askForEmail) account.MicrosoftEmail = Input.Request<string>(
+                if (askForEmail) Account.v.MicrosoftEmail = Input.Request<string>(
                     TRequests.MicrosoftEmail, 
                     validator: Validators.Credentials.Email
                 );
-                account.MicrosoftPassword = Input.Request<string>(
+                Account.v.MicrosoftPassword = Input.Request<string>(
                     TRequests.MicrosoftPassword,
                     hidden: true
                 );
             }
             
             // get bearer with microsoft credentials
-            var authResult = await Snipe.Auth.AuthMicrosoft(account.MicrosoftEmail, account.MicrosoftPassword);
+            var authResult = await Snipe.Auth.AuthMicrosoft(Account.v.MicrosoftEmail, Account.v.MicrosoftPassword);
 
             // if bearer not returned, retry
             if (String.IsNullOrEmpty(authResult.bearer)) {
                 FS.FileSystem.Log(TAuth.AuthInforms.FailedMicrosoft + $" - attempt {attempt}");
-                return await HandleMicrosoft(account, ++attempt, true, authResult.error != "Wrong password");
+                await HandleMicrosoft(++attempt, true, authResult.error != "Wrong password");
+                return;
             }
 
-            account.Bearer = authResult.bearer;
-            account.prename = authResult.prename;
+            Account.v.Bearer = authResult.bearer;
+            Account.v.prename = authResult.prename;
             Output.Success(attempt == 3 ? TAuth.AuthInforms.SuccessAuthMicrosoft + ", third time's a charm" : TAuth.AuthInforms.SuccessAuthMicrosoft);
-
-            return account;
         }
 
-        public static async Task<Account> HandleBearer(Account account, int attempt, bool newBearer=false){
+        public static async Task HandleBearer(int attempt, bool newBearer=false){
             // prompt for bearer token
-            if (newBearer) account.Bearer = Input.Request<string>(TRequests.Bearer);
+            if (newBearer) Account.v.Bearer = Input.Request<string>(TRequests.Bearer);
 
             // retry if invalid bearer
-            if(!await Snipe.Auth.AuthWithBearer(account.Bearer)) {
+            if(!await Snipe.Auth.AuthWithBearer(Account.v.Bearer)) {
                 Output.Error(TAuth.AuthInforms.FailedBearer);
-                return await HandleBearer(account, ++attempt, true);
+                await HandleBearer(++attempt, true);
+                return;
             }
 
             // validate the token
             Output.Warn(TAuth.AuthInforms.WarnBearer);
             Output.Success(attempt == 3 ? TAuth.AuthInforms.SuccessAuth + ", third time's a charm" : TAuth.AuthInforms.SuccessAuth);
-        
-            return account;
         }
 
         private static async Task<HandleFromFileResult> HandleFromFile() {
-            var account = FileSystem.GetAccount();
-
             // determine available methods
             List<string> availableMethods = new List<string>();
-            if (!String.IsNullOrEmpty(account.Bearer))
+            if (!String.IsNullOrEmpty(Account.v.Bearer))
                 availableMethods.Add(TAuth.AuthOptions.BearerToken);
             if (
-                !String.IsNullOrEmpty(account.MicrosoftPassword) && 
-                !String.IsNullOrEmpty(account.MicrosoftEmail)
+                !String.IsNullOrEmpty(Account.v.MicrosoftPassword) && 
+                !String.IsNullOrEmpty(Account.v.MicrosoftEmail)
             ) availableMethods.Add(TAuth.AuthOptions.Microsoft);
 
             // determine final auth method
@@ -122,15 +116,14 @@ namespace Cli
                 : availableMethods[0];
 
             // authenticate the chosen method
-            if (choice == TAuth.AuthOptions.BearerToken) account = await HandleBearer(account, 1);
-            if (choice == TAuth.AuthOptions.Microsoft) account = await HandleMicrosoft(account, 1);
+            if (choice == TAuth.AuthOptions.BearerToken) await HandleBearer(1);
+            if (choice == TAuth.AuthOptions.Microsoft) await HandleMicrosoft(1);
 
-            return new HandleFromFileResult { Account = account, Choice = choice };
+            return new HandleFromFileResult { Choice = choice };
         }
 
         // return type of handlefromFile
         private struct HandleFromFileResult {
-            public Account Account { get; set; }
             public string Choice { get; set; }
         }
     }

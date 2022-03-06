@@ -12,15 +12,13 @@ if(Core.arguments.ContainsKey("--email") && Core.arguments.ContainsKey("--passwo
     Config.v.EnableDiscordRPC = false;
     Config.v.ShowTargetNameDRPC = false;
     Config.v.ShowUsernameDRPC = false;
+    Account.v.MicrosoftEmail = Core.arguments["--email"].data!;
+    Account.v.MicrosoftPassword = Core.arguments["--password"].data!;
     Initialize();
     var temp = new AuthResult {
-        account = await Core.HandleMicrosoft(new Account() {
-            MicrosoftEmail = Core.arguments["--email"].data!,
-            MicrosoftPassword = Core.arguments["--password"].data!
-        }, 1),
         loginMethod = TAuth.AuthOptions.Microsoft
     };
-    await Names.handleThreeLetter(temp, temp.account);
+    await Names.handleThreeLetter(temp);
     Console.ReadKey();
     return;
 }
@@ -29,14 +27,12 @@ if(Core.arguments.ContainsKey("--bearer")){
     Config.v.EnableDiscordRPC = false;
     Config.v.ShowTargetNameDRPC = false;
     Config.v.ShowUsernameDRPC = false;
+    Account.v.Bearer = Core.arguments["--bearer"].data!;
     Initialize();
     var temp = new AuthResult {
-        account = await Core.HandleBearer(new Account() {
-            Bearer = Core.arguments["--bearer"].data!,
-        }, 1),
         loginMethod = TAuth.AuthOptions.Microsoft
     };
-    await Names.handleThreeLetter(temp, temp.account);
+    await Names.handleThreeLetter(temp);
     Console.ReadKey();
     return;
 }
@@ -46,13 +42,12 @@ Initialize();
 
 // let the user authenticate
 AuthResult authResult = await Core.Auth();
-Account account = authResult.account;
 
-if(!account.prename) if (!await Stats.CanChangeName(account.Bearer)) Cli.Output.ExitError($"{account.MicrosoftEmail} cannot change username yet.");
-string? username = await Utils.Stats.GetUsername(account.Bearer);
+if(!Account.v.prename) if (!await Stats.CanChangeName(Account.v.Bearer)) Cli.Output.ExitError($"{Account.v.MicrosoftEmail} cannot change username yet.");
+string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
 
 // handle prename account and change config (runtime only)
-if (account.prename) {
+if (Account.v.prename) {
     var maxPackets2 = !Convert.ToBoolean(
     new SelectionPrompt("Sniping using a prename account, switch to 2 max packets sent?", 
         new string[] { "Yes [suggested]", "No" }).answerIndex);
@@ -85,9 +80,9 @@ var nameOption = new SelectionPrompt("What name(s) would you like to snipe?",
 ).result;
 
 // handle each option individualy
-if(nameOption == TNames.LetMePick) await Names.handleSingleName(authResult, account);
-if(nameOption == TNames.UseNamesJson) await Names.handleNamesList(authResult, account, namesList);
-if(nameOption == TNames.ThreeCharNames) await Names.handleThreeLetter(authResult, account);
+if(nameOption == TNames.LetMePick) await Names.handleSingleName(authResult);
+if(nameOption == TNames.UseNamesJson) await Names.handleNamesList(authResult, namesList);
+if(nameOption == TNames.ThreeCharNames) await Names.handleThreeLetter(authResult);
 
 // don't exit automatically
 Output.Inform("Finished sniping, press any key to exit");
@@ -120,6 +115,9 @@ static void Initialize() {
     // create, load and log config
     FileSystem.PrepareConfig();
     FS.FileSystem.Log("Using config: " + System.Text.Json.JsonSerializer.Serialize(Config.v, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
+
+    // load account config
+    FileSystem.PrepareAccount();
     
     // create and load name list
     if (!FileSystem.NamesFileExists()) FileSystem.SaveNames(new List<string>());
