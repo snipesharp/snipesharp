@@ -43,7 +43,7 @@ Initialize();
 // let the user authenticate
 AuthResult authResult = await Core.Auth();
 
-if(!Account.v.prename) if (!await Stats.CanChangeName(Account.v.Bearer)) Cli.Output.ExitError($"{Account.v.MicrosoftEmail} cannot change username yet.");
+if(!Account.v.prename && authResult.loginMethod != "Bearer Token") if (!await Stats.CanChangeName(Account.v.Bearer)) Cli.Output.ExitError($"{Account.v.MicrosoftEmail} cannot change username yet.");
 string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
 
 // handle prename account and change config (runtime only)
