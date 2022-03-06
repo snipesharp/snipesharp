@@ -8,7 +8,7 @@ namespace Snipe
     {
         /// <summary>Verifies whether the current bearer works & returns true if the account owns Minecraft & can change its username</summary>
         public static async Task<bool> AuthWithBearer(string bearer) {
-            bearer = bearer.Trim(); // todo and regex
+            bearer = bearer.Trim(); // todo: and regex to remove Bearer: :bearer etc
             if (bearer.Length < 280) DataTypes.Config.v.yggdrasilToken = true;
             if (!await IsWorkingBearer(bearer)) return false;
             if (!DataTypes.Config.v.yggdrasilToken) if (!await Utils.Stats.OwnsMinecraft(bearer)) Cli.Output.ExitError("Account doesn't own Minecraft");
