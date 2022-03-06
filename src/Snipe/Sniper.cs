@@ -22,7 +22,7 @@ namespace Snipe
             }
         }
 
-        public static void WaitForName(string name, long droptime, Account account, string loginMethod) {
+        public static async Task<Account> WaitForName(string name, long droptime, Account account, string loginMethod) {
             // update discord rpc
             if (Config.v.ShowTargetNameDRPC) Utils.DiscordRPC.SetSniping(name, droptime);
 
@@ -30,16 +30,17 @@ namespace Snipe
             var countDown = new CountDown(droptime, $"Sniping {SetText.DarkBlue + SetText.Bold}{name}{SetText.ResetAll} in " + "{TIME}");
 
             // wait for the time minus 5 minutes then reauthenticate // async but not awaited
-            if (Config.v.EnableBearerRefreshing && loginMethod == TAuth.AuthOptions.Microsoft && droptime > 300000) Reauthenticate(account, droptime);
+            if (Config.v.EnableBearerRefreshing && loginMethod == TAuth.AuthOptions.Microsoft && droptime > 300000) account = await Reauthenticate(account, droptime);
 
             // actually wait for the time
             int msToSleep = (int)TimeSpan.FromMilliseconds(droptime).TotalMilliseconds;
             Thread.Sleep(msToSleep);
 
             countDown.Cancel();
+            return account;
         }
 
-        public static async void Reauthenticate(Account account, long waitTime) {
+        public static async Task<Account> Reauthenticate(Account account, long waitTime) {
             // sleep until 5 mins before
             await Task.Delay((int)waitTime - 299990);
 
@@ -47,6 +48,7 @@ namespace Snipe
             var result = await Auth.AuthMicrosoft(account.MicrosoftEmail, account.MicrosoftPassword);
             account.Bearer = result.bearer;
             FS.FileSystem.SaveAccount(account);
+            return account;
         }
     }
 }

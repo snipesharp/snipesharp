@@ -82,12 +82,18 @@ namespace Snipe
                     }
 
                     // Return if prename account
-                    if (!await HasNameHistory(mcApiJsonResponse.access_token) && ownsMinecraft) return new MsAuthResult{bearer = mcApiJsonResponse.access_token.ToString(), prename = true};
+                    if (!await HasNameHistory(mcApiJsonResponse.access_token) && ownsMinecraft) {
+                        FS.FileSystem.Log("Successfully authenticated prename Microsoft account");
+                        return new MsAuthResult{bearer = mcApiJsonResponse.access_token.ToString(), prename = true};
+                    }
 
                     // Check if account can change name since its not a prename account
                     await Utils.Stats.CanChangeName(mcApiJsonResponse.access_token);
 
-                    if (!String.IsNullOrEmpty(mcApiJsonResponse.access_token.ToString())) return new MsAuthResult{bearer = mcApiJsonResponse.access_token.ToString(), prename = false};
+                    if (!String.IsNullOrEmpty(mcApiJsonResponse.access_token.ToString())) {
+                        FS.FileSystem.Log("Successfully authenticated Microsoft account");
+                        return new MsAuthResult{bearer = mcApiJsonResponse.access_token.ToString(), prename = false};
+                    }
                 }
                 else Cli.Output.ExitError("Failed to get access_token");
             } 
