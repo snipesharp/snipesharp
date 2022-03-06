@@ -40,12 +40,10 @@ namespace FS
         }
 
         // Saves given account to the account.json file
-        public static void SaveAccount(Account account){
+        public static void SaveAccount(){
             try {
                 if (!Directory.Exists(snipesharpFolder)) CreateSnipesharpFolder();
-                var json = JsonSerializer.Serialize(account, new JsonSerializerOptions { WriteIndented = true });
-                var warning = string.Concat(Enumerable.Repeat(TFileSystem.FSInforms.AccountSafety, 50));
-                File.WriteAllText(accountJsonFile, warning + json);
+                Utils.ConfigSerialization.Serialize(accountJsonFile);
             } catch (Exception e) { Cli.Output.Error(e.Message); }
         }
 
