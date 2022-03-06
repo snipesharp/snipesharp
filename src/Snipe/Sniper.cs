@@ -46,7 +46,7 @@ namespace Snipe
             FS.FileSystem.Log("Refreshing bearer");
             var result = await Auth.AuthMicrosoft(Account.v.MicrosoftEmail, Account.v.MicrosoftPassword);
             Account.v.Bearer = result.bearer;
-            FS.FileSystem.SaveAccount();
+            FS.FileSystem.UpdateAccount();
         }
     }
 }

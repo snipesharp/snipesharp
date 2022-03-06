@@ -43,7 +43,7 @@ namespace FS
         public static void UpdateAccount(){
             try {
                 if (!Directory.Exists(snipesharpFolder)) CreateSnipesharpFolder();
-                Utils.ConfigSerialization.Serialize(accountJsonFile);
+                Utils.AccountSerialization.Serialize(accountJsonFile);
             } catch (Exception e) { Cli.Output.Error(e.Message); }
         }
 
@@ -81,6 +81,9 @@ namespace FS
             catch (JsonException e) {
                 Cli.Output.Error(TFileSystem.FSInforms.CannotReadFile(new Tuple<string, JsonException>("config.json", e)));
             }
+            catch (Exception) {
+                Cli.Output.Error("An error occured while reading config.json");
+            }
         }
 
         /// <summary>Prepares existing or new account config depending on whether one already exists</summary>
@@ -93,9 +96,13 @@ namespace FS
                 var fileContents = File.ReadAllText(accountJsonFile);
                 var splitted = fileContents.Split(new[] { '{' }, 2);
                 Utils.AccountSerialization.Deserialize("{"+splitted[1]);
+                UpdateAccount();
             }
             catch (JsonException e) {
                 Cli.Output.Error(TFileSystem.FSInforms.CannotReadFile(new Tuple<string, JsonException>("account.json", e)));
+            }
+            catch (Exception) {
+                Cli.Output.Error("An error occured while reading account.json");
             }
         }
 

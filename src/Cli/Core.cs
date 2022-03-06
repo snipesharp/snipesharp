@@ -49,7 +49,7 @@ namespace Cli
             }
 
             // save account and return
-            FileSystem.SaveAccount();
+            FileSystem.UpdateAccount();
             return new AuthResult { loginMethod = loginMethod };
         }
 
@@ -101,6 +101,7 @@ namespace Cli
         private static async Task<HandleFromFileResult> HandleFromFile() {
             // determine available methods
             List<string> availableMethods = new List<string>();
+            if (String.IsNullOrEmpty(Account.v.Bearer) && String.IsNullOrEmpty(Account.v.MicrosoftEmail)) Cli.Output.ExitError("account.json contains no valid credentials");
             if (!String.IsNullOrEmpty(Account.v.Bearer))
                 availableMethods.Add(TAuth.AuthOptions.BearerToken);
             if (
