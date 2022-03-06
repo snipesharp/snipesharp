@@ -27,7 +27,7 @@
     <img src="https://img.shields.io/badge/windows_arm64-v1.5.5-%23015fa1?style=flat-square&logo=windows&logoWidth=20&logoColor=white"</img>
   </a>
   <br><br>
-  <a href="#donate-%EF%B8%8F">
+  <a href="https://snipesharp.xyz/donate/">
     <img src="https://img.shields.io/badge/❤️_donate_❤️-%230b2a53?style=for-the-badge">
   </a>
   <br/><br/>
@@ -42,7 +42,7 @@
 </p>
 
 # About ❓
-Snipesharp is an easy to use Minecraft name Sniper featuring 24/7 giftcard & normal sniping, Discord RPC & more! Snipesharp is coded in [.NET](https://dotnet.microsoft.com/en-us/) C# and is focused on both speed and user friendliness.
+<a href="https://snipesharp.xyz/">Snipesharp</a> is an Open Source & easy to use Minecraft name Sniper featuring 24/7 giftcard & normal sniping, Discord RPC & more! Snipesharp is coded in [.NET](https://dotnet.microsoft.com/en-us/) C# and is focused on both speed and user friendliness.
 
 ### Created by:
 
@@ -109,7 +109,7 @@ On **Linux** you will have to make the `install_linux.sh` file executable by run
 
 Similarly, if you have an **arm64/aarch64 architecture CPU**, you will have to make the file executable the same way you would normally, but run it without superuser privileges by running `./install_linux.sh`
 
-# Donate ❤️
+# <a href="https://snipesharp.xyz/donate/">Donate ❤️</a>
 - ### To demented
   - **Monero/XMR**: 89Gk3YiZGWnLsgGygzRg8Shqp1UyEuYGMbnrz3dLX9isbiLb5b8e6Zu4rT6NX5K5dsNtMb1WTyScqdYCsjxNfUFaRLcdeBk
   - **Bitcoin/BTC**: bc1qfppf2n4qe4qcsehlh66gg4dz6qv7m3dd7fsam3
@@ -139,5 +139,4 @@ If you still can't fix your issue or you just want to hang out, you can join [ou
 - `names.json` = ~/.snipesharp/names.json
 - `latest.log` = ~/.snipesharp/logs/latest.log
 
-
-![Untitled](https://user-images.githubusercontent.com/93228501/155002588-ab6d285d-2a5d-4ba1-86ac-85a35a253289.gif)
+<a href="https://snipesharp.xyz/">![Untitled](https://user-images.githubusercontent.com/93228501/155002588-ab6d285d-2a5d-4ba1-86ac-85a35a253289.gif)</a>
