@@ -20,7 +20,7 @@ namespace Cli.Names
             string name = Input.Request<string>("Name to snipe: ");
             long delay = await GetDelay();
             var dropTime = Math.Max(0, await Droptime.GetMilliseconds(name, true) - delay);
-            account = await Sniper.WaitForName(name, dropTime, account, authResult.loginMethod);
+            Sniper.WaitForName(name, dropTime, account, authResult.loginMethod);
             Sniper.Shoot(account, name);
         }
 
@@ -29,7 +29,7 @@ namespace Cli.Names
             for (int i = 0; i < namesList.Count; i++) {
                 var dropTime = Math.Max(0, await Droptime.GetMilliseconds(namesList[i], false) - delay);
                 if(dropTime > 0){
-                    account = await Sniper.WaitForName(namesList[i], dropTime, account, authResult.loginMethod);
+                    Sniper.WaitForName(namesList[i], dropTime, account, authResult.loginMethod);
                     Sniper.Shoot(account, namesList[i]);
                 }
 
