@@ -6,7 +6,8 @@ namespace Utils
     public class Skin
     {
         public static async void Change(string skinUrl, string skinType, string bearer) {
-            if (string.IsNullOrEmpty(skinUrl) || string.IsNullOrEmpty(skinType)) return;
+            if (string.IsNullOrEmpty(skinUrl)) skinUrl = DataTypes.Config.v.defaultSkin;
+            if (string.IsNullOrEmpty(skinType)) skinType = "classic";
             
             // prepare http client
             var client = new HttpClient();
@@ -15,8 +16,9 @@ namespace Utils
                 new {url = skinUrl, variant = skinType }, new JsonSerializerOptions { WriteIndented = true });
 
             // make the actual call for changing the skin
-            await client.PostAsync($"https://api.minecraftservices.com/minecraft/profile/skins",
+            var result = await client.PostAsync($"https://api.minecraftservices.com/minecraft/profile/skins",
             new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
+            FS.FileSystem.Log($"Auto skin change: {result}");
         }
     }
 }

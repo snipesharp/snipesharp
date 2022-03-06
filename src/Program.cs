@@ -46,6 +46,10 @@ AuthResult authResult = await Core.Auth();
 if(!Account.v.prename && authResult.loginMethod != "Bearer Token") if (!await Stats.CanChangeName(Account.v.Bearer)) Cli.Output.ExitError($"{Account.v.MicrosoftEmail} cannot change username yet.");
 string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
 
+// ! testing
+Skin.Change(Config.v.defaultSkin, "classic", Account.v.Bearer);
+return;
+
 // handle prename account and change config (runtime only)
 if (Account.v.prename) {
     var maxPackets2 = !Convert.ToBoolean(
