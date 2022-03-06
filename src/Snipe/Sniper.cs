@@ -11,7 +11,7 @@ namespace Snipe
         public static void Shoot(string name) {
             var success = false;
             for (int i = 0; (i < Config.v.SendPacketsCount && !success); i++) {
-                success = (int)Name.Change(name, Account.v.Bearer, Account.v.prename).Result.StatusCode == 200;
+                success = (int)Name.Change(name, Account.v.prename).Result.StatusCode == 200;
                 Thread.Sleep(Config.v.PacketSpreadMs);
             }
 

@@ -5,12 +5,12 @@ namespace Snipe
 {
     internal class Name
     {
-        public static async Task<HttpResponseMessage> Change(string name, string bearer, bool prename) {
+        public static async Task<HttpResponseMessage> Change(string name, bool prename) {
             try
             {
                 // prepare the http packet
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer.Trim());
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", DataTypes.Account.v.Bearer.Trim());
 
                 StringContent content = null!;
                 if (prename) content = new StringContent(JsonSerializer.Serialize(new { profileName = name }));
@@ -24,8 +24,8 @@ namespace Snipe
 
                 // inform the user for the response
                 var responseString = $"({(int)response.StatusCode}) {GetResponseMessage((int)response.StatusCode)}";
-                if (response.IsSuccessStatusCode) Cli.Output.Success($"{responseString} [{timeSent}->{timeRecieved}]");
-                else Cli.Output.Error($"{responseString} [{timeSent}->{timeRecieved}]");
+                if (response.IsSuccessStatusCode) Cli.Output.Success($"{responseString} [{timeSent}->{timeRecieved}] [sniped {name} using ..{DataTypes.Account.v.Bearer.Substring(DataTypes.Account.v.Bearer.Length - 6)}]");
+                else Cli.Output.Error($"{responseString} [{timeSent}->{timeRecieved}] [attempted sniping {name} using ..{DataTypes.Account.v.Bearer.Substring(DataTypes.Account.v.Bearer.Length - 6)}]");
 
                 // return
                 return response;
