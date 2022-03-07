@@ -8,6 +8,7 @@ using Cli.Animatables;
 using DataTypes.SetText;
 using Cli.Names;
 			
+// handle args
 await HandleArgs();
 
 // prepare everything and welcome the user
