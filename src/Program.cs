@@ -8,7 +8,7 @@ using Cli.Animatables;
 using DataTypes.SetText;
 using Cli.Names;
 			
-HandleArgs();
+await HandleArgs();
 
 // prepare everything and welcome the user
 Initialize();
@@ -102,7 +102,7 @@ static void Initialize() {
     if (Config.v.EnableDiscordRPC) Utils.DiscordRPC.Initialize();
 }
 
-static async void HandleArgs() {
+static async Task HandleArgs() {
     string argName = "";
     if(Core.arguments.ContainsKey("--name")) argName = Core.arguments["--name"].data!;
 
@@ -122,7 +122,7 @@ static async void HandleArgs() {
         };
         if (argName == "l" || argName == "list") await Names.handleNamesList(temp, FileSystem.GetNames());
         if (argName == "3" || argName == "3char") await Names.handleThreeLetter(temp);
-        await Names.handleSingleName(temp, argName);
+        if (argName != "3" && argName != "l" && argName != "3char" && argName != "list") await Names.handleSingleName(temp, argName);
         Console.ReadKey();
         return;
     }
@@ -140,7 +140,10 @@ static async void HandleArgs() {
         var temp = new AuthResult {
             loginMethod = TAuth.AuthOptions.Microsoft
         };
-        await Names.handleThreeLetter(temp);
+        if (string.IsNullOrEmpty(argName)) await Names.handleThreeLetter(temp);
+        if (argName == "l" || argName == "list") await Names.handleNamesList(temp, FileSystem.GetNames());
+        if (argName == "3" || argName == "3char") await Names.handleThreeLetter(temp);
+        if (argName != "3" && argName != "l" && argName != "3char" && argName != "list") await Names.handleSingleName(temp, argName);
         Console.ReadKey();
         return;
     }
