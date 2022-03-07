@@ -47,7 +47,7 @@
 ### Created by:
 
 <p align="center">
-<a href="https://namemc.com/profile/dement6d.1">demented<img src="https://mc-heads.net/head/a5aee899-2d82-4594-aed1-f547178db6c0/100"></img></a><a href="https://github.com/StiliyanKushev"><img src="https://i.imgur.com/lMWqAlH.png">StiliyanKushev</img></a>
+<a href="https://snipesharp.xyz/demented/">demented<img src="https://mc-heads.net/head/a5aee899-2d82-4594-aed1-f547178db6c0/100"></img></a><a href="https://snipesharp.xyz/stiliyan/"><img src="https://i.imgur.com/lMWqAlH.png">StiliyanKushev</img></a>
 </p>
 
 # Features ⚡
