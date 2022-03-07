@@ -110,12 +110,7 @@ On **Linux** you will have to make the `install_linux.sh` file executable by run
 Similarly, if you have an **arm64/aarch64 architecture CPU**, you will have to make the file executable the same way you would normally, but run it without superuser privileges by running `./install_linux.sh`
 
 # <a href="https://snipesharp.xyz/donate/">Donate ❤️</a>
-- ### To demented
-  - **Monero/XMR**: 89Gk3YiZGWnLsgGygzRg8Shqp1UyEuYGMbnrz3dLX9isbiLb5b8e6Zu4rT6NX5K5dsNtMb1WTyScqdYCsjxNfUFaRLcdeBk
-  - **Bitcoin/BTC**: bc1qfppf2n4qe4qcsehlh66gg4dz6qv7m3dd7fsam3
-  - **[Paypal](https://paypal.me/dement6d)**: _https://paypal.me/dement6d_
-- ### To StiliyanKushev
-  - **[Paypal](https://www.paypal.com/donate/?hosted_button_id=GXK6UYPH5SK5C)**: _https://www.paypal.com/donate/?hosted_button_id=GXK6UYPH5SK5C_
+### Donate to us through our website ❤️ https://snipesharp.xyz/donate/
 
 # Troubleshooting & FAQ 🪛
 If youre having trouble while using snipesharp, check for solutions of frequently asked questions on the [Wiki](https://github.com/snipesharp/snipesharp/wiki).
