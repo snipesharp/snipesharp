@@ -8,34 +8,7 @@ using Cli.Animatables;
 using DataTypes.SetText;
 using Cli.Names;
 			
-if(Core.arguments.ContainsKey("--email") && Core.arguments.ContainsKey("--password")){
-    Config.v.EnableDiscordRPC = false;
-    Config.v.ShowTargetNameDRPC = false;
-    Config.v.ShowUsernameDRPC = false;
-    Account.v.MicrosoftEmail = Core.arguments["--email"].data!;
-    Account.v.MicrosoftPassword = Core.arguments["--password"].data!;
-    Initialize();
-    var temp = new AuthResult {
-        loginMethod = TAuth.AuthOptions.Microsoft
-    };
-    await Names.handleThreeLetter(temp);
-    Console.ReadKey();
-    return;
-}
-
-if(Core.arguments.ContainsKey("--bearer")){
-    Config.v.EnableDiscordRPC = false;
-    Config.v.ShowTargetNameDRPC = false;
-    Config.v.ShowUsernameDRPC = false;
-    Account.v.Bearer = Core.arguments["--bearer"].data!;
-    Initialize();
-    var temp = new AuthResult {
-        loginMethod = TAuth.AuthOptions.Microsoft
-    };
-    await Names.handleThreeLetter(temp);
-    Console.ReadKey();
-    return;
-}
+HandleArgs();
 
 // prepare everything and welcome the user
 Initialize();
@@ -127,4 +100,40 @@ static void Initialize() {
 
     // start discord rpc
     if (Config.v.EnableDiscordRPC) Utils.DiscordRPC.Initialize();
+}
+
+static async void HandleArgs() {
+    string argName = "";
+    if(Core.arguments.ContainsKey("--name")) argName = Core.arguments["--name"].data!;
+
+    if(Core.arguments.ContainsKey("--email") && Core.arguments.ContainsKey("--password")){
+        Config.v.EnableDiscordRPC = false;
+        Config.v.ShowTargetNameDRPC = false;
+        Config.v.ShowUsernameDRPC = false;
+        Account.v.MicrosoftEmail = Core.arguments["--email"].data!;
+        Account.v.MicrosoftPassword = Core.arguments["--password"].data!;
+        Initialize();
+        var temp = new AuthResult {
+            loginMethod = TAuth.AuthOptions.Microsoft
+        };
+        if (argName == "l" || argName == "list") await Names.handleNamesList(temp, FileSystem.GetNames());
+        if (argName == "3" || argName == "3char") await Names.handleThreeLetter(temp);
+        await Names.handleSingleName(temp, argName);
+        Console.ReadKey();
+        return;
+    }
+
+    if(Core.arguments.ContainsKey("--bearer")){
+        Config.v.EnableDiscordRPC = false;
+        Config.v.ShowTargetNameDRPC = false;
+        Config.v.ShowUsernameDRPC = false;
+        Account.v.Bearer = Core.arguments["--bearer"].data!;
+        Initialize();
+        var temp = new AuthResult {
+            loginMethod = TAuth.AuthOptions.Microsoft
+        };
+        await Names.handleThreeLetter(temp);
+        Console.ReadKey();
+        return;
+    }
 }

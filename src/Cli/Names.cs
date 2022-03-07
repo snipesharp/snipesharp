@@ -16,8 +16,8 @@ namespace Cli.Names
             return Input.Request<long>($"Offset in ms [suggested: {suggestedOffset}ms]: ");
         }
 
-        public static async Task handleSingleName(AuthResult authResult){
-            string name = Input.Request<string>("Name to snipe: ");
+        public static async Task handleSingleName(AuthResult authResult, string name=""){
+            if (string.IsNullOrEmpty(name)) name = Input.Request<string>("Name to snipe: ");
             long delay = await GetDelay();
             var dropTime = Math.Max(0, await Droptime.GetMilliseconds(name, true) - delay);
             Sniper.WaitForName(name, dropTime, authResult.loginMethod);
