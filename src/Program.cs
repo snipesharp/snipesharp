@@ -104,8 +104,11 @@ static void Initialize() {
 
 static async Task HandleArgs() {
     string argName = "";
-    if(Core.arguments.ContainsKey("--name")) argName = Core.arguments["--name"].data!;
 
+    if(Core.arguments.ContainsKey("--username")) Config.v.DiscordWebhookUsername = Core.arguments["--username"].data!;
+    if(Core.arguments.ContainsKey("--asc")) Config.v.AutoSkinChange = true;
+    if(Core.arguments.ContainsKey("--asc")) Config.v.AutoSkinChange = true;
+    if(Core.arguments.ContainsKey("--name")) argName = Core.arguments["--name"].data!;
     if(Core.arguments.ContainsKey("--email") && Core.arguments.ContainsKey("--password")){
         Config.v.EnableDiscordRPC = false;
         Config.v.ShowTargetNameDRPC = false;
@@ -126,7 +129,6 @@ static async Task HandleArgs() {
         Console.ReadKey();
         return;
     }
-
     if(Core.arguments.ContainsKey("--bearer")){
         Config.v.EnableDiscordRPC = false;
         Config.v.ShowTargetNameDRPC = false;
