@@ -143,9 +143,9 @@ static async Task HandleArgs() {
             loginMethod = TAuth.AuthOptions.Microsoft
         };
         if (string.IsNullOrEmpty(argName)) await Names.handleThreeLetter(temp);
-        if (argName == "l" || argName == "list") await Names.handleNamesList(temp, FileSystem.GetNames());
-        if (argName == "3" || argName == "3char") await Names.handleThreeLetter(temp);
-        if (argName != "3" && argName != "l" && argName != "3char" && argName != "list") await Names.handleSingleName(temp, argName);
+        if (argName == "l") await Names.handleNamesList(temp, FileSystem.GetNames());
+        if (argName == "3") await Names.handleThreeLetter(temp);
+        if (argName != "3" && argName != "l") await Names.handleSingleName(temp, argName);
         Console.ReadKey();
         return;
     }
