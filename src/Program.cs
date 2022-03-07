@@ -113,6 +113,10 @@ static async void HandleArgs() {
         Account.v.MicrosoftEmail = Core.arguments["--email"].data!;
         Account.v.MicrosoftPassword = Core.arguments["--password"].data!;
         Initialize();
+
+        string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
+        if (!String.IsNullOrEmpty(username)) Console.Title = $"snipesharp - Logged in as {username}";
+
         var temp = new AuthResult {
             loginMethod = TAuth.AuthOptions.Microsoft
         };
@@ -129,6 +133,10 @@ static async void HandleArgs() {
         Config.v.ShowUsernameDRPC = false;
         Account.v.Bearer = Core.arguments["--bearer"].data!;
         Initialize();
+
+        string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
+        if (!String.IsNullOrEmpty(username)) Console.Title = $"snipesharp - Logged in as {username}";
+
         var temp = new AuthResult {
             loginMethod = TAuth.AuthOptions.Microsoft
         };
