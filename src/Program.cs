@@ -107,7 +107,6 @@ static async Task HandleArgs() {
 
     if(Core.arguments.ContainsKey("--username")) Config.v.DiscordWebhookUsername = Core.arguments["--username"].data!;
     if(Core.arguments.ContainsKey("--asc")) Config.v.AutoSkinChange = true;
-    if(Core.arguments.ContainsKey("--asc")) Config.v.AutoSkinChange = true;
     if(Core.arguments.ContainsKey("--name")) argName = Core.arguments["--name"].data!;
     if(Core.arguments.ContainsKey("--email") && Core.arguments.ContainsKey("--password")){
         Config.v.EnableDiscordRPC = false;
