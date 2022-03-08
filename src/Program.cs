@@ -7,7 +7,7 @@ using Cli.Templates;
 using Cli.Animatables;
 using DataTypes.SetText;
 using Cli.Names;
-			
+
 // handle args
 await HandleArgs();
 
@@ -105,7 +105,6 @@ static void Initialize() {
 
 static async Task HandleArgs() {
     string argName = "";
-
     if(Core.arguments.ContainsKey("--username")) Config.v.DiscordWebhookUsername = Core.arguments["--username"].data!;
     if(Core.arguments.ContainsKey("--asc")) Config.v.AutoSkinChange = true;
     if(Core.arguments.ContainsKey("--name")) argName = Core.arguments["--name"].data!;
@@ -123,6 +122,7 @@ static async Task HandleArgs() {
         var temp = new AuthResult {
             loginMethod = TAuth.AuthOptions.Microsoft
         };
+        if (string.IsNullOrEmpty(argName)) await Names.handleThreeLetter(temp);
         if (argName == "l" || argName == "list") await Names.handleNamesList(temp, FileSystem.GetNames());
         if (argName == "3" || argName == "3char") await Names.handleThreeLetter(temp);
         if (argName != "3" && argName != "l" && argName != "3char" && argName != "list") await Names.handleSingleName(temp, argName);
