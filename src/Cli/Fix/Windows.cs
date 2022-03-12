@@ -37,7 +37,7 @@ namespace Fix
             // get current console mode
             uint consoleMode;
             if (!GetConsoleMode(consoleHandle, out consoleMode)) {
-                // ERROR: Unable to get console mode.
+                Cli.Output.Error("Unable to get console mode");
                 return false;
             }
 
