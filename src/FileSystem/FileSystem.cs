@@ -90,7 +90,6 @@ namespace FS
         public static void PrepareAccount() {
             try {
                 if (!AccountFileExists()) {
-                    UpdateAccount();
                     return;
                 }
                 var fileContents = File.ReadAllText(accountJsonFile);
