@@ -2,7 +2,7 @@
 name: Suggestion
 about: Suggestion of a new feature or different implementation of existing feature
 title: ''
-labels: enhancement
+labels: suggestion
 assignees: ''
 
 ---
