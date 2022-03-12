@@ -73,6 +73,10 @@ static void Initialize() {
     if (Core.pid != PlatformID.Unix)
     Fix.Windows.FixCmd();
 
+    // disable quick edit
+    if (Core.pid != PlatformID.Unix)
+    Fix.Windows.DisableQuickEdit();
+
     // attempt to fix cursor not showing after close
     Fix.TerminateHandler.FixCursor();
 
