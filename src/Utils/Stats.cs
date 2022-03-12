@@ -13,7 +13,12 @@ namespace Utils
             client.DefaultRequestHeaders.Add("Authorization", $"Bearer {bearer}");
 
             var result = await client.GetAsync("https://api.minecraftservices.com/minecraft/profile");
-            var jsonResult = JsonSerializer.Deserialize<ProfileInformation>(await result.Content.ReadAsStringAsync());
+            ProfileInformation? jsonResult = new ProfileInformation();
+            try { jsonResult = JsonSerializer.Deserialize<ProfileInformation>(await result.Content.ReadAsStringAsync()); }
+            catch (Exception e) { 
+                Cli.Output.Error(e.Message);
+                FS.FileSystem.Log(e.ToString());
+            }
             if (jsonResult != null) return jsonResult.name;
             return null;
         }
