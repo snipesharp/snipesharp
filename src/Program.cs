@@ -8,11 +8,14 @@ using Cli.Animatables;
 using DataTypes.SetText;
 using Cli.Names;
 
+// get and log snipesharp version
+string currentVersion = new Assembly().GetAssemblyVersion();
+
 // handle args
-await HandleArgs();
+await HandleArgs(currentVersion);
 
 // prepare everything and welcome the user
-Initialize();
+await Initialize(currentVersion);
 
 // let the user authenticate
 AuthResult authResult = await Core.Auth();
@@ -27,10 +30,10 @@ if (Account.v.prename) {
         new string[] { "Yes [suggested]", "No" }).answerIndex);
     Config.v.SendPacketsCount = maxPackets2 ? 2 : Config.v.SendPacketsCount;
     Output.Inform(TAuth.AuthInforms.NoNameHistory);
-    Console.Title = $"snipesharp - Logged in with a prename account";
+    Console.Title = $"snipesharp {currentVersion} - Logged in with a prename account";
 }
 else if (!String.IsNullOrEmpty(username)) { 
-    Console.Title = $"snipesharp - Logged in as {username}";
+    Console.Title = $"snipesharp {currentVersion} - Logged in as {username}";
     if (Config.v.ShowUsernameDRPC) Utils.DiscordRPC.SetDescription($"Logged in as {username}");
 }
 
@@ -62,12 +65,16 @@ if(nameOption == TNames.ThreeCharNames) await Names.handleThreeLetter(authResult
 Output.Inform("Finished sniping, press any key to exit");
 Console.ReadKey();
 
-static void Initialize() {
+static async Task Initialize(string currentVersion) {
+
     // set console window title
-    Console.Title = "snipesharp";
+    Console.Title = $"snipesharp {currentVersion}";
 
     // delete latest log file
     if (File.Exists(FileSystem.latestLogFile)) File.Delete(FileSystem.latestLogFile);
+
+    // log verison
+    FS.FileSystem.Log($"Running version: {currentVersion}");
 
     // attempt to fix windows cmd colors
     if (Core.pid != PlatformID.Unix)
@@ -94,6 +101,9 @@ static void Initialize() {
     FileSystem.PrepareConfig();
     FS.FileSystem.Log("Using config: " + System.Text.Json.JsonSerializer.Serialize(Config.v, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
 
+    // execute auto update
+    if (!Core.arguments.ContainsKey("--disable-auto-update")) FS.FileSystem.Log(await Utils.AutoUpdate.Update(currentVersion));
+
     // load account config
     FileSystem.PrepareAccount();
     
@@ -107,18 +117,25 @@ static void Initialize() {
     if (Config.v.EnableDiscordRPC) Utils.DiscordRPC.Initialize();
 }
 
-static async Task HandleArgs() {
+static async Task HandleArgs(string currentVersion) {
     string argName = "";
-    if(Core.arguments.ContainsKey("--username")) Config.v.DiscordWebhookUsername = Core.arguments["--username"].data!;
-    if(Core.arguments.ContainsKey("--asc")) Config.v.AutoSkinChange = true;
-    if(Core.arguments.ContainsKey("--name")) argName = Core.arguments["--name"].data!;
-    if(Core.arguments.ContainsKey("--email") && Core.arguments.ContainsKey("--password")){
+    if (Core.arguments.ContainsKey("--auto-update")) {
+        Cli.Output.Inform("Test 2");
+        Cli.Output.Inform($"Moving current file to {Core.arguments["--auto-update"].data!}");
+        File.Move(System.Diagnostics.Process.GetCurrentProcess().MainModule!.FileName!, Core.arguments["--auto-update"].data!);
+        Cli.Output.Inform("Successfully updated, start snipesharp as you would normally");
+        System.Diagnostics.Process.GetCurrentProcess().Kill();
+    } 
+    if (Core.arguments.ContainsKey("--username")) Config.v.DiscordWebhookUsername = Core.arguments["--username"].data!;
+    if (Core.arguments.ContainsKey("--asc")) Config.v.AutoSkinChange = true;
+    if (Core.arguments.ContainsKey("--name")) argName = Core.arguments["--name"].data!;
+    if (Core.arguments.ContainsKey("--email") && Core.arguments.ContainsKey("--password")){
         Config.v.EnableDiscordRPC = false;
         Config.v.ShowTargetNameDRPC = false;
         Config.v.ShowUsernameDRPC = false;
         Account.v.MicrosoftEmail = Core.arguments["--email"].data!;
         Account.v.MicrosoftPassword = Core.arguments["--password"].data!;
-        Initialize();
+        await Initialize(currentVersion);
 
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
         if (!String.IsNullOrEmpty(username)) Console.Title = $"snipesharp - Logged in as {username}";
@@ -133,15 +150,15 @@ static async Task HandleArgs() {
         Console.ReadKey();
         return;
     }
-    if(Core.arguments.ContainsKey("--bearer")){
+    if (Core.arguments.ContainsKey("--bearer")){
         Config.v.EnableDiscordRPC = false;
         Config.v.ShowTargetNameDRPC = false;
         Config.v.ShowUsernameDRPC = false;
         Account.v.Bearer = Core.arguments["--bearer"].data!;
-        Initialize();
+        await Initialize(currentVersion);
 
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
-        if (!String.IsNullOrEmpty(username)) Console.Title = $"snipesharp - Logged in as {username}";
+        if (!String.IsNullOrEmpty(username)) Console.Title = $"snipesharp {currentVersion} - Logged in as {username}";
 
         var temp = new AuthResult {
             loginMethod = TAuth.AuthOptions.Microsoft

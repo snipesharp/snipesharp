@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <ApplicationIcon>snipesharp.ico</ApplicationIcon>
         <PackageIcon>snipesharp.ico</PackageIcon>
+        <AssemblyVersion>1.5.8.0</AssemblyVersion>
 
         <OutputType>Exe</OutputType>
         <TargetFramework>net6.0</TargetFramework>

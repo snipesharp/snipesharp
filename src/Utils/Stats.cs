@@ -57,7 +57,7 @@ namespace Utils
             Cli.Animatables.Spinner spinner = new Cli.Animatables.Spinner();
             // prepare http call using the bearer
             HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0");
+            client.DefaultRequestHeaders.Add("User-Agent", Cli.Templates.TWeb.UserAgent);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
 

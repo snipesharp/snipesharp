@@ -134,5 +134,35 @@ namespace FS
                 catch { Cli.Output.Warn("Log file is busy"); }
             });
         }
+        /// <summary>Downloads a file from the given URL to the given path</summary>
+        /// <returns>True if the file downloaded successfully</returns>
+        public static async Task<bool> Download(string url, string path) {
+            try {
+                // prepare client
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Add("User-Agent", Cli.Templates.TWeb.UserAgent);
+
+                // verify url works
+                Uri uriResult;
+                if (!Uri.TryCreate(url, UriKind.Absolute, out uriResult)) return false;
+                
+                // download file
+                byte[] fileBytes = await client.GetByteArrayAsync(url);
+                File.WriteAllBytes(path, fileBytes);
+
+                Log("File downloaded: " + File.Exists(path));
+
+                // return true if download succeeded
+                return true;
+            }
+            catch (UnauthorizedAccessException e) {
+                Cli.Output.Error($"Failed to download. {e.Message}");
+                return false;
+            }
+            catch (Exception e) {
+                Log("Failed to download. " + e.Message);
+                return false;
+            }
+        }
     }
 }

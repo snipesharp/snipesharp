@@ -25,6 +25,8 @@
         public string SkinUrl { get; set; } = "https://raw.githubusercontent.com/snipesharp/snipesharp/main/default_skin.png";
         public string SkinType { get; set; } = "classic";
         public bool NamesListAutoClean { get; set; } = true;
+        public bool AlwaysAutoUpdate {get;set;} = false;
+        public bool NeverAutoUpdate {get;set;} = false;
     }
 
     public static class Config

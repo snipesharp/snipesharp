@@ -21,7 +21,7 @@ namespace Snipe
 
             // get post url and PPFT
             HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0");
+            client.DefaultRequestHeaders.Add("User-Agent", Cli.Templates.TWeb.UserAgent);
             HttpResponseMessage initGet = await client.GetAsync("https://login.live.com/oauth20_authorize.srf?client_id=000000004C12AE6F&redirect_uri=https://login.live.com/oauth20_desktop.srf&scope=service::user.auth.xboxlive.com::MBI_SSL&display=touch&response_type=token&locale=en");
             string GetResult = initGet.Content.ReadAsStringAsync().Result;
             string sFTTag = Validators.Auth.rSFTTagRegex.Matches(GetResult)[0].Value.Replace("value=\"", "").Replace("\"", "");
@@ -124,7 +124,7 @@ namespace Snipe
             
             // prepare http client
             HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0");
+            client.DefaultRequestHeaders.Add("User-Agent", Cli.Templates.TWeb.UserAgent);
 
             // mojang bearer
             if (DataTypes.Config.v.yggdrasilToken) {
@@ -159,7 +159,7 @@ namespace Snipe
         public async static Task<bool> RedeemGiftcard(string giftcode, string bearer) {
             // prepare the http request
             HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0");
+            client.DefaultRequestHeaders.Add("", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
 
