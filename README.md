@@ -87,12 +87,12 @@
   - Features
     - Webhooks contain your desired username & the name you sniped
     - Webhooks contain Minecraft character head of the account which sniped the name
-  - Configuration ([config.json](#configuration-file-locations-%EF%B8%8F)
+  - Configuration ([config.json](#configuration-file-locations-%EF%B8%8F))
     - Custom username contained in webhook
     - Enable/disable webhook to snipesharp Discord server
     - Enable/disable webhook to custom Discord server
 - Automatic skin change
-  - Configuration ([config.json](#configuration-file-locations-%EF%B8%8F)
+  - Configuration ([config.json](#configuration-file-locations-%EF%B8%8F))
     - Custom skin
     - Custom skin type (classic/slim)
 
