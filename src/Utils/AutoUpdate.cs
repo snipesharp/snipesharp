@@ -144,7 +144,7 @@ namespace Utils
 
                 FS.FileSystem.Log("CPU Architecture: " + RuntimeInformation.OSArchitecture + ", OS: " + os);
 
-                return $"{release.Replace("/tag/", "/download/")}/snipesharp_{os}-{cpuArch}-v{version}" + (os == "windows" ? ".exe" : "");
+                return $"{release.Replace("/tag/", "/download/")}/snipesharp_{os}-{cpuArch}-v{version}" + (os == "win" ? ".exe" : "");
             }
             catch (Exception e) { FS.FileSystem.Log(e.ToString()); return "0"; }
         }

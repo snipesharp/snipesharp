@@ -9,3 +9,4 @@ make_release.bat
 src/Properties/
 .github
 devbuild.sh
+pull.bat
