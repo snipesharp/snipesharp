@@ -139,8 +139,7 @@ static async Task HandleArgs(string currentVersion) {
             }
         }
         catch (Exception e) { 
-            Cli.Output.Inform(e.ToString());
-            FS.FileSystem.Log(e.ToString());
+            FS.FileSystem.Log($"Failed to finish auto update: {e.ToString()}");
          }
     } 
     if (Core.arguments.ContainsKey("--username")) Config.v.DiscordWebhookUsername = Core.arguments["--username"].data!;
