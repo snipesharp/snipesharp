@@ -124,7 +124,7 @@ static async Task HandleArgs(string currentVersion) {
             if (Cli.Core.pid != PlatformID.Unix) {
                 // windows
                 // move file
-                File.Move(System.Diagnostics.Process.GetCurrentProcess().MainModule!.FileName!, Core.arguments["--auto-update"].data!);
+                File.Move(System.Diagnostics.Process.GetCurrentProcess().MainModule!.FileName!, Core.arguments["--auto-update"].data!, true);
                 FS.FileSystem.Log($"Moved {System.Diagnostics.Process.GetCurrentProcess().MainModule!.FileName!} to {Core.arguments["--auto-update"].data!}");
 
                 // output success
