@@ -13,16 +13,15 @@ namespace Utils
 
             // get and log latest version
             var latestRelease = await GetLatestRelease();
+            spinner.Cancel();
             var latestVersion = latestRelease.Substring(latestRelease.IndexOf("/v") + 2);
             FS.FileSystem.Log($"Latest version: {latestVersion}");
 
             // return if latest version failed to fetch
             if (latestRelease == "0") {
-                spinner.Cancel();
                 return "Failed to fetch latest version";
             }
 
-            spinner.Cancel();
             // if never auto update isnt on, continue
             if (!DataTypes.Config.v.NeverAutoUpdate) {
 
@@ -52,8 +51,8 @@ namespace Utils
                 // update
                 // get appropriate latest version download
                 var downloadLink = GetDownloadLink(latestRelease, latestVersion);
+                spinnerTwo.Cancel();
                 if (downloadLink == "0") { 
-                    spinnerTwo.Cancel();
                     return "Failed to construct download link";
                 }
 
@@ -66,12 +65,10 @@ namespace Utils
 
                 // download file, return if download fails
                 if (!await FS.FileSystem.Download(downloadLink, path)) {
-                    spinnerTwo.Cancel();
                     return $"Failed to download {latestVersion} from {downloadLink}";
                 }
                 FS.FileSystem.Log($"Successfully downloaded {latestVersion} from {downloadLink}");
                 
-                spinnerTwo.Cancel();
                 // ask whether to restart snipesharp under the new version
                 var restartPromptResult = new Cli.Animatables.SelectionPrompt
                 ("Restart snipesharp to run the latest version?", new string[]{"Yes", "No"}).result;
