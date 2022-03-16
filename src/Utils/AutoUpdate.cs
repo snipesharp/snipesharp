@@ -90,6 +90,7 @@ namespace Utils
             // make app runnable for unix systems
             if (Cli.Core.pid == PlatformID.Unix) {
                 try {
+                    // make latest version executable
                     await Process.Start(new ProcessStartInfo{
                         FileName = "/bin/bash",
                         Arguments = "-c \" " + $"chmod +x {filePath}" + " \"",
@@ -98,27 +99,16 @@ namespace Utils
                         RedirectStandardOutput = true
                     })!.WaitForExitAsync();
 
-                    Cli.Output.Inform($"Running: -c \"sudo {filePath}\" | without --auto-update=\"{Process.GetCurrentProcess().MainModule!.FileName}\"");
+                    // delete current file
+                    try { File.Delete(Process.GetCurrentProcess().MainModule!.FileName!); } catch {}
 
-                    // start the new file with --auto-update arg as sudo
-                    var psi = new ProcessStartInfo
-                    {
-                        FileName = "/bin/bash",
-                        UseShellExecute = false,
-                        RedirectStandardOutput = true,
-                        Arguments = string.Format("-c \"sudo {0} {1}\"", filePath, $"--auto-update=\"{Process.GetCurrentProcess().MainModule!.FileName}\"")
-                    };
+                    // move latest snipesharp to snipesharp
+                    File.Move(filePath, "/usr/bin/snipesharp");
 
-                    using (var p = Process.Start(psi))
-                    {
-                        if (p != null)
-                        {
-                            var strOutput = p.StandardOutput.ReadToEnd();
-                            p.WaitForExit();
-                        }
-                    }
+                    // output success
+                    Cli.Output.Success("Successfully updated, start snipesharp again to run the latest version");
                 }
-                catch { FS.FileSystem.Log($"Failed to run \"chmod +x {filePath}\""); }
+                catch (Exception e) { FS.FileSystem.Log($"Failed to complete running latest snipesharp version: {e.ToString()}"); }
             }
             else { // windows
                 // start the new file with --auto-update arg
