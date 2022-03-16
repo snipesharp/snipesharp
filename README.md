@@ -134,4 +134,6 @@ If you still can't fix your issue or you just want to hang out, you can join [ou
 - `names.json` = ~/.snipesharp/names.json
 - `latest.log` = ~/.snipesharp/logs/latest.log
 
+<h1><h1/>
+  
 <a href="https://snipesharp.xyz/">![Untitled](https://user-images.githubusercontent.com/93228501/155002588-ab6d285d-2a5d-4ba1-86ac-85a35a253289.gif)</a>
