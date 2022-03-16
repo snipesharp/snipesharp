@@ -41,7 +41,7 @@
   <a href="https://github.com/snipesharp/snipesharp/issues"><img src="https://img.shields.io/github/issues/snipesharp/snipesharp?style=flat&color=0e3351&logo=github"></a>
 </p>
 
-# About ❓
+<h1 align="center">About ❓</h1>
 <a href="https://snipesharp.xyz/">Snipesharp</a> is an Open Source & easy to use Minecraft name Sniper featuring 24/7 giftcard & normal sniping, Discord RPC & more! Snipesharp is coded in [.NET](https://dotnet.microsoft.com/en-us/) C# and is focused on both speed and user friendliness.
 
 ### Created by:
@@ -50,7 +50,8 @@
 <a href="https://snipesharp.xyz/demented/">demented<img src="https://mc-heads.net/head/a5aee899-2d82-4594-aed1-f547178db6c0/100"></img></a><a href="https://snipesharp.xyz/stiliyan/"><img src="https://i.imgur.com/lMWqAlH.png">StiliyanKushev</img></a>
 </p>
 
-# Features ⚡
+<h1 align="center">Features ⚡</h1>
+
 ### General
 - Discord RPC
     - ![image](https://user-images.githubusercontent.com/93228501/155626988-fed009c7-9e79-47a9-9d9d-22b86e3295eb.png)
@@ -96,7 +97,8 @@
     - Custom skin
     - Custom skin type (classic/slim)
 
-# Installing ✅
+<h1 align="center">Installing ✅</h1>
+
 To use snipesharp you can just download an executable from the [latest release](https://github.com/snipesharp/snipesharp/releases/tag/v1.5.7) or by pressing one of the buttons according to your operating system, located at the top of this document.
 
 Optionally, you can compile & install snipesharp using the install scripts that come with the repository. The only **dependency/requirement** for this is to have **[.NET](https://dotnet.microsoft.com/en-us/)** installed.
@@ -109,10 +111,12 @@ On **Linux** you will have to make the `install_linux.sh` file executable by run
 
 Similarly, if you have an **arm64/aarch64 architecture CPU**, you will have to make the file executable the same way you would normally, but run it without superuser privileges by running `./install_linux.sh`
 
-# <a href="https://snipesharp.xyz/donate/">Donate ❤️</a>
+<h1 align="center"><a href="https://snipesharp.xyz/donate/">Donate ❤️</a></h1>
+
 ### Donate to us through our website ❤️ https://snipesharp.xyz/donate/
 
-# Troubleshooting & FAQ 🪛
+<h1 align="center">Troubleshooting & FAQ 🪛</h1>
+
 If youre having trouble while using snipesharp, check for solutions of frequently asked questions on the [Wiki](https://github.com/snipesharp/snipesharp/wiki).
 If you still can't fix your issue or you just want to hang out, you can join [our Discord server](https://snipesharp.xyz/discord) and ask for help in the [#help](https://discord.com/channels/943483411597758494/943583091878932491) channel
 
@@ -120,7 +124,8 @@ If you still can't fix your issue or you just want to hang out, you can join [ou
     <img src="https://img.shields.io/discord/943483411597758494?color=567CFF&label=discord&logo=discord&logoColor=ffffff&style=for-the-badge">
 </a>
 
-# Configuration file locations ⚙️
+<h1 align="center">Configuration file locations ⚙️</h1>
+
 ### Windows
 - `%appdata%` = WindowsPartition:\\Users\\{user}\\AppData\\Roaming
 - `account.json` = %appdata%\\.snipesharp\\account.json
