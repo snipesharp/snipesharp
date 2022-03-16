@@ -70,7 +70,7 @@ namespace Utils
                 ("Restart snipesharp to run the latest version?", new string[]{"Yes", "No"}).result;
 
                 // handle restart prompt
-                await HandleRestartPrompt(restartPromptResult, path);
+                await HandleRestartPrompt(restartPromptResult, path, restartPromptResult == "Yes");
 
                 return $"Succesfully updated to the latest version ({latestVersion})";
             }
@@ -78,7 +78,7 @@ namespace Utils
             // if never auto update is on, return
             return "Never auto update is on, not updating";
         }
-        private static async Task HandleRestartPrompt(string result, string filePath) {
+        private static async Task HandleRestartPrompt(string result, string filePath, bool restart) {
             
             // for unix
             if (Cli.Core.pid == PlatformID.Unix) {
@@ -104,7 +104,7 @@ namespace Utils
                 catch (Exception e) { FS.FileSystem.Log($"Failed to complete running latest snipesharp version: {e.ToString()}"); }
             }
             else { // for windows
-            
+
                 // move current file to snipesharp.old
                 File.Move(Process.GetCurrentProcess().MainModule!.FileName!, "snipesharp.old", true);
                 
@@ -116,9 +116,11 @@ namespace Utils
             }
 
             // kill current process
-            Thread.Sleep(1500);
-            Console.ReadKey();
-            Process.GetCurrentProcess().Kill();
+            if (restart) {
+                Thread.Sleep(1500);
+                Console.ReadKey();
+                Process.GetCurrentProcess().Kill();
+            }
         }
         private static string GetDownloadLink(string release, string version) {
             try {
