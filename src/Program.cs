@@ -67,6 +67,9 @@ Console.ReadKey();
 
 static async Task Initialize(string currentVersion) {
 
+    // delete snipesharp.old
+    try { File.Delete("snipesharp.old"); } catch (Exception e) { FS.FileSystem.Log(e.ToString()); }
+
     // set console window title
     Console.Title = $"snipesharp {currentVersion}";
 
@@ -119,26 +122,6 @@ static async Task Initialize(string currentVersion) {
 
 static async Task HandleArgs(string currentVersion) {
     string argName = "";
-    if (Core.arguments.ContainsKey("--auto-update")) {
-        try {
-            if (Cli.Core.pid != PlatformID.Unix) {
-                // windows
-                // move file
-                File.Move(System.Diagnostics.Process.GetCurrentProcess().MainModule!.FileName!, Core.arguments["--auto-update"].data!, true);
-                FS.FileSystem.Log($"Moved {System.Diagnostics.Process.GetCurrentProcess().MainModule!.FileName!} to {Core.arguments["--auto-update"].data!}");
-
-                // output success
-                Cli.Output.Success("Successfully updated, start snipesharp again to run the latest version");
-
-                // kill current process
-                Console.ReadKey();
-                System.Diagnostics.Process.GetCurrentProcess().Kill();
-            }
-        }
-        catch (Exception e) { 
-            FS.FileSystem.Log($"Failed to finish auto update: {e.ToString()}");
-         }
-    } 
     if (Core.arguments.ContainsKey("--username")) Config.v.DiscordWebhookUsername = Core.arguments["--username"].data!;
     if (Core.arguments.ContainsKey("--asc")) Config.v.AutoSkinChange = true;
     if (Core.arguments.ContainsKey("--name")) argName = Core.arguments["--name"].data!;

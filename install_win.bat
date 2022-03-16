@@ -3,7 +3,7 @@ cd src
 
 echo Compiling...
 @echo.
-dotnet publish -c Release -r win-x64 -p:PublishSingleFile=true --self-contained true
+dotnet publish -c Release -r win-x64 -p:PublishSingleFile=true --self-contained true /p:AssemblyVersion=1.5.8
 @echo.
 echo Making folder "%AppData%\.snipesharp\"
 mkdir %AppData%\.snipesharp\

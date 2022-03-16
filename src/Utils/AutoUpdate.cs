@@ -80,7 +80,7 @@ namespace Utils
         }
         private static async Task HandleRestartPrompt(string result, string filePath) {
             
-            // make app runnable for unix systems
+            // for unix
             if (Cli.Core.pid == PlatformID.Unix) {
                 try {
                     // make latest version executable
@@ -95,7 +95,7 @@ namespace Utils
                     // delete current file
                     try { File.Delete(Process.GetCurrentProcess().MainModule!.FileName!); } catch {}
 
-                    // move latest snipesharp to snipesharp
+                    // move to original path
                     File.Move(filePath, "/usr/bin/snipesharp", true);
 
                     // output success
@@ -103,15 +103,21 @@ namespace Utils
                 }
                 catch (Exception e) { FS.FileSystem.Log($"Failed to complete running latest snipesharp version: {e.ToString()}"); }
             }
-            else { // windows
-                // start the new file with --auto-update arg
-                Process.Start(new ProcessStartInfo{
-                    FileName = filePath,
-                    Arguments = $"--auto-update=\"{Process.GetCurrentProcess().MainModule!.FileName}\""
-                });
+            else { // for windows
+            
+                // move current file to snipesharp.old
+                File.Move(Process.GetCurrentProcess().MainModule!.FileName!, "snipesharp.old", true);
+                
+                // move latest update to current process name
+                File.Move(filePath, Process.GetCurrentProcess().MainModule!.FileName!, true);
+
+                // output success
+                Cli.Output.Success("Successfully updated, start snipesharp again to run the latest version");
             }
 
             // kill current process
+            Thread.Sleep(1500);
+            Console.ReadKey();
             Process.GetCurrentProcess().Kill();
         }
         private static string GetDownloadLink(string release, string version) {
