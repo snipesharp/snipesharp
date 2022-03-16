@@ -9,11 +9,8 @@ namespace Utils
     {
         ///<returns>whether the app updated or not</returns>
         public static async Task<string> Update(string currentVersion) {
-            var spinner = new Cli.Animatables.Spinner();
-
             // get and log latest version
             var latestRelease = await GetLatestRelease();
-            spinner.Cancel();
             var latestVersion = latestRelease.Substring(latestRelease.IndexOf("/v") + 2);
             FS.FileSystem.Log($"Latest version: {latestVersion}");
 
@@ -48,12 +45,9 @@ namespace Utils
                     FS.FileSystem.UpdateConfig();
                 }
 
-                var spinnerTwo = new Cli.Animatables.Spinner();
-
                 // update
                 // get appropriate latest version download
                 var downloadLink = GetDownloadLink(latestRelease, latestVersion);
-                spinnerTwo.Cancel();
                 if (downloadLink == "0") { 
                     return "Failed to construct download link";
                 }
