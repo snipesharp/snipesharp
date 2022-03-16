@@ -121,10 +121,7 @@ static async Task HandleArgs(string currentVersion) {
     string argName = "";
     if (Core.arguments.ContainsKey("--auto-update")) {
         try {
-            if (Cli.Core.pid == PlatformID.Unix) {
-                // make it work for unix
-            }
-            else {
+            if (Cli.Core.pid != PlatformID.Unix) {
                 // windows
                 // move file
                 File.Move(System.Diagnostics.Process.GetCurrentProcess().MainModule!.FileName!, Core.arguments["--auto-update"].data!);
