@@ -17,6 +17,8 @@ namespace Utils
             var latestVersion = latestRelease.Substring(latestRelease.IndexOf("/v") + 2);
             FS.FileSystem.Log($"Latest version: {latestVersion}");
 
+            if (latestVersion == currentVersion) return "Up to date";
+
             // return if latest version failed to fetch
             if (latestRelease == "0") {
                 return "Failed to fetch latest version";
