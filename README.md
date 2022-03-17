@@ -27,7 +27,7 @@
     <img src="https://img.shields.io/badge/windows_arm64-v1.6.0-%23015fa1?style=flat-square&logo=windows&logoWidth=20&logoColor=white"</img>
   </a>
   <br>
-  <a align="center" href="http://download.snipesharp.xyz/"><b>Not sure which one to download?</b></a>
+  <a align="center" href="http://download.snipesharp.xyz/"><b>Not sure which to download?</b></a>
   <br><br>
   <a href="https://snipesharp.xyz/donate/">
     <img src="https://img.shields.io/badge/❤️_donate_❤️-%230b2a53?style=for-the-badge">
