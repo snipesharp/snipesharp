@@ -4,7 +4,7 @@ namespace DataTypes
 {
     public class AccountSettings
     {
-        public bool prename;
+        public bool prename = false;
         public string Bearer { get; set; }
         public string MicrosoftEmail { get; set; }
         public string MicrosoftPassword { get; set; }
