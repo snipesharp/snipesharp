@@ -4,27 +4,27 @@
   </a>
   <br/>
   
-  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.6.0/sha256sums.txt">
+  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.6.1/sha256sums.txt">
     <img src="https://img.shields.io/badge/sha256sums-%231a6eef?style=flat-square"</img>
   </a>
-  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.6.0/snipesharp_linux-x86-64-v1.6.0">
-    <img src="https://img.shields.io/badge/_linux-v1.6.0-%231a6eef?style=flat-square&logo=linux&logoWidth=20&logoColor=white"</img>
+  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.6.1/snipesharp_linux-x86-64-v1.6.1">
+    <img src="https://img.shields.io/badge/_linux-v1.6.1-%231a6eef?style=flat-square&logo=linux&logoWidth=20&logoColor=white"</img>
   </a>
-  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.6.0/snipesharp_mac-os-x86-64-v1.6.0">
-    <img src="https://img.shields.io/badge/_mac_os-v1.6.0-%231a6eef?style=flat-square&logo=apple&logoWidth=20&logoColor=white"</img>
+  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.6.1/snipesharp_mac-os-x86-64-v1.6.1">
+    <img src="https://img.shields.io/badge/_mac_os-v1.6.1-%231a6eef?style=flat-square&logo=apple&logoWidth=20&logoColor=white"</img>
   </a>
-  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.6.0/snipesharp_win-x86-64-v1.6.0.exe">
-    <img src="https://img.shields.io/badge/_windows-v1.6.0-%231a6eef?style=flat-square&logo=windows&logoWidth=20&logoColor=white"</img>
+  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.6.1/snipesharp_win-x86-64-v1.6.1.exe">
+    <img src="https://img.shields.io/badge/_windows-v1.6.1-%231a6eef?style=flat-square&logo=windows&logoWidth=20&logoColor=white"</img>
   </a>
   <br/>
-  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.6.0/snipesharp_linux-arm64-v1.6.0">
-    <img src="https://img.shields.io/badge/linux_arm64-v1.6.0-%23015fa1?style=flat-square&logo=linux&logoWidth=20&logoColor=white"</img>
+  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.6.1/snipesharp_linux-arm64-v1.6.1">
+    <img src="https://img.shields.io/badge/linux_arm64-v1.6.1-%23015fa1?style=flat-square&logo=linux&logoWidth=20&logoColor=white"</img>
   </a>
-  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.6.0/snipesharp_mac-os-arm64-v1.6.0">
-    <img src="https://img.shields.io/badge/mac_os_arm64-v1.6.0-%23015fa1?style=flat-square&logo=apple&logoWidth=20&logoColor=white"</img>
+  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.6.1/snipesharp_mac-os-arm64-v1.6.1">
+    <img src="https://img.shields.io/badge/mac_os_arm64-v1.6.1-%23015fa1?style=flat-square&logo=apple&logoWidth=20&logoColor=white"</img>
   </a>
-  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.6.0/snipesharp_win-arm64-v1.6.0.exe">
-    <img src="https://img.shields.io/badge/windows_arm64-v1.6.0-%23015fa1?style=flat-square&logo=windows&logoWidth=20&logoColor=white"</img>
+  <a href="https://github.com/snipesharp/snipesharp/releases/download/v1.6.1/snipesharp_win-arm64-v1.6.1.exe">
+    <img src="https://img.shields.io/badge/windows_arm64-v1.6.1-%23015fa1?style=flat-square&logo=windows&logoWidth=20&logoColor=white"</img>
   </a>
   <br>
   <a align="center" href="http://download.snipesharp.xyz/"><b>Not sure which to download?</b></a>
@@ -102,7 +102,7 @@
 
 <h1 align="center">Installing ✅</h1>
 
-To use snipesharp you can just download an executable from the [latest release](https://github.com/snipesharp/snipesharp/releases/tag/v1.6.0) or by pressing one of the buttons according to your operating system, located at the top of this document.
+To use snipesharp you can just download an executable from the [latest release](https://github.com/snipesharp/snipesharp/releases/tag/v1.6.1) or by pressing one of the buttons according to your operating system, located at the top of this document.
 
 Optionally, you can compile & install snipesharp using the install scripts that come with the repository. The only **dependency/requirement** for this is to have **[.NET](https://dotnet.microsoft.com/en-us/)** installed.
 
