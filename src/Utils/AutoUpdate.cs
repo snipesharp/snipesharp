@@ -119,7 +119,7 @@ namespace Utils
             if (restart) {
                 Thread.Sleep(1500);
                 Console.ReadKey();
-                Process.GetCurrentProcess().Kill();
+                Environment.Exit(0);
             }
         }
         private static string GetDownloadLink(string release, string version) {
