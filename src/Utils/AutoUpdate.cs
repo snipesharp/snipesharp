@@ -96,7 +96,7 @@ namespace Utils
                     try { File.Delete(Process.GetCurrentProcess().MainModule!.FileName!); } catch {}
 
                     // move to original path
-                    File.Move(filePath, Process.GetCurrentProcess().MainModule!.FileName!, true);
+                    File.Move(filePath, Process.GetCurrentProcess().MainModule!.FileName!.Replace(" (deleted)", ""), true);
 
                     // output success
                     Cli.Output.Success("Successfully updated, start snipesharp again to run the latest version");
