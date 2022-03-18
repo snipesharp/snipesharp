@@ -25,7 +25,7 @@ namespace Utils
         public static void SetSniping(string name, long droptime){
             var days = (int)TimeSpan.FromMilliseconds(droptime).Days;
             if(days > 0) {
-                State = $"Sniping name \"{name}\" in {days} days";
+                State = $"Sniping name \"{name}\" in {days} day" + (days == 1 ? "" : "s");
                 Timestamps.EndUnixMilliseconds = 0;
             }
             else {
