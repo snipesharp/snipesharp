@@ -122,6 +122,8 @@ static async Task Initialize(string currentVersion) {
 
 static async Task HandleArgs(string currentVersion) {
     string argName = "";
+    
+    // --offset is handled in Names.cs
     if (Core.arguments.ContainsKey("--username")) Config.v.DiscordWebhookUsername = Core.arguments["--username"].data!;
     if (Core.arguments.ContainsKey("--asc")) Config.v.AutoSkinChange = true;
     if (Core.arguments.ContainsKey("--name")) argName = Core.arguments["--name"].data!;
