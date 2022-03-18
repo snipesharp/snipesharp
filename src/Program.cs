@@ -159,7 +159,7 @@ static async Task HandleArgs(string currentVersion) {
         if (!String.IsNullOrEmpty(username)) Console.Title = $"snipesharp {currentVersion} - Logged in as {username}";
 
         var temp = new AuthResult {
-            loginMethod = TAuth.AuthOptions.Microsoft
+            loginMethod = TAuth.AuthOptions.BearerToken
         };
         if (string.IsNullOrEmpty(argName)) await Names.handleThreeLetter(temp);
         if (argName == "l") await Names.handleNamesList(temp, FileSystem.GetNames());
