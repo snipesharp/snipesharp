@@ -125,15 +125,18 @@ static async Task HandleArgs(string currentVersion) {
     
     // --offset is handled in Names.cs
     if (Core.arguments.ContainsKey("--username")) Config.v.DiscordWebhookUsername = Core.arguments["--username"].data!;
-    if (Core.arguments.ContainsKey("--asc")) Config.v.AutoSkinChange = true;
+    if (Core.arguments.ContainsKey("--asc")) {
+        Config.v.AutoSkinChange = true;
+        FS.FileSystem.Log("AutoSkinChange set to true");
+    }
     if (Core.arguments.ContainsKey("--name")) argName = Core.arguments["--name"].data!;
     if (Core.arguments.ContainsKey("--email") && Core.arguments.ContainsKey("--password")){
+        await Initialize(currentVersion);
         Config.v.EnableDiscordRPC = false;
         Config.v.ShowTargetNameDRPC = false;
         Config.v.ShowUsernameDRPC = false;
         Account.v.MicrosoftEmail = Core.arguments["--email"].data!;
         Account.v.MicrosoftPassword = Core.arguments["--password"].data!;
-        await Initialize(currentVersion);
 
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
         if (!String.IsNullOrEmpty(username)) Console.Title = $"snipesharp - Logged in as {username}";
@@ -149,11 +152,11 @@ static async Task HandleArgs(string currentVersion) {
         return;
     }
     if (Core.arguments.ContainsKey("--bearer")){
+        await Initialize(currentVersion);
         Config.v.EnableDiscordRPC = false;
         Config.v.ShowTargetNameDRPC = false;
         Config.v.ShowUsernameDRPC = false;
         Account.v.Bearer = Core.arguments["--bearer"].data!;
-        await Initialize(currentVersion);
 
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
         if (!String.IsNullOrEmpty(username)) Console.Title = $"snipesharp {currentVersion} - Logged in as {username}";

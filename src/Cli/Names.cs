@@ -20,6 +20,7 @@ namespace Cli.Names
         public static async Task handleSingleName(AuthResult authResult, string name=""){
             if (string.IsNullOrEmpty(name)) name = Input.Request<string>("Name to snipe: ");
             long delay = await GetDelay();
+            FS.FileSystem.Log($"Offset set to {delay}ms");
             var dropTime = Math.Max(0, await Droptime.GetMilliseconds(name, true) - delay);
             Sniper.WaitForName(name, dropTime, authResult.loginMethod);
             Sniper.Shoot(name);
@@ -27,6 +28,7 @@ namespace Cli.Names
 
         public static async Task handleNamesList(AuthResult authResult, List<string> namesList, bool fromJsonFile=true){
             long delay = await GetDelay();
+            FS.FileSystem.Log($"Offset set to {delay}ms");
             for (int i = 0; i < namesList.Count; i++) {
                 var dropTime = Math.Max(0, await Droptime.GetMilliseconds(namesList[i], false) - delay);
                 if(dropTime > 0){

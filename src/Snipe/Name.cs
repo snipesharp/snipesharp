@@ -32,7 +32,7 @@ namespace Snipe
             }
             catch (Exception ex)
             {
-                Cli.Output.ExitError($"Crashed while trying to change name: {ex.ToString()}");
+                Cli.Output.ExitError($"Crashed while trying to change name:\n{ex.StackTrace}\n\n{ex.ToString()}");
                 throw;
             }
         }
