@@ -33,6 +33,7 @@ namespace Snipe
             catch (Exception ex)
             {
                 Cli.Output.ExitError($"Crashed while trying to change name: {ex.ToString()}");
+                throw;
             }
         }
         protected static string GetResponseMessage(int code)
