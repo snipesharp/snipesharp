@@ -32,8 +32,7 @@ namespace Snipe
             }
             catch (Exception ex)
             {
-                FS.FileSystem.Log($"Crashed while trying to change name: {ex.ToString()}");
-                throw;
+                Cli.Output.ExitError($"Crashed while trying to change name: {ex.ToString()}");
             }
         }
         protected static string GetResponseMessage(int code)
