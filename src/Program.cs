@@ -9,7 +9,7 @@ using DataTypes.SetText;
 using Cli.Names;
 
 // get and log snipesharp version
-string currentVersion = new Assembly().GetAssemblyVersion();
+string currentVersion = new Snipesharp().GetAssemblyVersion();
 
 // handle args
 await HandleArgs(currentVersion);
@@ -124,6 +124,7 @@ static async Task HandleArgs(string currentVersion) {
     string argName = "";
     
     // --offset is handled in Names.cs
+    if (Core.arguments.ContainsKey("--install")) Snipesharp.Install();
     if (Core.arguments.ContainsKey("--username")) Config.v.DiscordWebhookUsername = Core.arguments["--username"].data!;
     if (Core.arguments.ContainsKey("--asc")) {
         Config.v.AutoSkinChange = true;
