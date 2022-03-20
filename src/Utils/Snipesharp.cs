@@ -13,17 +13,21 @@ namespace Utils
             if (Cli.Core.pid == PlatformID.Unix) {
                 // install for unix
                 try {
+                    // output info because after file is moved it cant output
+                    Cli.Output.Inform($"Installing snipesharp to {DataTypes.SetText.SetText.Blue}/usr/bin/snipesharp{DataTypes.SetText.SetText.ResetAll}");
+
                     // move to /usr/bin/snipesharp
                     File.Move(Process.GetCurrentProcess().MainModule!.FileName!, "/usr/bin/snipesharp");
                 }
                 catch (UnauthorizedAccessException) {
-                    Cli.Output.ExitError($"Failed to install to {DataTypes.SetText.SetText.Blue}/usr/bin/snipesharp{DataTypes.SetText.SetText.ResetAll} due to lack of permissions (Re-run with sudo)");
+                    Cli.Output.Error($"Failed to install to {DataTypes.SetText.SetText.Blue}/usr/bin/snipesharp{DataTypes.SetText.SetText.ResetAll} due to lack of permissions (Re-run with sudo)");
+                    Environment.Exit(-1);
                 }
                 catch (Exception e) {
-                    Cli.Output.ExitError($"Failed to install: {e.Message}");
+                    Cli.Output.Error($"Failed to install: {e.Message}");
+                    Environment.Exit(-1);
                 }
 
-                Cli.Output.Success($"Successfully installed snipesharp to {DataTypes.SetText.SetText.Blue}/usr/bin/snipesharp{DataTypes.SetText.SetText.ResetAll}");
                 Environment.Exit(0);
                 return;
             }
@@ -41,10 +45,12 @@ namespace Utils
                 File.CreateSymbolicLink(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), snipesharpExe);
             }
             catch (UnauthorizedAccessException) {
-                Cli.Output.ExitError($"Failed to install to {DataTypes.SetText.SetText.Blue}%APPDATA%\\.snipesharp{DataTypes.SetText.SetText.ResetAll} due to lack of permissions (Re-run with sudo)");
+                Cli.Output.Error($"Failed to install to {DataTypes.SetText.SetText.Blue}%APPDATA%\\.snipesharp{DataTypes.SetText.SetText.ResetAll} due to lack of permissions (Re-run with sudo)");
+                Environment.Exit(-1);
             }
             catch (Exception e) {
-                Cli.Output.ExitError($"Failed to install: {e.Message}");
+                Cli.Output.Error($"Failed to install: {e.Message}");
+                Environment.Exit(-1);
             }
 
             Cli.Output.Success($"Successfully installed snipesharp to {DataTypes.SetText.SetText.Blue}{snipesharpExe}{DataTypes.SetText.SetText.ResetAll}");
