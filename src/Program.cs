@@ -104,6 +104,9 @@ static async Task Initialize(string currentVersion) {
     FileSystem.PrepareConfig();
     FS.FileSystem.Log("Using config: " + System.Text.Json.JsonSerializer.Serialize(Config.v, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
 
+    // install snipesharp
+    if (Core.arguments.ContainsKey("--install")) Snipesharp.Install();
+
     // execute auto update
     if (!Core.arguments.ContainsKey("--disable-auto-update")) FS.FileSystem.Log(await Utils.AutoUpdate.Update(currentVersion));
 
@@ -124,7 +127,7 @@ static async Task HandleArgs(string currentVersion) {
     string argName = "";
     
     // --offset is handled in Names.cs
-    if (Core.arguments.ContainsKey("--install")) Snipesharp.Install();
+    // --disable-auto-update & --install handled in Initialize()
     if (Core.arguments.ContainsKey("--username")) Config.v.DiscordWebhookUsername = Core.arguments["--username"].data!;
     if (Core.arguments.ContainsKey("--asc")) {
         Config.v.AutoSkinChange = true;

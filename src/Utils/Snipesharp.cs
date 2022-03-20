@@ -17,7 +17,7 @@ namespace Utils
                     Cli.Output.Inform($"Installing snipesharp to {DataTypes.SetText.SetText.Blue}/usr/bin/snipesharp{DataTypes.SetText.SetText.ResetAll}");
 
                     // move to /usr/bin/snipesharp
-                    File.Move(Process.GetCurrentProcess().MainModule!.FileName!, "/usr/bin/snipesharp");
+                    File.Move(Process.GetCurrentProcess().MainModule!.FileName!, "/usr/bin/snipesharp", true);
                 }
                 catch (UnauthorizedAccessException) {
                     Cli.Output.Error($"Failed to install to {DataTypes.SetText.SetText.Blue}/usr/bin/snipesharp{DataTypes.SetText.SetText.ResetAll} due to lack of permissions (Re-run with sudo)");
@@ -37,13 +37,28 @@ namespace Utils
 
             // install on windows
             try {
-
+                string SCRIPT = $"{Environment.GetFolderPath(Environment.SpecialFolder.Templates)}\\snipesharp_install.vbs";
+                string makeShortcutCommand =    "echo Creating desktop shortcut for snipesharp.exe && " +
+                                                $"echo Creating script at {SCRIPT} && " +
+                                                $"echo Set oWS = WScript.CreateObject(\"WScript.Shell\") >> {SCRIPT} && " +
+                                                $"echo sLinkFile = \"%USERPROFILE%\\Desktop\\snipesharp.lnk\" >> {SCRIPT} && " +
+                                                $"echo Set oLink = oWS.CreateShortcut(sLinkFile) >> {SCRIPT} && " +
+                                                $"echo oLink.TargetPath = \"%AppData%\\.snipesharp\\snipesharp.exe\" >> {SCRIPT} && " +
+                                                $"echo oLink.WorkingDirectory = \"%AppData%\\.snipesharp\" >> {SCRIPT} && " +
+                                                $"echo oLink.Save >> {SCRIPT} && " +
+                                                $"cscript /nologo {SCRIPT} && " +
+                                                $"del {SCRIPT}";
                 // move file to .snipesharp folder
-                File.Move(Process.GetCurrentProcess().MainModule!.FileName!, snipesharpExe);
+                File.Move(Process.GetCurrentProcess().MainModule!.FileName!, snipesharpExe, true);
 
                 // create desktop shortcut
                 try {
-                    File.CreateSymbolicLink(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "//snipesharp.lnk", snipesharpExe);
+                    Process.Start(new ProcessStartInfo {
+                        FileName = "cmd.exe",
+                        Arguments = $"/C {makeShortcutCommand}"
+                    });
+
+                    Cli.Output.Success($"Successfully created Desktop shortcut");
                 }
                 catch {
                     Cli.Output.Error($"Failed to create desktop shortcut");
