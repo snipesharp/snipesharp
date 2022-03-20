@@ -59,6 +59,7 @@
 - Discord RPC
     - <img height="128px" src="https://user-images.githubusercontent.com/93228501/155626988-fed009c7-9e79-47a9-9d9d-22b86e3295eb.png" align="center"/>
 - Ease of use
+- Automatic updates
 ### Logging in
 - Features
   - Completely possible through the Console Interface
