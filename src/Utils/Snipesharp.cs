@@ -22,13 +22,17 @@ namespace Utils
                 catch (Exception e) {
                     Cli.Output.ExitError($"Failed to install: {e.Message}");
                 }
+
+                Cli.Output.Success($"Successfully installed snipesharp to {DataTypes.SetText.SetText.Blue}/usr/bin/snipesharp{DataTypes.SetText.SetText.ResetAll}");
+                Environment.Exit(0);
                 return;
             }
             
+            // exe location
+            var snipesharpExe = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.snipesharp\\snipesharp.exe";
+
             // install on windows
             try {
-                // exe location
-                var snipesharpExe = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.snipesharp\\snipesharp.exe";
 
                 // move file to .snipesharp folder
                 File.Move(Process.GetCurrentProcess().MainModule!.FileName!, snipesharpExe);
@@ -42,6 +46,9 @@ namespace Utils
             catch (Exception e) {
                 Cli.Output.ExitError($"Failed to install: {e.Message}");
             }
+
+            Cli.Output.Success($"Successfully installed snipesharp to {DataTypes.SetText.SetText.Blue}{snipesharpExe}{DataTypes.SetText.SetText.ResetAll}");
+            Environment.Exit(0);
             return;
         }
     }
