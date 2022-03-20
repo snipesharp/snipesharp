@@ -42,10 +42,15 @@ namespace Utils
                 File.Move(Process.GetCurrentProcess().MainModule!.FileName!, snipesharpExe);
 
                 // create desktop shortcut
-                File.CreateSymbolicLink(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), snipesharpExe);
+                try {
+                    File.CreateSymbolicLink(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "//snipesharp.lnk", snipesharpExe);
+                }
+                catch {
+                    Cli.Output.Error($"Failed to create desktop shortcut");
+                }
             }
-            catch (UnauthorizedAccessException) {
-                Cli.Output.Error($"Failed to install to {DataTypes.SetText.SetText.Blue}%APPDATA%\\.snipesharp{DataTypes.SetText.SetText.ResetAll} due to lack of permissions (Re-run with sudo)");
+            catch (UnauthorizedAccessException uae) {
+                Cli.Output.Error($"Failed to install to {DataTypes.SetText.SetText.Blue}%APPDATA%\\.snipesharp{DataTypes.SetText.SetText.ResetAll} due to lack of permissions ({uae.Message})");
                 Environment.Exit(-1);
             }
             catch (Exception e) {
