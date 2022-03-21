@@ -23,8 +23,8 @@ namespace FS
 
         // Creates the .snipesharp folder and informs the user
         public static void CreateSnipesharpFolder() {
-            if (Directory.Exists(snipesharpFolder)) Directory.CreateDirectory(snipesharpFolder);
-            if (Directory.Exists(logsFolder)) Directory.CreateDirectory(logsFolder);
+            if (!Directory.Exists(snipesharpFolder)) Directory.CreateDirectory(snipesharpFolder);
+            if (!Directory.Exists(logsFolder)) Directory.CreateDirectory(logsFolder);
             Config.v.firstTime = true;
             Cli.Output.Inform(TFileSystem.FSInforms.ConfigSetup);
         }
