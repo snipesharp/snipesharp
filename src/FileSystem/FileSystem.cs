@@ -23,9 +23,11 @@ namespace FS
 
         // Creates the .snipesharp folder and informs the user
         public static void CreateSnipesharpFolder() {
-            if (!Directory.Exists(snipesharpFolder)) Directory.CreateDirectory(snipesharpFolder);
+            if (!Directory.Exists(snipesharpFolder)) {
+                Directory.CreateDirectory(snipesharpFolder);
+                Config.v.firstTime = true;
+            } 
             if (!Directory.Exists(logsFolder)) Directory.CreateDirectory(logsFolder);
-            Config.v.firstTime = true;
         }
 
         // Saves given names list to the names.json file
