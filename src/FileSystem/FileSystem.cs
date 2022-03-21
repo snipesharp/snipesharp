@@ -26,7 +26,6 @@ namespace FS
             if (!Directory.Exists(snipesharpFolder)) Directory.CreateDirectory(snipesharpFolder);
             if (!Directory.Exists(logsFolder)) Directory.CreateDirectory(logsFolder);
             Config.v.firstTime = true;
-            Cli.Output.Inform(TFileSystem.FSInforms.ConfigSetup);
         }
 
         // Saves given names list to the names.json file

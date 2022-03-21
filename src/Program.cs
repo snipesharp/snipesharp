@@ -99,6 +99,7 @@ static async Task Initialize(string currentVersion) {
 
     // welcome the user
     Output.PrintLogo();
+    if (Config.v.firstTime) Cli.Output.Inform(TFileSystem.FSInforms.ConfigSetup);
 
     // create, load and log config
     FileSystem.PrepareConfig();
