@@ -22,7 +22,7 @@ namespace FS
         public static string latestLogFile = logsFolder + "latest.log";
 
         // Creates the .snipesharp folder and informs the user
-        public static void CreateSnipesharpFolder() {
+        public static void CreateSnipesharpFolders() {
             if (!Directory.Exists(snipesharpFolder)) {
                 Directory.CreateDirectory(snipesharpFolder);
                 Config.v.firstTime = true;
@@ -34,7 +34,7 @@ namespace FS
         public static void SaveNames(List<string> names, string? path = null) {
             path = path == null ? namesJsonFile : snipesharpFolder + path;
             try {
-                if (!Directory.Exists(snipesharpFolder)) CreateSnipesharpFolder();
+                if (!Directory.Exists(snipesharpFolder)) CreateSnipesharpFolders();
                 var json = JsonSerializer.Serialize(names, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(path, json);
             }
@@ -44,7 +44,7 @@ namespace FS
         // Saves given account to the account.json file
         public static void UpdateAccount(){
             try {
-                if (!Directory.Exists(snipesharpFolder)) CreateSnipesharpFolder();
+                if (!Directory.Exists(snipesharpFolder)) CreateSnipesharpFolders();
                 Utils.AccountSerialization.Serialize(accountJsonFile);
             } catch (Exception e) { Cli.Output.Error(e.Message); }
         }
@@ -52,7 +52,7 @@ namespace FS
         // Saves the state of the config to the config file
         public static void UpdateConfig(){
             try {
-                if (!Directory.Exists(snipesharpFolder)) CreateSnipesharpFolder();
+                if (!Directory.Exists(snipesharpFolder)) CreateSnipesharpFolders();
                 Utils.ConfigSerialization.Serialize(configJsonFile);
             } catch (Exception e) { Cli.Output.ExitError(e.Message); }
         }
@@ -129,7 +129,7 @@ namespace FS
         public static void Log(string log) {
             Task.Run(() => {
                 try {
-                    if (!Directory.Exists(logsFolder)) CreateSnipesharpFolder();
+                    if (!Directory.Exists(logsFolder)) CreateSnipesharpFolders();
                     File.AppendAllText(logFile, $"[{DateTime.Now}] {log}\n");
                     File.AppendAllText(latestLogFile, $"[{DateTime.Now}] {log}\n");
                 }
