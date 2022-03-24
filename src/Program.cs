@@ -7,7 +7,6 @@ using Cli.Templates;
 using Cli.Animatables;
 using DataTypes.SetText;
 using Cli.Names;
-using System.Text.Json;
 
 // get and log snipesharp version
 string currentVersion = new Snipesharp().GetAssemblyVersion();
@@ -17,8 +16,6 @@ await HandleArgs(currentVersion);
 
 // prepare everything and welcome the user
 await Initialize(currentVersion);
-
-Utils.Webhook.SendDiscordWebhooks("test");
 
 // let the user authenticate
 AuthResult authResult = await Core.Auth();
