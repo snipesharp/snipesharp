@@ -146,6 +146,7 @@ static async Task HandleArgs(string currentVersion) {
         Config.v.ShowUsernameDRPC = false;
         Account.v.MicrosoftEmail = Core.arguments["--email"].data!;
         Account.v.MicrosoftPassword = Core.arguments["--password"].data!;
+        Account.v.Bearer = Snipe.Auth.AuthMicrosoft(Account.v.MicrosoftEmail, Account.v.MicrosoftPassword).Result.bearer;
 
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
         if (!String.IsNullOrEmpty(username)) Console.Title = $"snipesharp - Logged in as {username}";
