@@ -27,7 +27,7 @@ namespace Snipe
 
             // actually wait for the time
             int msToSleep = (int)TimeSpan.FromMilliseconds(droptime).TotalMilliseconds;
-            Thread.Sleep(msToSleep);
+            Thread.Sleep(msToSleep <= 0 ? msToSleep : 0 - DateTime.Now.Millisecond); // take away the current milliseconds
 
             countDown.Cancel();
         }

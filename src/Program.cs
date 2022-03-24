@@ -114,6 +114,10 @@ static async Task Initialize(string currentVersion) {
     // load account config
     FileSystem.PrepareAccount();
     
+    // override old packetspreadms default value
+    if (Config.v.PacketSpreadMs == 31) Config.v.PacketSpreadMs = 275;
+    FileSystem.UpdateConfig();
+    
     // create and load name list
     if (!FileSystem.NamesFileExists()) FileSystem.SaveNames(new List<string>());
 
