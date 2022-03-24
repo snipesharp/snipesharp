@@ -45,7 +45,7 @@
 
 <h1 align="center">About ❓</h1>
 
-<a href="https://snipesharp.xyz/">Snipesharp</a> is an Open Source & easy to use Minecraft name Sniper featuring 24/7 giftcard & normal sniping, Discord RPC & more! Snipesharp is coded in [.NET](https://dotnet.microsoft.com/en-us/) C# and is focused on both speed and user friendliness.
+<a href="https://snipesharp.xyz/">Snipesharp</a> is an Open Source & easy to use Minecraft name Sniper featuring 24/7 giftcard (prename) & normal sniping, Discord RPC & more! Snipesharp is coded in [.NET](https://dotnet.microsoft.com/en-us/) C# and is focused on both speed and user friendliness.
 
 ### Created by:
 
@@ -58,8 +58,10 @@
 ### General
 - Discord RPC
     - <img height="128px" src="https://user-images.githubusercontent.com/93228501/155626988-fed009c7-9e79-47a9-9d9d-22b86e3295eb.png" align="center"/>
+- Auto NameMC follow on success
 - Ease of use
 - Automatic updates
+- 24/7 sniping support
 ### Logging in
 - Features
   - Completely possible through the Console Interface
