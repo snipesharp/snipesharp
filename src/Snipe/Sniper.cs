@@ -9,16 +9,9 @@ namespace Snipe
     public class Sniper
     {
         public static void Shoot(string name) {
-            var success = false;
-            for (int i = 0; (i < Config.v.SendPacketsCount && !success); i++) {
-                success = (int)Name.Change(name, Account.v.prename).Result.StatusCode == 200;
+            for (int i = 0; (i < Config.v.SendPacketsCount); i++) {
+                Name.Change(name, Account.v.prename);
                 Thread.Sleep(Config.v.PacketSpreadMs);
-            }
-
-            // post success
-            if (success) {
-                Webhook.SendDiscordWebhooks(name);
-                if (Config.v.AutoSkinChange) Skin.Change(Config.v.SkinUrl, Config.v.SkinType, Account.v.Bearer);
             }
         }
 

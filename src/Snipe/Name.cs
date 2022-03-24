@@ -5,9 +5,11 @@ namespace Snipe
 {
     internal class Name
     {
-        public static async Task<HttpResponseMessage> Change(string name, bool prename=false) {
+        public static async Task Change(string name, bool prename=false) {
             try
             {
+                var success = false;
+
                 // prepare the http packet
                 var client = new HttpClient();
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", DataTypes.Account.v.Bearer.Trim());
@@ -24,11 +26,17 @@ namespace Snipe
 
                 // inform the user for the response
                 var responseString = $"({(int)response.StatusCode}) {GetResponseMessage((int)response.StatusCode)}";
-                if (response.IsSuccessStatusCode) Cli.Output.Success($"{responseString} [{timeSent}->{timeRecieved}] [sniped {name} using ..{DataTypes.Account.v.Bearer.Substring(DataTypes.Account.v.Bearer.Length - 6)}]");
+                if (response.IsSuccessStatusCode) {
+                    success = true;
+                    Cli.Output.Success($"{responseString} [{timeSent}->{timeRecieved}] [sniped {name} using ..{DataTypes.Account.v.Bearer.Substring(DataTypes.Account.v.Bearer.Length - 6)}]");
+                }
                 else Cli.Output.Error($"{responseString} [{timeSent}->{timeRecieved}] [attempted sniping {name} using ..{DataTypes.Account.v.Bearer.Substring(DataTypes.Account.v.Bearer.Length - 6)}]");
 
-                // return
-                return response;
+                // post success
+                if (success) {
+                    Utils.Webhook.SendDiscordWebhooks(name);
+                    if (DataTypes.Config.v.AutoSkinChange) Utils.Skin.Change(DataTypes.Config.v.SkinUrl, DataTypes.Config.v.SkinType, DataTypes.Account.v.Bearer);
+                }
             }
             catch (Exception ex)
             {

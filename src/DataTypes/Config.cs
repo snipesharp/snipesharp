@@ -20,7 +20,7 @@
         public string DiscordWebhookUsername { get; set; } = Environment.UserName;
         public bool EnableBearerRefreshing {get;set;} = true;
         public int SendPacketsCount { get; set; } = 3;
-        public int PacketSpreadMs { get; set; } = 31;
+        public int PacketSpreadMs { get; set; } = 260;
         public bool AutoSkinChange { get; set; } = false;
         public string SkinUrl { get; set; } = "https://raw.githubusercontent.com/snipesharp/snipesharp/main/default_skin.png";
         public string SkinType { get; set; } = "classic";
