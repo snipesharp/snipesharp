@@ -7,22 +7,35 @@ namespace Utils
     {
         private static DiscordRpcClient? client;
         private static string State = "Setting up Snipesharp";
-        private static string Details = "A minecraft name sniper/grabber";
+        private static string Details = "The best Minecraft name sniper!";
         private static Timestamps Timestamps = new Timestamps(){
             EndUnixMilliseconds = 0,
         };
 
         public static void Deinitialize(){
+            if(client == null) return;
+
             client!.Dispose();
         }
 
         public static void Initialize(){
-            client = new DiscordRpcClient(Config.v.discordApplicationId);		
+            client = new DiscordRpcClient(Config.v.discordApplicationId);
             client.Initialize();
+            RandomizeDetails();
             Update();
         }
 
+        public static void RandomizeDetails() {
+            var random = new Random().Next(1,4);
+            if (random == 1) Details = "The best Minecraft name sniper!";
+            if (random == 2) Details = "Name a better MC name sniper";
+            if (random == 3) Details = "A fast & easy to use name sniper!";
+            if (random == 4) Details = "Better than paid name snipers!";
+        }
+
         public static void SetSniping(string name, long droptime){
+            if(client == null) return;
+
             var days = (int)TimeSpan.FromMilliseconds(droptime).Days;
             if(days > 0) {
                 State = $"Sniping name \"{name}\" in {days} day" + (days == 1 ? "" : "s");
@@ -36,13 +49,15 @@ namespace Utils
         }
 
         public static void SetDescription(string description) {
+            if(client == null) return;
+
             Details = description;
             Update();
         }
 
         private static void Update(){
-            if(Cli.Core.arguments.ContainsKey("--email") && Cli.Core.arguments.ContainsKey("--password")) return;
-            if(Cli.Core.arguments.ContainsKey("--bearer")) return;
+            if(client == null) return;
+
             client!.SetPresence(new RichPresence() {
                 Details = Details,
                 State = State,

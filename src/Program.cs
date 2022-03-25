@@ -124,6 +124,18 @@ static async Task Initialize(string currentVersion) {
     // create example names file
     FileSystem.SaveNames(new List<string> { "example1", "example2", "example3" }, "example.names.json");
 
+    // disable-discordrpc arg
+    if (Core.arguments.ContainsKey("--disable-discordrpc")) {
+        Config.v.EnableDiscordRPC = false;
+        Cli.Output.Inform("EnableDiscordRPC set to false");
+    }
+
+    // enable-discordrpc arg
+    if (Core.arguments.ContainsKey("--enable-discordrpc")) {
+        Config.v.EnableDiscordRPC = true;
+        Cli.Output.Inform("EnableDiscordRPC set to true");
+    }
+
     // start discord rpc
     if (Config.v.EnableDiscordRPC) Utils.DiscordRPC.Initialize();
 }
@@ -131,9 +143,13 @@ static async Task Initialize(string currentVersion) {
 static async Task HandleArgs(string currentVersion) {
     string argName = "";
     
-    // --offset is handled in Names.cs
-    // --disable-auto-update & --install handled in Initialize()
+    // --offset handled in Names.cs
+    // --disable-auto-update, --disable-discordrpc, --enable-discordrpc & --install handled in Initialize()
 
+    if (Core.arguments.ContainsKey("--help")) {
+        Snipesharp.PrintHelp();
+        Environment.Exit(0);
+    }
     if (Core.arguments.ContainsKey("--packet-spread-ms")) { 
         if (int.TryParse(Core.arguments["--packet-spread-ms"].data!, out int packetSpreadMs)) {
             Config.v.PacketSpreadMs = int.Parse(Core.arguments["--packet-spread-ms"].data!);
@@ -151,12 +167,22 @@ static async Task HandleArgs(string currentVersion) {
     }
     if (Core.arguments.ContainsKey("--name")) argName = Core.arguments["--name"].data!;
     if (Core.arguments.ContainsKey("--email") && Core.arguments.ContainsKey("--password")){
-        Config.v.EnableDiscordRPC = false;
-        Config.v.ShowTargetNameDRPC = false;
-        Config.v.ShowUsernameDRPC = false;
+        // set account credentials
         Account.v.MicrosoftEmail = Core.arguments["--email"].data!;
         Account.v.MicrosoftPassword = Core.arguments["--password"].data!;
         Account.v.Bearer = Snipe.Auth.AuthMicrosoft(Account.v.MicrosoftEmail, Account.v.MicrosoftPassword).Result.bearer;
+
+        // verify the credentials work
+        if(!Core.arguments.ContainsKey("--dont-verify")) {
+            if (string.IsNullOrEmpty(Snipe.Auth.AuthMicrosoft(Account.v.MicrosoftEmail, Account.v.MicrosoftPassword).Result.bearer)) {
+                Output.Error(TAuth.AuthInforms.FailedMicrosoft);
+                return;
+            }
+            Cli.Output.Success(TAuth.AuthInforms.SuccessAuthMicrosoft);
+        }
+        else Output.Warn("Not verifying credentials validity because --dont-verify was used");
+
+        // update config and account files
         FileSystem.UpdateConfig();
         FileSystem.UpdateAccount();
 
@@ -174,10 +200,20 @@ static async Task HandleArgs(string currentVersion) {
         return;
     }
     if (Core.arguments.ContainsKey("--bearer")){
-        Config.v.EnableDiscordRPC = false;
-        Config.v.ShowTargetNameDRPC = false;
-        Config.v.ShowUsernameDRPC = false;
+        // set account bearer
         Account.v.Bearer = Core.arguments["--bearer"].data!;
+
+        // verify the credentials work
+        if(!Core.arguments.ContainsKey("--dont-verify")) {
+            if (!await Snipe.Auth.AuthWithBearer(Account.v.Bearer)) {
+                Output.Error(TAuth.AuthInforms.FailedBearer);
+                return;
+            }
+            Cli.Output.Success(TAuth.AuthInforms.SuccessAuth);
+        }
+        else Output.Warn("Not verifying bearer validity because --dont-verify was used");
+
+        // update config and account files
         FileSystem.UpdateConfig();
         FileSystem.UpdateAccount();
 

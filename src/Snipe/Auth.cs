@@ -6,7 +6,8 @@ namespace Snipe
 {
     public class Auth
     {
-        /// <summary>Verifies whether the current bearer works & returns true if the account owns Minecraft & can change its username</summary>
+
+        /// <returns>true if the account owns Minecraft & can change its username</returns>
         public static async Task<bool> AuthWithBearer(string bearer) {
             bearer = bearer.Trim(); // todo: and regex to remove Bearer: :bearer etc
             if (bearer.Length < 280) DataTypes.Config.v.yggdrasilToken = true;

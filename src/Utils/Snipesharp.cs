@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using DataTypes.SetText;
+using StringExtensions;
 
 namespace Utils
 {
@@ -9,18 +11,49 @@ namespace Utils
             return fullVersion.Substring(0, fullVersion.Length - 2);
         }
 
+        public static void PrintHelp() {
+            Console.Write(
+                "\n" +
+                "Help for using arguments in snipesharp:".Centered() +
+                $"\n\nTo give value to an argument; put an {SetText.Blue}equals sign{SetText.ResetAll} after it, followed by the desired value\n" +
+                $"Example: --packet-spread-ms{SetText.Blue}=\"400\"{SetText.ResetAll}\n\n" +
+                "Some arguments may not require values\n" +
+                $"Example: {SetText.Blue}--asc{SetText.ResetAll}\n\n" +
+                "Available arguments:".Centered() +
+                "\n\n" +
+                "--" + SetText.Cyan + "help".MakeGapRight(23) + SetText.ResetAll + $"Prints help for using arguments\n" +
+                "--" + SetText.Cyan + "install".MakeGapRight(23) + SetText.ResetAll + $"Installs snipesharp in {SetText.Blue}"
+                    + (Cli.Core.pid == PlatformID.Unix ? "/usr/bin/snipesharp" : Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + $"\\.snipesharp\\snipesharp.exe")
+                    + $"{SetText.ResetAll}\n" +
+                "--" + SetText.Cyan + "disable-auto-update".MakeGapRight(23) + SetText.ResetAll + $"Prevents snipesharp from checking for software updates\n" +
+                "--" + SetText.Cyan + "disable-discordrpc".MakeGapRight(23) + SetText.ResetAll + $"Disables Discord Rich Presence\n" +
+                "--" + SetText.Cyan + "enable-discordrpc".MakeGapRight(23) + SetText.ResetAll + $"Enables Discord Rich Presence\n" +
+                "--" + SetText.Cyan + "asc".MakeGapRight(23) + SetText.ResetAll + $"Enables Auto Skin Change\n" +
+                "--" + SetText.Cyan + "offset".MakeGapRight(23) + SetText.ResetAll + $"Sets the offset in milliseconds ({SetText.Blue}Requires integer value{SetText.ResetAll})\n" +
+                "--" + SetText.Cyan + "packet-spread-ms".MakeGapRight(23) + SetText.ResetAll + $"Sets the PacketSpreadMs config value ({SetText.Blue}Requires integer value{SetText.ResetAll})\n" +
+                "--" + SetText.Cyan + "username".MakeGapRight(23) + SetText.ResetAll + $"Sets your display name in Discord Rich Presence, if it's enabled ({SetText.Blue}Requires string value{SetText.ResetAll})\n" +
+                "--" + SetText.Cyan + "bearer".MakeGapRight(23) + SetText.ResetAll + $"Sets the Bearer Token account value ({SetText.Blue}Requires string value{SetText.ResetAll})\n" +
+                "--" + SetText.Cyan + "email".MakeGapRight(23) + SetText.ResetAll + $"Sets the Microsoft login Email ({SetText.Blue}Requires string value{SetText.ResetAll}) ({SetText.Blue}Requires valid --password value to work{SetText.ResetAll})\n" +
+                "--" + SetText.Cyan + "password".MakeGapRight(23) + SetText.ResetAll + $"Sets the Microsoft login Password ({SetText.Blue}Requires string value{SetText.ResetAll}) ({SetText.Blue}Requires valid --email value to work{SetText.ResetAll})"
+            );
+
+        }
+
         public static void Install() {
             if (Cli.Core.pid == PlatformID.Unix) {
                 // install for unix
                 try {
                     // output info because after file is moved it cant output
-                    Cli.Output.Inform($"Installing snipesharp to {DataTypes.SetText.SetText.Blue}/usr/bin/snipesharp{DataTypes.SetText.SetText.ResetAll}");
+                    Cli.Output.Inform($"Installing snipesharp to {SetText.Blue}/usr/bin/snipesharp{SetText.ResetAll}");
 
                     // move to /usr/bin/snipesharp
                     File.Move(Process.GetCurrentProcess().MainModule!.FileName!, "/usr/bin/snipesharp", true);
+
+                    // output success
+                    Cli.Output.Success($"Successfully installed snipesharp to {SetText.Blue}/usr/bin/snipesharp{SetText.ResetAll}");
                 }
                 catch (UnauthorizedAccessException) {
-                    Cli.Output.Error($"Failed to install to {DataTypes.SetText.SetText.Blue}/usr/bin/snipesharp{DataTypes.SetText.SetText.ResetAll} due to lack of permissions (Re-run with sudo)");
+                    Cli.Output.Error($"Failed to install to {SetText.Blue}/usr/bin/snipesharp{SetText.ResetAll} due to lack of permissions (Re-run with sudo)");
                     Environment.Exit(-1);
                 }
                 catch (Exception e) {
@@ -33,7 +66,7 @@ namespace Utils
             }
             
             // exe location
-            var snipesharpExe = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.snipesharp\\snipesharp.exe";
+            var snipesharpExe = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + $"\\.snipesharp\\snipesharp.exe";
 
             // install on windows
             try {
@@ -65,7 +98,7 @@ namespace Utils
                 }
             }
             catch (UnauthorizedAccessException uae) {
-                Cli.Output.Error($"Failed to install to {DataTypes.SetText.SetText.Blue}%APPDATA%\\.snipesharp{DataTypes.SetText.SetText.ResetAll} due to lack of permissions ({uae.Message})");
+                Cli.Output.Error($"Failed to install to {SetText.Blue}%APPDATA%\\.snipesharp{SetText.ResetAll} due to lack of permissions ({uae.Message})");
                 Environment.Exit(-1);
             }
             catch (Exception e) {
@@ -73,7 +106,7 @@ namespace Utils
                 Environment.Exit(-1);
             }
 
-            Cli.Output.Success($"Successfully installed snipesharp to {DataTypes.SetText.SetText.Blue}{snipesharpExe}{DataTypes.SetText.SetText.ResetAll}");
+            Cli.Output.Success($"Successfully installed snipesharp to {SetText.Blue}{snipesharpExe}{SetText.ResetAll}");
             Environment.Exit(0);
             return;
         }

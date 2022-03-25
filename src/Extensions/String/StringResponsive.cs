@@ -15,6 +15,11 @@ namespace StringExtensions
             return spaces + str + spaces;
         }
 
+        public static string MakeGapRight(this string str, int finalLength) {
+            while (str.Length < finalLength) str += ' ';
+            return str;
+        }
+
         public static string Cross(this string str){
             int even = Convert.ToInt32(str.Length % 2 == 0);
             var left = str.Substring(0, str.Length / 2);
