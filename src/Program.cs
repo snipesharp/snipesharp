@@ -11,11 +11,11 @@ using Cli.Names;
 // get and log snipesharp version
 string currentVersion = new Snipesharp().GetAssemblyVersion();
 
-// handle args
-await HandleArgs(currentVersion);
-
 // prepare everything and welcome the user
 await Initialize(currentVersion);
+
+// handle args
+await HandleArgs(currentVersion);
 
 // let the user authenticate
 AuthResult authResult = await Core.Auth();
@@ -133,20 +133,32 @@ static async Task HandleArgs(string currentVersion) {
     
     // --offset is handled in Names.cs
     // --disable-auto-update & --install handled in Initialize()
-    if (Core.arguments.ContainsKey("--username")) Config.v.DiscordWebhookUsername = Core.arguments["--username"].data!;
+
+    if (Core.arguments.ContainsKey("--packet-spread-ms")) { 
+        if (int.TryParse(Core.arguments["--packet-spread-ms"].data!, out int packetSpreadMs)) {
+            Config.v.PacketSpreadMs = int.Parse(Core.arguments["--packet-spread-ms"].data!);
+            Cli.Output.Inform($"PacketSpreadMs set to {Core.arguments["--packet-spread-ms"].data!}");
+        }
+        else Cli.Output.Error($"{Core.arguments["--packet-spread-ms"].data!} is not a valid PacketSpreadMs value");
+    }
+    if (Core.arguments.ContainsKey("--username")) { 
+        Config.v.DiscordWebhookUsername = Core.arguments["--username"].data!;
+        Cli.Output.Inform($"DiscordWebhookUsername set to {Core.arguments["--username"].data!}");
+    }
     if (Core.arguments.ContainsKey("--asc")) {
         Config.v.AutoSkinChange = true;
-        FS.FileSystem.Log("AutoSkinChange set to true");
+        Cli.Output.Inform("AutoSkinChange set to true");
     }
     if (Core.arguments.ContainsKey("--name")) argName = Core.arguments["--name"].data!;
     if (Core.arguments.ContainsKey("--email") && Core.arguments.ContainsKey("--password")){
-        await Initialize(currentVersion);
         Config.v.EnableDiscordRPC = false;
         Config.v.ShowTargetNameDRPC = false;
         Config.v.ShowUsernameDRPC = false;
         Account.v.MicrosoftEmail = Core.arguments["--email"].data!;
         Account.v.MicrosoftPassword = Core.arguments["--password"].data!;
         Account.v.Bearer = Snipe.Auth.AuthMicrosoft(Account.v.MicrosoftEmail, Account.v.MicrosoftPassword).Result.bearer;
+        FileSystem.UpdateConfig();
+        FileSystem.UpdateAccount();
 
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
         if (!String.IsNullOrEmpty(username)) Console.Title = $"snipesharp - Logged in as {username}";
@@ -162,11 +174,12 @@ static async Task HandleArgs(string currentVersion) {
         return;
     }
     if (Core.arguments.ContainsKey("--bearer")){
-        await Initialize(currentVersion);
         Config.v.EnableDiscordRPC = false;
         Config.v.ShowTargetNameDRPC = false;
         Config.v.ShowUsernameDRPC = false;
         Account.v.Bearer = Core.arguments["--bearer"].data!;
+        FileSystem.UpdateConfig();
+        FileSystem.UpdateAccount();
 
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
         if (!String.IsNullOrEmpty(username)) Console.Title = $"snipesharp {currentVersion} - Logged in as {username}";
