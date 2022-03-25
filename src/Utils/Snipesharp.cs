@@ -15,7 +15,7 @@ namespace Utils
             Console.Write(
                 "\n" +
                 "Help for using arguments in snipesharp:".Centered() +
-                $"\n\nTo give value to an argument; put an {SetText.Blue}equals sign{SetText.ResetAll} after it, followed by the desired value\n" +
+                $"\n\nTo give value to an argument; put an {SetText.Blue}equals sign{SetText.ResetAll} after it, followed by a {SetText.Blue}quoted{SetText.ResetAll} desired value\n" +
                 $"Example: --packet-spread-ms{SetText.Blue}=\"400\"{SetText.ResetAll}\n\n" +
                 "Some arguments may not require values\n" +
                 $"Example: {SetText.Blue}--asc{SetText.ResetAll}\n\n" +
