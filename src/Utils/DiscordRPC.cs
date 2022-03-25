@@ -21,7 +21,7 @@ namespace Utils
         public static void Initialize(){
             client = new DiscordRpcClient(Config.v.discordApplicationId);
             client.Initialize();
-            RandomizeDetails();
+            if (Details != null) if (!Details.StartsWith("Logged in")) RandomizeDetails();
             Update();
         }
 
