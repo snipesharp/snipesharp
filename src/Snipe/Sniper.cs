@@ -8,9 +8,11 @@ namespace Snipe
 {
     public class Sniper
     {
-        public static void Shoot(string name) {
+        public static async void Shoot(string name) {
             for (int i = 0; (i < Config.v.SendPacketsCount); i++) {
-                Name.Change(name, Account.v.prename);
+                if (Cli.Core.arguments.ContainsKey("--await-first-packet") && i == 0) await Name.Change(name, Account.v.prename); 
+                else Name.Change(name, Account.v.prename);
+                if (Cli.Core.arguments.ContainsKey("--await-first-packet") && i == 0) continue;
                 Thread.Sleep(Config.v.PacketSpreadMs);
             }
         }

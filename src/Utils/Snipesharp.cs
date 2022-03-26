@@ -14,11 +14,13 @@ namespace Utils
         public static void PrintHelp() {
             Console.Write(
                 "\n" +
+                "Running with arguments is completely optional, none of the available arguments are essential to using snipesharp!\n\n" +
                 "Help for using arguments in snipesharp:".Centered() +
                 $"\n\nTo give value to an argument; put an {SetText.Blue}equals sign{SetText.ResetAll} after it, followed by a {SetText.Blue}quoted{SetText.ResetAll} desired value\n" +
                 $"Example: --packet-spread-ms{SetText.Blue}=\"400\"{SetText.ResetAll}\n\n" +
                 "Some arguments may not require values\n" +
-                $"Example: {SetText.Blue}--asc{SetText.ResetAll}\n\n" +
+                $"Example: snipesharp {SetText.Blue}--asc{SetText.ResetAll}\n\n" +
+                $"Using arguments colored {SetText.Red}RED{SetText.ResetAll} could result in unwanted outcomes. Only use them if you know what you're doing!\n\n" +
                 "Available arguments:".Centered() +
                 "\n\n" +
                 "--" + SetText.Cyan + "help".MakeGapRight(23) + SetText.ResetAll + $"Prints help for using arguments\n" +
@@ -34,7 +36,9 @@ namespace Utils
                 "--" + SetText.Cyan + "username".MakeGapRight(23) + SetText.ResetAll + $"Sets your display name in Discord Rich Presence, if it's enabled ({SetText.Blue}Requires string value{SetText.ResetAll})\n" +
                 "--" + SetText.Cyan + "bearer".MakeGapRight(23) + SetText.ResetAll + $"Sets the Bearer Token account value ({SetText.Blue}Requires string value{SetText.ResetAll})\n" +
                 "--" + SetText.Cyan + "email".MakeGapRight(23) + SetText.ResetAll + $"Sets the Microsoft login Email ({SetText.Blue}Requires string value{SetText.ResetAll}) ({SetText.Blue}Requires valid --password value to work{SetText.ResetAll})\n" +
-                "--" + SetText.Cyan + "password".MakeGapRight(23) + SetText.ResetAll + $"Sets the Microsoft login Password ({SetText.Blue}Requires string value{SetText.ResetAll}) ({SetText.Blue}Requires valid --email value to work{SetText.ResetAll})"
+                "--" + SetText.Cyan + "password".MakeGapRight(23) + SetText.ResetAll + $"Sets the Microsoft login Password ({SetText.Blue}Requires string value{SetText.ResetAll}) ({SetText.Blue}Requires valid --email value to work{SetText.ResetAll})\n" +
+                "--" + SetText.Red + "await-first-packet".MakeGapRight(23) + SetText.ResetAll + $"Sends the second name change packet after a response is received from the first one\n" +
+                "--" + SetText.Red + "dont-verify".MakeGapRight(23) + SetText.ResetAll + $"Doesn't verify your Bearer Token works"
             );
 
         }

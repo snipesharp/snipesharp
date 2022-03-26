@@ -17,8 +17,14 @@ namespace Cli.Names
                 }
                 Cli.Output.Error($"{Core.arguments["--offset"].data!} is not a valid offset value");
             }
-            if(Core.arguments.ContainsKey("--bearer")) return suggestedOffset;
-            if(Core.arguments.ContainsKey("--email") && Core.arguments.ContainsKey("--password")) return suggestedOffset;
+            if(Core.arguments.ContainsKey("--bearer")) {
+                Cli.Output.Inform($"Offset set to {suggestedOffset}");
+                return suggestedOffset;
+            }
+            if(Core.arguments.ContainsKey("--email") && Core.arguments.ContainsKey("--password")) {
+                Cli.Output.Inform($"Offset set to {suggestedOffset}");
+                return suggestedOffset;
+            }
             if (DataTypes.Config.v.firstTime) Cli.Output.Inform(Cli.Templates.TFileSystem.FSInforms.OffsetExplanation);
             return Input.Request<long>($"Offset in ms [suggested: {suggestedOffset}ms]: ");
         }

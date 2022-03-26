@@ -86,6 +86,12 @@ namespace Cli
             // prompt for bearer token
             if (newBearer) Account.v.Bearer = Input.Request<string>(TRequests.Bearer);
 
+            // check for --dont-verify
+            if(arguments.ContainsKey("--dont-verify")) {
+                Output.Warn("Not verifying bearer validity because --dont-verify was used");
+                return;
+            }
+
             // retry if invalid bearer
             if(!await Snipe.Auth.AuthWithBearer(Account.v.Bearer)) {
                 Output.Error(TAuth.AuthInforms.FailedBearer);

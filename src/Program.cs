@@ -143,9 +143,12 @@ static async Task Initialize(string currentVersion) {
 static async Task HandleArgs(string currentVersion) {
     string argName = "";
     
+    // --dont-verify handled here AND in Core.cs
+    // --await-first-packet handled in Sniper.cs
     // --offset handled in Names.cs
     // --disable-auto-update, --disable-discordrpc, --enable-discordrpc & --install handled in Initialize()
 
+    if (Core.arguments.ContainsKey("--await-first-packet")) Cli.Output.Warn($"The second name change packet will be sent {SetText.Red}after a response is received{SetText.ResetAll} from the first one!");
     if (Core.arguments.ContainsKey("--help")) {
         Snipesharp.PrintHelp();
         Environment.Exit(0);
@@ -167,20 +170,20 @@ static async Task HandleArgs(string currentVersion) {
     }
     if (Core.arguments.ContainsKey("--name")) argName = Core.arguments["--name"].data!;
     if (Core.arguments.ContainsKey("--email") && Core.arguments.ContainsKey("--password")){
+        // exit if one of credentials is empty
+        if (string.IsNullOrEmpty(Core.arguments["--email"].data!) || string.IsNullOrEmpty(Core.arguments["--password"].data!)) Cli.Output.ExitError($"Credentials can't be empty. Use {SetText.Blue}snipesharp --help{SetText.ResetAll} if you need help with using arguments.");
+
         // set account credentials
         Account.v.MicrosoftEmail = Core.arguments["--email"].data!;
         Account.v.MicrosoftPassword = Core.arguments["--password"].data!;
         Account.v.Bearer = Snipe.Auth.AuthMicrosoft(Account.v.MicrosoftEmail, Account.v.MicrosoftPassword).Result.bearer;
 
-        // verify the credentials work
-        if(!Core.arguments.ContainsKey("--dont-verify")) {
-            if (string.IsNullOrEmpty(Snipe.Auth.AuthMicrosoft(Account.v.MicrosoftEmail, Account.v.MicrosoftPassword).Result.bearer)) {
-                Output.Error(TAuth.AuthInforms.FailedMicrosoft);
-                return;
-            }
-            Cli.Output.Success(TAuth.AuthInforms.SuccessAuthMicrosoft);
+        // verify the account works
+        if (string.IsNullOrEmpty(Account.v.Bearer)) {
+            Output.Error(TAuth.AuthInforms.FailedMicrosoft);
+            return;
         }
-        else Output.Warn("Not verifying credentials validity because --dont-verify was used");
+        Cli.Output.Success(TAuth.AuthInforms.SuccessAuthMicrosoft);
 
         // update config and account files
         FileSystem.UpdateConfig();
@@ -195,14 +198,33 @@ static async Task HandleArgs(string currentVersion) {
         var temp = new AuthResult {
             loginMethod = TAuth.AuthOptions.Microsoft
         };
-        if (string.IsNullOrEmpty(argName)) await Names.handleThreeLetter(temp);
-        if (argName == "l" || argName == "list") await Names.handleNamesList(temp, FileSystem.GetNames());
-        if (argName == "3" || argName == "3char") await Names.handleThreeLetter(temp);
-        if (argName != "3" && argName != "l" && argName != "3char" && argName != "list") await Names.handleSingleName(temp, argName);
+
+        // get name to snipe if --name wasnt specified
+        if (!Core.arguments.ContainsKey("--name")) {
+            List<string> argNamesList = FileSystem.GetNames();
+            argName = new SelectionPrompt("What name(s) would you like to snipe?",
+                new string[] {
+                    TNames.LetMePick,
+                    TNames.UseNamesJson,
+                    TNames.ThreeCharNames,
+                },
+                new string[] {
+                    argNamesList.Count == 0 ? TNames.UseNamesJson : "",
+                }
+            ).result;
+        }
+
+        if (argName == "l" || argName == TNames.UseNamesJson) await Names.handleNamesList(temp, FileSystem.GetNames());
+        if (argName == "3" || argName == TNames.ThreeCharNames) await Names.handleThreeLetter(temp);
+        if (argName == TNames.LetMePick) await Names.handleSingleName(temp);
+        if (argName != "3" && argName != "l") await Names.handleSingleName(temp, argName);
         Console.ReadKey();
         return;
     }
     if (Core.arguments.ContainsKey("--bearer")){
+        // exit if bearer is empty
+        if (string.IsNullOrEmpty(Core.arguments["--bearer"].data!)) Cli.Output.ExitError($"Bearer can't be empty. Use {SetText.Blue}snipesharp --help{SetText.ResetAll} if you need help with using arguments.");
+
         // set account bearer
         Account.v.Bearer = Core.arguments["--bearer"].data!;
 
@@ -230,8 +252,25 @@ static async Task HandleArgs(string currentVersion) {
             loginMethod = TAuth.AuthOptions.BearerToken
         };
         if (string.IsNullOrEmpty(argName)) await Names.handleThreeLetter(temp);
-        if (argName == "l") await Names.handleNamesList(temp, FileSystem.GetNames());
-        if (argName == "3") await Names.handleThreeLetter(temp);
+
+        // get name to snipe if --name wasnt specified
+        if (!Core.arguments.ContainsKey("--name")) {
+            List<string> argNamesList = FileSystem.GetNames();
+            argName = new SelectionPrompt("What name(s) would you like to snipe?",
+                new string[] {
+                    TNames.LetMePick,
+                    TNames.UseNamesJson,
+                    TNames.ThreeCharNames,
+                },
+                new string[] {
+                    argNamesList.Count == 0 ? TNames.UseNamesJson : "",
+                }
+            ).result;
+        }
+
+        if (argName == "l" || argName == TNames.UseNamesJson) await Names.handleNamesList(temp, FileSystem.GetNames());
+        if (argName == "3" || argName == TNames.ThreeCharNames) await Names.handleThreeLetter(temp);
+        if (argName == TNames.LetMePick) await Names.handleSingleName(temp);
         if (argName != "3" && argName != "l") await Names.handleSingleName(temp, argName);
         Console.ReadKey();
         return;
