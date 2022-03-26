@@ -148,11 +148,11 @@ static async Task HandleArgs(string currentVersion) {
     // --offset handled in Names.cs
     // --disable-auto-update, --disable-discordrpc, --enable-discordrpc & --install handled in Initialize()
 
-    if (Core.arguments.ContainsKey("--await-first-packet")) Cli.Output.Warn($"The second name change packet will be sent {SetText.Red}after a response is received{SetText.ResetAll} from the first one!");
     if (Core.arguments.ContainsKey("--help")) {
         Snipesharp.PrintHelp();
         Environment.Exit(0);
     }
+    if (Core.arguments.ContainsKey("--await-first-packet")) Cli.Output.Warn($"The second name change packet will be sent {SetText.Red}after a response is received{SetText.ResetAll} from the first one!");
     if (Core.arguments.ContainsKey("--packet-spread-ms")) { 
         if (int.TryParse(Core.arguments["--packet-spread-ms"].data!, out int packetSpreadMs)) {
             Config.v.PacketSpreadMs = int.Parse(Core.arguments["--packet-spread-ms"].data!);
@@ -167,6 +167,10 @@ static async Task HandleArgs(string currentVersion) {
     if (Core.arguments.ContainsKey("--asc")) {
         Config.v.AutoSkinChange = true;
         Cli.Output.Inform("AutoSkinChange set to true");
+    }
+    if (Core.arguments.ContainsKey("--asc-url")) {
+        Config.v.SkinUrl = Core.arguments["--asc-url"].data!;
+        Cli.Output.Inform($"SkinUrl set to ${Core.arguments["--asc-url"].data!}");
     }
     if (Core.arguments.ContainsKey("--name")) argName = Core.arguments["--name"].data!;
     if (Core.arguments.ContainsKey("--email") && Core.arguments.ContainsKey("--password")){

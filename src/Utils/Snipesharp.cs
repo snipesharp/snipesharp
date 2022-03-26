@@ -25,12 +25,14 @@ namespace Utils
                 "\n\n" +
                 "--" + SetText.Cyan + "help".MakeGapRight(23) + SetText.ResetAll + $"Prints help for using arguments\n" +
                 "--" + SetText.Cyan + "install".MakeGapRight(23) + SetText.ResetAll + $"Installs snipesharp in {SetText.Blue}"
-                    + (Cli.Core.pid == PlatformID.Unix ? "/usr/bin/snipesharp" : Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + $"\\.snipesharp\\snipesharp.exe")
-                    + $"{SetText.ResetAll}\n" +
+                    + (Cli.Core.pid == PlatformID.Unix
+                    ? $"/usr/bin/snipesharp{SetText.ResetAll} ({SetText.Blue}Needs to be ran as superuser{SetText.ResetAll})\n"
+                    : Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + $"\\.snipesharp\\snipesharp.exe{SetText.ResetAll}\n") +
                 "--" + SetText.Cyan + "disable-auto-update".MakeGapRight(23) + SetText.ResetAll + $"Prevents snipesharp from checking for software updates\n" +
                 "--" + SetText.Cyan + "disable-discordrpc".MakeGapRight(23) + SetText.ResetAll + $"Disables Discord Rich Presence\n" +
                 "--" + SetText.Cyan + "enable-discordrpc".MakeGapRight(23) + SetText.ResetAll + $"Enables Discord Rich Presence\n" +
                 "--" + SetText.Cyan + "asc".MakeGapRight(23) + SetText.ResetAll + $"Enables Auto Skin Change\n" +
+                "--" + SetText.Cyan + "asc-url".MakeGapRight(23) + SetText.ResetAll + $"Sets the Skin URL for Auto Skin Change ({SetText.Blue}Requires string value{SetText.ResetAll})\n" +
                 "--" + SetText.Cyan + "offset".MakeGapRight(23) + SetText.ResetAll + $"Sets the offset in milliseconds ({SetText.Blue}Requires integer value{SetText.ResetAll})\n" +
                 "--" + SetText.Cyan + "packet-spread-ms".MakeGapRight(23) + SetText.ResetAll + $"Sets the PacketSpreadMs config value ({SetText.Blue}Requires integer value{SetText.ResetAll})\n" +
                 "--" + SetText.Cyan + "username".MakeGapRight(23) + SetText.ResetAll + $"Sets your display name in Discord Rich Presence, if it's enabled ({SetText.Blue}Requires string value{SetText.ResetAll})\n" +
