@@ -9,11 +9,14 @@ namespace Snipe
     public class Sniper
     {
         public static async void Shoot(string name) {
+            if (DataTypes.Config.v.debug) Cli.Output.Inform($"Sniper.Shoot called @ {DateTime.Now.Second}s{DateTime.Now.Millisecond}ms");
             for (int i = 0; (i < Config.v.SendPacketsCount); i++) {
                 if (Config.v.awaitFirstPacket && i == 0) {
+                    if (DataTypes.Config.v.debug) Cli.Output.Inform($"Calling Name.Change @ {DateTime.Now.Second}s{DateTime.Now.Millisecond}ms");
                     await Name.Change(name, Account.v.prename);
                     continue;
                 }
+                if (DataTypes.Config.v.debug) Cli.Output.Inform($"Calling Name.Change @ {DateTime.Now.Second}s{DateTime.Now.Millisecond}ms");
                 Name.Change(name, Account.v.prename);
                 Thread.Sleep(Config.v.PacketSpreadMs);
             }
@@ -41,11 +44,7 @@ namespace Snipe
                 Cli.Output.Inform($"Sleeping @ {now.Second}s{now.Millisecond}ms");
             }
             Thread.Sleep(msToSleep <= 0 ? 0 : msToSleep - DateTime.Now.Millisecond); // take away the current milliseconds
-
-            if (Config.v.debug) Cli.Output.Inform($"Cancelling countdown @ {DateTime.Now.Second}s{DateTime.Now.Millisecond}ms");
             countDown.Cancel();
-            if (Config.v.debug) Cli.Output.Inform($"Cancelling finished @ {DateTime.Now.Second}s{DateTime.Now.Millisecond}ms");
-            return;
         }
 
         public static async Task Reauthenticate(long waitTime) {

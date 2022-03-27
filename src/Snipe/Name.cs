@@ -6,6 +6,7 @@ namespace Snipe
     internal class Name
     {
         public static async Task Change(string name, bool prename=false) {
+            if (DataTypes.Config.v.debug) Cli.Output.Inform($"Name.Change called @ {DateTime.Now.Second}s{DateTime.Now.Millisecond}ms");
             try
             {
                 var success = false;

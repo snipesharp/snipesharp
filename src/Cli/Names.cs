@@ -39,6 +39,7 @@ namespace Cli.Names
             Cli.Output.Inform($"{DataTypes.SetText.SetText.Blue}{name}{DataTypes.SetText.SetText.ResetAll} drops @ {DataTypes.SetText.SetText.Blue}{DateTime.Now.AddMilliseconds(dropTime).ToString()}{DataTypes.SetText.SetText.ResetAll}");
 
             Sniper.WaitForName(name, dropTime, authResult.loginMethod);
+            if (DataTypes.Config.v.debug) Cli.Output.Inform($"Calling Sniper.Shoot @ {DateTime.Now.Second}s{DateTime.Now.Millisecond}ms");
             Sniper.Shoot(name);
         }
 

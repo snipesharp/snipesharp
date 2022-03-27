@@ -40,8 +40,8 @@ namespace Cli.Animatables
             }, 1000);
         }
 
-        public async Task Cancel() {
-            this.animation.Cancel();
+        public void Cancel() {
+            Task.Run(() => {this.animation.Cancel();});
             SetText.DisplayCursor(true);
         }
     }

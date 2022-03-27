@@ -16,7 +16,7 @@ namespace Utils
             ProfileInformation? jsonResult = new ProfileInformation();
             try { jsonResult = JsonSerializer.Deserialize<ProfileInformation>(await result.Content.ReadAsStringAsync()); }
             catch (Exception e) { 
-                Cli.Output.Error(e.Message);
+                Cli.Output.Error("Failed to get account username");
                 FS.FileSystem.Log(e.ToString());
             }
             if (jsonResult != null) return jsonResult.name;
