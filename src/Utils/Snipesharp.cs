@@ -6,6 +6,7 @@ namespace Utils
 {
     public class Snipesharp
     {
+        public static DateTime snipeTime = new DateTime();
         public string GetAssemblyVersion() {
             string fullVersion = GetType().Assembly.GetName().Version.ToString();
             return fullVersion.Substring(0, fullVersion.Length - 2);

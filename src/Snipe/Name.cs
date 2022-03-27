@@ -5,8 +5,7 @@ namespace Snipe
 {
     internal class Name
     {
-        public static async Task Change(string name, bool prename=false) {
-            if (DataTypes.Config.v.debug) Cli.Output.Inform($"Name.Change called @ {DateTime.Now.Second}s{DateTime.Now.Millisecond}ms");
+        public static async Task Change(string name, int packetNumber, bool prename=false) {
             try
             {
                 var success = false;
@@ -17,6 +16,16 @@ namespace Snipe
 
                 StringContent content = null!;
                 if (prename) content = new StringContent(JsonSerializer.Serialize(new { profileName = name }));
+
+                // wait for it...
+                var snipeTime = Utils.Snipesharp.snipeTime;
+                if ((DataTypes.Config.v.awaitFirstPacket && packetNumber != 1) || !DataTypes.Config.v.awaitFirstPacket) {
+                    if (snipeTime.Second > DateTime.Now.Second || (snipeTime.Second == DateTime.Now.Second && snipeTime.Millisecond > DateTime.Now.Millisecond)) {
+                        if (packetNumber == 0) while (snipeTime.Millisecond != DateTime.Now.Millisecond) {}
+                        else while (snipeTime.AddMilliseconds(DataTypes.Config.v.PacketSpreadMs * packetNumber).Millisecond != DateTime.Now.Millisecond) {}
+                    }
+                    else await Task.Delay(DataTypes.Config.v.PacketSpreadMs * packetNumber);
+                }
 
                 // get response and set packet sent time and reply time
                 var sentDateValue = DateTime.Now;
