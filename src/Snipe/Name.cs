@@ -53,6 +53,7 @@ namespace Snipe
                 case 401: return "Bearer token expired or is not correct";
                 case 429: return "Too many requests sent";
                 case 500: return "API Timed out";
+                case 503: return "Service unavailable";
                 case 200: return "Name changed";
                 default: return "Unknown";
             }
