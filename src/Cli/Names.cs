@@ -34,6 +34,10 @@ namespace Cli.Names
             long delay = await GetDelay();
             FS.FileSystem.Log($"Offset set to {delay}ms");
             var dropTime = Math.Max(0, await Droptime.GetMilliseconds(name, true) - delay);
+            
+            // print droptime
+            Cli.Output.Inform($"{DataTypes.SetText.SetText.Blue}{name}{DataTypes.SetText.SetText.ResetAll} drops @ {DataTypes.SetText.SetText.Blue}{DateTime.Now.AddMilliseconds(dropTime).ToString()}{DataTypes.SetText.SetText.ResetAll}");
+
             Sniper.WaitForName(name, dropTime, authResult.loginMethod);
             Sniper.Shoot(name);
         }
@@ -42,9 +46,13 @@ namespace Cli.Names
             long delay = await GetDelay();
             FS.FileSystem.Log($"Offset set to {delay}ms");
             for (int i = 0; i < namesList.Count; i++) {
-                var dropTime = Math.Max(0, await Droptime.GetMilliseconds(namesList[i], false) - delay);
+                var dropTime = Math.Max(0, await Droptime.GetMilliseconds(namesList[i], false));
+
+                // print droptime
+                Cli.Output.Inform($"{DataTypes.SetText.SetText.Blue}{namesList[i]}{DataTypes.SetText.SetText.ResetAll} drops @ {DataTypes.SetText.SetText.Blue}{DateTime.Now.AddMilliseconds(dropTime).ToString()}{DataTypes.SetText.SetText.ResetAll}");
+            
                 if(dropTime > 0){
-                    Sniper.WaitForName(namesList[i], dropTime, authResult.loginMethod);
+                    Sniper.WaitForName(namesList[i], dropTime - delay, authResult.loginMethod);
                     Sniper.Shoot(namesList[i]);
                 }
 
