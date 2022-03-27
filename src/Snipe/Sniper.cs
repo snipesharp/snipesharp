@@ -32,12 +32,14 @@ namespace Snipe
 
             // actually wait for the time
             int msToSleep = (int)TimeSpan.FromMilliseconds(droptime).TotalMilliseconds;
-            if (Config.v.debug) Cli.Output.Inform($"Got msToSleep @ {DateTime.Now.Second}s{DateTime.Now.Millisecond}ms");
-            if (Config.v.debug)
-                Cli.Output.Inform($"Should snipe @ {SetText.Blue}{DateTime.Now.AddMilliseconds(msToSleep <= 0 ? 0 : msToSleep - DateTime.Now.Millisecond).Second}s{DateTime.Now.AddMilliseconds(msToSleep <= 0 ? 0 : msToSleep - DateTime.Now.Millisecond).Millisecond}ms" +
-                $"{SetText.ResetAll}, {DateTime.Now.AddMilliseconds((msToSleep <= 0 ? 0 : msToSleep - DateTime.Now.Millisecond) + DataTypes.Config.v.PacketSpreadMs).Second}s{DateTime.Now.AddMilliseconds((msToSleep <= 0 ? 0 : msToSleep - DateTime.Now.Millisecond) + DataTypes.Config.v.PacketSpreadMs).Millisecond}ms" + 
-                $" & {DateTime.Now.AddMilliseconds((msToSleep <= 0 ? 0 : msToSleep - DateTime.Now.Millisecond) + (DataTypes.Config.v.PacketSpreadMs*2)).Second}s{DateTime.Now.AddMilliseconds((msToSleep <= 0 ? 0 : msToSleep - DateTime.Now.Millisecond) + (DataTypes.Config.v.PacketSpreadMs*2)).Millisecond}ms");
-            if (Config.v.debug) Cli.Output.Inform($"Sleeping @ {DateTime.Now.Second}s{DateTime.Now.Millisecond}ms");
+            if (Config.v.debug) {
+                var now = DateTime.Now;
+                Cli.Output.Inform($"Got msToSleep @ {now.Second}s{now.Millisecond}ms");
+                Cli.Output.Inform($"Should snipe @ {SetText.Blue}{now.AddMilliseconds(msToSleep <= 0 ? 0 : msToSleep - now.Millisecond).Second}s{now.AddMilliseconds(msToSleep <= 0 ? 0 : msToSleep - now.Millisecond).Millisecond}ms" +
+                $"{SetText.ResetAll}, {now.AddMilliseconds((msToSleep <= 0 ? 0 : msToSleep - now.Millisecond) + DataTypes.Config.v.PacketSpreadMs).Second}s{now.AddMilliseconds((msToSleep <= 0 ? 0 : msToSleep - now.Millisecond) + DataTypes.Config.v.PacketSpreadMs).Millisecond}ms" + 
+                $" & {now.AddMilliseconds((msToSleep <= 0 ? 0 : msToSleep - now.Millisecond) + (DataTypes.Config.v.PacketSpreadMs*2)).Second}s{now.AddMilliseconds((msToSleep <= 0 ? 0 : msToSleep - now.Millisecond) + (DataTypes.Config.v.PacketSpreadMs*2)).Millisecond}ms");
+                Cli.Output.Inform($"Sleeping @ {now.Second}s{now.Millisecond}ms");
+            }
             Thread.Sleep(msToSleep <= 0 ? 0 : msToSleep - DateTime.Now.Millisecond); // take away the current milliseconds
 
             if (Config.v.debug) Cli.Output.Inform($"Cancelling countdown @ {DateTime.Now.Second}s{DateTime.Now.Millisecond}ms");

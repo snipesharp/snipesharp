@@ -18,21 +18,23 @@ namespace Snipe
                 if (prename) content = new StringContent(JsonSerializer.Serialize(new { profileName = name }));
 
                 // get response and set packet sent time and reply time
+                var sentDateValue = DateTime.Now;
                 HttpResponseMessage response = prename
                     ? await client.PostAsync($"https://api.minecraftservices.com/minecraft/profile", content)
                     : await client.PutAsync($"https://api.minecraftservices.com/minecraft/profile/name/{name}", null);
-                var sentDateValue = response.RequestMessage!.Headers!.Date!.Value;
-                var receivedDateValue = response.Headers!.Date!.Value;
+                var receivedDateValue = DateTime.Now;
+
                 string timeSent = $"sent@{sentDateValue.Hour}h{sentDateValue.Minute}m{sentDateValue.Second}s{sentDateValue.Millisecond}ms";
                 string timeRecieved = $"reply@{receivedDateValue.Hour}h{receivedDateValue.Minute}m{receivedDateValue.Second}s{receivedDateValue.Millisecond}ms";
 
                 // inform the user for the response
                 var responseString = $"({(int)response.StatusCode}) {GetResponseMessage((int)response.StatusCode)}";
+                var shortBearer = (DataTypes.Account.v.Bearer.Length <= 6 ? DataTypes.Account.v.Bearer : ".." + DataTypes.Account.v.Bearer.Substring(DataTypes.Account.v.Bearer.Length - 6));
                 if (response.IsSuccessStatusCode) {
                     success = true;
-                    Cli.Output.Success($"{responseString} [{timeSent}->{timeRecieved}] [sniped {name} using {(DataTypes.Account.v.Bearer.Length <= 6 ? DataTypes.Account.v.Bearer : ".." + DataTypes.Account.v.Bearer.Substring(DataTypes.Account.v.Bearer.Length - 6))}]");
+                    Cli.Output.Success($"{responseString} [{timeSent}->{timeRecieved}] [sniped {name} using {shortBearer}]");
                 }
-                else Cli.Output.Error($"{responseString} [{timeSent}->{timeRecieved}] [attempted sniping {name} using {(DataTypes.Account.v.Bearer.Length <= 6 ? DataTypes.Account.v.Bearer : ".." + DataTypes.Account.v.Bearer.Substring(DataTypes.Account.v.Bearer.Length - 6))}]");
+                else Cli.Output.Error($"{responseString} [{timeSent}->{timeRecieved}] [attempted sniping {name} using {shortBearer}]");
 
                 // post success
                 if (success) {
