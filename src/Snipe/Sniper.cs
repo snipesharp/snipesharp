@@ -10,7 +10,7 @@ namespace Snipe
     {
         public static async void Shoot(string name) {
             for (int i = 0; (i < Config.v.SendPacketsCount); i++) {
-                if (Cli.Core.arguments.ContainsKey("--await-first-packet") && i == 0) {
+                if (Config.v.awaitFirstPacket && i == 0) {
                     await Name.Change(name, Account.v.prename);
                     continue;
                 }
@@ -20,6 +20,7 @@ namespace Snipe
         }
 
         public static void WaitForName(string name, long droptime, string loginMethod) {
+            if (Config.v.debug) Cli.Output.Inform($"WaitForName called @ {DateTime.Now.Second}s{DateTime.Now.Millisecond}ms");
             // update discord rpc
             if (Config.v.ShowTargetNameDRPC) Utils.DiscordRPC.SetSniping(name, droptime);
 
@@ -31,9 +32,18 @@ namespace Snipe
 
             // actually wait for the time
             int msToSleep = (int)TimeSpan.FromMilliseconds(droptime).TotalMilliseconds;
+            if (Config.v.debug) Cli.Output.Inform($"Got msToSleep @ {DateTime.Now.Second}s{DateTime.Now.Millisecond}ms");
+            if (Config.v.debug)
+                Cli.Output.Inform($"Should snipe @ {SetText.Blue}{DateTime.Now.AddMilliseconds(msToSleep <= 0 ? 0 : msToSleep - DateTime.Now.Millisecond).Second}s{DateTime.Now.AddMilliseconds(msToSleep <= 0 ? 0 : msToSleep - DateTime.Now.Millisecond).Millisecond}ms" +
+                $"{SetText.ResetAll}, {DateTime.Now.AddMilliseconds((msToSleep <= 0 ? 0 : msToSleep - DateTime.Now.Millisecond) + DataTypes.Config.v.PacketSpreadMs).Second}s{DateTime.Now.AddMilliseconds((msToSleep <= 0 ? 0 : msToSleep - DateTime.Now.Millisecond) + DataTypes.Config.v.PacketSpreadMs).Millisecond}ms" + 
+                $" & {DateTime.Now.AddMilliseconds((msToSleep <= 0 ? 0 : msToSleep - DateTime.Now.Millisecond) + (DataTypes.Config.v.PacketSpreadMs*2)).Second}s{DateTime.Now.AddMilliseconds((msToSleep <= 0 ? 0 : msToSleep - DateTime.Now.Millisecond) + (DataTypes.Config.v.PacketSpreadMs*2)).Millisecond}ms");
+            if (Config.v.debug) Cli.Output.Inform($"Sleeping @ {DateTime.Now.Second}s{DateTime.Now.Millisecond}ms");
             Thread.Sleep(msToSleep <= 0 ? 0 : msToSleep - DateTime.Now.Millisecond); // take away the current milliseconds
 
+            if (Config.v.debug) Cli.Output.Inform($"Cancelling countdown @ {DateTime.Now.Second}s{DateTime.Now.Millisecond}ms");
             countDown.Cancel();
+            if (Config.v.debug) Cli.Output.Inform($"Cancelling finished @ {DateTime.Now.Second}s{DateTime.Now.Millisecond}ms");
+            return;
         }
 
         public static async Task Reauthenticate(long waitTime) {
@@ -44,7 +54,7 @@ namespace Snipe
             var result = await Auth.AuthMicrosoft(Account.v.MicrosoftEmail, Account.v.MicrosoftPassword);
             Account.v.Bearer = result.bearer;
             FS.FileSystem.UpdateAccount();
-            
+
             SetText.DisplayCursor(false);
         }
     }

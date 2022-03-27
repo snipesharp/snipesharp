@@ -7,6 +7,8 @@
     // Also, a property should have { get; set; } for the deserialization of it to work.
     public class ConfigSettings
     {
+        public bool debug = false;
+        public bool awaitFirstPacket = false;
         public string defaultSkin = "https://raw.githubusercontent.com/snipesharp/snipesharp/main/default_skin.png";
         public bool firstTime = false;
         public bool yggdrasilToken = false;

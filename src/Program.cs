@@ -152,7 +152,11 @@ static async Task HandleArgs(string currentVersion) {
         Snipesharp.PrintHelp();
         Environment.Exit(0);
     }
-    if (Core.arguments.ContainsKey("--await-first-packet")) Cli.Output.Warn($"The second name change packet will be sent {SetText.Red}after a response is received{SetText.ResetAll} from the first one!");
+    if (Core.arguments.ContainsKey("--await-first-packet")) {
+        Cli.Output.Warn($"The second name change packet will be sent {SetText.Red}after a response is received{SetText.ResetAll} from the first one!");
+        Config.v.awaitFirstPacket = true;
+    }
+    if (Core.arguments.ContainsKey("--debug")) Config.v.debug = true;
     if (Core.arguments.ContainsKey("--packet-spread-ms")) { 
         if (int.TryParse(Core.arguments["--packet-spread-ms"].data!, out int packetSpreadMs)) {
             Config.v.PacketSpreadMs = int.Parse(Core.arguments["--packet-spread-ms"].data!);
@@ -221,9 +225,11 @@ static async Task HandleArgs(string currentVersion) {
         if (argName == "l" || argName == TNames.UseNamesJson) await Names.handleNamesList(temp, FileSystem.GetNames());
         if (argName == "3" || argName == TNames.ThreeCharNames) await Names.handleThreeLetter(temp);
         if (argName == TNames.LetMePick) await Names.handleSingleName(temp);
-        if (argName != "3" && argName != "l") await Names.handleSingleName(temp, argName);
+        if (argName != "3" && argName != "l" && argName != TNames.LetMePick) await Names.handleSingleName(temp, argName);
+
+        // don't exit automatically
         Console.ReadKey();
-        return;
+        Environment.Exit(0);
     }
     if (Core.arguments.ContainsKey("--bearer")){
         // exit if bearer is empty
@@ -255,7 +261,6 @@ static async Task HandleArgs(string currentVersion) {
         var temp = new AuthResult {
             loginMethod = TAuth.AuthOptions.BearerToken
         };
-        if (string.IsNullOrEmpty(argName)) await Names.handleThreeLetter(temp);
 
         // get name to snipe if --name wasnt specified
         if (!Core.arguments.ContainsKey("--name")) {
@@ -275,8 +280,10 @@ static async Task HandleArgs(string currentVersion) {
         if (argName == "l" || argName == TNames.UseNamesJson) await Names.handleNamesList(temp, FileSystem.GetNames());
         if (argName == "3" || argName == TNames.ThreeCharNames) await Names.handleThreeLetter(temp);
         if (argName == TNames.LetMePick) await Names.handleSingleName(temp);
-        if (argName != "3" && argName != "l") await Names.handleSingleName(temp, argName);
+        if (argName != "3" && argName != "l" && argName != TNames.LetMePick) await Names.handleSingleName(temp, argName);
+
+        // don't exit automatically
         Console.ReadKey();
-        return;
+        Environment.Exit(0);
     }
 }
