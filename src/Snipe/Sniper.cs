@@ -44,6 +44,8 @@ namespace Snipe
             var result = await Auth.AuthMicrosoft(Account.v.MicrosoftEmail, Account.v.MicrosoftPassword);
             Account.v.Bearer = result.bearer;
             FS.FileSystem.UpdateAccount();
+            
+            SetText.DisplayCursor(false);
         }
     }
 }
