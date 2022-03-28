@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using System.Text.Json;
+using DataTypes.SetText;
 
 namespace Snipe
 {
@@ -42,13 +43,15 @@ namespace Snipe
                 string timeRecieved = $"reply@{receivedDateValue.Hour}h{receivedDateValue.Minute}m{receivedDateValue.Second}s{receivedDateValue.Millisecond}ms";
 
                 // inform the user for the response
-                var responseString = $"({(int)response.StatusCode}) {GetResponseMessage((int)response.StatusCode)}";
+                var responseString = response.IsSuccessStatusCode
+                    ? $"({SetText.Green}{(int)response.StatusCode}{SetText.ResetAll}) {GetResponseMessage((int)response.StatusCode)}"
+                    : $"({SetText.Red}{(int)response.StatusCode}{SetText.ResetAll}) {GetResponseMessage((int)response.StatusCode)}";
                 var shortBearer = (DataTypes.Account.v.Bearer.Length <= 6 ? DataTypes.Account.v.Bearer : ".." + DataTypes.Account.v.Bearer.Substring(DataTypes.Account.v.Bearer.Length - 6));
                 if (response.IsSuccessStatusCode) {
                     success = true;
-                    Cli.Output.Success($"{responseString} [{timeSent}->{timeRecieved}] [sniped {name} using {shortBearer}]");
+                    Cli.Output.Success($"{responseString} [{SetText.Green}{timeSent}{SetText.ResetAll}->{timeRecieved}] [sniped {SetText.Blue}{name}{SetText.ResetAll} using {shortBearer}]");
                 }
-                else Cli.Output.Error($"{responseString} [{timeSent}->{timeRecieved}] [attempted sniping {name} using {shortBearer}]");
+                else Cli.Output.Error($"{responseString} [{SetText.Blue}{timeSent}{SetText.ResetAll}->{timeRecieved}] [attempted sniping {SetText.Blue}{name}{SetText.ResetAll} using {shortBearer}]");
 
                 // post success
                 if (success) {
