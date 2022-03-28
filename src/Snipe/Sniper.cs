@@ -18,7 +18,7 @@ namespace Snipe
             }
         }
 
-        public static async void WaitForName(string name, long droptime, string loginMethod) {
+        public static void WaitForName(string name, long droptime, string loginMethod) {
             // update discord rpc
             if (Config.v.ShowTargetNameDRPC) Utils.DiscordRPC.SetSniping(name, droptime);
 
