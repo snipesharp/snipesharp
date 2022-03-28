@@ -51,7 +51,7 @@ namespace Cli {
 
         public static void Warn(string message){
             FS.FileSystem.Log($"Warning: {message}");
-            Console.WriteLine($"{SetText.Yellow}[{SetText.DarkYellow}warning{SetText.Yellow}]{SetText.ResetAll} {message}{SetText.ResetAll}");
+            Console.WriteLine($"{SetText.DarkYellow}[{SetText.Yellow}warning{SetText.DarkYellow}]{SetText.ResetAll} {message}{SetText.ResetAll}");
         }
 
         public static void Error(string message){
