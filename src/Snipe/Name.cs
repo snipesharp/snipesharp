@@ -54,7 +54,7 @@ namespace Snipe
                     success = true;
                     Cli.Output.Success($"{responseString} [recv @{SetText.Green}{timeSent}{SetText.ResetAll} -> recv @{SetText.Green}{timeRecieved}{SetText.ResetAll}] sniped {SetText.Blue}{name}{SetText.ResetAll} | {shortBearer}");
                 }
-                else Cli.Output.Error($"{responseString} [sent @{SetText.Blue}{timeSent}{SetText.ResetAll} -> recv @{SetText.Cyan}{timeRecieved}{SetText.ResetAll}] tried sniping {SetText.Blue}{name}{SetText.ResetAll} | {shortBearer}");
+                else Cli.Output.Error($"{responseString} [sent @{SetText.Blue}{timeSent}{SetText.ResetAll} -> recv @{SetText.Cyan}{timeRecieved}{SetText.ResetAll}] missed {SetText.Blue}{name}{SetText.ResetAll} | {shortBearer}");
 
                 // post success
                 if (success) {
