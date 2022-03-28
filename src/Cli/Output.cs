@@ -51,12 +51,12 @@ namespace Cli {
 
         public static void Warn(string message){
             FS.FileSystem.Log($"Warning: {message}");
-            Console.WriteLine($"{SetText.Yellow}[warning]{SetText.ResetAll} {message}{SetText.ResetAll}");
+            Console.WriteLine($"{SetText.Yellow}[{SetText.DarkYellow}warning{SetText.Yellow}]{SetText.ResetAll} {message}{SetText.ResetAll}");
         }
 
         public static void Error(string message){
             FS.FileSystem.Log($"Error: {message}");
-            Console.WriteLine($"{SetText.Red}[error]{SetText.ResetAll} {message}{SetText.ResetAll}");
+            Console.WriteLine($"{SetText.DarkRed}[{SetText.Red}error{SetText.DarkRed}]{SetText.ResetAll} {message}{SetText.ResetAll}");
         }
         public static void Success(string message){
             FS.FileSystem.Log($"Success: {message}");
