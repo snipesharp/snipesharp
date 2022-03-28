@@ -52,9 +52,9 @@ namespace Snipe
                 var shortBearer = (DataTypes.Account.v.Bearer.Length <= 6 ? DataTypes.Account.v.Bearer : ".." + DataTypes.Account.v.Bearer.Substring(DataTypes.Account.v.Bearer.Length - 6));
                 if (response.IsSuccessStatusCode) {
                     success = true;
-                    Cli.Output.Success($"{responseString} [recv @{SetText.Green}{timeSent}{SetText.ResetAll} -> recv @{SetText.Green}{timeRecieved}{SetText.ResetAll}] [sniped {SetText.Blue}{name}{SetText.ResetAll} using {shortBearer}]");
+                    Cli.Output.Success($"{responseString} [recv @{SetText.Green}{timeSent}{SetText.ResetAll} -> recv @{SetText.Green}{timeRecieved}{SetText.ResetAll}] sniped {SetText.Blue}{name}{SetText.ResetAll} | {shortBearer}");
                 }
-                else Cli.Output.Error($"{responseString} [sent @{SetText.Blue}{timeSent}{SetText.ResetAll} -> recv @{SetText.Cyan}{timeRecieved}{SetText.ResetAll}] [attempted sniping {SetText.Blue}{name}{SetText.ResetAll} using {shortBearer}]");
+                else Cli.Output.Error($"{responseString} [sent @{SetText.Blue}{timeSent}{SetText.ResetAll} -> recv @{SetText.Cyan}{timeRecieved}{SetText.ResetAll}] tried sniping {SetText.Blue}{name}{SetText.ResetAll} | {shortBearer}");
 
                 // post success
                 if (success) {
