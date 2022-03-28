@@ -10,7 +10,7 @@ namespace Snipe
     {
         public static async Task Shoot(string name) {
             for (int i = 0; (i < Config.v.SendPacketsCount); i++) {
-                if (Config.v.awaitFirstPacket && i == 0) {
+                if (Config.v.awaitPackets || (Config.v.awaitFirstPacket && i == 0)) {
                     await Name.Change(name, i, Account.v.prename);
                     continue;
                 }
@@ -18,7 +18,7 @@ namespace Snipe
             }
         }
 
-        public static void WaitForName(string name, long droptime, string loginMethod) {
+        public static async void WaitForName(string name, long droptime, string loginMethod) {
             // update discord rpc
             if (Config.v.ShowTargetNameDRPC) Utils.DiscordRPC.SetSniping(name, droptime);
 
@@ -28,17 +28,34 @@ namespace Snipe
             // wait for the time minus 5 minutes then reauthenticate // async but not awaited
             if (Config.v.EnableBearerRefreshing && loginMethod == TAuth.AuthOptions.Microsoft && droptime > 300000) Reauthenticate(droptime);
 
-            // actually wait for the time
+            // get milliseconds to sleep
             int msToSleep = (int)TimeSpan.FromMilliseconds(droptime).TotalMilliseconds;
+
+            // print snipe times, if debug is on
             if (Config.v.debug) {
                 var now = DateTime.Now;
-                Cli.Output.Inform($"Should snipe @ {SetText.Blue}{now.AddMilliseconds(msToSleep <= 0 ? 0 : msToSleep - now.Millisecond).Second}s{now.AddMilliseconds(msToSleep <= 0 ? 0 : msToSleep - now.Millisecond).Millisecond}ms" +
-                $"{SetText.ResetAll}, {now.AddMilliseconds((msToSleep <= 0 ? 0 : msToSleep - now.Millisecond) + DataTypes.Config.v.PacketSpreadMs).Second}s{now.AddMilliseconds((msToSleep <= 0 ? 0 : msToSleep - now.Millisecond) + DataTypes.Config.v.PacketSpreadMs).Millisecond}ms" + 
-                $" & {now.AddMilliseconds((msToSleep <= 0 ? 0 : msToSleep - now.Millisecond) + (DataTypes.Config.v.PacketSpreadMs*2)).Second}s{now.AddMilliseconds((msToSleep <= 0 ? 0 : msToSleep - now.Millisecond) + (DataTypes.Config.v.PacketSpreadMs*2)).Millisecond}ms");
+
+                // construct string to print
+                // take away current milliseconds from the milliseconds to sleep
+                int msToSleepWithoutCurrentMs = (msToSleep <= 0 ? 0 : msToSleep - now.Millisecond);
+
+                // first packet
+                string toPrint = $"Should snipe @ {SetText.Blue}{now.AddMilliseconds(msToSleepWithoutCurrentMs).Second}s{now.AddMilliseconds(msToSleepWithoutCurrentMs).Millisecond}ms";
+
+                // rest of the packets, if packets arent awaited
+                if (!Config.v.awaitFirstPacket && !Config.v.awaitPackets)
+                    for (int i = 1; i < Config.v.SendPacketsCount; i++)
+                        toPrint +=  (((i + 1) == Config.v.SendPacketsCount) ? $"{SetText.ResetAll} & {SetText.Gray}" : $"{SetText.ResetAll}, {SetText.Gray}") +
+                                    $"{now.AddMilliseconds(msToSleepWithoutCurrentMs + (DataTypes.Config.v.PacketSpreadMs * i)).Second}s" +
+                                    $"{now.AddMilliseconds(msToSleepWithoutCurrentMs + (DataTypes.Config.v.PacketSpreadMs * i)).Millisecond}ms";
+                Cli.Output.Inform(toPrint);
             }
-            Thread.Sleep((msToSleep <= 0 ? 0 : (msToSleep - DateTime.Now.Millisecond) - 50)); // take away the current milliseconds
+
+            // actually wait for the time
+            // sleep for msToSleep without the current ms and take away 75ms which will be waited for in Name.Change
+            Thread.Sleep((msToSleep <= (75 + DateTime.Now.Millisecond) ? 0 : ((msToSleep - DateTime.Now.Millisecond) - 75)));
             countDown.Cancel();
-            Snipesharp.snipeTime = DateTime.Now.AddMilliseconds(50);
+            Snipesharp.snipeTime = DateTime.Now.AddMilliseconds(75);
         }
 
         public static async Task Reauthenticate(long waitTime) {

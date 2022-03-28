@@ -152,9 +152,13 @@ static async Task HandleArgs(string currentVersion) {
         Snipesharp.PrintHelp();
         Environment.Exit(0);
     }
-    if (Core.arguments.ContainsKey("--await-first-packet")) {
+    if (Core.arguments.ContainsKey("--await-first-packet") && !Core.arguments.ContainsKey("--await-packets")) {
         Cli.Output.Warn($"The second name change packet will be sent {SetText.Red}after a response is received{SetText.ResetAll} from the first one!");
         Config.v.awaitFirstPacket = true;
+    }
+    if (Core.arguments.ContainsKey("--await-packets")) {
+        Cli.Output.Warn($"Every name change packet will be sent {SetText.Red}after a response is received{SetText.ResetAll} from the one before it!");
+        Config.v.awaitPackets = true;
     }
     if (Core.arguments.ContainsKey("--debug")) Config.v.debug = true;
     if (Core.arguments.ContainsKey("--packet-spread-ms")) { 

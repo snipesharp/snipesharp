@@ -17,12 +17,16 @@ namespace Snipe
                 StringContent content = null!;
                 if (prename) content = new StringContent(JsonSerializer.Serialize(new { profileName = name }));
 
-                // wait for it...
+                // wait for exact millisecond
                 var snipeTime = Utils.Snipesharp.snipeTime;
-                if ((DataTypes.Config.v.awaitFirstPacket && packetNumber != 1) || !DataTypes.Config.v.awaitFirstPacket) {
+                // always enter on first packet
+                // if it isnt the first packet and awaitPackets is on, do NOT enter
+                // if awaitPackets isnt on, and awaitFirstPacket isnt on, enter
+                // if awaitFirstPacket is on and if we arent on the second packet enter
+                if (packetNumber == 0 || (!DataTypes.Config.v.awaitPackets && (!DataTypes.Config.v.awaitFirstPacket || (DataTypes.Config.v.awaitFirstPacket && packetNumber != 1)))) {
                     if (snipeTime.Second > DateTime.Now.Second || (snipeTime.Second == DateTime.Now.Second && snipeTime.Millisecond > DateTime.Now.Millisecond)) {
-                        if (packetNumber == 0) while (snipeTime.Millisecond != DateTime.Now.Millisecond) {}
-                        else while (snipeTime.AddMilliseconds(DataTypes.Config.v.PacketSpreadMs * packetNumber).Millisecond != DateTime.Now.Millisecond) {}
+                        if (packetNumber == 0) while (snipeTime.AddMilliseconds(-0.3).Millisecond != DateTime.Now.Millisecond) {} // await Task.Delay((int)(snipeTime - DateTime.Now).TotalMilliseconds) works worse
+                        else while (snipeTime.AddMilliseconds((DataTypes.Config.v.PacketSpreadMs * packetNumber) + (-0.5)).Millisecond != DateTime.Now.Millisecond) {} // await Task.Delay((int)(snipeTime.AddMilliseconds((DataTypes.Config.v.PacketSpreadMs * packetNumber) + -0.5) - DateTime.Now).TotalMilliseconds) works worse
                     }
                     else await Task.Delay(DataTypes.Config.v.PacketSpreadMs * packetNumber);
                 }

@@ -9,6 +9,7 @@
     {
         public bool debug = false;
         public bool awaitFirstPacket = false;
+        public bool awaitPackets = false;
         public string defaultSkin = "https://raw.githubusercontent.com/snipesharp/snipesharp/main/default_skin.png";
         public bool firstTime = false;
         public bool yggdrasilToken = false;

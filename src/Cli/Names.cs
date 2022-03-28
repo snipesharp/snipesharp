@@ -35,8 +35,8 @@ namespace Cli.Names
             FS.FileSystem.Log($"Offset set to {delay}ms");
             var dropTime = Math.Max(0, await Droptime.GetMilliseconds(name, true) - delay);
             
-            // print droptime
-            Cli.Output.Inform($"{DataTypes.SetText.SetText.Blue}{name}{DataTypes.SetText.SetText.ResetAll} drops @ {DataTypes.SetText.SetText.Blue}{DateTime.Now.AddMilliseconds(dropTime).ToString()}{DataTypes.SetText.SetText.ResetAll}");
+            // print droptime and subtract 5ms because for SOME reason it shows a second late but it doesnt in WaitForName
+            Cli.Output.Inform($"{DataTypes.SetText.SetText.Blue}{name}{DataTypes.SetText.SetText.ResetAll} drops @ {DataTypes.SetText.SetText.Blue}{DateTime.Now.AddMilliseconds(dropTime - 5).ToString()}{DataTypes.SetText.SetText.ResetAll}");
 
             Sniper.WaitForName(name, dropTime, authResult.loginMethod);
             Sniper.Shoot(name);
@@ -49,7 +49,7 @@ namespace Cli.Names
                 var dropTime = Math.Max(0, await Droptime.GetMilliseconds(namesList[i], false));
 
                 // print droptime
-                Cli.Output.Inform($"{DataTypes.SetText.SetText.Blue}{namesList[i]}{DataTypes.SetText.SetText.ResetAll} drops @ {DataTypes.SetText.SetText.Blue}{DateTime.Now.AddMilliseconds(dropTime).ToString()}{DataTypes.SetText.SetText.ResetAll}");
+                Cli.Output.Inform($"{DataTypes.SetText.SetText.Blue}{namesList[i]}{DataTypes.SetText.SetText.ResetAll} drops @ {DataTypes.SetText.SetText.Blue}{DateTime.Now.AddMilliseconds(dropTime - 5).ToString()}{DataTypes.SetText.SetText.ResetAll}");
             
                 if(dropTime > 0){
                     Sniper.WaitForName(namesList[i], dropTime - delay, authResult.loginMethod);
