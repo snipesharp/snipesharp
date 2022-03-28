@@ -26,10 +26,12 @@ namespace Snipe
                 // if awaitFirstPacket is on and if we arent on the second packet enter
                 if (packetNumber == 0 || (!DataTypes.Config.v.awaitPackets && (!DataTypes.Config.v.awaitFirstPacket || (DataTypes.Config.v.awaitFirstPacket && packetNumber != 1)))) {
                     if (snipeTime.Second > DateTime.Now.Second || (snipeTime.Second == DateTime.Now.Second && snipeTime.Millisecond > DateTime.Now.Millisecond)) {
-                        if (packetNumber == 0) while (snipeTime.AddMilliseconds(-0.3).Millisecond != DateTime.Now.Millisecond) {} // await Task.Delay((int)(snipeTime - DateTime.Now).TotalMilliseconds) works worse
-                        else while (snipeTime.AddMilliseconds((DataTypes.Config.v.PacketSpreadMs * packetNumber) + (-0.5)).Millisecond != DateTime.Now.Millisecond) {} // await Task.Delay((int)(snipeTime.AddMilliseconds((DataTypes.Config.v.PacketSpreadMs * packetNumber) + -0.5) - DateTime.Now).TotalMilliseconds) works worse
+                        if (packetNumber == 0) while (snipeTime.Millisecond != DateTime.Now.Millisecond) {} 
+                        else while (snipeTime.AddMilliseconds((DataTypes.Config.v.PacketSpreadMs * packetNumber)).Millisecond != DateTime.Now.Millisecond) {}
+                        //if (packetNumber == 0) await Task.Delay(((int)(snipeTime - DateTime.Now).TotalMilliseconds) - stopwatch.Elapsed.Milliseconds);
+                        //else await Task.Delay(((int)(snipeTime.AddMilliseconds((DataTypes.Config.v.PacketSpreadMs * packetNumber) + -0.5) - DateTime.Now).TotalMilliseconds) - stopwatch.Elapsed.Milliseconds);
                     }
-                    else await Task.Delay(DataTypes.Config.v.PacketSpreadMs * packetNumber);
+                    else await Task.Delay((DataTypes.Config.v.PacketSpreadMs * packetNumber));
                 }
 
                 // get response and set packet sent time and reply time
@@ -39,8 +41,9 @@ namespace Snipe
                     : await client.PutAsync($"https://api.minecraftservices.com/minecraft/profile/name/{name}", null);
                 var receivedDateValue = DateTime.Now;
 
-                string timeSent = $"sent@{sentDateValue.Hour}h{sentDateValue.Minute}m{sentDateValue.Second}s{sentDateValue.Millisecond}ms";
-                string timeRecieved = $"reply@{receivedDateValue.Hour}h{receivedDateValue.Minute}m{receivedDateValue.Second}s{receivedDateValue.Millisecond}ms";
+                // make sent & recieved strings
+                string timeSent = $"{sentDateValue.Second}.{sentDateValue.Millisecond}s";
+                string timeRecieved = $"{receivedDateValue.Second}.{(receivedDateValue.Millisecond)}s";
 
                 // inform the user for the response
                 var responseString = response.IsSuccessStatusCode
@@ -49,9 +52,9 @@ namespace Snipe
                 var shortBearer = (DataTypes.Account.v.Bearer.Length <= 6 ? DataTypes.Account.v.Bearer : ".." + DataTypes.Account.v.Bearer.Substring(DataTypes.Account.v.Bearer.Length - 6));
                 if (response.IsSuccessStatusCode) {
                     success = true;
-                    Cli.Output.Success($"{responseString} [{SetText.Green}{timeSent}{SetText.ResetAll}->{timeRecieved}] [sniped {SetText.Blue}{name}{SetText.ResetAll} using {shortBearer}]");
+                    Cli.Output.Success($"{responseString} [recv @{SetText.Green}{timeSent}{SetText.ResetAll} -> recv @{SetText.Green}{timeRecieved}{SetText.ResetAll}] [sniped {SetText.Blue}{name}{SetText.ResetAll} using {shortBearer}]");
                 }
-                else Cli.Output.Error($"{responseString} [{SetText.Blue}{timeSent}{SetText.ResetAll}->{timeRecieved}] [attempted sniping {SetText.Blue}{name}{SetText.ResetAll} using {shortBearer}]");
+                else Cli.Output.Error($"{responseString} [sent @{SetText.Blue}{timeSent}{SetText.ResetAll} -> recv @{SetText.Cyan}{timeRecieved}{SetText.ResetAll}] [attempted sniping {SetText.Blue}{name}{SetText.ResetAll} using {shortBearer}]");
 
                 // post success
                 if (success) {
@@ -69,10 +72,10 @@ namespace Snipe
         {
             switch (code)
             {
-                case 400: return "Name is invalid";
-                case 403: return "Name is taken or has not become available";
-                case 401: return "Bearer token expired or is not correct";
-                case 429: return "Too many requests sent";
+                case 400: return "Invalid name";
+                case 403: return "Name taken or not yet available";
+                case 401: return "Bearer expired or incorrect";
+                case 429: return "Too many requests";
                 case 500: return "API timed out";
                 case 503: return "Service unavailable";
                 case 200: return "Name changed";

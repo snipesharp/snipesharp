@@ -40,14 +40,14 @@ namespace Snipe
                 int msToSleepWithoutCurrentMs = (msToSleep <= 0 ? 0 : msToSleep - now.Millisecond);
 
                 // first packet
-                string toPrint = $"Should snipe @ {SetText.Blue}{now.AddMilliseconds(msToSleepWithoutCurrentMs).Second}s{now.AddMilliseconds(msToSleepWithoutCurrentMs).Millisecond}ms";
+                string toPrint = $"Should snipe @ {SetText.Blue}{now.AddMilliseconds(msToSleepWithoutCurrentMs).Second}.{now.AddMilliseconds(msToSleepWithoutCurrentMs).Millisecond}s";
 
                 // rest of the packets, if packets arent awaited
                 if (!Config.v.awaitFirstPacket && !Config.v.awaitPackets)
                     for (int i = 1; i < Config.v.SendPacketsCount; i++)
                         toPrint +=  (((i + 1) == Config.v.SendPacketsCount) ? $"{SetText.ResetAll} & {SetText.Gray}" : $"{SetText.ResetAll}, {SetText.Gray}") +
-                                    $"{now.AddMilliseconds(msToSleepWithoutCurrentMs + (DataTypes.Config.v.PacketSpreadMs * i)).Second}s" +
-                                    $"{now.AddMilliseconds(msToSleepWithoutCurrentMs + (DataTypes.Config.v.PacketSpreadMs * i)).Millisecond}ms";
+                                    $"{now.AddMilliseconds(msToSleepWithoutCurrentMs + (DataTypes.Config.v.PacketSpreadMs * i)).Second}." +
+                                    $"{now.AddMilliseconds(msToSleepWithoutCurrentMs + (DataTypes.Config.v.PacketSpreadMs * i)).Millisecond}s";
                 Cli.Output.Inform(toPrint);
             }
 
