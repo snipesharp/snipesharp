@@ -32,8 +32,6 @@ namespace Snipe
                         if (snipeTime.Second > DateTime.Now.Second || (snipeTime.Second == DateTime.Now.Second && snipeTime.Millisecond > DateTime.Now.Millisecond)) {
                             if (packetNumber == 0) while (snipeTime.Millisecond != DateTime.Now.Millisecond) {} 
                             else while (snipeTime.AddMilliseconds((DataTypes.Config.v.PacketSpreadMs * packetNumber)).Millisecond != DateTime.Now.Millisecond) {}
-                            //if (packetNumber == 0) await Task.Delay(((int)(snipeTime - DateTime.Now).TotalMilliseconds) - stopwatch.Elapsed.Milliseconds);
-                            //else await Task.Delay(((int)(snipeTime.AddMilliseconds((DataTypes.Config.v.PacketSpreadMs * packetNumber) + -0.5) - DateTime.Now).TotalMilliseconds) - stopwatch.Elapsed.Milliseconds);
                         }
                         else await Task.Delay((DataTypes.Config.v.PacketSpreadMs * packetNumber));
                     }
@@ -63,6 +61,7 @@ namespace Snipe
 
                 // post success
                 if (success) {
+                    Cli.Output.Inform($"{SetText.Gray}If you're happy with your snipe, consider supporting us by donating {SetText.White}@{SetText.Blue} https://snipesharp.xyz/donate");
                     Utils.Webhook.SendDiscordWebhooks(name);
                     if (DataTypes.Config.v.AutoSkinChange) Utils.Skin.Change(DataTypes.Config.v.SkinUrl, DataTypes.Config.v.SkinType, DataTypes.Account.v.Bearer);
                 }
