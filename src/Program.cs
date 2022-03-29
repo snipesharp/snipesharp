@@ -63,6 +63,8 @@ if(nameOption == TNames.ThreeCharNames) await Names.handleThreeLetter(authResult
 
 // don't exit automatically
 Output.Inform("Finished sniping, press any key to exit");
+if (Core.pid != PlatformID.Unix)
+    Fix.Windows.QuickEdit(true);
 Console.ReadKey();
 
 static async Task Initialize(string currentVersion) {
@@ -85,7 +87,7 @@ static async Task Initialize(string currentVersion) {
 
     // disable quick edit
     if (Core.pid != PlatformID.Unix)
-    Fix.Windows.DisableQuickEdit();
+    Fix.Windows.QuickEdit(false);
 
     // attempt to fix cursor not showing after close
     Fix.TerminateHandler.FixCursor();
@@ -228,6 +230,8 @@ static async Task HandleArgs(string currentVersion) {
         if (argName != "3" && argName != "l" && argName != TNames.LetMePick) await Names.handleSingleName(temp, argName);
 
         // don't exit automatically
+        if (Core.pid != PlatformID.Unix)
+            Fix.Windows.QuickEdit(true);
         Console.ReadKey();
         Environment.Exit(0);
     }
@@ -283,6 +287,8 @@ static async Task HandleArgs(string currentVersion) {
         if (argName != "3" && argName != "l" && argName != TNames.LetMePick) await Names.handleSingleName(temp, argName);
 
         // don't exit automatically
+        if (Core.pid != PlatformID.Unix)
+            Fix.Windows.QuickEdit(true);
         Console.ReadKey();
         Environment.Exit(0);
     }

@@ -19,6 +19,10 @@ namespace Fix
                 Console.Write(SetText.MoveUp(Console.WindowHeight - 10));
                 Console.Write(SetText.MoveLeft(Console.WindowWidth));
 
+                // re-enable quickedit
+                if (Cli.Core.pid != PlatformID.Unix)
+                    Windows.QuickEdit(true);
+
                 // exit the app
                 ev.Cancel = true;
                 Environment.Exit(0);

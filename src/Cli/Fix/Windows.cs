@@ -30,7 +30,7 @@ namespace Fix
             if (!SetConsoleMode(iStdIn, inConsoleMode)) return;
             if (!SetConsoleMode(iStdOut, outConsoleMode)) return;
         }
-        internal static bool DisableQuickEdit() {
+        internal static bool QuickEdit(bool enable) {
 
             IntPtr consoleHandle = GetStdHandle(STD_INPUT_HANDLE);
 
@@ -42,7 +42,8 @@ namespace Fix
             }
 
             // Clear the quick edit bit in the mode flags
-            consoleMode &= ~ENABLE_QUICK_EDIT;
+            if (enable) consoleMode |= ENABLE_QUICK_EDIT;
+            else consoleMode &= ~ENABLE_QUICK_EDIT;
 
             // set the new mode
             if (!SetConsoleMode(consoleHandle, consoleMode)) {
