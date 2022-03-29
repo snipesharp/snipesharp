@@ -20,14 +20,14 @@ namespace Snipe
 
                 // wait for exact millisecond
                 var snipeTime = Utils.Snipesharp.snipeTime;
-                // always enter on first packet
-                // if it isnt the first packet and awaitPackets is on, do NOT enter
-                // if awaitPackets isnt on, and awaitFirstPacket isnt on, enter
-                // if awaitFirstPacket is on and if we arent on the second packet enter
                 DateTime sentDateValue = new DateTime();
                 DateTime receivedDateValue = new DateTime();
                 HttpResponseMessage response = new HttpResponseMessage();
                 await Task.Run(async () => {
+                    // always enter on first packet
+                    // if it isnt the first packet and awaitPackets is on, do NOT enter
+                    // if awaitPackets isnt on, and awaitFirstPacket isnt on, enter
+                    // if awaitFirstPacket is on and if we arent on the second packet enter
                     if (packetNumber == 0 || (!DataTypes.Config.v.awaitPackets && (!DataTypes.Config.v.awaitFirstPacket || (DataTypes.Config.v.awaitFirstPacket && packetNumber != 1)))) {
                         if (snipeTime.Second > DateTime.Now.Second || (snipeTime.Second == DateTime.Now.Second && snipeTime.Millisecond > DateTime.Now.Millisecond)) {
                             if (packetNumber == 0) while (snipeTime.Millisecond != DateTime.Now.Millisecond) {} 
