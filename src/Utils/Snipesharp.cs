@@ -18,7 +18,7 @@ namespace Utils
                 "Running with arguments is completely optional, none of the available arguments are essential to using snipesharp!\n\n" +
                 "Help for using arguments in snipesharp:".Centered() +
                 $"\n\nTo give value to an argument; put an {SetText.Blue}equals sign{SetText.ResetAll} after it, followed by a {SetText.Blue}quoted{SetText.ResetAll} desired value\n" +
-                $"Example: --packet-spread-ms{SetText.Blue}=\"400\"{SetText.ResetAll}\n\n" +
+                $"Example: --spread{SetText.Blue}=\"400\"{SetText.ResetAll}\n\n" +
                 "Some arguments may not require values\n" +
                 $"Example: snipesharp {SetText.Blue}--asc{SetText.ResetAll}\n\n" +
                 $"Using arguments colored {SetText.Red}RED{SetText.ResetAll} could result in unwanted outcomes. Only use them if you know what you're doing!\n\n" +
@@ -35,7 +35,7 @@ namespace Utils
                 "--" + SetText.Cyan + "asc".MakeGapRight(23) + SetText.ResetAll + $"Enables Auto Skin Change\n" +
                 "--" + SetText.Cyan + "asc-url".MakeGapRight(23) + SetText.ResetAll + $"Sets the Skin URL for Auto Skin Change ({SetText.Blue}Requires string value{SetText.ResetAll})\n" +
                 "--" + SetText.Cyan + "offset".MakeGapRight(23) + SetText.ResetAll + $"Sets the offset in milliseconds ({SetText.Blue}Requires integer value{SetText.ResetAll})\n" +
-                "--" + SetText.Cyan + "packet-spread-ms".MakeGapRight(23) + SetText.ResetAll + $"Sets the PacketSpreadMs config value ({SetText.Blue}Requires integer value{SetText.ResetAll})\n" +
+                "--" + SetText.Cyan + "spread".MakeGapRight(23) + SetText.ResetAll + $"Sets the PacketSpreadMs config value ({SetText.Blue}Requires integer value{SetText.ResetAll})\n" +
                 "--" + SetText.Cyan + "username".MakeGapRight(23) + SetText.ResetAll + $"Sets your display name in Discord Rich Presence, if it's enabled ({SetText.Blue}Requires string value{SetText.ResetAll})\n" +
                 "--" + SetText.Cyan + "bearer".MakeGapRight(23) + SetText.ResetAll + $"Sets the Bearer Token account value ({SetText.Blue}Requires string value{SetText.ResetAll})\n" +
                 "--" + SetText.Cyan + "email".MakeGapRight(23) + SetText.ResetAll + $"Sets the Microsoft login Email ({SetText.Blue}Requires string value{SetText.ResetAll}) ({SetText.Blue}Requires valid --password value to work{SetText.ResetAll})\n" +

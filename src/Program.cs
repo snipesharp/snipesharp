@@ -159,12 +159,12 @@ static async Task HandleArgs(string currentVersion) {
         Config.v.awaitPackets = true;
     }
     if (Core.arguments.ContainsKey("--debug")) Config.v.debug = true;
-    if (Core.arguments.ContainsKey("--packet-spread-ms")) { 
-        if (int.TryParse(Core.arguments["--packet-spread-ms"].data!, out int packetSpreadMs)) {
-            Config.v.PacketSpreadMs = int.Parse(Core.arguments["--packet-spread-ms"].data!);
-            Cli.Output.Inform($"PacketSpreadMs set to {Core.arguments["--packet-spread-ms"].data!}");
+    if (Core.arguments.ContainsKey("--spread")) { 
+        if (int.TryParse(Core.arguments["--spread"].data!, out int packetSpreadMs)) {
+            Config.v.PacketSpreadMs = int.Parse(Core.arguments["--spread"].data!);
+            Cli.Output.Inform($"PacketSpreadMs set to {Core.arguments["--spread"].data!}");
         }
-        else Cli.Output.Error($"{Core.arguments["--packet-spread-ms"].data!} is not a valid PacketSpreadMs value");
+        else Cli.Output.Error($"{Core.arguments["--spread"].data!} is not a valid PacketSpreadMs value");
     }
     if (Core.arguments.ContainsKey("--username")) { 
         Config.v.DiscordWebhookUsername = Core.arguments["--username"].data!;
