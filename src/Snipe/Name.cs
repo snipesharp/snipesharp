@@ -50,14 +50,14 @@ namespace Snipe
 
                 // inform the user for the response
                 var responseString = response.IsSuccessStatusCode
-                    ? $"({SetText.Green}{(int)response.StatusCode}{SetText.ResetAll}) {GetResponseMessage((int)response.StatusCode)}"
+                    ? $"({SetText.Green}{(int)response.StatusCode}{SetText.ResetAll}) {SetText.Green}{GetResponseMessage((int)response.StatusCode)}{SetText.ResetAll}"
                     : $"({SetText.Red}{(int)response.StatusCode}{SetText.ResetAll}) {GetResponseMessage((int)response.StatusCode)}";
                 var shortBearer = (DataTypes.Account.v.Bearer.Length <= 6 ? DataTypes.Account.v.Bearer : ".." + DataTypes.Account.v.Bearer.Substring(DataTypes.Account.v.Bearer.Length - 6));
                 if (response.IsSuccessStatusCode) {
                     success = true;
-                    Cli.Output.Success($"{responseString} [recv @{SetText.Green}{timeSent}{SetText.ResetAll} -> recv @{SetText.Green}{timeRecieved}{SetText.ResetAll}] sniped {SetText.Blue}{name}{SetText.ResetAll} | {shortBearer}");
+                    Cli.Output.Success($"{responseString} {SetText.Gray}[{SetText.ResetAll}sent @{SetText.Green}{timeSent}{SetText.ResetAll} -> recv @{SetText.Green}{timeRecieved}{SetText.Gray}]{SetText.ResetAll} sniped {SetText.Blue}{name}{SetText.ResetAll} | {shortBearer}");
                 }
-                else Cli.Output.Error($"{responseString} [sent @{SetText.Blue}{timeSent}{SetText.ResetAll} -> recv @{SetText.Cyan}{timeRecieved}{SetText.ResetAll}] missed {SetText.Blue}{name}{SetText.ResetAll} | {shortBearer}");
+                else Cli.Output.Error($"{responseString} {SetText.Gray}[{SetText.ResetAll}sent @{SetText.Blue}{timeSent}{SetText.ResetAll} -> recv @{SetText.Cyan}{timeRecieved}{SetText.Gray}]{SetText.ResetAll} missed {SetText.Blue}{name}{SetText.ResetAll} | {shortBearer}");
 
                 // post success
                 if (success) {

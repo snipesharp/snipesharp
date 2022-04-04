@@ -46,21 +46,21 @@ namespace Cli {
 
         public static void Inform(string message){
             FS.FileSystem.Log($"Info: {message}");
-            Console.WriteLine($"{SetText.Gray}[{SetText.White}info{SetText.Gray}]{SetText.ResetAll} {message}{SetText.ResetAll}");
+            Console.WriteLine($"   {SetText.Gray}i{SetText.ResetAll} {message}{SetText.ResetAll}");
         }
 
         public static void Warn(string message){
             FS.FileSystem.Log($"Warning: {message}");
-            Console.WriteLine($"{SetText.DarkYellow}[{SetText.Yellow}warning{SetText.DarkYellow}]{SetText.ResetAll} {message}{SetText.ResetAll}");
+            Console.WriteLine($"   {SetText.Yellow}!{SetText.ResetAll} {message}{SetText.ResetAll}");
         }
 
         public static void Error(string message){
             FS.FileSystem.Log($"Error: {message}");
-            Console.WriteLine($"{SetText.DarkRed}[{SetText.Red}error{SetText.DarkRed}]{SetText.ResetAll} {message}{SetText.ResetAll}");
+            Console.WriteLine($"   {SetText.Red}x{SetText.ResetAll} {message}{SetText.ResetAll}");
         }
         public static void Success(string message){
             FS.FileSystem.Log($"Success: {message}");
-            Console.WriteLine($"{SetText.DarkGreen}[{SetText.Green}success{SetText.DarkGreen}]{SetText.ResetAll} {message}{SetText.ResetAll}");
+            Console.WriteLine($"   {SetText.Green}✓{SetText.ResetAll} {message}{SetText.ResetAll}");
         }
 
         public static void ExitError(string message){
