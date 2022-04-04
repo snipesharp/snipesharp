@@ -46,7 +46,7 @@ namespace Snipe
 
                 // make sent & recieved strings
                 string timeSent = $"{sentDateValue.Second}.{sentDateValue.Millisecond}s";
-                string timeRecieved = $"{receivedDateValue.Second}.{(receivedDateValue.Millisecond)}s";
+                string timeRecieved = $"{receivedDateValue.Second}.{receivedDateValue.Millisecond}s";
 
                 // inform the user for the response
                 var responseString = response.IsSuccessStatusCode
