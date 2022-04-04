@@ -68,8 +68,8 @@ namespace Snipe
             }
             catch (Exception ex)
             {
-                Cli.Output.ExitError($"Crashed while trying to change name:\n{ex.StackTrace}\n\n{ex.ToString()}");
-                throw;
+                Cli.Output.Error($"Failed to change name:\n{ex.StackTrace}\n\n{ex.ToString()}");
+                return;
             }
         }
         protected static string GetResponseMessage(int code)
