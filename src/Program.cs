@@ -235,6 +235,62 @@ static async Task HandleArgs(string currentVersion) {
         Console.ReadKey();
         Environment.Exit(0);
     }
+    if (Core.arguments.ContainsKey("--mojang-email") && Core.arguments.ContainsKey("--mojang-password")){
+        // exit if one of credentials is empty
+        if (string.IsNullOrEmpty(Core.arguments["--mojang-email"].data!) || string.IsNullOrEmpty(Core.arguments["--mojang-password"].data!)) Cli.Output.ExitError($"Credentials can't be empty. Use {SetText.Blue}snipesharp --help{SetText.ResetAll} if you need help with using arguments.");
+
+        // set account credentials
+        Account.v.MojangEmail = Core.arguments["--mojang-email"].data!;
+        Account.v.MojangPassword = Core.arguments["--mojang-password"].data!;
+        Account.v.Bearer = await Snipe.Auth.AuthMojang(Account.v.MojangEmail, Account.v.MojangPassword);
+
+        // verify the account works
+        if (string.IsNullOrEmpty(Account.v.Bearer)) {
+            Output.Error(TAuth.AuthInforms.FailedMojang);
+            return;
+        }
+        Cli.Output.Success(TAuth.AuthInforms.SuccessAuthMojang);
+
+        // update config and account files
+        FileSystem.UpdateConfig();
+        FileSystem.UpdateAccount();
+
+        string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
+        if (!String.IsNullOrEmpty(username)) { 
+            Console.Title = $"snipesharp - Logged in as {username}";
+            if (Config.v.EnableDiscordRPC && Config.v.ShowUsernameDRPC) Utils.DiscordRPC.SetDescription($"Logged in as {username}");
+        }
+
+        var temp = new AuthResult {
+            loginMethod = TAuth.AuthOptions.Mojang
+        };
+
+        // get name to snipe if --name wasnt specified
+        if (!Core.arguments.ContainsKey("--name")) {
+            List<string> argNamesList = FileSystem.GetNames();
+            argName = new SelectionPrompt("What name(s) would you like to snipe?",
+                new string[] {
+                    TNames.LetMePick,
+                    TNames.UseNamesJson,
+                    TNames.ThreeCharNames,
+                },
+                new string[] {
+                    argNamesList.Count == 0 ? TNames.UseNamesJson : "",
+                }
+            ).result;
+        }
+
+        if (argName == "l" || argName == TNames.UseNamesJson) await Names.handleNamesList(temp, FileSystem.GetNames());
+        if (argName == "3" || argName == TNames.ThreeCharNames) await Names.handleThreeLetter(temp);
+        if (argName == TNames.LetMePick) await Names.handleSingleName(temp);
+        if (argName != "3" && argName != "l" && argName != TNames.LetMePick) await Names.handleSingleName(temp, argName);
+
+        // don't exit automatically
+        if (Core.pid != PlatformID.Unix)
+            Fix.Windows.QuickEdit(true);
+        Console.ReadKey();
+        Environment.Exit(0);
+    }
     if (Core.arguments.ContainsKey("--bearer")){
         // exit if bearer is empty
         if (string.IsNullOrEmpty(Core.arguments["--bearer"].data!)) Cli.Output.ExitError($"Bearer can't be empty. Use {SetText.Blue}snipesharp --help{SetText.ResetAll} if you need help with using arguments.");

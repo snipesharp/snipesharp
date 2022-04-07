@@ -33,16 +33,19 @@ namespace Cli
                 ? new SelectionPrompt("Login method:", new string[] {
                     TAuth.AuthOptions.PreviousSession,
                     TAuth.AuthOptions.BearerToken,
-                    TAuth.AuthOptions.Microsoft
+                    TAuth.AuthOptions.Microsoft,
+                    TAuth.AuthOptions.Mojang
                 }).result
                 : new SelectionPrompt("Login method:", new string[] { 
                     TAuth.AuthOptions.BearerToken,
-                    TAuth.AuthOptions.Microsoft
+                    TAuth.AuthOptions.Microsoft,
+                    TAuth.AuthOptions.Mojang
                 }).result;
  
             // obtain login info based on login method choice
             if (loginMethod == TAuth.AuthOptions.BearerToken) await HandleBearer(1, true);
             else if (loginMethod == TAuth.AuthOptions.Microsoft) await HandleMicrosoft(1, true);
+            else if (loginMethod == TAuth.AuthOptions.Mojang) await HandleMojang(1, true);
             else {
                 var handleFromFileResult = await HandleFromFile();
                 loginMethod = handleFromFileResult.Choice;
@@ -52,7 +55,33 @@ namespace Cli
             FileSystem.UpdateAccount();
             return new AuthResult { loginMethod = loginMethod };
         }
+        
+        public static async Task HandleMojang(int attempt, bool newLogin=false, bool askForEmail=true){
+            // get new credentials
+            if (newLogin) {
+                if (askForEmail) Account.v.MojangEmail = Input.Request<string>(
+                    TRequests.MojangEmail, 
+                    validator: Validators.Credentials.Email
+                );
+                Account.v.MojangPassword = Input.Request<string>(
+                    TRequests.MojangPassword,
+                    hidden: true
+                );
+            }
 
+            // get bearer with mojang credentials
+            var bearer = await Snipe.Auth.AuthMojang(Account.v.MojangEmail, Account.v.MojangPassword);
+
+            // if bearer not returned, retry
+            if (String.IsNullOrEmpty(bearer)) {
+                FS.FileSystem.Log(TAuth.AuthInforms.FailedMicrosoft + $" - attempt {attempt}");
+                await HandleMojang(++attempt, true, true);
+                return;
+            }
+
+            Account.v.Bearer = bearer;
+            Output.Success(attempt == 3 ? TAuth.AuthInforms.SuccessAuthMojang + ", third time's a charm" : TAuth.AuthInforms.SuccessAuthMojang);
+        }
         public static async Task HandleMicrosoft(int attempt, bool newLogin=false, bool askForEmail=true){
             
             // get new credentials
@@ -114,6 +143,10 @@ namespace Cli
                 !String.IsNullOrEmpty(Account.v.MicrosoftPassword) && 
                 !String.IsNullOrEmpty(Account.v.MicrosoftEmail)
             ) availableMethods.Add(TAuth.AuthOptions.Microsoft);
+            if (
+                !String.IsNullOrEmpty(Account.v.MojangEmail) && 
+                !String.IsNullOrEmpty(Account.v.MojangPassword)
+            ) availableMethods.Add(TAuth.AuthOptions.Mojang);
 
             // determine final auth method
             string choice = availableMethods.Count > 1
@@ -125,6 +158,7 @@ namespace Cli
             // authenticate the chosen method
             if (choice == TAuth.AuthOptions.BearerToken) await HandleBearer(1);
             if (choice == TAuth.AuthOptions.Microsoft) await HandleMicrosoft(1);
+            if (choice == TAuth.AuthOptions.Mojang) await HandleMojang(1);
 
             return new HandleFromFileResult { Choice = choice };
         }

@@ -15,6 +15,23 @@ namespace Snipe
             if (!DataTypes.Config.v.yggdrasilToken) if (!await Utils.Stats.OwnsMinecraft(bearer)) Cli.Output.ExitError("Account doesn't own Minecraft");
             return true;
         }
+
+        /// <returns>MC Bearer using Mojang credentials if successful, or null if not</returns>
+        /// <summary>Currently doesn't support prename sniping</summary>
+        public static async Task<string?> AuthMojang(string email, string password) {
+            var spinner = new Spinner();
+
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("User-Agent", Cli.Templates.TWeb.UserAgent);
+            var response = await client.PostAsync("https://authserver.mojang.com/authenticate", MojangPayload.GetContent(MojangPayload.GenerateMojangPayload(email, password)));
+            
+            var responseJson = JsonSerializer.Deserialize<MojangResponse>(await response.Content.ReadAsStringAsync(), new JsonSerializerOptions { WriteIndented = true });
+
+            spinner.Cancel();
+            DataTypes.Config.v.yggdrasilToken = true;
+            if (responseJson == null) return null;
+            return responseJson.accessToken;
+        }
         
         /// <returns>MC Bearer using Microsoft credentials if successful, or an empty MsAuthResult object if not</returns>
         public static async Task<MsAuthResult> AuthMicrosoft(string email, string password) {
@@ -83,7 +100,7 @@ namespace Snipe
                     }
 
                     // Return if prename account
-                    if (!await HasNameHistory(mcApiJsonResponse.access_token) && ownsMinecraft) {
+                    if (!await HasNameHistory(mcApiJsonResponse.access_token)) {
                         try { FS.FileSystem.Log($"Successfully authenticated prename Microsoft account & got ..{mcApiJsonResponse.access_token.ToString().Substring(mcApiJsonResponse.access_token.ToString().Length-6)}"); }
                         catch { FS.FileSystem.Log("Invalid bearer"); }
                         return new MsAuthResult{bearer = mcApiJsonResponse.access_token.ToString(), prename = true};
@@ -129,7 +146,7 @@ namespace Snipe
 
             // mojang bearer
             if (DataTypes.Config.v.yggdrasilToken) {
-                StringContent content = new StringContent(JsonSerializer.Serialize(MojangPayload.GenerateMojangPayload(bearer), new JsonSerializerOptions {WriteIndented=true}), System.Text.Encoding.UTF8, "application/json");
+                StringContent content = new StringContent(JsonSerializer.Serialize(MojangTokenCheckPayload.GenerateMojangPayload(bearer), new JsonSerializerOptions {WriteIndented=true}), System.Text.Encoding.UTF8, "application/json");
                 var mojangAuthHttpResponse = await client.PostAsync("https://authserver.mojang.com/validate", content);
 
                 // return Mojang response
@@ -172,13 +189,46 @@ namespace Snipe
             return (int)response.StatusCode==200;
         }
     }
-    public class MojangPayload {
+    public class MojangTokenCheckPayload {
         public string accessToken {get;set;}
-        public static MojangPayload GenerateMojangPayload(string accessToken) {
-            return new MojangPayload {
+        public static MojangTokenCheckPayload GenerateMojangPayload(string accessToken) {
+            return new MojangTokenCheckPayload {
                 accessToken = accessToken
             };
         }
+    }
+    public class MojangResponse {
+        public string? accessToken {get;set;}
+    }
+    public class MojangPayload {
+        public MojangAgent? agent {get;set;}
+        public string? username {get;set;}
+        public string? password {get;set;}
+        public string? clientToken {get;set;}
+        public string? requestUser {get;set;}
+        public static MojangPayload GenerateMojangPayload(string email, string password) {
+            return new MojangPayload {
+                agent = new MojangAgent{
+                    name = "Minecraft",
+                    version = 1
+                },
+                username = email,
+                password = password,
+                clientToken = "Mojang-API-Client",
+                requestUser = "true"
+            };
+        }
+        public static StringContent GetContent(MojangPayload mojangPayload) {
+            return new StringContent
+                (JsonSerializer.Serialize(
+                    mojangPayload,
+                    new JsonSerializerOptions { WriteIndented = true }
+                ), System.Text.Encoding.UTF8, "application/json");
+        }
+    }
+    public class MojangAgent {
+        public string? name {get;set;}
+        public int version {get;set;}
     }
     public class McPayload {
         public string? identityToken { get; set; }
