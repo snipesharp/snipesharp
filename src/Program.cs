@@ -201,7 +201,7 @@ static async Task HandleArgs(string currentVersion) {
 
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
         if (!String.IsNullOrEmpty(username)) { 
-            Console.Title = $"snipesharp - Logged in as {username}";
+            Console.Title = $"snipesharp {currentVersion} - Logged in as {username}";
             if (Config.v.EnableDiscordRPC && Config.v.ShowUsernameDRPC) Utils.DiscordRPC.SetDescription($"Logged in as {username}");
         }
 
@@ -257,7 +257,7 @@ static async Task HandleArgs(string currentVersion) {
 
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
         if (!String.IsNullOrEmpty(username)) { 
-            Console.Title = $"snipesharp - Logged in as {username}";
+            Console.Title = $"snipesharp {currentVersion} - Logged in as {username}";
             if (Config.v.EnableDiscordRPC && Config.v.ShowUsernameDRPC) Utils.DiscordRPC.SetDescription($"Logged in as {username}");
         }
 
