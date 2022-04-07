@@ -18,20 +18,21 @@ namespace Snipe
                 StringContent content = null!;
                 if (prename) content = new StringContent(JsonSerializer.Serialize(new { profileName = name }));
 
-                // wait for exact millisecond
+                // wait for exact millisecond, we are here 75ms early
                 var snipeTime = Utils.Snipesharp.snipeTime;
                 DateTime sentDateValue = new DateTime();
                 DateTime receivedDateValue = new DateTime();
                 HttpResponseMessage response = new HttpResponseMessage();
                 await Task.Run(async () => {
                     // always enter on first packet
-                    // if it isnt the first packet and awaitPackets is on, do NOT enter
-                    // if awaitPackets isnt on, and awaitFirstPacket isnt on, enter
+                    // if it isnt the first packet, awaitPackets isnt on, and awaitFirstPacket isnt on, enter
                     // if awaitFirstPacket is on and if we arent on the second packet enter
                     if (packetNumber == 0 || (!DataTypes.Config.v.awaitPackets && (!DataTypes.Config.v.awaitFirstPacket || (DataTypes.Config.v.awaitFirstPacket && packetNumber != 1)))) {
+                        // if the snipeTime second is bigger than the current second, enter
+                        // OR if the snipeTime second is the same as the current second but the current millisecond is smaller than the snipeTime second enter
                         if (snipeTime.Second > DateTime.Now.Second || (snipeTime.Second == DateTime.Now.Second && snipeTime.Millisecond > DateTime.Now.Millisecond)) {
-                            if (packetNumber == 0) while (snipeTime.Millisecond != DateTime.Now.Millisecond) {}
-                            else while (snipeTime.AddMilliseconds((DataTypes.Config.v.PacketSpreadMs * packetNumber)).Millisecond != DateTime.Now.Millisecond) {}
+                            if (packetNumber == 0) while (snipeTime > DateTime.Now) {}
+                            else while ((snipeTime.AddMilliseconds((DataTypes.Config.v.PacketSpreadMs * packetNumber)) > DateTime.Now)) {}
                         }
                         else await Task.Delay((DataTypes.Config.v.PacketSpreadMs * packetNumber));
                     }
