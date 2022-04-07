@@ -30,8 +30,8 @@ namespace Snipe
                     // if awaitFirstPacket is on and if we arent on the second packet enter
                     if (packetNumber == 0 || (!DataTypes.Config.v.awaitPackets && (!DataTypes.Config.v.awaitFirstPacket || (DataTypes.Config.v.awaitFirstPacket && packetNumber != 1)))) {
                         if (snipeTime.Second > DateTime.Now.Second || (snipeTime.Second == DateTime.Now.Second && snipeTime.Millisecond > DateTime.Now.Millisecond)) {
-                            if (packetNumber == 0) while (snipeTime.Millisecond != DateTime.Now.Millisecond) {} 
-                            else while (snipeTime.AddMilliseconds((DataTypes.Config.v.PacketSpreadMs * packetNumber)).Millisecond != DateTime.Now.Millisecond) {}
+                            if (packetNumber == 0) while (snipeTime.Millisecond > DateTime.Now.Millisecond) {}
+                            else while (snipeTime.AddMilliseconds((DataTypes.Config.v.PacketSpreadMs * packetNumber)).Millisecond > DateTime.Now.Millisecond) {}
                         }
                         else await Task.Delay((DataTypes.Config.v.PacketSpreadMs * packetNumber));
                     }
