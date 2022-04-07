@@ -69,6 +69,7 @@
   - Giftcode redeeming when logging in with accounts which don't own Minecraft
 - Methods
   - Microsoft Login
+  - Mojang Login
   - Bearer Token Login
   - Using previous session credentials/bearer
 - Configuration ([account.json](#configuration-file-locations-%EF%B8%8F))
@@ -76,11 +77,11 @@
 ### Sniping
 - Features
   - Giftcard (prename) sniping
-  - Seamless bearer reauthentication for 24/7 sniping support (Only works when using Microsoft accounts)
+  - Seamless bearer reauthentication for 24/7 sniping support (Only works when using Microsoft & Mojang accounts)
   - Snipe custom name
   - Snipe from a [custom name list](#configuration-file-locations-%EF%B8%8F)
     - Automatically clean [name list of names](#configuration-file-locations-%EF%B8%8F) which were already sniped, can be disabled from [config.json](#configuration-file-locations-%EF%B8%8F)
-    - Supports sniping 24/7 (Bearer gets updated using Microsoft Account credentials)
+    - Supports sniping 24/7 (Bearer gets updated using Microsoft/Mojang Account credentials)
     - Snipes in top to bottom order
   - Automatic (suggested) offset based on your ping and more math
 - Configuration ([config.json](#configuration-file-locations-%EF%B8%8F) & In App)
