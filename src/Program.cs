@@ -197,7 +197,7 @@ static async Task HandleArgs(string currentVersion) {
 
         // update config and account files
         FileSystem.UpdateConfig();
-        FileSystem.UpdateAccount();
+        if (!Core.arguments.ContainsKey("--dont-verify")) FileSystem.UpdateAccount();
 
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
         if (!String.IsNullOrEmpty(username)) { 
@@ -253,7 +253,7 @@ static async Task HandleArgs(string currentVersion) {
 
         // update config and account files
         FileSystem.UpdateConfig();
-        FileSystem.UpdateAccount();
+        if (!Core.arguments.ContainsKey("--dont-verify")) FileSystem.UpdateAccount();
 
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
         if (!String.IsNullOrEmpty(username)) { 
@@ -310,7 +310,7 @@ static async Task HandleArgs(string currentVersion) {
 
         // update config and account files
         FileSystem.UpdateConfig();
-        FileSystem.UpdateAccount();
+        if (!Core.arguments.ContainsKey("--dont-verify")) FileSystem.UpdateAccount();
 
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
         if (!String.IsNullOrEmpty(username)) {
