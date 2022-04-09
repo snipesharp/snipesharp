@@ -41,7 +41,7 @@ namespace Snipe
                 int msToSleepWithoutCurrentMs = (msToSleep <= 0 ? 0 : msToSleep - now.Millisecond);
 
                 // first packet
-                string toPrint = $"Should snipe @ {SetText.Blue}{now.AddMilliseconds(msToSleepWithoutCurrentMs).Second}.{now.AddMilliseconds(msToSleepWithoutCurrentMs).Millisecond}s";
+                string toPrint = $"Should snipe {SetText.Blue}{name}{SetText.ResetAll} @ {SetText.Blue}{now.AddMilliseconds(msToSleepWithoutCurrentMs).Second}.{now.AddMilliseconds(msToSleepWithoutCurrentMs).Millisecond}s";
 
                 // rest of the packets, if packets arent awaited
                 if (!Config.v.awaitFirstPacket && !Config.v.awaitPackets)
