@@ -73,15 +73,15 @@ namespace Utils
             );
 
             // If doesn't own minecraft, prompt to redeem a giftcard 
-            if (mcOwnershipJsonResponse.items == null || mcOwnershipJsonResponse.items.Length < 1) {
+            if (!Cli.Core.arguments.ContainsKey("--skip-gc-redeem") && (mcOwnershipJsonResponse.items == null || mcOwnershipJsonResponse.items.Length < 1)) {
                 spinner.Cancel();
-                var promptAnswer = new SelectionPrompt("Your account doesn't own Minecraft, would you like to redeem a giftcard?",
+                var skipRedeem = Convert.ToBoolean(new SelectionPrompt("Your account doesn't own Minecraft, would you like to redeem a giftcard?",
                 new string[] {
                     "Yes",
                     "No"
                 }
-                ).result;
-                if (promptAnswer == "No") return true;
+                ).answerIndex);
+                if (skipRedeem) return true;
 
                 bool redeemResult;
                 while (redeemResult = !await Snipe.Auth.RedeemGiftcard(Cli.Input.Request<string>(Cli.Templates.TRequests.Giftcode), bearer));

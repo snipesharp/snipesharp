@@ -25,11 +25,11 @@ string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
 
 // handle prename account and change config (runtime only)
 if (Account.v.prename) {
-    var maxPackets2 = !Convert.ToBoolean(
+    var maxPackets2 = Core.arguments.ContainsKey("--prename") ? true : !Convert.ToBoolean(
     new SelectionPrompt("Sniping using a prename account, switch to 2 max packets sent?", 
         new string[] { "Yes [suggested]", "No" }).answerIndex);
     Config.v.SendPacketsCount = maxPackets2 ? 2 : Config.v.SendPacketsCount;
-    Output.Inform(TAuth.AuthInforms.NoNameHistory);
+    if (maxPackets2) Output.Inform(TAuth.AuthInforms.NoNameHistory);
     Console.Title = $"snipesharp {currentVersion} - Logged in with a prename account";
 }
 else if (!String.IsNullOrEmpty(username)) { 
@@ -141,6 +141,8 @@ static async Task Initialize(string currentVersion) {
 static async Task HandleArgs(string currentVersion) {
     string argName = "";
     
+    // --prename handled in
+    // --skip-gc-redeem handled in Stats.cs
     // --dont-verify handled here AND in Core.cs
     // --await-first-packet handled in Sniper.cs
     // --offset handled in Names.cs

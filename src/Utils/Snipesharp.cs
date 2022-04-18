@@ -36,12 +36,14 @@ namespace Utils
                 "--" + SetText.Cyan + "asc-url".MakeGapRight(23) + SetText.ResetAll + $"Sets the Skin URL for Auto Skin Change ({SetText.Blue}Requires string value{SetText.ResetAll})\n" +
                 "--" + SetText.Cyan + "offset".MakeGapRight(23) + SetText.ResetAll + $"Sets the offset in milliseconds ({SetText.Blue}Requires integer value{SetText.ResetAll})\n" +
                 "--" + SetText.Cyan + "spread".MakeGapRight(23) + SetText.ResetAll + $"Sets the PacketSpreadMs config value ({SetText.Blue}Requires integer value{SetText.ResetAll})\n" +
+                "--" + SetText.Cyan + "prename".MakeGapRight(23) + SetText.ResetAll + $"Automatically sets SendPacketsCount to 2\n" +
                 "--" + SetText.Cyan + "username".MakeGapRight(23) + SetText.ResetAll + $"Sets your display name in Discord Rich Presence, if it's enabled ({SetText.Blue}Requires string value{SetText.ResetAll})\n" +
                 "--" + SetText.Cyan + "bearer".MakeGapRight(23) + SetText.ResetAll + $"Sets the Bearer Token account value ({SetText.Blue}Requires string value{SetText.ResetAll})\n" +
                 "--" + SetText.Cyan + "email".MakeGapRight(23) + SetText.ResetAll + $"Sets the Microsoft login Email ({SetText.Blue}Requires string value{SetText.ResetAll}) ({SetText.Blue}Requires valid --password value to work{SetText.ResetAll})\n" +
                 "--" + SetText.Cyan + "password".MakeGapRight(23) + SetText.ResetAll + $"Sets the Microsoft login Password ({SetText.Blue}Requires string value{SetText.ResetAll}) ({SetText.Blue}Requires valid --email value to work{SetText.ResetAll})\n" +
                 "--" + SetText.Cyan + "mojang-email".MakeGapRight(23) + SetText.ResetAll + $"Sets the Mojang login Email ({SetText.Blue}Requires string value{SetText.ResetAll}) ({SetText.Blue}Requires valid --mojang-password value to work{SetText.ResetAll})\n" +
                 "--" + SetText.Cyan + "mojang-password".MakeGapRight(23) + SetText.ResetAll + $"Sets the Mojang login Password ({SetText.Blue}Requires string value{SetText.ResetAll}) ({SetText.Blue}Requires valid --mojang-email value to work{SetText.ResetAll})\n" +
+                "--" + SetText.Cyan + "skip-gc-redeem".MakeGapRight(23) + SetText.ResetAll + $"Skips the giftcard redeeming process\n" +
                 "--" + SetText.Red + "await-first-packet".MakeGapRight(23) + SetText.ResetAll + $"Sends the second name change packet after a response is received from the first one\n" +
                 "--" + SetText.Red + "await-packets".MakeGapRight(23) + SetText.ResetAll + $"Sends every name change packet after a response is received from the one prior to it\n" +
                 "--" + SetText.Red + "dont-verify".MakeGapRight(23) + SetText.ResetAll + $"Doesn't verify your Bearer Token works"
