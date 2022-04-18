@@ -14,8 +14,15 @@ namespace Utils
             catch (Exception ex) { Cli.Output.Error(ex.ToString()); }
         }
         
-        public static void SendDiscordWebhooks(string sniped) {
-            string json = JsonSerializer.Serialize(new
+        public static void SendDiscordWebhooks(string sniped, bool prename=false) {
+            string json = prename 
+            ? JsonSerializer.Serialize(new
+            { 
+                name = sniped,
+                sender = Config.v.DiscordWebhookUsername,
+                prename = "true"
+            }, new JsonSerializerOptions { WriteIndented = true })
+            : JsonSerializer.Serialize(new
             { 
                 name = sniped,
                 sender = Config.v.DiscordWebhookUsername

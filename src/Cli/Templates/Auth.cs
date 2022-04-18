@@ -18,7 +18,7 @@ namespace Cli.Templates
             public static string FailedBearer = "Failed to authenticate using bearer";
             public static string WarnBearer = "Bearer tokens reset every 24 hours & on login, sniping will fail if the bearer has expired at snipe time!";
             public static string ManyLoginMethods = "More than one login method previously used, choose one:";
-            public static string NoNameHistory = "No name history detected, will perform prename snipe and send 6 packets instead of 3";
+            public static string NoNameHistory = "No name history detected, will perform prename snipe and send 2 packets instead of 3";
         }
     }
 }

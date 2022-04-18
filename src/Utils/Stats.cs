@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Net.Http.Headers;
+using Cli.Animatables;
 
 namespace Utils
 {
@@ -73,9 +74,17 @@ namespace Utils
 
             // If doesn't own minecraft, prompt to redeem a giftcard 
             if (mcOwnershipJsonResponse.items == null || mcOwnershipJsonResponse.items.Length < 1) {
+                spinner.Cancel();
+                var promptAnswer = new SelectionPrompt("Your account doesn't own Minecraft, would you like to redeem a giftcard?",
+                new string[] {
+                    "Yes",
+                    "No"
+                }
+                ).result;
+                if (promptAnswer == "No") return true;
+
                 bool redeemResult;
                 while (redeemResult = !await Snipe.Auth.RedeemGiftcard(Cli.Input.Request<string>(Cli.Templates.TRequests.Giftcode), bearer));
-                spinner.Cancel();
                 return redeemResult;
             }
             spinner.Cancel();
