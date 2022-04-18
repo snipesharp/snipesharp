@@ -116,7 +116,7 @@ namespace Snipe
                     }
                 }
                 else Cli.Output.ExitError("Failed to get access_token");
-            } 
+            }
             else {
                 // log the response for later debug
                 spinner.Cancel();

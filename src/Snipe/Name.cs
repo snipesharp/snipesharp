@@ -16,7 +16,7 @@ namespace Snipe
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", DataTypes.Account.v.Bearer.Trim());
 
                 StringContent content = null!;
-                if (prename) content = new StringContent(JsonSerializer.Serialize(new { profileName = name }));
+                if (prename) content = new StringContent(JsonSerializer.Serialize(new { profileName = name }), System.Text.Encoding.UTF8, "application/json");
 
                 // wait for exact millisecond, we are here 75ms early
                 var snipeTime = Utils.Snipesharp.snipeTime;
