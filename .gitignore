@@ -8,5 +8,5 @@ release*/
 make_release.bat
 src/Properties/
 .github
-devbuild.sh
+dev*
 pull.bat

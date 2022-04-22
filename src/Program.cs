@@ -41,6 +41,13 @@ else if (!String.IsNullOrEmpty(username)) {
 // will be used later if needed
 List<string> namesList = FileSystem.GetNames();
 
+// test rate limiting
+if (Core.arguments.ContainsKey("--test-rl")) {
+    await Snipe.Sniper.Shoot(Core.arguments.ContainsKey("--name") ? Core.arguments["--name"].data! : "abc");
+    Console.ReadKey();
+    Environment.Exit(0);
+}
+
 // first time setup
 if (DataTypes.Config.v.firstTime) Cli.Output.Inform(Cli.Templates.TFileSystem.FSInforms.Names);
 
@@ -163,8 +170,15 @@ static async Task HandleArgs(string currentVersion) {
     if (Core.arguments.ContainsKey("--debug")) Config.v.debug = true;
     if (Core.arguments.ContainsKey("--spread")) { 
         if (int.TryParse(Core.arguments["--spread"].data!, out int packetSpreadMs)) {
-            Config.v.PacketSpreadMs = int.Parse(Core.arguments["--spread"].data!);
-            Cli.Output.Inform($"PacketSpreadMs set to {Core.arguments["--spread"].data!}");
+            Config.v.PacketSpreadMs = packetSpreadMs;
+            Cli.Output.Inform($"PacketSpreadMs set to {packetSpreadMs}");
+        }
+        else Cli.Output.Error($"{Core.arguments["--spread"].data!} is not a valid PacketSpreadMs value");
+    }
+    if (Core.arguments.ContainsKey("--packet-count")) { 
+        if (int.TryParse(Core.arguments["--packet-count"].data!, out int sendPacketsCount)) {
+            Config.v.SendPacketsCount = sendPacketsCount;
+            Cli.Output.Inform($"SendPacketsCount set to {sendPacketsCount}");
         }
         else Cli.Output.Error($"{Core.arguments["--spread"].data!} is not a valid PacketSpreadMs value");
     }
@@ -197,8 +211,7 @@ static async Task HandleArgs(string currentVersion) {
         }
         Cli.Output.Success(TAuth.AuthInforms.SuccessAuthMicrosoft);
 
-        // update config and account files
-        FileSystem.UpdateConfig();
+        // update account file
         if (!Core.arguments.ContainsKey("--dont-verify")) FileSystem.UpdateAccount();
 
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
@@ -253,8 +266,7 @@ static async Task HandleArgs(string currentVersion) {
         }
         Cli.Output.Success(TAuth.AuthInforms.SuccessAuthMojang);
 
-        // update config and account files
-        FileSystem.UpdateConfig();
+        // update account file
         if (!Core.arguments.ContainsKey("--dont-verify")) FileSystem.UpdateAccount();
 
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
@@ -310,8 +322,7 @@ static async Task HandleArgs(string currentVersion) {
         }
         else Output.Warn("Not verifying bearer validity because --dont-verify was used");
 
-        // update config and account files
-        FileSystem.UpdateConfig();
+        // update account file
         if (!Core.arguments.ContainsKey("--dont-verify")) FileSystem.UpdateAccount();
 
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
