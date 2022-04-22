@@ -45,6 +45,9 @@ namespace Snipe
                     receivedDateValue = DateTime.Now;
                 });
 
+                // log response in detail
+                if (DataTypes.Config.v.debug) FS.FileSystem.Log("\n" + response.ToString() + "\n\nContent:\n" + await response.Content.ReadAsStringAsync() + "\n");
+
                 // make sent & recieved strings
                 string timeSent = $"{sentDateValue.Second}.{sentDateValue.Millisecond}s";
                 string timeRecieved = $"{receivedDateValue.Second}.{receivedDateValue.Millisecond}s";
@@ -78,8 +81,9 @@ namespace Snipe
             switch (code)
             {
                 case 400: return "Invalid name";
-                case 403: return "Name taken or not yet available";
                 case 401: return "Bearer expired or incorrect";
+                case 403: return "Name taken or not yet available";
+                case 404: return "Not found";
                 case 429: return "Too many requests";
                 case 500: return "API timed out";
                 case 503: return "Service unavailable";

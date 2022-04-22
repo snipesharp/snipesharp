@@ -190,7 +190,7 @@ namespace Snipe
         }
     }
     public class MojangTokenCheckPayload {
-        public string accessToken {get;set;}
+        public string? accessToken {get; set;}
         public static MojangTokenCheckPayload GenerateMojangPayload(string accessToken) {
             return new MojangTokenCheckPayload {
                 accessToken = accessToken

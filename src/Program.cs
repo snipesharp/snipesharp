@@ -42,11 +42,7 @@ else if (!String.IsNullOrEmpty(username)) {
 List<string> namesList = FileSystem.GetNames();
 
 // test rate limiting
-if (Core.arguments.ContainsKey("--test-rl")) {
-    await Snipe.Sniper.Shoot(Core.arguments.ContainsKey("--name") ? Core.arguments["--name"].data! : "abc");
-    Console.ReadKey();
-    Environment.Exit(0);
-}
+if (Core.arguments.ContainsKey("--test-rl")) await TestRatelimit();
 
 // first time setup
 if (DataTypes.Config.v.firstTime) Cli.Output.Inform(Cli.Templates.TFileSystem.FSInforms.Names);
@@ -239,6 +235,9 @@ static async Task HandleArgs(string currentVersion) {
             ).result;
         }
 
+        // test rate limiting
+        if (Core.arguments.ContainsKey("--test-rl")) await TestRatelimit();
+
         if (argName == "l" || argName == TNames.UseNamesJson) await Names.handleNamesList(temp, FileSystem.GetNames());
         if (argName == "3" || argName == TNames.ThreeCharNames) await Names.handleThreeLetter(temp);
         if (argName == TNames.LetMePick) await Names.handleSingleName(temp);
@@ -293,6 +292,9 @@ static async Task HandleArgs(string currentVersion) {
                 }
             ).result;
         }
+
+        // test rate limiting
+        if (Core.arguments.ContainsKey("--test-rl")) await TestRatelimit();
 
         if (argName == "l" || argName == TNames.UseNamesJson) await Names.handleNamesList(temp, FileSystem.GetNames());
         if (argName == "3" || argName == TNames.ThreeCharNames) await Names.handleThreeLetter(temp);
@@ -350,6 +352,9 @@ static async Task HandleArgs(string currentVersion) {
             ).result;
         }
 
+        // test rate limiting
+        if (Core.arguments.ContainsKey("--test-rl")) await TestRatelimit();
+
         if (argName == "l" || argName == TNames.UseNamesJson) await Names.handleNamesList(temp, FileSystem.GetNames());
         if (argName == "3" || argName == TNames.ThreeCharNames) await Names.handleThreeLetter(temp);
         if (argName == TNames.LetMePick) await Names.handleSingleName(temp);
@@ -361,4 +366,10 @@ static async Task HandleArgs(string currentVersion) {
         Console.ReadKey();
         Environment.Exit(0);
     }
+}
+
+static async Task TestRatelimit() {
+    await Snipe.Sniper.Shoot(Core.arguments.ContainsKey("--name") ? Core.arguments["--name"].data! : "abc");
+    Console.ReadKey();
+    Environment.Exit(0);
 }
