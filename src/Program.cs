@@ -51,13 +51,7 @@ if (DataTypes.Config.v.firstTime) Cli.Output.Inform(Cli.Templates.TFileSystem.FS
 var nameOption = Snipesharp.GetNameToSnipe();
 
 // snipe periodically
-if (Config.v.interval != null) while (true) {
-    if (Core.arguments.ContainsKey("--email")) await Snipe.Sniper.ReauthenticateMs(300000);
-    else await Snipe.Sniper.ReauthenticateMojang(300000);
-    await Snipe.Sniper.Shoot(nameOption);
-    Output.Inform($"Sniping {SetText.Blue}{SetText.Bold}{nameOption}{SetText.ResetAll} again in {SetText.Blue}{SetText.Bold}{Config.v.interval!/60000}{SetText.ResetAll} minutes");
-    Thread.Sleep((int)Config.v.interval);
-}
+if (Config.v.interval != null) await SnipePeriodically(nameOption);
 
 // handle each option individualy
 if (nameOption == TNames.LetMePick) await Names.handleSingleName(authResult);
@@ -77,7 +71,7 @@ static async Task Initialize(string currentVersion) {
     try { File.Delete("snipesharp.old"); } catch (Exception e) { FS.FileSystem.Log(e.ToString()); }
 
     // set console window title
-    Console.Title = $"snipesharp v{currentVersion}";
+    Console.Title = $"snipesharp {currentVersion}";
 
     // delete latest log file
     if (File.Exists(FileSystem.latestLogFile)) File.Delete(FileSystem.latestLogFile);
@@ -234,13 +228,7 @@ static async Task HandleArgs(string currentVersion) {
         if (Core.arguments.ContainsKey("--test-rl")) await TestRatelimit();
 
         // snipe periodically
-        if (Config.v.interval != null) while (true) {
-            if (Core.arguments.ContainsKey("--email")) await Snipe.Sniper.ReauthenticateMs(300000);
-            else await Snipe.Sniper.ReauthenticateMojang(300000);
-            await Snipe.Sniper.Shoot(argName);
-            Output.Inform($"Sniping {SetText.Blue}{SetText.Bold}{argName}{SetText.ResetAll} again in {SetText.Blue}{SetText.Bold}{Config.v.interval!/60000}{SetText.ResetAll} minutes");
-            Thread.Sleep((int)Config.v.interval);
-        }
+        if (Config.v.interval != null) await SnipePeriodically(argName);
 
         if (argName == "l" || argName == TNames.UseNamesJson) await Names.handleNamesList(temp, FileSystem.GetNames());
         if (argName == "3" || argName == TNames.ThreeCharNames) await Names.handleThreeLetter(temp);
@@ -289,13 +277,7 @@ static async Task HandleArgs(string currentVersion) {
         if (Core.arguments.ContainsKey("--test-rl")) await TestRatelimit();
 
         // snipe periodically
-        if (Config.v.interval != null) while (true) {
-            if (Core.arguments.ContainsKey("--email")) await Snipe.Sniper.ReauthenticateMs(300000);
-            else await Snipe.Sniper.ReauthenticateMojang(300000);
-            await Snipe.Sniper.Shoot(argName);
-            Output.Inform($"Sniping {SetText.Blue}{SetText.Bold}{argName}{SetText.ResetAll} again in {SetText.Blue}{SetText.Bold}{Config.v.interval!/60000}{SetText.ResetAll} minutes");
-            Thread.Sleep((int)Config.v.interval);
-        }
+        if (Config.v.interval != null) await SnipePeriodically(argName);
 
         if (argName == "l" || argName == TNames.UseNamesJson) await Names.handleNamesList(temp, FileSystem.GetNames());
         if (argName == "3" || argName == TNames.ThreeCharNames) await Names.handleThreeLetter(temp);
@@ -345,13 +327,7 @@ static async Task HandleArgs(string currentVersion) {
         if (Core.arguments.ContainsKey("--test-rl")) await TestRatelimit();
 
         // snipe periodically
-        if (Config.v.interval != null) while (true) {
-            if (Core.arguments.ContainsKey("--email")) await Snipe.Sniper.ReauthenticateMs(300000);
-            else await Snipe.Sniper.ReauthenticateMojang(300000);
-            await Snipe.Sniper.Shoot(argName);
-            Output.Inform($"Sniping {SetText.Blue}{SetText.Bold}{argName}{SetText.ResetAll} again in {SetText.Blue}{SetText.Bold}{Config.v.interval!/60000}{SetText.ResetAll} minutes");
-            Thread.Sleep((int)Config.v.interval);
-        }
+        if (Config.v.interval != null) await SnipePeriodically(argName);
 
         if (argName == "l" || argName == TNames.UseNamesJson) await Names.handleNamesList(temp, FileSystem.GetNames());
         if (argName == "3" || argName == TNames.ThreeCharNames) await Names.handleThreeLetter(temp);
@@ -364,6 +340,16 @@ static async Task HandleArgs(string currentVersion) {
         Console.ReadKey();
         Environment.Exit(0);
     }
+}
+
+static async Task SnipePeriodically(string name) {
+        while (true) {
+            if (Core.arguments.ContainsKey("--email")) await Snipe.Sniper.ReauthenticateMs(300000);
+            else await Snipe.Sniper.ReauthenticateMojang(300000);
+            await Snipe.Sniper.Shoot(name);
+            Output.Inform($"Sniping {SetText.Blue}{SetText.Bold}{name}{SetText.ResetAll} again in {SetText.Blue}{SetText.Bold}{Config.v.interval!/60000}{SetText.ResetAll} minutes");
+            Thread.Sleep((int)Config.v.interval);
+        }
 }
 
 static async Task TestRatelimit() {
