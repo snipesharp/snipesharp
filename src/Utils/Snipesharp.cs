@@ -11,7 +11,22 @@ namespace Utils
             string fullVersion = GetType().Assembly.GetName().Version.ToString();
             return fullVersion.Substring(0, fullVersion.Length - 2);
         }
-
+        public static string GetNameToSnipe() {
+            if (!Cli.Core.arguments.ContainsKey("--name")) {
+                List<string> argNamesList = FS.FileSystem.GetNames();
+                return new Cli.Animatables.SelectionPrompt("What name(s) would you like to snipe?",
+                    new string[] {
+                        Cli.Templates.TNames.LetMePick,
+                        Cli.Templates.TNames.UseNamesJson,
+                        Cli.Templates.TNames.ThreeCharNames,
+                    },
+                    new string[] {
+                        argNamesList.Count == 0 ? Cli.Templates.TNames.UseNamesJson : "",
+                    }
+                ).result;
+            }
+            return Cli.Core.arguments["--name"].data!;
+        }
         public static void PrintHelp() {
             Console.Write(
                 "\n" +
@@ -48,9 +63,9 @@ namespace Utils
                 "--" + SetText.Red + "test-rl".MakeGapRight(23) + SetText.ResetAll + $"Instantly sends name change packets for the name 'abc' to test rate limiting. Works well combined with --packet-count\n" +
                 "--" + SetText.Red + "await-first-packet".MakeGapRight(23) + SetText.ResetAll + $"Sends the second name change packet after a response is received from the first one\n" +
                 "--" + SetText.Red + "await-packets".MakeGapRight(23) + SetText.ResetAll + $"Sends every name change packet after a response is received from the one prior to it\n" +
-                "--" + SetText.Red + "dont-verify".MakeGapRight(23) + SetText.ResetAll + $"Doesn't verify your Bearer Token works"
+                "--" + SetText.Red + "dont-verify".MakeGapRight(23) + SetText.ResetAll + $"Doesn't verify your Bearer Token works\n"
             );
-
+            Environment.Exit(0);
         }
 
         public static void Install() {
