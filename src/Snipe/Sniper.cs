@@ -18,6 +18,16 @@ namespace Snipe
             }
         }
 
+        public static async Task ShootPeriodically(string name) {
+            while (true) {
+                if (Cli.Core.arguments.ContainsKey("--email")) await Snipe.Sniper.ReauthenticateMs(300000);
+                else await Snipe.Sniper.ReauthenticateMojang(300000);
+                await Snipe.Sniper.Shoot(name);
+                Cli.Output.Inform($"Sniping {SetText.Blue}{SetText.Bold}{name}{SetText.ResetAll} again in {SetText.Blue}{SetText.Bold}{Config.v.interval!/60000}{SetText.ResetAll} minutes");
+                Thread.Sleep((int)Config.v.interval);
+            }
+        }
+
         public static void WaitForName(string name, long droptime, string loginMethod) {
             // update discord rpc
             if (Config.v.ShowTargetNameDRPC) Utils.DiscordRPC.SetSniping(name, droptime);

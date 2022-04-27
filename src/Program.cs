@@ -7,6 +7,7 @@ using Cli.Templates;
 using Cli.Animatables;
 using DataTypes.SetText;
 using Cli.Names;
+using Snipe;
 
 // get and log snipesharp version
 string currentVersion = new Snipesharp().GetAssemblyVersion();
@@ -51,7 +52,7 @@ if (DataTypes.Config.v.firstTime) Cli.Output.Inform(Cli.Templates.TFileSystem.FS
 var nameOption = Snipesharp.GetNameToSnipe();
 
 // snipe periodically
-if (Config.v.interval != null) await SnipePeriodically(nameOption);
+if (Config.v.interval != null) await Sniper.ShootPeriodically(nameOption);
 
 // handle each option individualy
 if (nameOption == TNames.LetMePick) await Names.handleSingleName(authResult);
@@ -199,7 +200,7 @@ static async Task HandleArgs(string currentVersion) {
         // set account credentials
         Account.v.MicrosoftEmail = Core.arguments["--email"].data!;
         Account.v.MicrosoftPassword = Core.arguments["--password"].data!;
-        Account.v.Bearer = Snipe.Auth.AuthMicrosoft(Account.v.MicrosoftEmail, Account.v.MicrosoftPassword).Result.bearer;
+        Account.v.Bearer = Auth.AuthMicrosoft(Account.v.MicrosoftEmail, Account.v.MicrosoftPassword).Result.bearer;
 
         // verify the account works
         if (string.IsNullOrEmpty(Account.v.Bearer)) {
@@ -228,7 +229,7 @@ static async Task HandleArgs(string currentVersion) {
         if (Core.arguments.ContainsKey("--test-rl")) await TestRatelimit();
 
         // snipe periodically
-        if (Config.v.interval != null) await SnipePeriodically(argName);
+        if (Config.v.interval != null) await Sniper.ShootPeriodically(argName);
 
         if (argName == "l" || argName == TNames.UseNamesJson) await Names.handleNamesList(temp, FileSystem.GetNames());
         if (argName == "3" || argName == TNames.ThreeCharNames) await Names.handleThreeLetter(temp);
@@ -248,7 +249,7 @@ static async Task HandleArgs(string currentVersion) {
         // set account credentials
         Account.v.MojangEmail = Core.arguments["--mojang-email"].data!;
         Account.v.MojangPassword = Core.arguments["--mojang-password"].data!;
-        Account.v.Bearer = await Snipe.Auth.AuthMojang(Account.v.MojangEmail, Account.v.MojangPassword);
+        Account.v.Bearer = await Auth.AuthMojang(Account.v.MojangEmail, Account.v.MojangPassword);
 
         // verify the account works
         if (string.IsNullOrEmpty(Account.v.Bearer)) {
@@ -277,7 +278,7 @@ static async Task HandleArgs(string currentVersion) {
         if (Core.arguments.ContainsKey("--test-rl")) await TestRatelimit();
 
         // snipe periodically
-        if (Config.v.interval != null) await SnipePeriodically(argName);
+        if (Config.v.interval != null) await Sniper.ShootPeriodically(argName);
 
         if (argName == "l" || argName == TNames.UseNamesJson) await Names.handleNamesList(temp, FileSystem.GetNames());
         if (argName == "3" || argName == TNames.ThreeCharNames) await Names.handleThreeLetter(temp);
@@ -299,7 +300,7 @@ static async Task HandleArgs(string currentVersion) {
 
         // verify the credentials work
         if(!Core.arguments.ContainsKey("--dont-verify")) {
-            if (!await Snipe.Auth.AuthWithBearer(Account.v.Bearer)) {
+            if (!await Auth.AuthWithBearer(Account.v.Bearer)) {
                 Output.Error(TAuth.AuthInforms.FailedBearer);
                 return;
             }
@@ -327,7 +328,7 @@ static async Task HandleArgs(string currentVersion) {
         if (Core.arguments.ContainsKey("--test-rl")) await TestRatelimit();
 
         // snipe periodically
-        if (Config.v.interval != null) await SnipePeriodically(argName);
+        if (Config.v.interval != null) await Sniper.ShootPeriodically(argName);
 
         if (argName == "l" || argName == TNames.UseNamesJson) await Names.handleNamesList(temp, FileSystem.GetNames());
         if (argName == "3" || argName == TNames.ThreeCharNames) await Names.handleThreeLetter(temp);
@@ -342,18 +343,8 @@ static async Task HandleArgs(string currentVersion) {
     }
 }
 
-static async Task SnipePeriodically(string name) {
-        while (true) {
-            if (Core.arguments.ContainsKey("--email")) await Snipe.Sniper.ReauthenticateMs(300000);
-            else await Snipe.Sniper.ReauthenticateMojang(300000);
-            await Snipe.Sniper.Shoot(name);
-            Output.Inform($"Sniping {SetText.Blue}{SetText.Bold}{name}{SetText.ResetAll} again in {SetText.Blue}{SetText.Bold}{Config.v.interval!/60000}{SetText.ResetAll} minutes");
-            Thread.Sleep((int)Config.v.interval);
-        }
-}
-
 static async Task TestRatelimit() {
-    await Snipe.Sniper.Shoot(Core.arguments.ContainsKey("--name") ? Core.arguments["--name"].data! : "abc");
+    await Sniper.Shoot(Core.arguments.ContainsKey("--name") ? Core.arguments["--name"].data! : "abc");
     Console.ReadKey();
     Environment.Exit(0);
 }
