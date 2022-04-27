@@ -30,11 +30,12 @@ namespace Snipe
 
         public static async Task<long> GetMilliseconds(string username, bool exitOnError=false){
             var snipesharpData = await Utils.Stats.GetUnixDroptime(username);
-            // create starData but only fetch if our manual fetch is null
-            UnixJSON starData = new UnixJSON();
-            if (snipesharpData.unix == null) starData = await Fetch<UnixJSON>(UrlStar(username));
-            // set timestamp
-            int timestamp = Math.Max((int)snipesharpData.unix, (int)starData.unix);
+            int timestamp = 0;
+            if (snipesharpData.unix == null) {
+                UnixJSON starData = await Fetch<UnixJSON>(UrlStar(username));
+                timestamp = (int)starData.unix!;
+            }
+            else timestamp = (int)snipesharpData.unix!;
 
             // couldn't find the timestamp
             Action<string> errorFunction = exitOnError ? Cli.Output.ExitError : Cli.Output.Error;
