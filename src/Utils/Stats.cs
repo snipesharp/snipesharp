@@ -19,11 +19,14 @@ namespace Utils
         // get droptime from username
         public static async Task<Snipe.Droptime.UnixJSON> GetUnixDroptime(string username) {
             HttpClient client = new HttpClient();
-            string uuid = await GetUUID(username);
-            string responseJson = await client.GetAsync($"https://api.mojang.com/user/profile/{uuid}/names").Result.Content.ReadAsStringAsync();
-            var profiles = JsonSerializer.Deserialize<ProfileResponse[]>(responseJson);
-            long changedToAt = profiles[profiles.Length - 1].changedToAt;
-            return new Snipe.Droptime.UnixJSON { unix = (changedToAt + 3196800000)/1000 };
+            try {
+                string uuid = await GetUUID(username);
+                string responseJson = await client.GetAsync($"https://api.mojang.com/user/profile/{uuid}/names").Result.Content.ReadAsStringAsync();
+                var profiles = JsonSerializer.Deserialize<ProfileResponse[]>(responseJson);
+                long changedToAt = profiles[profiles.Length - 1].changedToAt;
+                return new Snipe.Droptime.UnixJSON { unix = (changedToAt + 3196800000)/1000 };
+            }
+            catch { return new Snipe.Droptime.UnixJSON { unix = null }; }
         }
         private static JsonSerializerOptions JsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 

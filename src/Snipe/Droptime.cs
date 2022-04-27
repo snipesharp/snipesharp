@@ -11,7 +11,7 @@ namespace Snipe
         private static Func<string, string> UrlMojang = name => $"https://api.star.shopping/droptime/{name}";
 
         // define json return types
-        public struct UnixJSON { public long unix { get; set; } }
+        public struct UnixJSON { public long? unix { get; set; } }
         private static JsonSerializerOptions JsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
         // handle fetching json data as object
