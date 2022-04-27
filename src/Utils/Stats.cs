@@ -7,6 +7,24 @@ namespace Utils
     public class Stats
     {
         private static string NameChangeEndpoint = "https://api.minecraftservices.com/minecraft/profile/namechange";
+
+        // get UUID from username
+        private static async Task<string> GetUUID(string username) {
+            HttpClient client = new HttpClient();
+            var content = new StringContent(JsonSerializer.Serialize(new string[] {username}), System.Text.Encoding.UTF8, "application/json");
+            string json = await client.PostAsync($"https://api.mojang.com/profiles/minecraft", content).Result.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<ProfileInformation[]>(json)![0].id!;
+        }
+
+        // get droptime from username
+        public static async Task<Snipe.Droptime.UnixJSON> GetUnixDroptime(string username) {
+            HttpClient client = new HttpClient();
+            string uuid = await GetUUID(username);
+            string responseJson = await client.GetAsync($"https://api.mojang.com/user/profile/{uuid}/names").Result.Content.ReadAsStringAsync();
+            var profiles = JsonSerializer.Deserialize<ProfileResponse[]>(responseJson);
+            long changedToAt = profiles[profiles.Length - 1].changedToAt;
+            return new Snipe.Droptime.UnixJSON { unix = (changedToAt + 3196800000)/1000 };
+        }
         private static JsonSerializerOptions JsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
         public static async Task<string?> GetUsername(string bearer) {
@@ -90,21 +108,22 @@ namespace Utils
             spinner.Cancel();
             return true;
         }
+        private struct ProfileResponse { public long changedToAt {get; set;} }
         public class ProfileInformation {
             public string? id { get; set; }
             public string? name { get; set; }
         }
-        public class Items {
+        private struct Items {
             public string? name { get; set; }
             public string? signature { get; set; }
         }
-        public struct McOwnershipResponse {
+        private struct McOwnershipResponse {
             public Items[] items { get; set; }
             public string signature { get; set; }
             public string keyId { get; set; }
         }
 
-        public struct NameChangeResponse
+        private struct NameChangeResponse
         {
             public string changedAt { get; set; }
             public string createdAt { get; set; }
