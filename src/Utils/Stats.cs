@@ -13,7 +13,7 @@ namespace Utils
             HttpClient client = new HttpClient();
             var content = new StringContent(JsonSerializer.Serialize(new string[] {username}), System.Text.Encoding.UTF8, "application/json");
             string json = await client.PostAsync($"https://api.mojang.com/profiles/minecraft", content).Result.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<ProfileInformation[]>(json)![0].id!;
+            try { return JsonSerializer.Deserialize<ProfileInformation[]>(json)![0].id!; } catch { return ""; }
         }
 
         /// <summary>Gets droptime for specified username</summary>
