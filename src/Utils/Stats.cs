@@ -8,7 +8,7 @@ namespace Utils
     {
         private static string NameChangeEndpoint = "https://api.minecraftservices.com/minecraft/profile/namechange";
 
-        // get UUID from username
+        // <summary>Gets a UUID from username</summary>
         private static async Task<string> GetUUID(string username) {
             HttpClient client = new HttpClient();
             var content = new StringContent(JsonSerializer.Serialize(new string[] {username}), System.Text.Encoding.UTF8, "application/json");
@@ -16,13 +16,18 @@ namespace Utils
             return JsonSerializer.Deserialize<ProfileInformation[]>(json)![0].id!;
         }
 
-        // get droptime from username
+        /// <summary>Gets droptime for specified username</summary>
         public static async Task<Snipe.Droptime.UnixJSON> GetUnixDroptime(string username) {
             HttpClient client = new HttpClient();
             try {
                 string uuid = await GetUUID(username);
                 string responseJson = await client.GetAsync($"https://api.mojang.com/user/profile/{uuid}/names").Result.Content.ReadAsStringAsync();
                 var profiles = JsonSerializer.Deserialize<ProfileResponse[]>(responseJson);
+
+                // return 0 if the name is taken
+                bool nameTaken = profiles[profiles.Length - 1].name.ToLower() == username.ToLower();
+                if (nameTaken) return new Snipe.Droptime.UnixJSON { unix = 0 };
+
                 long changedToAt = profiles[profiles.Length - 1].changedToAt;
                 return new Snipe.Droptime.UnixJSON { unix = (changedToAt + 3196800000)/1000 };
             }
@@ -111,7 +116,13 @@ namespace Utils
             spinner.Cancel();
             return true;
         }
-        private struct ProfileResponse { public long changedToAt {get; set;} }
+        private struct UsernameInfo {
+            public string status {get; set;}
+        }
+        private struct ProfileResponse {
+            public string name {get; set;}
+            public long changedToAt {get; set;}
+        }
         public class ProfileInformation {
             public string? id { get; set; }
             public string? name { get; set; }
