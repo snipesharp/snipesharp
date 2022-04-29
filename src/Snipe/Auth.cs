@@ -94,7 +94,7 @@ namespace Snipe
                     spinner.Cancel();
 
                     // Check if account owns MC
-                     bool ownsMinecraft = await Utils.Stats.OwnsMinecraft(mcApiJsonResponse.access_token);
+                    bool ownsMinecraft = await Utils.Stats.OwnsMinecraft(mcApiJsonResponse.access_token);
                     if (!ownsMinecraft) {
                         Cli.Output.ExitError("Account doesn't own Minecraft");
                     }

@@ -25,18 +25,7 @@ if(!Account.v.prename && authResult.loginMethod != "Bearer Token") if (!await St
 string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
 
 // handle prename account and change config (runtime only)
-if (Account.v.prename) {
-    var maxPackets2 = Core.arguments.ContainsKey("--prename") ? true : !Convert.ToBoolean(
-    new SelectionPrompt("Sniping using a prename account, switch to 2 max packets sent?", 
-        new string[] { "Yes [suggested]", "No" }).answerIndex);
-    Config.v.SendPacketsCount = maxPackets2 ? 2 : Config.v.SendPacketsCount;
-    if (maxPackets2) Output.Inform(TAuth.AuthInforms.NoNameHistory);
-    Console.Title = $"snipesharp {currentVersion} - Logged in with a prename account";
-}
-else if (!String.IsNullOrEmpty(username)) { 
-    Console.Title = $"snipesharp {currentVersion} - Logged in as {username}";
-    if (Config.v.ShowUsernameDRPC) Utils.DiscordRPC.SetDescription($"Logged in as {username}");
-}
+HandleTitle(currentVersion, username);
 
 // fetch names list now to see if they are empty or not
 // will be used later if needed
@@ -140,7 +129,7 @@ static async Task Initialize(string currentVersion) {
 static async Task HandleArgs(string currentVersion) {
     // --prename handled in
     // --name handled in Snipesharp.cs
-    // --skip-gc-redeem handled in Stats.cs
+    // --skip-gc-redeem handled in Stats.cs & here
     // --dont-verify handled here AND in Core.cs
     // --await-first-packet handled in Sniper.cs
     // --offset handled in Names.cs
@@ -212,11 +201,9 @@ static async Task HandleArgs(string currentVersion) {
         // update account file
         if (!Core.arguments.ContainsKey("--dont-verify")) FileSystem.UpdateAccount();
 
+        // handle prename account and change config (runtime only)
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
-        if (!String.IsNullOrEmpty(username)) { 
-            Console.Title = $"snipesharp {currentVersion} - Logged in as {username}";
-            if (Config.v.EnableDiscordRPC && Config.v.ShowUsernameDRPC) Utils.DiscordRPC.SetDescription($"Logged in as {username}");
-        }
+        HandleTitle(currentVersion, username);
 
         var temp = new AuthResult {
             loginMethod = TAuth.AuthOptions.Microsoft
@@ -261,7 +248,11 @@ static async Task HandleArgs(string currentVersion) {
         // update account file
         if (!Core.arguments.ContainsKey("--dont-verify")) FileSystem.UpdateAccount();
 
+
+        // handle prename account and change config (runtime only)
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
+        HandleTitle(currentVersion, username);
+
         if (!String.IsNullOrEmpty(username)) { 
             Console.Title = $"snipesharp {currentVersion} - Logged in as {username}";
             if (Config.v.EnableDiscordRPC && Config.v.ShowUsernameDRPC) Utils.DiscordRPC.SetDescription($"Logged in as {username}");
@@ -311,7 +302,10 @@ static async Task HandleArgs(string currentVersion) {
         // update account file
         if (!Core.arguments.ContainsKey("--dont-verify")) FileSystem.UpdateAccount();
 
+        // handle prename account and change config (runtime only)
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
+        HandleTitle(currentVersion, username);
+        
         if (!String.IsNullOrEmpty(username)) {
             Console.Title = $"snipesharp {currentVersion} - Logged in as {username}";
             if (Config.v.EnableDiscordRPC && Config.v.ShowUsernameDRPC) Utils.DiscordRPC.SetDescription($"Logged in as {username}");
@@ -347,4 +341,19 @@ static async Task TestRatelimit() {
     await Sniper.Shoot(Core.arguments.ContainsKey("--name") ? Core.arguments["--name"].data! : "abc");
     Console.ReadKey();
     Environment.Exit(0);
+}
+
+static void HandleTitle(string currentVersion, string username) {
+    if (Account.v.prename) {
+        var maxPackets2 = Core.arguments.ContainsKey("--prename") ? true : !Convert.ToBoolean(
+        new SelectionPrompt("Sniping using a prename account, switch to 2 max packets sent?", 
+            new string[] { "Yes [suggested]", "No" }).answerIndex);
+        Config.v.SendPacketsCount = maxPackets2 ? 2 : Config.v.SendPacketsCount;
+        if (maxPackets2) Output.Inform(TAuth.AuthInforms.NoNameHistory);
+        Console.Title = $"snipesharp {currentVersion} - Logged in with a prename account";
+    }
+    else if (!String.IsNullOrEmpty(username)) { 
+        Console.Title = $"snipesharp {currentVersion} - Logged in as {username}";
+        if (Config.v.ShowUsernameDRPC) Utils.DiscordRPC.SetDescription($"Logged in as {username}");
+    }
 }
