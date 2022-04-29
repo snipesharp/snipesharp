@@ -49,7 +49,7 @@ namespace Utils
                 "--" + SetText.Cyan + "enable-discordrpc".MakeGapRight(23) + SetText.ResetAll + $"Enables Discord Rich Presence\n" +
                 "--" + SetText.Cyan + "asc".MakeGapRight(23) + SetText.ResetAll + $"Enables Auto Skin Change\n" +
                 "--" + SetText.Cyan + "asc-url".MakeGapRight(23) + SetText.ResetAll + $"Sets the Skin URL for Auto Skin Change ({SetText.Blue}Requires string value{SetText.ResetAll})\n" +
-                "--" + SetText.Cyan + "offset".MakeGapRight(23) + SetText.ResetAll + $"Sets the offset in milliseconds ({SetText.Blue}Requires integer value{SetText.ResetAll})\n" +
+                "--" + SetText.Cyan + "offset".MakeGapRight(23) + SetText.ResetAll + $"Sets the offset in milliseconds. Use value 'auto' or 'suggested' to use the suggested value ({SetText.Blue}Requires integer value{SetText.ResetAll})\n" +
                 "--" + SetText.Cyan + "spread".MakeGapRight(23) + SetText.ResetAll + $"Sets the PacketSpreadMs config value ({SetText.Blue}Requires integer value{SetText.ResetAll})\n" +
                 "--" + SetText.Cyan + "packet-count".MakeGapRight(23) + SetText.ResetAll + $"Sets the SendPacketsCount config value ({SetText.Blue}Requires integer value{SetText.ResetAll})\n" +
                 "--" + SetText.Cyan + "prename".MakeGapRight(23) + SetText.ResetAll + $"Automatically sets SendPacketsCount to 2\n" +

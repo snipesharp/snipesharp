@@ -25,7 +25,7 @@ if(!Account.v.prename && authResult.loginMethod != "Bearer Token") if (!await St
 string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
 
 // handle prename account and change config (runtime only)
-HandleTitle(currentVersion, username);
+HandleAccountType(currentVersion, username);
 
 // fetch names list now to see if they are empty or not
 // will be used later if needed
@@ -203,7 +203,7 @@ static async Task HandleArgs(string currentVersion) {
 
         // handle prename account and change config (runtime only)
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
-        HandleTitle(currentVersion, username);
+        HandleAccountType(currentVersion, username);
 
         var temp = new AuthResult {
             loginMethod = TAuth.AuthOptions.Microsoft
@@ -251,7 +251,7 @@ static async Task HandleArgs(string currentVersion) {
 
         // handle prename account and change config (runtime only)
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
-        HandleTitle(currentVersion, username);
+        HandleAccountType(currentVersion, username);
 
         if (!String.IsNullOrEmpty(username)) { 
             Console.Title = $"snipesharp {currentVersion} - Logged in as {username}";
@@ -304,7 +304,7 @@ static async Task HandleArgs(string currentVersion) {
 
         // handle prename account and change config (runtime only)
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
-        HandleTitle(currentVersion, username);
+        HandleAccountType(currentVersion, username);
         
         if (!String.IsNullOrEmpty(username)) {
             Console.Title = $"snipesharp {currentVersion} - Logged in as {username}";
@@ -343,7 +343,7 @@ static async Task TestRatelimit() {
     Environment.Exit(0);
 }
 
-static void HandleTitle(string currentVersion, string username) {
+static void HandleAccountType(string currentVersion, string username) {
     if (Account.v.prename) {
         var maxPackets2 = Core.arguments.ContainsKey("--prename") ? true : !Convert.ToBoolean(
         new SelectionPrompt("Sniping using a prename account, switch to 2 max packets sent?", 

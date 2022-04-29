@@ -10,20 +10,16 @@ namespace Cli.Names
     {
         static async Task<long> GetDelay(){
             var suggestedOffset = await Offset.CalcSuggested();
-            if(Core.arguments.ContainsKey("--offset")) { 
+            if(Core.arguments.ContainsKey("--offset")) {
+                if (new string[] {"auto", "suggested"}.Contains(Core.arguments["--offset"].data!)) {
+                    Cli.Output.Inform($"Offset set to {suggestedOffset}");
+                    return suggestedOffset; 
+                }
                 if (int.TryParse(Core.arguments["--offset"].data!, out int offsetArg)) {
                     Cli.Output.Inform($"Offset set to {offsetArg}");
                     return offsetArg;
                 }
                 Cli.Output.Error($"{Core.arguments["--offset"].data!} is not a valid offset value");
-            }
-            if(Core.arguments.ContainsKey("--bearer")) {
-                Cli.Output.Inform($"Offset set to {suggestedOffset}");
-                return suggestedOffset;
-            }
-            if(Core.arguments.ContainsKey("--email") && Core.arguments.ContainsKey("--password")) {
-                Cli.Output.Inform($"Offset set to {suggestedOffset}");
-                return suggestedOffset;
             }
             if (DataTypes.Config.v.firstTime) Cli.Output.Inform(Cli.Templates.TFileSystem.FSInforms.OffsetExplanation);
             return Input.Request<long>($"Offset in ms [suggested: {suggestedOffset}ms]: ");
