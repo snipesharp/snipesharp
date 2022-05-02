@@ -8,31 +8,6 @@ namespace Utils
     {
         private static string NameChangeEndpoint = "https://api.minecraftservices.com/minecraft/profile/namechange";
 
-        // <summary>Gets a UUID from username</summary>
-        private static async Task<string> GetUUID(string username) {
-            HttpClient client = new HttpClient();
-            var content = new StringContent(JsonSerializer.Serialize(new string[] {username}), System.Text.Encoding.UTF8, "application/json");
-            string json = await client.PostAsync($"https://api.mojang.com/profiles/minecraft", content).Result.Content.ReadAsStringAsync();
-            try { return JsonSerializer.Deserialize<ProfileInformation[]>(json)![0].id!; } catch { return ""; }
-        }
-
-        /// <summary>Gets droptime for specified username</summary>
-        public static async Task<Snipe.Droptime.UnixJSON> GetUnixDroptime(string username) {
-            HttpClient client = new HttpClient();
-            try {
-                string uuid = await GetUUID(username);
-                string responseJson = await client.GetAsync($"https://api.mojang.com/user/profile/{uuid}/names").Result.Content.ReadAsStringAsync();
-                var profiles = JsonSerializer.Deserialize<ProfileResponse[]>(responseJson);
-
-                // return 0 if the name is taken
-                bool nameTaken = profiles[profiles.Length - 1].name.ToLower() == username.ToLower();
-                if (nameTaken) return new Snipe.Droptime.UnixJSON { unix = 0 };
-
-                long changedToAt = profiles[profiles.Length - 1].changedToAt;
-                return new Snipe.Droptime.UnixJSON { unix = (changedToAt + 3196800000)/1000 };
-            }
-            catch { return new Snipe.Droptime.UnixJSON { unix = null }; }
-        }
         private static JsonSerializerOptions JsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
         public static async Task<string?> GetUsername(string bearer) {

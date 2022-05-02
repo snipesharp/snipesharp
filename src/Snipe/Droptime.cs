@@ -11,7 +11,7 @@ namespace Snipe
         private static Func<string, string> UrlMojang = name => $"https://api.star.shopping/droptime/{name}";
 
         // define json return types
-        public struct UnixJSON { public long? unix { get; set; } }
+        public struct UnixJSON { public int unix { get; set; } }
         private static JsonSerializerOptions JsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
         // handle fetching json data as object
@@ -29,13 +29,7 @@ namespace Snipe
         }
 
         public static async Task<long> GetMilliseconds(string username, bool exitOnError=false){
-            var snipesharpData = await Utils.Stats.GetUnixDroptime(username);
-            int timestamp = 0;
-            if (snipesharpData.unix == null) {
-                UnixJSON starData = await Fetch<UnixJSON>(UrlStar(username));
-                timestamp = (int)starData.unix!;
-            }
-            else timestamp = (int)snipesharpData.unix!;
+            int timestamp = (await Fetch<UnixJSON>(UrlStar(username))).unix;
 
             // couldn't find the timestamp
             Action<string> errorFunction = exitOnError ? Cli.Output.ExitError : Cli.Output.Error;
