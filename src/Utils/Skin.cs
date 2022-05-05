@@ -18,7 +18,7 @@ namespace Utils
             // make the actual call for changing the skin
             var result = await client.PostAsync($"https://api.minecraftservices.com/minecraft/profile/skins",
             new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
-            FS.FileSystem.Log($"Auto skin change: {result}");
+            FS.FileSystem.Log($"Auto skin change: {(int)result.StatusCode}");
         }
     }
 }
