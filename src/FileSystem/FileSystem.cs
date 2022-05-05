@@ -131,7 +131,7 @@ namespace FS
             Task.Run(() => {
                 try {
                     if (!Directory.Exists(logsFolder)) CreateSnipesharpFolders();
-                    File.AppendAllText(logFile, $"[{DateTime.Now}] {log}\n");
+                    File.AppendAllText(filePath, $"[{DateTime.Now}] {log}\n");
                     File.AppendAllText(latestLogFile, $"[{DateTime.Now}] {log}\n");
                 }
                 catch { if (Config.v.debug) Cli.Output.Warn("Log file is busy"); }
