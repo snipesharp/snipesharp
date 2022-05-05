@@ -50,7 +50,7 @@ namespace Snipe
                     "\nPacket number " + packetNumber + $"for '{name}'\n" +
                     response.ToString() +
                     "\n\nContent:\n" + await response.Content.ReadAsStringAsync() + "\n",
-                    FS.FileSystem.logsFolder + $"{name}-{Environment.ProcessId}.log"
+                    FS.FileSystem.logsFolder + $"{name}-res-{Environment.ProcessId}.log"
                 );
 
                 // make sent & recieved strings
