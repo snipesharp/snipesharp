@@ -47,7 +47,7 @@ namespace Snipe
 
                 // log response in detail
                 FS.FileSystem.Log(
-                    "Packet number " + packetNumber + $" for '{name}'\n" +
+                    "Packet number " + (packetNumber + 1) + $" for '{name}'\n" +
                     response.ToString() +
                     "\n\nContent:\n" + await response.Content.ReadAsStringAsync() + "\n",
                     FS.FileSystem.logsFolder + $"{name}-res-{Environment.ProcessId}.log"
