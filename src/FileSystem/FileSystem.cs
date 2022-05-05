@@ -133,7 +133,7 @@ namespace FS
                 try {
                     if (!Directory.Exists(logsFolder)) CreateSnipesharpFolders();
                     File.AppendAllText(filePath, $"[{DateTime.Now}] {cleanLog}\n");
-                    File.AppendAllText(latestLogFile, $"[{DateTime.Now}] {cleanLog}\n");
+                    File.AppendAllText(latestLogFile, $"[{DateTime.Now}] {Environment.ProcessId} | {cleanLog}\n");
                 }
                 catch { if (Config.v.debug) Cli.Output.Warn("Log file is busy"); }
             });
