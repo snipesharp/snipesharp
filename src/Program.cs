@@ -136,6 +136,7 @@ static async Task HandleArgs(string currentVersion) {
     // --disable-auto-update, --disable-discordrpc, --enable-discordrpc & --install handled in Initialize()
 
     if (Core.arguments.ContainsKey("--help")) Snipesharp.PrintHelp();
+    if (Core.arguments.ContainsKey("--prename")) Account.v.prename = true;
     if (Core.arguments.ContainsKey("-v") || Core.arguments.ContainsKey("--version")) {
         Output.Inform($"snipesharp {currentVersion}");
         Environment.Exit(0);
