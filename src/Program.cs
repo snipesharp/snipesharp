@@ -24,7 +24,7 @@ AuthResult authResult = await Core.Auth();
 if(!Account.v.prename && authResult.loginMethod != "Bearer Token") if (!await Stats.CanChangeName(Account.v.Bearer)) Cli.Output.ExitError($"{Account.v.MicrosoftEmail} cannot change username yet.");
 string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
 
-// handle prename account and change config (runtime only)
+// handle prename account and change configs
 HandleAccountType(currentVersion, username);
 
 // fetch names list now to see if they are empty or not
@@ -202,7 +202,7 @@ static async Task HandleArgs(string currentVersion) {
         // update account file
         if (!Core.arguments.ContainsKey("--dont-verify")) FileSystem.UpdateAccount();
 
-        // handle prename account and change config (runtime only)
+        // handle prename account and change config
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
         HandleAccountType(currentVersion, username);
 
@@ -250,7 +250,7 @@ static async Task HandleArgs(string currentVersion) {
         if (!Core.arguments.ContainsKey("--dont-verify")) FileSystem.UpdateAccount();
 
 
-        // handle prename account and change config (runtime only)
+        // handle prename account and change config
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
         HandleAccountType(currentVersion, username);
 
@@ -303,7 +303,7 @@ static async Task HandleArgs(string currentVersion) {
         // update account file
         if (!Core.arguments.ContainsKey("--dont-verify")) FileSystem.UpdateAccount();
 
-        // handle prename account and change config (runtime only)
+        // handle prename account and change config
         string? username = await Utils.Stats.GetUsername(Account.v.Bearer);
         HandleAccountType(currentVersion, username);
         

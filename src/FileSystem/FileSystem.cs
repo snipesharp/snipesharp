@@ -128,11 +128,12 @@ namespace FS
         // <summary>Appends the given string to the latest.log & a instance unique log file</summary>
         public static void Log(string log, string? filePath=null) {
             if (string.IsNullOrEmpty(filePath)) filePath = logFile;
+            string cleanLog = new System.Text.RegularExpressions.Regex(@"\x1b\[\d+\w").Replace(log, "");
             Task.Run(() => {
                 try {
                     if (!Directory.Exists(logsFolder)) CreateSnipesharpFolders();
-                    File.AppendAllText(filePath, $"[{DateTime.Now}] {log}\n");
-                    File.AppendAllText(latestLogFile, $"[{DateTime.Now}] {log}\n");
+                    File.AppendAllText(filePath, $"[{DateTime.Now}] {cleanLog}\n");
+                    File.AppendAllText(latestLogFile, $"[{DateTime.Now}] {cleanLog}\n");
                 }
                 catch { if (Config.v.debug) Cli.Output.Warn("Log file is busy"); }
             });
