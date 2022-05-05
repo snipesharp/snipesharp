@@ -46,7 +46,12 @@ namespace Snipe
                 });
 
                 // log response in detail
-                if (DataTypes.Config.v.debug) FS.FileSystem.Log("\nPacket number " + packetNumber + "\n" + response.ToString() + "\n\nContent:\n" + await response.Content.ReadAsStringAsync() + "\n");
+                FS.FileSystem.Log(
+                    "\nPacket number " + packetNumber + $"for '{name}'\n" +
+                    response.ToString() +
+                    "\n\nContent:\n" + await response.Content.ReadAsStringAsync() + "\n",
+                    FS.FileSystem.logsFolder + $"{name}-{Environment.ProcessId}.log"
+                );
 
                 // make sent & recieved strings
                 string timeSent = $"{sentDateValue.Second}.{sentDateValue.Millisecond}s";

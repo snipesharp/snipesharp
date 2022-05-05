@@ -125,15 +125,16 @@ namespace FS
             return File.Exists(configJsonFile);
         }
 
-        // appends the given string to the latest.log file
-        public static void Log(string log) {
+        // <summary>Appends the given string to the latest.log & a instance unique log file</summary>
+        public static void Log(string log, string? filePath=null) {
+            if (string.IsNullOrEmpty(filePath)) filePath = logFile;
             Task.Run(() => {
                 try {
                     if (!Directory.Exists(logsFolder)) CreateSnipesharpFolders();
                     File.AppendAllText(logFile, $"[{DateTime.Now}] {log}\n");
                     File.AppendAllText(latestLogFile, $"[{DateTime.Now}] {log}\n");
                 }
-                catch { Cli.Output.Warn("Log file is busy"); }
+                catch { if (Config.v.debug) Cli.Output.Warn("Log file is busy"); }
             });
         }
         /// <summary>Downloads a file from the given URL to the given path</summary>
