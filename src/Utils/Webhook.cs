@@ -29,46 +29,45 @@ namespace Utils
                 name = sniped,
                 sender = Config.v.DiscordWebhookUsername
             }, new JsonSerializerOptions { WriteIndented = true });
-            if (Config.v.SnipesharpServerWebhook) 
-                Send(Config.v.snipesharpServerWebhook, jsonOfficial);
-            if (
-                !String.IsNullOrEmpty(Config.v.CustomDiscordWebhookUrl) &&
-                !String.IsNullOrEmpty(Config.v.DiscordWebhookUsername)
-            ){
-                var searchesResponse = await Send("http://webhooks.snipesharp.xyz/searches", JsonSerializer.Serialize(new {name=sniped}));
-                string json = JsonSerializer.Serialize(new {
-                    embeds = new[]
+            if (Config.v.SnipesharpServerWebhook) Send(Config.v.snipesharpServerWebhook, jsonOfficial);
+
+            // return if custom webhook isnt set
+            if (string.IsNullOrEmpty(Config.v.CustomDiscordWebhookUrl)) return;
+            
+            // send custom webhook
+            var searchesResponse = await Send("http://webhooks.snipesharp.xyz/searches", JsonSerializer.Serialize(new {name=sniped}));
+            string json = JsonSerializer.Serialize(new {
+                embeds = new[]
+                {
+                    new
                     {
-                        new
-                        {
-                            title = "snipesharp snipe :tada:",
-                            fields = new[] {
-                                new {
-                                    name = "Searches",
-                                    value = $"{searchesResponse} per month",
-                                    inline = true
-                                },
-                                new {
-                                    name = "Name sniped",
-                                    value = $"[{sniped}](https://namemc.com/{sniped})",
-                                    inline = true
-                                },
-                                new {
-                                    name = "Sniped by",
-                                    value = Config.v.DiscordWebhookUsername,
-                                    inline = true
-                                }
+                        title = "snipesharp snipe :tada:",
+                        fields = new[] {
+                            new {
+                                name = "Searches",
+                                value = $"{searchesResponse} per month",
+                                inline = true
                             },
-                            color = 1211647,
-                            thumbnail = new
-                            {
-                                url = $"https://mc-heads.net/head/{sniped}"
+                            new {
+                                name = "Name sniped",
+                                value = $"[{sniped}](https://namemc.com/{sniped})",
+                                inline = true
+                            },
+                            new {
+                                name = "Sniped by",
+                                value = Config.v.DiscordWebhookUsername,
+                                inline = true
                             }
+                        },
+                        color = 1211647,
+                        thumbnail = new
+                        {
+                            url = $"https://mc-heads.net/head/{sniped}"
                         }
                     }
-                }, new JsonSerializerOptions { WriteIndented = true});
-                Send(Config.v.CustomDiscordWebhookUrl, json);
-            }
+                }
+            }, new JsonSerializerOptions { WriteIndented = true});
+            Send(Config.v.CustomDiscordWebhookUrl, json);
         }
     }
 }

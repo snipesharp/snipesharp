@@ -135,7 +135,11 @@ static async Task HandleArgs(string currentVersion) {
     // --offset handled in Names.cs
     // --disable-auto-update, --disable-discordrpc, --enable-discordrpc & --install handled in Initialize()
 
-    if (Core.arguments.ContainsKey("--help")) Snipesharp.PrintHelp();
+    if (Core.arguments.ContainsKey("--help")) Output.PrintHelp();
+    if (Core.arguments.ContainsKey("--webhook-url")) {
+        string webhookUrl = Core.arguments["--webhook-url"].data!;
+        if (!string.IsNullOrEmpty(webhookUrl)) Config.v.CustomDiscordWebhookUrl = webhookUrl;
+    }
     if (Core.arguments.ContainsKey("--prename")) Account.v.prename = true;
     if (Core.arguments.ContainsKey("-v") || Core.arguments.ContainsKey("--version")) {
         Output.Inform($"snipesharp {currentVersion}");
