@@ -25,7 +25,7 @@ namespace Cli {
                 Console.WriteLine(SetText.DarkRed + crosshair);
                 Console.WriteLine(SetText.Blue +     @"  @8Wou 9%    8888  888R    888E   uW888L  888' 8888L        @8Wou 9%   888E  888E 9888  9888   .d888L .+    uW888L  888' ".Centered().Cross());
                 Console.WriteLine(SetText.Blue +     @".888888P`    '*88*' 8888'   888&  '*88888Nu88P  '8888c. .+ .888888P`    888E  888E 9888  9888   ^'8888*'    '*88888Nu88P  ".Centered().Cross());
-                Console.WriteLine(SetText.DarkBlue + @"`   ^'F        ''   'Y'     R888' ~ '88888F`     '88888%   `   ^'F     m888N= 888> '888*''888'     'Y'      ~ '88888F`    ".Centered().Cross());
+                Console.WriteLine(SetText.Blue +     @"`   ^'F        ''   'Y'     R888' ~ '88888F`     '88888%   `   ^'F     m888N= 888> '888*''888'     'Y'      ~ '88888F`    ".Centered().Cross());
                 Console.WriteLine(SetText.DarkBlue + @"                             ''      888 ^         'YP'                 `Y'   888   ^Y'   ^Y'                  888 ^      ".Centered().Cross());
                 Console.WriteLine(SetText.DarkBlue + @"                                     *8E                                     J88'                              *8E        ".Centered().Cross());
                 Console.WriteLine(SetText.DarkBlue + @"                                     '8>                                     @%                                '8>        ".Centered().Cross());
