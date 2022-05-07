@@ -1,6 +1,7 @@
 using Cli.Templates;
 using StringExtensions;
 using DataTypes.SetText;
+using System.Drawing;
 
 namespace Cli {
     class Output {
@@ -11,36 +12,60 @@ namespace Cli {
             var even = Convert.ToInt32(Console.WindowWidth % 2 == 0);
             crosshair = $"{crosshair.Substring(0, halfLength)}+{crosshair.Substring(halfLength, halfLength - even)}";
 
-            // account for smaller terminal window
-            if (Console.WindowWidth < 65 && Console.WindowWidth > 33)
-            {
+            // HUGE
+            if (Console.WindowWidth > 123) {
                 Console.WriteLine("".Centered().Cross());
-                Console.WriteLine(SetText.LightCyan +   @"   ____ , __   ` \,___,   ___ ".Centered().Cross());
-                Console.WriteLine(SetText.Cyan +        @"  (     |'  `. | |    \ .'___/".Centered().Cross());
-                Console.WriteLine(SetText.Blue +        @"   `--. |    | | |    | |     ".Centered().Cross());
-                Console.WriteLine(SetText.DarkBlue +    @" \___.' /    | / |`---' `.___,".Centered().Cross());
+                
+                Console.WriteLine(SetText.LightCyan +@"   .x+=:.                    .                                .x+=:.                                                      ".Centered().Cross());
+                Console.WriteLine(SetText.LightCyan +@"  z`    ^%                  @88>                             z`    ^%    .uef^'                                           ".Centered().Cross());
+                Console.WriteLine(SetText.LightCyan +@"     .   <k    u.    u.     %8P    .d``                         .   <k :d88E                      .u    .    .d``         ".Centered().Cross());
+                Console.WriteLine(SetText.Cyan +     @"   .@8Ned8'  x@88k u@88c.    .     @8Ne.   .u        .u       .@8Ned8' `888E             u      .d88B :@8c   @8Ne.   .u   ".Centered().Cross());
+                Console.WriteLine(SetText.Cyan +     @" .@^%8888'  ^'8888''8888'  .@88u   %8888:u@88N    ud8888.   .@^%8888'   888E .z8k     us888u.  ='8888f8888r  %8888:u@88N  ".Centered().Cross());
+                Console.WriteLine(SetText.Cyan +     @"x88:  `)8b.   8888  888R  ''888E`   `888I  888. :888'8888. x88:  `)8b.  888E~?888L .@88 '8888'   4888>'88'    `888I  888. ".Centered().Cross());
+                Console.WriteLine(SetText.Blue +     @"8888N=*8888   8888  888R    888E     888I  888I d888 '88%' 8888N=*8888  888E  888E 9888  9888    4888> '       888I  888I ".Centered().Cross());
                 Console.WriteLine(SetText.DarkRed + crosshair);
-                Console.WriteLine(SetText.LightCyan +   @"   ____ /        __   .___  \,___,".Centered().Cross());
-                Console.WriteLine(SetText.Cyan +        @"  (     |,---.  /  `. /   \ |    \".Centered().Cross());
-                Console.WriteLine(SetText.Blue +        @"   `--. |    | |    | |     |    |".Centered().Cross());
-                Console.WriteLine(SetText.DarkBlue +    @" \___.' /    | `.__/| /     |`---'".Centered().Cross());
-                Console.WriteLine(SetText.DarkBlue +    @"                            \     ".Centered().Cross());
+                Console.WriteLine(SetText.Blue +     @"  @8Wou 9%    8888  888R    888E   uW888L  888' 8888L        @8Wou 9%   888E  888E 9888  9888   .d888L .+    uW888L  888' ".Centered().Cross());
+                Console.WriteLine(SetText.Blue +     @".888888P`    '*88*' 8888'   888&  '*88888Nu88P  '8888c. .+ .888888P`    888E  888E 9888  9888   ^'8888*'    '*88888Nu88P  ".Centered().Cross());
+                Console.WriteLine(SetText.DarkBlue + @"`   ^'F        ''   'Y'     R888' ~ '88888F`     '88888%   `   ^'F     m888N= 888> '888*''888'     'Y'      ~ '88888F`    ".Centered().Cross());
+                Console.WriteLine(SetText.DarkBlue + @"                             ''      888 ^         'YP'                 `Y'   888   ^Y'   ^Y'                  888 ^      ".Centered().Cross());
+                Console.WriteLine(SetText.DarkBlue + @"                                     *8E                                     J88'                              *8E        ".Centered().Cross());
+                Console.WriteLine(SetText.DarkBlue + @"                                     '8>                                     @%                                '8>        ".Centered().Cross());
+
                 Console.WriteLine($"{SetText.Blue}https://snipe{SetText.White}sharp.xyz{SetText.ResetAll}".Centered());
                 return;
             }
-            if (Console.WindowWidth < 33){
+
+            // SMALL
+            if (Console.WindowWidth < 54 && Console.WindowWidth > 30)
+            {
+                Console.WriteLine("".Centered().Cross());
+                Console.WriteLine(SetText.LightCyan +   @"   _________  ______  ___ ".Centered().Cross());
+                Console.WriteLine(SetText.Cyan +        @"  / ___/ __ \/ / __ \/ _ \".Centered().Cross());
+                Console.WriteLine(SetText.Blue +        @" (__  / / / / / /_/ /  __|".Centered().Cross());
+                Console.WriteLine(SetText.DarkBlue +    @"/____/_/ /_/_/ .___/\___/ ".Centered().Cross());
+                Console.WriteLine(SetText.DarkRed + crosshair);
+                Console.WriteLine(SetText.LightCyan +   @"   _____/ /_  ____ __________ ".Centered().Cross());
+                Console.WriteLine(SetText.Cyan +        @"  / ___/ __ \/ __ `/ ___/ __ \".Centered().Cross());
+                Console.WriteLine(SetText.Blue +        @" (__  / / / / /_/ / /  / /_/ /".Centered().Cross());
+                Console.WriteLine(SetText.DarkBlue +    @"/____/_/ /_/\__,_/_/  / .___/ ".Centered().Cross());
+                Console.WriteLine($"{SetText.Blue}https://snipe{SetText.White}sharp.xyz{SetText.ResetAll}".Centered());
+                return;
+            }
+
+            // TINY
+            if (Console.WindowWidth < 30){
                 Console.WriteLine($"{SetText.Blue}snipe{SetText.White}sharp".Centered());
                 Console.WriteLine($"{SetText.Blue}https://snipe{SetText.White}sharp.xyz{SetText.ResetAll}" + SetText.ResetAll.Centered());
                 return;
             }
 
-            // print
-            Console.WriteLine("".Centered().Cross());
-            Console.WriteLine(SetText.LightCyan +@"   ____ , __   ` \,___,   ___    ____ /        __   .___  \,___,".Centered().Cross());
-            Console.WriteLine(SetText.Cyan      +@"  (     |'  `. | |    \ .'  _/  (     |,---.  /  `. /   \ |    \".Centered().Cross());
+            // NORMAL
+            Console.WriteLine(SetText.LightCyan +@"                                 __                   ".Centered().Cross());
+            Console.WriteLine(SetText.Cyan      +@"   _________  ______  ___  _____/ /_  ____ __________ ".Centered().Cross());
+            Console.WriteLine(SetText.Blue      +@"  / ___/ __ \/ / __ \/ _ \/ ___/ __ \/ __ `/ ___/ __ \".Centered().Cross());
             Console.WriteLine(SetText.DarkRed   +crosshair);
-            Console.WriteLine(SetText.Blue      +@" \___.' /    | / |`---' `.___, \___.' /    | `.__/| /     |`---'".Centered().Cross());
-            Console.WriteLine(SetText.DarkBlue  +@"                 \                                        \     ".Centered().Cross());
+            Console.WriteLine(SetText.DarkBlue  +@"/____/_/ /_/ / .___/\___/____/_/ /_/\__,_/_/  / .___/ ".Centered().Cross());
+            Console.WriteLine(SetText.DarkBlue  +@"            /_/                              /_/      ".Centered().Cross());
             Console.WriteLine($"{SetText.Blue}https://snipe{SetText.White}sharp.xyz{SetText.ResetAll}".Centered());
         }
         public static void PrintHelp() {
