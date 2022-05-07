@@ -64,7 +64,7 @@ namespace Cli {
             Console.WriteLine(SetText.Cyan      +@"   _________  ______  ___  _____/ /_  ____ __________ ".Centered().Cross());
             Console.WriteLine(SetText.Blue      +@"  / ___/ __ \/ / __ \/ _ \/ ___/ __ \/ __ `/ ___/ __ \".Centered().Cross());
             Console.WriteLine(SetText.DarkRed   +crosshair);
-            Console.WriteLine(SetText.Blue  +@"/____/_/ /_/ / .___/\___/____/_/ /_/\__,_/_/  / .___/ ".Centered().Cross());
+            Console.WriteLine(SetText.Blue      +@"/____/_/ /_/ / .___/\___/____/_/ /_/\__,_/_/  / .___/ ".Centered().Cross());
             Console.WriteLine(SetText.DarkBlue  +@"            /_/                              /_/      ".Centered().Cross());
             Console.WriteLine($"{SetText.Blue}https://snipe{SetText.White}sharp.xyz{SetText.ResetAll}".Centered());
         }
