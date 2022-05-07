@@ -17,10 +17,10 @@ namespace Cli {
                 
                 Console.WriteLine(SetText.LightCyan +@"   .x+=:.                    .                                .x+=:.                                                      ".Centered().Cross());
                 Console.WriteLine(SetText.LightCyan +@"  z`    ^%                  @88>                             z`    ^%    .uef^'                                           ".Centered().Cross());
-                Console.WriteLine(SetText.LightCyan +@"     .   <k    u.    u.     %8P    .d``                         .   <k :d88E                      .u    .    .d``         ".Centered().Cross());
+                Console.WriteLine(SetText.Cyan +     @"     .   <k    u.    u.     %8P    .d``                         .   <k :d88E                      .u    .    .d``         ".Centered().Cross());
                 Console.WriteLine(SetText.Cyan +     @"   .@8Ned8'  x@88k u@88c.    .     @8Ne.   .u        .u       .@8Ned8' `888E             u      .d88B :@8c   @8Ne.   .u   ".Centered().Cross());
                 Console.WriteLine(SetText.Cyan +     @" .@^%8888'  ^'8888''8888'  .@88u   %8888:u@88N    ud8888.   .@^%8888'   888E .z8k     us888u.  ='8888f8888r  %8888:u@88N  ".Centered().Cross());
-                Console.WriteLine(SetText.Cyan +     @"x88:  `)8b.   8888  888R  ''888E`   `888I  888. :888'8888. x88:  `)8b.  888E~?888L .@88 '8888'   4888>'88'    `888I  888. ".Centered().Cross());
+                Console.WriteLine(SetText.Blue +     @"x88:  `)8b.   8888  888R  ''888E`   `888I  888. :888'8888. x88:  `)8b.  888E~?888L .@88 '8888'   4888>'88'    `888I  888. ".Centered().Cross());
                 Console.WriteLine(SetText.Blue +     @"8888N=*8888   8888  888R    888E     888I  888I d888 '88%' 8888N=*8888  888E  888E 9888  9888    4888> '       888I  888I ".Centered().Cross());
                 Console.WriteLine(SetText.DarkRed + crosshair);
                 Console.WriteLine(SetText.Blue +     @"  @8Wou 9%    8888  888R    888E   uW888L  888' 8888L        @8Wou 9%   888E  888E 9888  9888   .d888L .+    uW888L  888' ".Centered().Cross());
@@ -60,7 +60,7 @@ namespace Cli {
 
             // NORMAL
             Console.WriteLine(SetText.LightCyan +@"                                 __                   ".Centered().Cross());
-            Console.WriteLine(SetText.LightCyan      +@"   _________  ______  ___  _____/ /_  ____ __________ ".Centered().Cross());
+            Console.WriteLine(SetText.LightCyan +@"   _________  ______  ___  _____/ /_  ____ __________ ".Centered().Cross());
             Console.WriteLine(SetText.Cyan      +@"  / ___/ __ \/ / __ \/ _ \/ ___/ __ \/ __ `/ ___/ __ \".Centered().Cross());
             Console.WriteLine(SetText.DarkRed   +crosshair);
             Console.WriteLine(SetText.Blue      +@"/____/_/ /_/ / .___/\___/____/_/ /_/\__,_/_/  / .___/ ".Centered().Cross());
