@@ -12,7 +12,7 @@ namespace Cli {
             crosshair = $"{crosshair.Substring(0, halfLength)}+{crosshair.Substring(halfLength, halfLength - even)}";
 
             // HUGE
-            if (Console.WindowWidth > 123) {
+            if (Console.WindowWidth > 130) {
                 Console.WriteLine("".Centered().Cross());
                 
                 Console.WriteLine(SetText.LightCyan +@"   .x+=:.                    .                                .x+=:.                                                      ".Centered().Cross());
@@ -35,7 +35,7 @@ namespace Cli {
             }
 
             // SMALL
-            if (Console.WindowWidth < 54 && Console.WindowWidth > 30)
+            if (Console.WindowWidth < 54 && Console.WindowWidth > 31)
             {
                 Console.WriteLine("".Centered().Cross());
                 Console.WriteLine(SetText.LightCyan +   @"   _________  ______  ___ ".Centered().Cross());
@@ -52,7 +52,7 @@ namespace Cli {
             }
 
             // TINY
-            if (Console.WindowWidth < 30){
+            if (Console.WindowWidth <= 31){
                 Console.WriteLine($"{SetText.Blue}snipe{SetText.White}sharp".Centered());
                 Console.WriteLine($"{SetText.Blue}https://snipe{SetText.White}sharp.xyz{SetText.ResetAll}" + SetText.ResetAll.Centered());
                 return;
