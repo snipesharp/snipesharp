@@ -27,10 +27,12 @@ namespace Utils
 
         public static void RandomizeDetails() {
             var random = new Random().Next(1,4);
-            if (random == 1) Details = "The best Minecraft name sniper!";
-            if (random == 2) Details = "Name a better MC name sniper";
-            if (random == 3) Details = "A fast & easy to use name sniper!";
-            if (random == 4) Details = "Better than paid name snipers!";
+            switch (random) {
+                case 1: Details = "Name a better MC name sniper"; break;
+                case 2: Details = "A fast & easy to use name sniper!"; break;
+                case 3: Details = "Better than paid name snipers!"; break;
+                default: Details = "The best Minecraft name sniper!"; break;
+            }
         }
 
         public static void SetSniping(string name, long droptime){
