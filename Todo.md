@@ -1,6 +1,4 @@
 # List of ideas/bug fixes to be implemented:
-## Fix giftcard sniping
-Giftcard sniping gives error 415
 ## Automatic offset before name drop
 Implement option to leave the offset input empty to determine the offset right before name drop 
 ## Multiple name lists
