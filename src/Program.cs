@@ -135,6 +135,56 @@ static async Task HandleArgs(string currentVersion) {
     // --offset handled in Names.cs
     // --disable-auto-update, --disable-discordrpc, --enable-discordrpc & --install handled in Initialize()
 
+        /* GETDROPPING API */
+    // --api-minsearches
+    // --api-length
+    // --api-lengthOption
+    // --api-language
+    if (Core.arguments.ContainsKey("--api-minsearches")) { 
+        if (int.TryParse(Core.arguments["--api-minsearches"].data!, out int minSearches)) {
+            if (minSearches >= 0 && minSearches <= 10000) {
+                Config.v.ApiMinSearches = minSearches;
+                Cli.Output.Inform($"ApiMinSearches set to {minSearches}");
+            }
+            else Cli.Output.Error($"ApiMinSearches must be greater or equal to 0 and lower or equal to 10000");
+        }
+        else Cli.Output.Error($"{Core.arguments["--api-minsearches"].data!} is not a valid ApiMinSearches value");
+    }
+
+    if (Core.arguments.ContainsKey("--api-length")) { 
+        if (int.TryParse(Core.arguments["--api-length"].data!, out int length)) {
+            if (length >= 3 && length <= 16) {
+                Config.v.ApiLength = length;
+                Cli.Output.Inform($"ApiLength set to {length}");
+            }
+            else Cli.Output.Error($"ApiLength must be greater or equal to 3 and lower or equal to 16");
+        }
+        else Cli.Output.Error($"{Core.arguments["--api-length"].data!} is not a valid ApiLength value");
+    }
+
+    if (Core.arguments.ContainsKey("--api-lengthOption")) { 
+        if (int.TryParse(Core.arguments["--api-lengthOption"].data!, out int length)) {
+            if (length >= 3 && length <= 16) {
+                Config.v.ApiLengthOption = length;
+                Cli.Output.Inform($"ApiLengthOption set to {length}");
+            }
+            else Cli.Output.Error($"ApiLengthOption must be greater or equal to 0 and lower or equal to 10000");
+        }
+        else Cli.Output.Error($"{Core.arguments["--api-lengthOption"].data!} is not a valid ApiLengthOption value");
+    }
+
+    if (Core.arguments.ContainsKey("--api-language")) {
+        string[] supportedLanguages = {
+            "dutch", "english", "french", "german",
+            "italian", "polish", "portuguese", "spanish"
+        };
+        if (int.TryParse(Core.arguments["--api-language"].data!, out int language))
+            Cli.Output.Error($"ApiLanguage cannot be a number");
+        else if (!supportedLanguages.Contains(Core.arguments["--api-language"].data!.ToLower()))
+            Cli.Output.Error($"{Core.arguments["--api-language"].data!} is not a supported language, supported languages are: " + string.Join(" ", supportedLanguages));
+        else Config.v.ApiLanguage = Core.arguments["--api-language"].data!.ToLower();
+    }
+
     if (Core.arguments.ContainsKey("--help")) Output.PrintHelp();
     if (Core.arguments.ContainsKey("--webhook-url")) {
         string webhookUrl = Core.arguments["--webhook-url"].data!;
@@ -166,7 +216,7 @@ static async Task HandleArgs(string currentVersion) {
             Config.v.SendPacketsCount = sendPacketsCount;
             Cli.Output.Inform($"SendPacketsCount set to {sendPacketsCount}");
         }
-        else Cli.Output.Error($"{Core.arguments["--spread"].data!} is not a valid PacketSpreadMs value");
+        else Cli.Output.Error($"{Core.arguments["--packet-count"].data!} is not a valid SendPacketsCount value");
     }
     if (Core.arguments.ContainsKey("--username")) { 
         Config.v.DiscordWebhookUsername = Core.arguments["--username"].data!;

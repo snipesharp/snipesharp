@@ -5,14 +5,14 @@ namespace StringExtensions
 {
     public static class StringResponsive
     {
-        public static string Centered(this string str){
+        public static string Centered(this string str, bool rightSpaces=true, char fillChar=' '){
             var clean = new Regex(@"\x1b\[\d+\w").Replace(str, "");
 
             int spacesToAdd = clean.Length % 2 != 0
                 ? (Console.WindowWidth - 1) - clean.Length 
                 : Console.WindowWidth - clean.Length;
-            string spaces = new string(' ', (spacesToAdd / 2));
-            return spaces + str + spaces;
+            string spaces = new string(fillChar, (spacesToAdd / 2));
+            return (rightSpaces ? spaces + str + spaces : spaces + str);
         }
 
         public static string MakeGapRight(this string str, int finalLength) {
