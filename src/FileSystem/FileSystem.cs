@@ -160,7 +160,7 @@ namespace FS
                 return true;
             }
             catch (UnauthorizedAccessException e) {
-                Cli.Output.Error($"Failed to download. {e.Message}");
+                Cli.Output.Error($"Failed to download due to unauthorized access.");
                 return false;
             }
             catch (Exception e) {
