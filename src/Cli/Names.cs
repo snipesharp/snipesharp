@@ -49,7 +49,7 @@ namespace Cli.Names
             
                 if(dropTime > 0){
                     Sniper.WaitForName(namesList[i], dropTime - delay, authResult.loginMethod);
-                    Sniper.Shoot(namesList[i]); //! awaiting can possibly fix the issue where the next name starts being sniped before previous packets are all sent out
+                    Sniper.Shoot(namesList[i]); // awaiting doesnt fix starting a new name before all packets are printed
                 }
 
                 // remove sniped name from list and update the file
