@@ -110,6 +110,7 @@ namespace Cli {
                 "--" + SetText.Blue + "mojang-password".MakeGapRight(23) + SetText.ResetAll + $"Sets the Mojang login Password ({SetText.Blue}STRING{SetText.ResetAll}) ({SetText.Blue}Requires --mojang-email{SetText.ResetAll})\n" +
                 
                 "\n\n" + $"{SetText.Blue}{SetText.Bold} HELPERS {SetText.ResetAll}".Centered(true, '-') + "\n\n" +
+                "--" + SetText.Blue + "disable-auto-update".MakeGapRight(23) + SetText.ResetAll + $"Disables automatic updating\n" +
                 "--" + SetText.Blue + "prename".MakeGapRight(23) + SetText.ResetAll + $"Automatically sets SendPacketsCount to 2\n" +
                 "--" + SetText.Blue + "skip-gc-redeem".MakeGapRight(23) + SetText.ResetAll + $"Skips the giftcard redeeming process\n" +
                 
