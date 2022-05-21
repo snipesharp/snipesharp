@@ -49,7 +49,7 @@ namespace Cli.Names
             
                 if(dropTime > 0){
                     Sniper.WaitForName(namesList[i], dropTime - delay, authResult.loginMethod);
-                    Sniper.Shoot(namesList[i]);
+                    Sniper.Shoot(namesList[i]); //! awaiting can possibly fix the issue where the next name starts being sniped before previous packets are all sent out
                 }
 
                 // remove sniped name from list and update the file
@@ -64,6 +64,10 @@ namespace Cli.Names
         public static async Task handleThreeLetter(AuthResult authResult){
             var scraped = await Scrape.Get3LetterNames();
             await handleNamesList(authResult, scraped, false);
+        }
+
+        public static async Task handlePopularNames(AuthResult authResult){
+            while (true) await handleSingleName(authResult, await Scrape.getPopularName());
         }
     }
 }

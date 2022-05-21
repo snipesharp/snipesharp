@@ -19,6 +19,7 @@ namespace Utils
                         Cli.Templates.TNames.LetMePick,
                         Cli.Templates.TNames.UseNamesJson,
                         Cli.Templates.TNames.ThreeCharNames,
+                        Cli.Templates.TNames.PopularNames
                     },
                     new string[] {
                         argNamesList.Count == 0 ? Cli.Templates.TNames.UseNamesJson : "",

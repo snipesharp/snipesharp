@@ -47,7 +47,12 @@ if (Config.v.interval != null) await Sniper.ShootPeriodically(nameOption);
 if (nameOption == TNames.LetMePick) await Names.handleSingleName(authResult);
 if (nameOption == TNames.UseNamesJson) await Names.handleNamesList(authResult, namesList);
 if (nameOption == TNames.ThreeCharNames) await Names.handleThreeLetter(authResult);
-if (nameOption != TNames.LetMePick && nameOption != TNames.UseNamesJson && nameOption != TNames.ThreeCharNames) await Names.handleSingleName(authResult, nameOption);
+if (nameOption == TNames.PopularNames) await Names.handlePopularNames(authResult);
+if (
+    nameOption != TNames.PopularNames && nameOption != TNames.LetMePick &&
+    nameOption != TNames.UseNamesJson && nameOption != TNames.ThreeCharNames
+) await Names.handleSingleName(authResult, nameOption);
+
 
 // don't exit automatically
 Output.Inform("Finished sniping, press any key to exit");
@@ -136,53 +141,57 @@ static async Task HandleArgs(string currentVersion) {
     // --disable-auto-update, --disable-discordrpc, --enable-discordrpc & --install handled in Initialize()
 
         /* GETDROPPING API */
-    // --api-minsearches
-    // --api-length
-    // --api-lengthOption
-    // --api-language
-    if (Core.arguments.ContainsKey("--api-minsearches")) { 
-        if (int.TryParse(Core.arguments["--api-minsearches"].data!, out int minSearches)) {
+    // --pop-minsearches
+    // --pop-length
+    // --pop-lengthOption
+    // --pop-language
+    if (Core.arguments.ContainsKey("--pop-minsearches")) { 
+        if (int.TryParse(Core.arguments["--pop-minsearches"].data!, out int minSearches)) {
             if (minSearches >= 0 && minSearches <= 10000) {
-                Config.v.ApiMinSearches = minSearches;
-                Cli.Output.Inform($"ApiMinSearches set to {minSearches}");
+                Config.v.PopSearches = minSearches;
+                Cli.Output.Inform($"PopSearches set to {minSearches}");
             }
-            else Cli.Output.Error($"ApiMinSearches must be greater or equal to 0 and lower or equal to 10000");
+            else Cli.Output.Error($"PopSearches must be greater or equal to 0 and lower or equal to 10000");
         }
-        else Cli.Output.Error($"{Core.arguments["--api-minsearches"].data!} is not a valid ApiMinSearches value");
+        else Cli.Output.Error($"{Core.arguments["--pop-minsearches"].data!} is not a valid PopSearches value");
     }
 
-    if (Core.arguments.ContainsKey("--api-length")) { 
-        if (int.TryParse(Core.arguments["--api-length"].data!, out int length)) {
+    if (Core.arguments.ContainsKey("--pop-length")) { 
+        if (int.TryParse(Core.arguments["--pop-length"].data!, out int length)) {
             if (length >= 3 && length <= 16) {
-                Config.v.ApiLength = length;
-                Cli.Output.Inform($"ApiLength set to {length}");
+                Config.v.PopLength = length;
+                Cli.Output.Inform($"PopLength set to {length}");
             }
-            else Cli.Output.Error($"ApiLength must be greater or equal to 3 and lower or equal to 16");
+            else Cli.Output.Error($"PopLength must be greater or equal to 3 and lower or equal to 16");
         }
-        else Cli.Output.Error($"{Core.arguments["--api-length"].data!} is not a valid ApiLength value");
+        else Cli.Output.Error($"{Core.arguments["--pop-length"].data!} is not a valid PopLength value");
     }
 
-    if (Core.arguments.ContainsKey("--api-lengthOption")) { 
-        if (int.TryParse(Core.arguments["--api-lengthOption"].data!, out int length)) {
+    if (Core.arguments.ContainsKey("--pop-lengthOption")) { 
+        if (int.TryParse(Core.arguments["--pop-lengthOption"].data!, out int length)) {
             if (length >= 3 && length <= 16) {
-                Config.v.ApiLengthOption = length;
-                Cli.Output.Inform($"ApiLengthOption set to {length}");
+                Config.v.PopLengthOption = length;
+                Cli.Output.Inform($"PopLengthOption set to {length}");
             }
-            else Cli.Output.Error($"ApiLengthOption must be greater or equal to 0 and lower or equal to 10000");
+            else Cli.Output.Error($"PopLengthOption must be greater or equal to 0 and lower or equal to 10000");
         }
-        else Cli.Output.Error($"{Core.arguments["--api-lengthOption"].data!} is not a valid ApiLengthOption value");
+        else Cli.Output.Error($"{Core.arguments["--pop-lengthOption"].data!} is not a valid PopLengthOption value");
     }
 
-    if (Core.arguments.ContainsKey("--api-language")) {
+    if (Core.arguments.ContainsKey("--pop-language")) {
         string[] supportedLanguages = {
             "dutch", "english", "french", "german",
             "italian", "polish", "portuguese", "spanish"
         };
-        if (int.TryParse(Core.arguments["--api-language"].data!, out int language))
-            Cli.Output.Error($"ApiLanguage cannot be a number");
-        else if (!supportedLanguages.Contains(Core.arguments["--api-language"].data!.ToLower()))
-            Cli.Output.Error($"{Core.arguments["--api-language"].data!} is not a supported language, supported languages are: " + string.Join(" ", supportedLanguages));
-        else Config.v.ApiLanguage = Core.arguments["--api-language"].data!.ToLower();
+        if (int.TryParse(Core.arguments["--pop-language"].data!, out int language))
+            Cli.Output.Error($"PopLanguage cannot be a number");
+        else if (!supportedLanguages.Contains(Core.arguments["--pop-language"].data!.ToLower()))
+            Cli.Output.Error($"{Core.arguments["--pop-language"].data!} is not a supported language, supported languages are: " + string.Join(" ", supportedLanguages));
+        else {
+            string lang = Core.arguments["--pop-language"].data!.ToLower();
+            Config.v.PopLanguage = lang;
+            Output.Inform("PopLanguage set to " + lang);
+        }
     }
 
     if (Core.arguments.ContainsKey("--help")) Output.PrintHelp();

@@ -97,10 +97,10 @@ namespace Cli {
                 "--" + SetText.Blue + "username".MakeGapRight(23) + SetText.ResetAll + $"Sets your display name in Discord Rich Presence, if it's enabled ({SetText.Blue}STRING{SetText.ResetAll})\n" +
                 
                 "\n\n" + $"{SetText.Blue}{SetText.Bold} GETDROPPING API {SetText.ResetAll}".Centered(true, '-') + "\n\n" +
-                "--" + SetText.Blue + "api-minsearches".MakeGapRight(23) + SetText.ResetAll + $"Sets the minimum NameMC search count the name has to have ({SetText.Blue}INTEGER (RANGE: 0-10000){SetText.ResetAll})\n" +
-                "--" + SetText.Blue + "api-length".MakeGapRight(23) + SetText.ResetAll + $"Sets the min/max/eq length value according to ApiLengthOption ({SetText.Blue}INTEGER (RANGE: 3-16){SetText.ResetAll})\n" +
-                "--" + SetText.Blue + "api-lengthoption".MakeGapRight(23) + SetText.ResetAll + $"0 = none, 1 = Less or equal to ApiLength, 2 = Equal to ApiLength, 3 = Greater or equal to ApiLength ({SetText.Blue}INTEGER (RANGE: 0-3){SetText.ResetAll})\n" +
-                "--" + SetText.Blue + "api-language".MakeGapRight(23) + SetText.ResetAll + $"Sets the language the name has to be in ({SetText.Blue}STRING{SetText.ResetAll})\n" +
+                "--" + SetText.Blue + "pop-minsearches".MakeGapRight(23) + SetText.ResetAll + $"Sets the minimum NameMC search count the name has to have ({SetText.Blue}INTEGER (RANGE: 0-10000){SetText.ResetAll})\n" +
+                "--" + SetText.Blue + "pop-length".MakeGapRight(23) + SetText.ResetAll + $"Sets the min/max/eq length value according to PopLengthOption ({SetText.Blue}INTEGER (RANGE: 3-16){SetText.ResetAll})\n" +
+                "--" + SetText.Blue + "pop-lengthoption".MakeGapRight(23) + SetText.ResetAll + $"0 = none, 1 = Less or equal to PopLength, 2 = Equal to PopLength, 3 = Greater or equal to PopLength ({SetText.Blue}INTEGER (RANGE: 0-3){SetText.ResetAll})\n" +
+                "--" + SetText.Blue + "pop-language".MakeGapRight(23) + SetText.ResetAll + $"Sets the language the name has to be in ({SetText.Blue}STRING{SetText.ResetAll})\n" +
 
                 "\n\n" + $"{SetText.Blue}{SetText.Bold} AUTHENTICATING / LOGIN {SetText.ResetAll}".Centered(true, '-') + "\n\n" +
                 "--" + SetText.Blue + "bearer".MakeGapRight(23) + SetText.ResetAll + $"Sets the Bearer Token account value ({SetText.Blue}STRING{SetText.ResetAll})\n" +
