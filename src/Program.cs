@@ -191,7 +191,7 @@ static async Task HandleArgs(string currentVersion) {
 
     if (Core.arguments.ContainsKey("--pop-language")) {
         string[] supportedLanguages = {
-            "dutch", "english", "french", "german",
+            "dutch", "english", "french", "german", "",
             "italian", "polish", "portuguese", "spanish"
         };
         if (int.TryParse(Core.arguments["--pop-language"].data!, out int language))
