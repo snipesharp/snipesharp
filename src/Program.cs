@@ -140,6 +140,17 @@ static async Task HandleArgs(string currentVersion) {
     // --offset handled in Names.cs
     // --disable-auto-update, --disable-discordrpc, --enable-discordrpc & --install handled in Initialize()
 
+    if (Core.arguments.ContainsKey("--help")) Output.PrintHelp();
+    if (Core.arguments.ContainsKey("--webhook-url")) {
+        string webhookUrl = Core.arguments["--webhook-url"].data!;
+        if (!string.IsNullOrEmpty(webhookUrl)) Config.v.CustomDiscordWebhookUrl = webhookUrl;
+    }
+    if (Core.arguments.ContainsKey("--prename")) Account.v.prename = true;
+    if (Core.arguments.ContainsKey("-v") || Core.arguments.ContainsKey("--version")) {
+        Output.Inform($"snipesharp {currentVersion}");
+        Environment.Exit(0);
+    }
+
         /* GETDROPPING API */
     // --pop-minsearches
     // --pop-length
@@ -194,16 +205,6 @@ static async Task HandleArgs(string currentVersion) {
         }
     }
 
-    if (Core.arguments.ContainsKey("--help")) Output.PrintHelp();
-    if (Core.arguments.ContainsKey("--webhook-url")) {
-        string webhookUrl = Core.arguments["--webhook-url"].data!;
-        if (!string.IsNullOrEmpty(webhookUrl)) Config.v.CustomDiscordWebhookUrl = webhookUrl;
-    }
-    if (Core.arguments.ContainsKey("--prename")) Account.v.prename = true;
-    if (Core.arguments.ContainsKey("-v") || Core.arguments.ContainsKey("--version")) {
-        Output.Inform($"snipesharp {currentVersion}");
-        Environment.Exit(0);
-    }
     if (Core.arguments.ContainsKey("--await-first-packet") && !Core.arguments.ContainsKey("--await-packets")) {
         Cli.Output.Warn($"The second name change packet will be sent {SetText.Red}after a response is received{SetText.ResetAll} from the first one!");
         Config.v.awaitFirstPacket = true;
