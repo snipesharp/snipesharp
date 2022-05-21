@@ -20,7 +20,7 @@
         public int PopSearches { get; set; } = 100;
         public int PopLength { get; set; } = 3;
         public int PopLengthOption { get; set; } = 3;
-        public string PopLanguage { get; set; } = "English";
+        public string PopLanguage { get; set; } = "";
         public bool EnableDiscordRPC {get;set;} = true;
         public bool ShowUsernameDRPC {get;set;} = true;
         public bool ShowTargetNameDRPC {get;set;} = true;

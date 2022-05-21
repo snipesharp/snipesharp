@@ -285,7 +285,11 @@ static async Task HandleArgs(string currentVersion) {
         if (argName == "l" || argName == TNames.UseNamesJson) await Names.handleNamesList(temp, FileSystem.GetNames());
         if (argName == "3" || argName == TNames.ThreeCharNames) await Names.handleThreeLetter(temp);
         if (argName == TNames.LetMePick) await Names.handleSingleName(temp);
-        if (argName != "3" && argName != "l" && argName != TNames.LetMePick) await Names.handleSingleName(temp, argName);
+        if (argName == "p" || argName == TNames.PopularNames) await Names.handlePopularNames(temp);
+        if (
+            argName != TNames.PopularNames && argName != "p" && argName != "3" &&
+            argName != "l" && argName != TNames.LetMePick
+        ) await Names.handleSingleName(temp, argName);
 
         // don't exit automatically
         if (Core.pid != PlatformID.Unix)
@@ -338,7 +342,11 @@ static async Task HandleArgs(string currentVersion) {
         if (argName == "l" || argName == TNames.UseNamesJson) await Names.handleNamesList(temp, FileSystem.GetNames());
         if (argName == "3" || argName == TNames.ThreeCharNames) await Names.handleThreeLetter(temp);
         if (argName == TNames.LetMePick) await Names.handleSingleName(temp);
-        if (argName != "3" && argName != "l" && argName != TNames.LetMePick) await Names.handleSingleName(temp, argName);
+        if (argName == "p" || argName == TNames.PopularNames) await Names.handlePopularNames(temp);
+        if (
+            argName != TNames.PopularNames && argName != "p" && argName != "3" &&
+            argName != "l" && argName != TNames.LetMePick
+        ) await Names.handleSingleName(temp, argName);
 
         // don't exit automatically
         if (Core.pid != PlatformID.Unix)
@@ -391,7 +399,11 @@ static async Task HandleArgs(string currentVersion) {
         if (argName == "l" || argName == TNames.UseNamesJson) await Names.handleNamesList(temp, FileSystem.GetNames());
         if (argName == "3" || argName == TNames.ThreeCharNames) await Names.handleThreeLetter(temp);
         if (argName == TNames.LetMePick) await Names.handleSingleName(temp);
-        if (argName != "3" && argName != "l" && argName != TNames.LetMePick) await Names.handleSingleName(temp, argName);
+        if (argName == "p" || argName == TNames.PopularNames) await Names.handlePopularNames(temp);
+        if (
+            argName != TNames.PopularNames && argName != "p" && argName != "3" &&
+            argName != "l" && argName != TNames.LetMePick
+        ) await Names.handleSingleName(temp, argName);
 
         // don't exit automatically
         if (Core.pid != PlatformID.Unix)
