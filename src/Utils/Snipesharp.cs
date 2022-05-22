@@ -26,7 +26,14 @@ namespace Utils
                     }
                 ).result;
             }
-            return Cli.Core.arguments["--name"].data!;
+            string nameOption = "";
+            switch (Cli.Core.arguments["--name"].data!) {
+                case "p": nameOption = Cli.Templates.TNames.PopularNames; break;
+                case "l": nameOption = Cli.Templates.TNames.UseNamesJson; break;
+                case "3": nameOption = Cli.Templates.TNames.ThreeCharNames; break;
+                default: nameOption = Cli.Core.arguments["--name"].data!; break;
+            }
+            return nameOption;
         }
         public static void Install() {
             if (Cli.Core.pid == PlatformID.Unix) {
