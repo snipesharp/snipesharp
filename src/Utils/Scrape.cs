@@ -49,7 +49,7 @@ namespace Utils
             var response = await client.PostAsync("http://api.snipesharp.xyz:5150/getdropping", jsonContent);
 
             // handle failed request
-            if (!response.IsSuccessStatusCode) Cli.Output.ExitError("Failed to fetch popular name");
+            if (!response.IsSuccessStatusCode) Cli.Output.ExitError("Failed to fetch popular name" + ((((int)response.StatusCode) == 429) ? ", try again in ~5 minutes" : ""));
 
             var deserialized = JsonSerializer.Deserialize<GetDroppingAPI>(await response.Content.ReadAsStringAsync());
             Cli.Output.Inform($"{SetText.Bold}{SetText.Blue}{deserialized.name}{SetText.ResetAll} has {SetText.Blue}{deserialized.searches}{SetText.ResetAll} NameMC searches");
