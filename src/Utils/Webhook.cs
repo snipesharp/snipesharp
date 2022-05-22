@@ -35,7 +35,7 @@ namespace Utils
             if (string.IsNullOrEmpty(Config.v.CustomDiscordWebhookUrl)) return;
             
             // send custom webhook
-            var searchesResponse = await Send("http://api.snipesharp.xyz/searches", JsonSerializer.Serialize(new {name=sniped}));
+            var searchesResponse = await Send("http://api.snipesharp.xyz:5150/searches", JsonSerializer.Serialize(new {name=sniped}));
             string json = JsonSerializer.Serialize(new {
                 embeds = new[]
                 {
