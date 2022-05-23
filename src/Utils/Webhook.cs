@@ -15,6 +15,15 @@ namespace Utils
             }
             catch (Exception ex) { Cli.Output.Error(ex.ToString()); return "null"; }
         }
+        public static async Task SendResultsWebhook(string content) {
+            string json = JsonSerializer.Serialize(new {
+                    avatar_url = "https://snipesharp.xyz/img/logo.png",
+                    username = "snipesharp snipe results",
+                    content = content
+                }
+            );
+            await Send(Config.v.ResultsWebhookUrl, json);
+        }
         
         public static async Task SendDiscordWebhooks(string sniped, bool prename=false) {
             string jsonOfficial = prename 

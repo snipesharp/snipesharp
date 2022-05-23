@@ -74,6 +74,26 @@ namespace Snipe
                     Utils.Webhook.SendDiscordWebhooks(name);
                     if (DataTypes.Config.v.AutoSkinChange) Utils.Skin.Change(DataTypes.Config.v.SkinUrl, DataTypes.Config.v.SkinType, DataTypes.Account.v.Bearer);
                 }
+
+                if (!string.IsNullOrEmpty(DataTypes.Config.v.ResultsWebhookUrl)) {
+                    // append to results string
+                    Utils.Snipesharp.packetResults += $"{(response.IsSuccessStatusCode ? "+" : "-")} {(int)response.StatusCode} | Packet {packetNumber+1} | {timeSent} -> {timeRecieved}\n";
+
+                    // send results
+                    if ((packetNumber + 1) == DataTypes.Config.v.SendPacketsCount) {
+                        await Utils.Webhook.SendResultsWebhook(
+                            $"** **\n" +
+                            $"`Email----------->` {DataTypes.Config.v.emailInUse}\n" +
+                            $"`Account Type-----` {(DataTypes.Account.v.prename ? "Prename" : "Normal")}\n" +
+                            $"`Target Name----->` {name}\n" +
+                            $"`Offset-----------` {DataTypes.Config.v.offset}ms\n" +
+                            $"`Ping------------>` {await Utils.Offset.AveragePing()}ms\n" +
+                            $"**Results**:\n" +
+                            $"```diff\n{Utils.Snipesharp.packetResults}```"
+                        );
+                        Utils.Snipesharp.packetResults = "";
+                    }
+                }
             }
             catch (Exception ex)
             {

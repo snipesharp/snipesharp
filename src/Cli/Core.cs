@@ -79,6 +79,9 @@ namespace Cli
                 return;
             }
 
+            // set in use
+            Config.v.emailInUse = Account.v.MojangEmail;
+
             Account.v.Bearer = bearer;
             Output.Success(attempt == 3 ? TAuth.AuthInforms.SuccessAuthMojang + ", third time's a charm" : TAuth.AuthInforms.SuccessAuthMojang);
         }
@@ -106,6 +109,9 @@ namespace Cli
                 return;
             }
 
+            // set in use
+            Config.v.emailInUse = Account.v.MicrosoftEmail;
+
             Account.v.Bearer = authResult.bearer;
             Account.v.prename = authResult.prename;
             Output.Success(attempt == 3 ? TAuth.AuthInforms.SuccessAuthMicrosoft + ", third time's a charm" : TAuth.AuthInforms.SuccessAuthMicrosoft);
@@ -115,6 +121,10 @@ namespace Cli
             // prompt for bearer token
             if (newBearer) Account.v.Bearer = Input.Request<string>(TRequests.Bearer);
 
+            // set in use
+            var shortBearer = (DataTypes.Account.v.Bearer.Length <= 6 ? DataTypes.Account.v.Bearer : ".." + DataTypes.Account.v.Bearer.Substring(DataTypes.Account.v.Bearer.Length - 6));
+            Config.v.emailInUse = shortBearer;
+            
             // check for --dont-verify
             if(arguments.ContainsKey("--dont-verify")) {
                 Output.Warn("Not verifying bearer validity because --dont-verify was used");

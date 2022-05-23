@@ -22,7 +22,9 @@ namespace Cli.Names
                 Cli.Output.Error($"{Core.arguments["--offset"].data!} is not a valid offset value");
             }
             if (DataTypes.Config.v.firstTime) Cli.Output.Inform(Cli.Templates.TFileSystem.FSInforms.OffsetExplanation);
-            return Input.Request<long>($"Offset in ms [suggested: {suggestedOffset}ms]: ", false, null!, true);
+            long offset = Input.Request<long>($"Offset in ms [suggested: {suggestedOffset}ms]: ", false, null!, true);
+            Config.v.offset = offset;
+            return offset;
         }
 
         public static async Task handleSingleName(AuthResult authResult, string name="", bool exitOnError=true){

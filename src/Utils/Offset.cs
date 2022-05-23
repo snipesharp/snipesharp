@@ -10,7 +10,7 @@ namespace Utils
             return (int)(await AveragePing() * 1.5);
         }
 
-        private static async Task<int> AveragePing(){
+        public static async Task<int> AveragePing(){
             Ping ping = new Ping();
             double[] pings = new double[4];
             for(int i = 0; i < 4; i++){

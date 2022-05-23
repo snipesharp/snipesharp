@@ -16,6 +16,8 @@
         public bool yggdrasilToken = false;
         public string discordApplicationId = "946380985791033374";
         public string snipesharpServerWebhook = "http://webhooks.snipesharp.xyz:5150";
+        public long offset = 0;
+        public string emailInUse = "None";
 
         public int PopSearches { get; set; } = 100;
         public int PopLength { get; set; } = 3;
@@ -25,6 +27,7 @@
         public bool ShowUsernameDRPC {get;set;} = true;
         public bool ShowTargetNameDRPC {get;set;} = true;
         public bool SnipesharpServerWebhook { get; set; } = true;
+        public string ResultsWebhookUrl { get; set; } = "";
         public string CustomDiscordWebhookUrl { get; set; } = "";
         public string DiscordWebhookUsername { get; set; } = Environment.UserName;
         public bool EnableBearerRefreshing {get;set;} = true;
