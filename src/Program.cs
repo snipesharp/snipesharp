@@ -35,7 +35,7 @@ List<string> namesList = FileSystem.GetNames();
 if (Core.arguments.ContainsKey("--test-rl")) await TestRatelimit();
 
 // first time setup
-if (DataTypes.Config.v.firstTime) Cli.Output.Inform(Cli.Templates.TFileSystem.FSInforms.Names);
+if (DataTypes.Config.v.firstTime) Cli.Output.Inform(TFileSystem.FSInforms.Names);
 
 // prompt the user for name choices
 var nameOption = Snipesharp.GetNameToSnipe();
@@ -154,7 +154,7 @@ static async Task HandleArgs(string currentVersion) {
         /* GETDROPPING API */
     // --pop-minsearches
     // --pop-length
-    // --pop-lengthOption
+    // --pop-length-option
     // --pop-language
     if (Core.arguments.ContainsKey("--pop-minsearches")) { 
         if (int.TryParse(Core.arguments["--pop-minsearches"].data!, out int minSearches)) {
@@ -178,15 +178,15 @@ static async Task HandleArgs(string currentVersion) {
         else Cli.Output.Error($"{Core.arguments["--pop-length"].data!} is not a valid PopLength value");
     }
 
-    if (Core.arguments.ContainsKey("--pop-lengthOption")) { 
-        if (int.TryParse(Core.arguments["--pop-lengthOption"].data!, out int length)) {
+    if (Core.arguments.ContainsKey("--pop-length-option")) { 
+        if (int.TryParse(Core.arguments["--pop-length-option"].data!, out int length)) {
             if (length >= 3 && length <= 16) {
                 Config.v.PopLengthOption = length;
                 Cli.Output.Inform($"PopLengthOption set to {length}");
             }
             else Cli.Output.Error($"PopLengthOption must be greater or equal to 0 and lower or equal to 10000");
         }
-        else Cli.Output.Error($"{Core.arguments["--pop-lengthOption"].data!} is not a valid PopLengthOption value");
+        else Cli.Output.Error($"{Core.arguments["--pop-length-option"].data!} is not a valid PopLengthOption value");
     }
 
     if (Core.arguments.ContainsKey("--pop-language")) {

@@ -4,6 +4,7 @@ namespace Utils
 {
     public class Offset
     {
+        // ! 0 ping with vpns
         public static async Task<int> CalcSuggested(){
             // https://serverfault.com/questions/307946/measure-server-speed-and-deduct-the-network-latency   
             return (int)(await AveragePing() * 1.5);
