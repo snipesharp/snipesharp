@@ -77,11 +77,11 @@ namespace Snipe
 
                 if (!string.IsNullOrEmpty(DataTypes.Config.v.ResultsWebhookUrl)) {
                     // append to results string
-                    Utils.Snipesharp.packetResults += $"{(response.IsSuccessStatusCode ? "+" : "-")} {(int)response.StatusCode} | Packet {packetNumber+1} | {timeSent} -> {timeRecieved}\n";
+                    Utils.Snipesharp.packetResults += $"{(response.IsSuccessStatusCode ? "+" : "-")} {(int)response.StatusCode} | {GetResponseMessage((int)response.StatusCode)} | Packet {packetNumber+1} | {timeSent} -> {timeRecieved}\n";
 
                     // send results
                     if ((packetNumber + 1) == DataTypes.Config.v.SendPacketsCount) {
-                        await Utils.Webhook.SendResultsWebhook(
+                        Utils.Webhook.SendResultsWebhook(
                             $"** **\n" +
                             $"`Email----------->` {DataTypes.Config.v.emailInUse}\n" +
                             $"`Account Type-----` {(DataTypes.Account.v.prename ? "Prename" : "Normal")}\n" +
