@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Net.Http.Headers;
 using Cli.Animatables;
+using System.Text.RegularExpressions;
 
 namespace Snipe
 {
@@ -9,7 +10,7 @@ namespace Snipe
 
         /// <returns>true if the account owns Minecraft & can change its username</returns>
         public static async Task<bool> AuthWithBearer(string bearer) {
-            bearer = bearer.Trim(); // todo: and regex to remove Bearer: :bearer etc
+            bearer = Regex.Replace(bearer, "(:?)(bearer)(:?)", "", RegexOptions.IgnoreCase).Trim();
             if (bearer.Length < 280) DataTypes.Config.v.yggdrasilToken = true;
             if (!await IsWorkingBearer(bearer)) return false;
             if (!DataTypes.Config.v.yggdrasilToken) if (!await Utils.Stats.OwnsMinecraft(bearer)) Cli.Output.ExitError("Account doesn't own Minecraft");
