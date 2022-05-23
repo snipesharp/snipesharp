@@ -14,7 +14,7 @@
         public string defaultSkin = "https://raw.githubusercontent.com/snipesharp/snipesharp/main/default_skin.png";
         public bool firstTime = false;
         public bool yggdrasilToken = false;
-        public string discordApplicationId = "946380985791033374";
+        public string discordApplicationId = "963075152877326366";
         public string snipesharpServerWebhook = "http://webhooks.snipesharp.xyz:5150";
         public long offset = 0;
         public string emailInUse = "None";

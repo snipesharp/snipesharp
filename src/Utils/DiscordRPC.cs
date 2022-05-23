@@ -65,7 +65,7 @@ namespace Utils
                 State = State,
                 Timestamps = Timestamps.EndUnixMilliseconds > 0 ? Timestamps : null,
                 Assets = new Assets() {
-                    LargeImageKey = "rpc_icon",
+                    LargeImageKey = "1024p_logo",
                     LargeImageText = "Snipesharp",
                 },
                 Party = new Party() {
