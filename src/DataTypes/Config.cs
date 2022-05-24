@@ -28,6 +28,7 @@
         public bool ShowTargetNameDRPC {get;set;} = true;
         public bool SnipesharpServerWebhook { get; set; } = true;
         public string ResultsWebhookUrl { get; set; } = "";
+        public bool ResultsWebhookSuccessOnly { get; set; } = true;
         public string CustomDiscordWebhookUrl { get; set; } = "";
         public string DiscordWebhookUsername { get; set; } = Environment.UserName;
         public bool EnableBearerRefreshing {get;set;} = true;

@@ -208,7 +208,12 @@ static async Task HandleArgs(string currentVersion) {
     /* CONFIG */
 
     if (Core.arguments.ContainsKey("--debug")) Config.v.debug = true;
-    
+
+    if (Core.arguments.ContainsKey("--results-success-only")) {
+        Cli.Output.Inform($"ResultsWebhookSuccessOnly set to true");
+        Config.v.ResultsWebhookSuccessOnly = true;
+    }
+
     if (Core.arguments.ContainsKey("--spread")) { 
         if (int.TryParse(Core.arguments["--spread"].data!, out int packetSpreadMs)) {
             Config.v.PacketSpreadMs = packetSpreadMs;

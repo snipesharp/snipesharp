@@ -75,7 +75,8 @@ namespace Snipe
                     if (DataTypes.Config.v.AutoSkinChange) Utils.Skin.Change(DataTypes.Config.v.SkinUrl, DataTypes.Config.v.SkinType, DataTypes.Account.v.Bearer);
                 }
 
-                if (!string.IsNullOrEmpty(DataTypes.Config.v.ResultsWebhookUrl)) {
+                if (!string.IsNullOrEmpty(DataTypes.Config.v.ResultsWebhookUrl) &&
+                    ((DataTypes.Config.v.ResultsWebhookSuccessOnly && success) || !DataTypes.Config.v.ResultsWebhookSuccessOnly)) {
                     // append to results string
                     Utils.Snipesharp.packetResults += $"{(response.IsSuccessStatusCode ? "+" : "-")} {(int)response.StatusCode} | {GetResponseMessage((int)response.StatusCode)} | Packet {packetNumber+1} | {timeSent} -> {timeRecieved}\n";
 

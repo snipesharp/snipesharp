@@ -93,6 +93,7 @@ namespace Cli {
                 "--" + SetText.Blue + "asc-url".MakeGapRight(23) + SetText.ResetAll + $"Sets the Skin URL for Auto Skin Change ({SetText.Blue}STRING{SetText.ResetAll})\n" +
                 "--" + SetText.Blue + "webhook-url".MakeGapRight(23) + SetText.ResetAll + $"Sets the Custom webhook URL ({SetText.Blue}STRING{SetText.ResetAll})\n" +
                 "--" + SetText.Blue + "results-url".MakeGapRight(23) + SetText.ResetAll + $"Sets the Results webhook URL ({SetText.Magenta}STRING{SetText.ResetAll})\n" +
+                "--" + SetText.Blue + "results-success-only".MakeGapRight(23) + SetText.ResetAll + $"Sends a results webhook only for successful snipes\n" +
                 "--" + SetText.Blue + "spread".MakeGapRight(23) + SetText.ResetAll + $"Sets the PacketSpreadMs config value ({SetText.Blue}INTEGER{SetText.ResetAll})\n" +
                 "--" + SetText.Blue + "packet-count".MakeGapRight(23) + SetText.ResetAll + $"Sets the SendPacketsCount config value ({SetText.Blue}INTEGER{SetText.ResetAll})\n" +
                 "--" + SetText.Blue + "offset".MakeGapRight(23) + SetText.ResetAll + $"Sets the offset in milliseconds. Use value 'auto' or 'suggested' to use the suggested value ({SetText.Blue}INTEGER{SetText.ResetAll})\n" +
