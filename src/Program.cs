@@ -151,11 +151,8 @@ static async Task HandleArgs(string currentVersion) {
         Environment.Exit(0);
     }
 
-        /* GETDROPPING API */
-    // --pop-minsearches
-    // --pop-length
-    // --pop-length-option
-    // --pop-language
+    /* GETDROPPING API */
+
     if (Core.arguments.ContainsKey("--pop-minsearches")) { 
         if (int.TryParse(Core.arguments["--pop-minsearches"].data!, out int minSearches)) {
             if (minSearches >= 0 && minSearches <= 10000) {
@@ -205,15 +202,25 @@ static async Task HandleArgs(string currentVersion) {
         }
     }
 
+    if (Core.arguments.ContainsKey("--pop-lowercase")) {
+        Config.v.PopLowercaseOnly = true;
+        Cli.Output.Inform($"PopLowercaseOnly set to true");
+    }
+
+    /* CONFIG */
+
     if (Core.arguments.ContainsKey("--await-first-packet") && !Core.arguments.ContainsKey("--await-packets")) {
         Cli.Output.Warn($"The second name change packet will be sent {SetText.Red}after a response is received{SetText.ResetAll} from the first one!");
         Config.v.awaitFirstPacket = true;
     }
+
     if (Core.arguments.ContainsKey("--await-packets")) {
         Cli.Output.Warn($"Every name change packet will be sent {SetText.Red}after a response is received{SetText.ResetAll} from the one before it!");
         Config.v.awaitPackets = true;
     }
+
     if (Core.arguments.ContainsKey("--debug")) Config.v.debug = true;
+    
     if (Core.arguments.ContainsKey("--spread")) { 
         if (int.TryParse(Core.arguments["--spread"].data!, out int packetSpreadMs)) {
             Config.v.PacketSpreadMs = packetSpreadMs;
@@ -221,6 +228,7 @@ static async Task HandleArgs(string currentVersion) {
         }
         else Cli.Output.Error($"{Core.arguments["--spread"].data!} is not a valid PacketSpreadMs value");
     }
+
     if (Core.arguments.ContainsKey("--packet-count")) { 
         if (int.TryParse(Core.arguments["--packet-count"].data!, out int sendPacketsCount)) {
             Config.v.SendPacketsCount = sendPacketsCount;
@@ -228,18 +236,22 @@ static async Task HandleArgs(string currentVersion) {
         }
         else Cli.Output.Error($"{Core.arguments["--packet-count"].data!} is not a valid SendPacketsCount value");
     }
+
     if (Core.arguments.ContainsKey("--username")) { 
         Config.v.DiscordWebhookUsername = Core.arguments["--username"].data!;
         Cli.Output.Inform($"DiscordWebhookUsername set to {Core.arguments["--username"].data!}");
     }
+
     if (Core.arguments.ContainsKey("--asc")) {
         Config.v.AutoSkinChange = true;
         Cli.Output.Inform("AutoSkinChange set to true");
     }
+
     if (Core.arguments.ContainsKey("--asc-url")) {
         Config.v.SkinUrl = Core.arguments["--asc-url"].data!;
         Cli.Output.Inform($"SkinUrl set to ${Core.arguments["--asc-url"].data!}");
     }
+
     if (Core.arguments.ContainsKey("--periodically")) {
         if (int.TryParse(Core.arguments["--periodically"].data!, out int interval)) {
             Config.v.interval = interval * 60000;
@@ -247,6 +259,7 @@ static async Task HandleArgs(string currentVersion) {
         }
         else Cli.Output.Error($"{Core.arguments["--periodically"].data!} is not a valid interval value (int)");
     }
+
     if (Core.arguments.ContainsKey("--email") && Core.arguments.ContainsKey("--password")){
         // exit if one of credentials is empty
         if (string.IsNullOrEmpty(Core.arguments["--email"].data!) || string.IsNullOrEmpty(Core.arguments["--password"].data!)) Cli.Output.ExitError($"Credentials can't be empty. Use {SetText.Blue}snipesharp --help{SetText.ResetAll} if you need help with using arguments.");

@@ -23,6 +23,7 @@
         public int PopLength { get; set; } = 3;
         public int PopLengthOption { get; set; } = 3;
         public string PopLanguage { get; set; } = "";
+        public bool PopLowercaseOnly {get;set;} = true;
         public bool EnableDiscordRPC {get;set;} = true;
         public bool ShowUsernameDRPC {get;set;} = true;
         public bool ShowTargetNameDRPC {get;set;} = true;

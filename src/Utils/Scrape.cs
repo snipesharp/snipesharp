@@ -54,7 +54,7 @@ namespace Utils
             var deserialized = JsonSerializer.Deserialize<GetDroppingAPI>(await response.Content.ReadAsStringAsync());
             Cli.Output.Inform($"{SetText.Bold}{SetText.Blue}{deserialized.name}{SetText.ResetAll} has {SetText.Blue}{deserialized.searches}{SetText.ResetAll} NameMC searches");
 
-            return deserialized.name;
+            return DataTypes.Config.v.PopLowercaseOnly ? deserialized.name.ToLower() : deserialized.name;
         }
     }
     public class GetDroppingAPI {
