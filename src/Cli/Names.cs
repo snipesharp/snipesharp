@@ -13,10 +13,12 @@ namespace Cli.Names
             if(Core.arguments.ContainsKey("--offset")) {
                 if (new string[] {"auto", "suggested"}.Contains(Core.arguments["--offset"].data!)) {
                     Cli.Output.Inform($"Offset set to {suggestedOffset}");
+                    Config.v.offset = suggestedOffset;
                     return suggestedOffset; 
                 }
                 if (int.TryParse(Core.arguments["--offset"].data!, out int offsetArg)) {
                     Cli.Output.Inform($"Offset set to {offsetArg}");
+                    Config.v.offset = offsetArg;
                     return offsetArg;
                 }
                 Cli.Output.Error($"{Core.arguments["--offset"].data!} is not a valid offset value");

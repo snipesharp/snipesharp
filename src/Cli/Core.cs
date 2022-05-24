@@ -80,7 +80,7 @@ namespace Cli
             }
 
             // set in use
-            Config.v.emailInUse = Account.v.MojangEmail;
+            Account.v.emailInUse = Account.v.MojangEmail;
 
             Account.v.Bearer = bearer;
             Output.Success(attempt == 3 ? TAuth.AuthInforms.SuccessAuthMojang + ", third time's a charm" : TAuth.AuthInforms.SuccessAuthMojang);
@@ -110,7 +110,7 @@ namespace Cli
             }
 
             // set in use
-            Config.v.emailInUse = Account.v.MicrosoftEmail;
+            Account.v.emailInUse = Account.v.MicrosoftEmail;
 
             Account.v.Bearer = authResult.bearer;
             Account.v.prename = authResult.prename;
@@ -123,7 +123,7 @@ namespace Cli
 
             // set in use
             var shortBearer = (DataTypes.Account.v.Bearer.Length <= 6 ? DataTypes.Account.v.Bearer : ".." + DataTypes.Account.v.Bearer.Substring(DataTypes.Account.v.Bearer.Length - 6));
-            Config.v.emailInUse = shortBearer;
+            Account.v.emailInUse = shortBearer;
             
             // check for --dont-verify
             if(arguments.ContainsKey("--dont-verify")) {

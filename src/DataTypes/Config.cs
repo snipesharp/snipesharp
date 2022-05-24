@@ -17,7 +17,6 @@
         public string discordApplicationId = "963075152877326366";
         public string snipesharpServerWebhook = "http://webhooks.snipesharp.xyz:5150";
         public long offset = 0;
-        public string emailInUse = "None";
 
         public int PopSearches { get; set; } = 100;
         public int PopLength { get; set; } = 3;

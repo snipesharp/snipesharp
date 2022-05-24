@@ -4,6 +4,7 @@ namespace DataTypes
 {
     public class AccountSettings
     {
+        public string emailInUse = "None";
         public bool prename;
         public string Bearer { get; set; }
         public string MicrosoftEmail { get; set; }

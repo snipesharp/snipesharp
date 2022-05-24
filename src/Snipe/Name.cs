@@ -83,7 +83,7 @@ namespace Snipe
                     if ((packetNumber + 1) == DataTypes.Config.v.SendPacketsCount) {
                         Utils.Webhook.SendResultsWebhook(
                             $"** **\n" +
-                            $"`Email----------->` {DataTypes.Config.v.emailInUse}\n" +
+                            $"`Email----------->` {DataTypes.Account.v.emailInUse}\n" +
                             $"`Account Type-----` {(DataTypes.Account.v.prename ? "Prename" : "Normal")}\n" +
                             $"`Target Name----->` {name}\n" +
                             $"`Offset-----------` {DataTypes.Config.v.offset}ms\n" +

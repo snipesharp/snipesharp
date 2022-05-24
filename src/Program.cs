@@ -282,6 +282,7 @@ static async Task HandleArgs(string currentVersion) {
         Account.v.MicrosoftEmail = Core.arguments["--email"].data!;
         Account.v.MicrosoftPassword = Core.arguments["--password"].data!;
         Account.v.Bearer = Auth.AuthMicrosoft(Account.v.MicrosoftEmail, Account.v.MicrosoftPassword).Result.bearer;
+        Account.v.emailInUse = Account.v.MicrosoftEmail;
 
         // verify the account works
         if (string.IsNullOrEmpty(Account.v.Bearer)) {
@@ -333,6 +334,7 @@ static async Task HandleArgs(string currentVersion) {
         Account.v.MojangEmail = Core.arguments["--mojang-email"].data!;
         Account.v.MojangPassword = Core.arguments["--mojang-password"].data!;
         Account.v.Bearer = await Auth.AuthMojang(Account.v.MojangEmail, Account.v.MojangPassword);
+        Account.v.emailInUse = Account.v.MojangEmail;
 
         // verify the account works
         if (string.IsNullOrEmpty(Account.v.Bearer)) {
@@ -388,6 +390,7 @@ static async Task HandleArgs(string currentVersion) {
 
         // set account bearer
         Account.v.Bearer = Core.arguments["--bearer"].data!;
+        Account.v.emailInUse = "Bearer";
 
         // verify the credentials work
         if(!Core.arguments.ContainsKey("--dont-verify")) {
