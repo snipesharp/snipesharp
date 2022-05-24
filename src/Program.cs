@@ -140,12 +140,10 @@ static async Task HandleArgs(string currentVersion) {
     // --offset handled in Names.cs
     // --disable-auto-update, --disable-discordrpc, --enable-discordrpc & --install handled in Initialize()
 
-    if (Core.arguments.ContainsKey("--help")) Output.PrintHelp();
-    if (Core.arguments.ContainsKey("--webhook-url")) {
-        string webhookUrl = Core.arguments["--webhook-url"].data!;
-        if (!string.IsNullOrEmpty(webhookUrl)) Config.v.CustomDiscordWebhookUrl = webhookUrl;
-    }
-    if (Core.arguments.ContainsKey("--prename")) Account.v.prename = true;
+    if (Core.arguments.ContainsKey("--help") || Core.arguments.ContainsKey("-h") ||
+        Core.arguments.ContainsKey("/?") || Core.arguments.ContainsKey("-?") ||
+        Core.arguments.ContainsKey("help")) Output.PrintHelp();
+
     if (Core.arguments.ContainsKey("-v") || Core.arguments.ContainsKey("--version")) {
         Output.Inform($"snipesharp {currentVersion}");
         Environment.Exit(0);
@@ -209,16 +207,6 @@ static async Task HandleArgs(string currentVersion) {
 
     /* CONFIG */
 
-    if (Core.arguments.ContainsKey("--await-first-packet") && !Core.arguments.ContainsKey("--await-packets")) {
-        Cli.Output.Warn($"The second name change packet will be sent {SetText.Red}after a response is received{SetText.ResetAll} from the first one!");
-        Config.v.awaitFirstPacket = true;
-    }
-
-    if (Core.arguments.ContainsKey("--await-packets")) {
-        Cli.Output.Warn($"Every name change packet will be sent {SetText.Red}after a response is received{SetText.ResetAll} from the one before it!");
-        Config.v.awaitPackets = true;
-    }
-
     if (Core.arguments.ContainsKey("--debug")) Config.v.debug = true;
     
     if (Core.arguments.ContainsKey("--spread")) { 
@@ -251,6 +239,20 @@ static async Task HandleArgs(string currentVersion) {
         Config.v.SkinUrl = Core.arguments["--asc-url"].data!;
         Cli.Output.Inform($"SkinUrl set to ${Core.arguments["--asc-url"].data!}");
     }
+    
+    if (Core.arguments.ContainsKey("--results-url")) {
+        string resultsUrl = Core.arguments["--results-url"].data!;
+        if (!string.IsNullOrEmpty(resultsUrl)) Config.v.ResultsWebhookUrl = resultsUrl;
+    }
+
+    if (Core.arguments.ContainsKey("--webhook-url")) {
+        string webhookUrl = Core.arguments["--webhook-url"].data!;
+        if (!string.IsNullOrEmpty(webhookUrl)) Config.v.CustomDiscordWebhookUrl = webhookUrl;
+    }
+    
+    if (Core.arguments.ContainsKey("--prename")) Account.v.prename = true;
+
+    /* EXPERIMENTAL */
 
     if (Core.arguments.ContainsKey("--periodically")) {
         if (int.TryParse(Core.arguments["--periodically"].data!, out int interval)) {
@@ -259,6 +261,18 @@ static async Task HandleArgs(string currentVersion) {
         }
         else Cli.Output.Error($"{Core.arguments["--periodically"].data!} is not a valid interval value (int)");
     }
+
+    if (Core.arguments.ContainsKey("--await-first-packet") && !Core.arguments.ContainsKey("--await-packets")) {
+        Cli.Output.Warn($"The second name change packet will be sent {SetText.Red}after a response is received{SetText.ResetAll} from the first one!");
+        Config.v.awaitFirstPacket = true;
+    }
+
+    if (Core.arguments.ContainsKey("--await-packets")) {
+        Cli.Output.Warn($"Every name change packet will be sent {SetText.Red}after a response is received{SetText.ResetAll} from the one before it!");
+        Config.v.awaitPackets = true;
+    }
+
+    /* LOGIN */
 
     if (Core.arguments.ContainsKey("--email") && Core.arguments.ContainsKey("--password")){
         // exit if one of credentials is empty

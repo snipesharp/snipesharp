@@ -88,9 +88,11 @@ namespace Cli {
                 "\n\n" + $"{SetText.Blue}{SetText.Bold} CONFIG {SetText.ResetAll}".Centered(true, '-') + "\n\n" +
                 "--" + SetText.Blue + "disable-discordrpc".MakeGapRight(23) + SetText.ResetAll + $"Disables Discord Rich Presence\n" +
                 "--" + SetText.Blue + "enable-discordrpc".MakeGapRight(23) + SetText.ResetAll + $"Enables Discord Rich Presence\n" +
-                "--" + SetText.Blue + "asc".MakeGapRight(23) + SetText.ResetAll + $"Enables Auto Skin Change\n" + '\n' +
+                "--" + SetText.Blue + "debug".MakeGapRight(23) + SetText.ResetAll + $"Prints & logs additional info\n" +
+                "--" + SetText.Blue + "asc".MakeGapRight(23) + SetText.ResetAll + $"Enables Auto Skin Change\n" +
                 "--" + SetText.Blue + "asc-url".MakeGapRight(23) + SetText.ResetAll + $"Sets the Skin URL for Auto Skin Change ({SetText.Blue}STRING{SetText.ResetAll})\n" +
                 "--" + SetText.Blue + "webhook-url".MakeGapRight(23) + SetText.ResetAll + $"Sets the Custom webhook URL ({SetText.Blue}STRING{SetText.ResetAll})\n" +
+                "--" + SetText.Blue + "results-url".MakeGapRight(23) + SetText.ResetAll + $"Sets the Results webhook URL ({SetText.Magenta}STRING{SetText.ResetAll})\n" +
                 "--" + SetText.Blue + "spread".MakeGapRight(23) + SetText.ResetAll + $"Sets the PacketSpreadMs config value ({SetText.Blue}INTEGER{SetText.ResetAll})\n" +
                 "--" + SetText.Blue + "packet-count".MakeGapRight(23) + SetText.ResetAll + $"Sets the SendPacketsCount config value ({SetText.Blue}INTEGER{SetText.ResetAll})\n" +
                 "--" + SetText.Blue + "offset".MakeGapRight(23) + SetText.ResetAll + $"Sets the offset in milliseconds. Use value 'auto' or 'suggested' to use the suggested value ({SetText.Blue}INTEGER{SetText.ResetAll})\n" +
@@ -101,6 +103,7 @@ namespace Cli {
                 "--" + SetText.Blue + "pop-length".MakeGapRight(23) + SetText.ResetAll + $"Sets the min/max/eq length value according to PopLengthOption ({SetText.Blue}INTEGER (RANGE: 3-16){SetText.ResetAll})\n" +
                 "--" + SetText.Blue + "pop-lengthoption".MakeGapRight(23) + SetText.ResetAll + $"0 = none, 1 = Less or equal to PopLength, 2 = Equal to PopLength, 3 = Greater or equal to PopLength ({SetText.Blue}INTEGER (RANGE: 0-3){SetText.ResetAll})\n" +
                 "--" + SetText.Blue + "pop-language".MakeGapRight(23) + SetText.ResetAll + $"Sets the language the name has to be in ({SetText.Blue}STRING{SetText.ResetAll})\n" +
+                "--" + SetText.Blue + "pop-lowercase".MakeGapRight(23) + SetText.ResetAll + $"Sets all popular names to lowercase\n" +
 
                 "\n\n" + $"{SetText.Blue}{SetText.Bold} AUTHENTICATING / LOGIN {SetText.ResetAll}".Centered(true, '-') + "\n\n" +
                 "--" + SetText.Blue + "bearer".MakeGapRight(23) + SetText.ResetAll + $"Sets the Bearer Token account value ({SetText.Blue}STRING{SetText.ResetAll})\n" +
