@@ -18,7 +18,9 @@ namespace Utils
         public static async Task SendResultsWebhook(string content) {
             string json = JsonSerializer.Serialize(new {
                     avatar_url = "https://snipesharp.xyz/img/logo.png",
-                    username = "snipesharp snipe results",
+                    username = string.IsNullOrEmpty(DataTypes.Config.v.DiscordWebhookUsername) 
+                        ? "snipesharp - snipe results" 
+                        : DataTypes.Config.v.DiscordWebhookUsername + "'s snipe results",
                     content = content
                 }
             );
