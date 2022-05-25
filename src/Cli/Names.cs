@@ -29,11 +29,11 @@ namespace Cli.Names
             return offset;
         }
 
-        public static async Task handleSingleName(AuthResult authResult, string name="", bool exitOnError=true){
+        public static async Task handleSingleName(AuthResult authResult, string name="", bool exitOnError=true, long? delay=null){
             if (string.IsNullOrEmpty(name)) name = Input.Request<string>("Name to snipe: ");
-            long delay = await GetDelay();
+            if (delay == null) delay = await GetDelay();
             FS.FileSystem.Log($"Offset set to {delay}ms");
-            var dropTime = Math.Max(0, await Droptime.GetMilliseconds(name, exitOnError) - delay);
+            var dropTime = Math.Max(0, await Droptime.GetMilliseconds(name, exitOnError) - (long)delay);
             
             // print droptime and subtract 5ms because for SOME reason it shows a second late but it doesnt in WaitForName
             Cli.Output.Inform($"{DataTypes.SetText.SetText.Blue}{name}{DataTypes.SetText.SetText.ResetAll} drops @ {DataTypes.SetText.SetText.Blue}{DateTime.Now.AddMilliseconds(dropTime - 5).ToString()}{DataTypes.SetText.SetText.ResetAll}");
@@ -71,7 +71,9 @@ namespace Cli.Names
         }
 
         public static async Task handlePopularNames(AuthResult authResult){
-            while (true) await handleSingleName(authResult, await Scrape.getPopularName(), false);
+            long delay = await GetDelay();
+            FS.FileSystem.Log($"Offset set to {delay}ms");
+            while (true) await handleSingleName(authResult, await Scrape.getPopularName(), false, delay);
         }
     }
 }
