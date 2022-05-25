@@ -31,8 +31,10 @@ namespace Cli.Names
 
         public static async Task handleSingleName(AuthResult authResult, string name="", bool exitOnError=true, long? delay=null){
             if (string.IsNullOrEmpty(name)) name = Input.Request<string>("Name to snipe: ");
-            if (delay == null) delay = await GetDelay();
-            FS.FileSystem.Log($"Offset set to {delay}ms");
+            if (delay == null) {
+                delay = await GetDelay();
+                FS.FileSystem.Log($"Offset set to {delay}ms");
+            }
             var dropTime = Math.Max(0, await Droptime.GetMilliseconds(name, exitOnError) - (long)delay);
             
             // print droptime and subtract 5ms because for SOME reason it shows a second late but it doesnt in WaitForName
