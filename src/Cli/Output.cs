@@ -97,7 +97,7 @@ namespace Cli {
                 "--" + SetText.Blue + "spread".MakeGapRight(23) + SetText.ResetAll + $"Sets the PacketSpreadMs config value ({SetText.Blue}INTEGER{SetText.ResetAll})\n" +
                 "--" + SetText.Blue + "packet-count".MakeGapRight(23) + SetText.ResetAll + $"Sets the SendPacketsCount config value ({SetText.Blue}INTEGER{SetText.ResetAll})\n" +
                 "--" + SetText.Blue + "offset".MakeGapRight(23) + SetText.ResetAll + $"Sets the offset in milliseconds. Use value 'auto' or 'suggested' to use the suggested value ({SetText.Blue}INTEGER{SetText.ResetAll})\n" +
-                "--" + SetText.Blue + "username".MakeGapRight(23) + SetText.ResetAll + $"Sets your display name in Discord Rich Presence, if it's enabled ({SetText.Blue}STRING{SetText.ResetAll})\n" +
+                "--" + SetText.Blue + "username".MakeGapRight(23) + SetText.ResetAll + $"Sets your display name in Discord webhooks, if they're enabled ({SetText.Blue}STRING{SetText.ResetAll})\n" +
                 
                 "\n\n" + $"{SetText.Blue}{SetText.Bold} GETDROPPING API {SetText.ResetAll}".Centered(true, '-') + "\n\n" +
                 "--" + SetText.Blue + "pop-minsearches".MakeGapRight(23) + SetText.ResetAll + $"Sets the minimum NameMC search count the name has to have ({SetText.Blue}INTEGER (RANGE: 0-10000){SetText.ResetAll})\n" +
@@ -120,10 +120,10 @@ namespace Cli {
                 
                 "\n\n" + $"{SetText.Blue}{SetText.Bold} EXPERIMENTAL {SetText.ResetAll}".Centered(true, '-') + "\n\n" +
                 "--" + SetText.Blue + "periodically".MakeGapRight(23) + SetText.ResetAll + $"Snipes a name periodically, as often as defined in this argument ({SetText.Blue}INTEGER{SetText.ResetAll})\n" +
-                "--" + SetText.Red     + "test-rl".MakeGapRight(23) + SetText.ResetAll + $"Instantly sends name change packets for the name 'abc' to test rate limiting. Works well combined with --packet-count\n" +
-                "--" + SetText.Red     + "await-first-packet".MakeGapRight(23) + SetText.ResetAll + $"Sends the second name change packet after a response is received from the first one\n" +
-                "--" + SetText.Red     + "await-packets".MakeGapRight(23) + SetText.ResetAll + $"Sends every name change packet after a response is received from the one prior to it\n" +
-                "--" + SetText.Red     + "dont-verify".MakeGapRight(23) + SetText.ResetAll + $"Doesn't verify your Bearer Token works\n"
+                "--" + SetText.Red  + "test-rl".MakeGapRight(23) + SetText.ResetAll + $"Instantly sends name change packets for the name 'abc' to test rate limiting. Works well combined with --packet-count\n" +
+                "--" + SetText.Red  + "await-first-packet".MakeGapRight(23) + SetText.ResetAll + $"Sends the second name change packet after a response is received from the first one\n" +
+                "--" + SetText.Red  + "await-packets".MakeGapRight(23) + SetText.ResetAll + $"Sends every name change packet after a response is received from the one prior to it\n" +
+                "--" + SetText.Red  + "dont-verify".MakeGapRight(23) + SetText.ResetAll + $"Doesn't verify your Bearer Token works\n"
             );
             Environment.Exit(0);
         }
