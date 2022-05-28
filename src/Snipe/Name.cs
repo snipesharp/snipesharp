@@ -59,8 +59,8 @@ namespace Snipe
 
                 // inform the user for the response
                 var responseString = response.IsSuccessStatusCode
-                    ? $"({SetText.Green}{(int)response.StatusCode}{SetText.ResetAll}) {SetText.Green}{GetResponseMessage((int)response.StatusCode)}{SetText.ResetAll}"
-                    : $"({SetText.Red}{(int)response.StatusCode}{SetText.ResetAll}) {GetResponseMessage((int)response.StatusCode)}";
+                    ? $"({SetText.Green}{response}{SetText.ResetAll}) {SetText.Green}{GetResponseMessage(response)}{SetText.ResetAll}"
+                    : $"({SetText.Red}{response}{SetText.ResetAll}) {GetResponseMessage(response)}";
                 var shortBearer = (DataTypes.Account.v.Bearer.Length <= 6 ? DataTypes.Account.v.Bearer : ".." + DataTypes.Account.v.Bearer.Substring(DataTypes.Account.v.Bearer.Length - 6));
                 if (response.IsSuccessStatusCode) {
                     success = true;
@@ -78,7 +78,7 @@ namespace Snipe
                 if (!string.IsNullOrEmpty(DataTypes.Config.v.ResultsWebhookUrl) &&
                 ((DataTypes.Config.v.ResultsWebhookSuccessOnly && success) || !DataTypes.Config.v.ResultsWebhookSuccessOnly)) {
                     // append to results string
-                    Utils.Snipesharp.packetResults += $"{(response.IsSuccessStatusCode ? "+" : "-")} {(int)response.StatusCode} | {GetResponseMessage((int)response.StatusCode)} | Packet {packetNumber+1} | {timeSent} -> {timeRecieved}\n";
+                    Utils.Snipesharp.packetResults += $"{(response.IsSuccessStatusCode ? "+" : "-")} {response} | {GetResponseMessage(response)} | Packet {packetNumber+1} | {timeSent} -> {timeRecieved}\n";
 
                     // check if all packets have been appended to the results string
                     bool allPacketsRecorded = true;
@@ -108,11 +108,16 @@ namespace Snipe
                 return;
             }
         }
-        protected static string GetResponseMessage(int code)
-        {
-            switch (code)
+        protected static async Task<string> GetResponseMessage(HttpResponseMessage response) {
+            string responseContent = await response.Content.ReadAsStringAsync();
+            switch ((int)response.StatusCode)
             {
-                case 400: return "Invalid name";
+                case 400: return (DataTypes.Account.v.prename ? (
+                    responseContent.Contains("NOT_ENTITLED") ? "You don't own Minecraft" :
+                    responseContent.Contains("DUPLICATE") ? "Name taken or not yet available" :
+                    responseContent.Contains("NOT_ALLOWED") ? "Username not allowed" :
+                    responseContent.Contains("CONSTRAINT_VIOLATION") ? "Invalid name" : "Unknown"
+                ) : "Invalid name");
                 case 401: return "Bearer expired or incorrect";
                 case 403: return "Name taken or not yet available";
                 case 404: return "Not found";
