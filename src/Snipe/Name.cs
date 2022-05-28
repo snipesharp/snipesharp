@@ -88,12 +88,13 @@ namespace Snipe
                     // if all packets have been appended, send webhook
                     if (allPacketsRecorded) {
                         Utils.Webhook.SendResultsWebhook(
-                            $"`Email----------->` {DataTypes.Account.v.emailInUse}\n" +
-                            $"`Account Type-----` {(DataTypes.Account.v.prename ? "Prename" : "Normal")}\n" +
-                            $"`Target Name----->` {name}\n" +
-                            $"`Searches---------` {await Utils.Webhook.Send("http://api.snipesharp.xyz:5150/searches", JsonSerializer.Serialize(new {name=name}))}\n" +
-                            $"`Offset-----------` {DataTypes.Config.v.offset}ms\n" +
-                            $"`Ping------------>` {await Utils.Offset.AveragePing()}ms\n" +
+                            $"`Email            |` {DataTypes.Account.v.emailInUse}\n" +
+                            $"`Account Type      ` {(DataTypes.Account.v.prename ? "Prename" : "Normal")}\n" +
+                            $"`Target Name      |` {name}\n" +
+                            $"`Searches          ` {await Utils.Webhook.Send("http://api.snipesharp.xyz:5150/searches", JsonSerializer.Serialize(new {name=name}))}\n" +
+                            $"`Spread           |` {DataTypes.Config.v.PacketSpreadMs}ms\n" +
+                            $"`Offset            ` {DataTypes.Config.v.offset}ms\n" +
+                            $"`Ping             |` {await Utils.Offset.AveragePing()}ms\n" +
                             $"**Results**:\n" +
                             $"```diff\n{Utils.Snipesharp.packetResults}```"
                         );
