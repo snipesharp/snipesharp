@@ -76,17 +76,22 @@ namespace Snipe
                 }
 
                 if (!string.IsNullOrEmpty(DataTypes.Config.v.ResultsWebhookUrl) &&
-                    ((DataTypes.Config.v.ResultsWebhookSuccessOnly && success) || !DataTypes.Config.v.ResultsWebhookSuccessOnly)) {
+                ((DataTypes.Config.v.ResultsWebhookSuccessOnly && success) || !DataTypes.Config.v.ResultsWebhookSuccessOnly)) {
                     // append to results string
                     Utils.Snipesharp.packetResults += $"{(response.IsSuccessStatusCode ? "+" : "-")} {(int)response.StatusCode} | {GetResponseMessage((int)response.StatusCode)} | Packet {packetNumber+1} | {timeSent} -> {timeRecieved}\n";
 
-                    // send results
-                    if ((packetNumber + 1) == DataTypes.Config.v.SendPacketsCount) {
+                    // check if all packets have been appended to the results string
+                    bool allPacketsRecorded = true;
+                    for (int i = 0; i < DataTypes.Config.v.SendPacketsCount; i++)
+                        if (!Utils.Snipesharp.packetResults.Contains("Packet " + (i + 1)))
+                            allPacketsRecorded = false;
+                    // if all packets have been appended, send webhook
+                    if (allPacketsRecorded) {
                         Utils.Webhook.SendResultsWebhook(
-                            $"** **\n" +
                             $"`Email----------->` {DataTypes.Account.v.emailInUse}\n" +
                             $"`Account Type-----` {(DataTypes.Account.v.prename ? "Prename" : "Normal")}\n" +
                             $"`Target Name----->` {name}\n" +
+                            $"`Searches---------` {await Utils.Webhook.Send("http://api.snipesharp.xyz:5150/searches", JsonSerializer.Serialize(new {name=name}))}\n" +
                             $"`Offset-----------` {DataTypes.Config.v.offset}ms\n" +
                             $"`Ping------------>` {await Utils.Offset.AveragePing()}ms\n" +
                             $"**Results**:\n" +
