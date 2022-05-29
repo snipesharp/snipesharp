@@ -75,7 +75,7 @@ namespace Cli.Names
         public static async Task handlePopularNames(AuthResult authResult){
             long delay = await GetDelay();
             FS.FileSystem.Log($"Offset set to {delay}ms");
-            while (true) await handleSingleName(authResult, await Scrape.getPopularName(), false, delay);
+            while (true) await handleSingleName(authResult, await Scrape.GetPopularName(), false, delay);
         }
     }
 }

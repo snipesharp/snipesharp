@@ -32,7 +32,7 @@ namespace Utils
             return response.Content.ReadAsStringAsync().Result;
         }
 
-        public static async Task<string> getPopularName() {
+        public static async Task<string> GetPopularName() {
             // json
             var json = JsonSerializer.Serialize(new {
                 minSearches = DataTypes.Config.v.PopSearches,
