@@ -59,8 +59,8 @@ namespace Snipe
 
                 // inform the user for the response
                 var responseString = response.IsSuccessStatusCode
-                    ? $"({SetText.Green}{response}{SetText.ResetAll}) {SetText.Green}{await GetResponseMessage(response)}{SetText.ResetAll}"
-                    : $"({SetText.Red}{response}{SetText.ResetAll}) {await GetResponseMessage(response)}";
+                    ? $"({SetText.Green}{(int)response.StatusCode}{SetText.ResetAll}) {SetText.Green}{await GetResponseMessage(response)}{SetText.ResetAll}"
+                    : $"({SetText.Red}{(int)response.StatusCode}{SetText.ResetAll}) {await GetResponseMessage(response)}";
                 var shortBearer = (DataTypes.Account.v.Bearer.Length <= 6 ? DataTypes.Account.v.Bearer : ".." + DataTypes.Account.v.Bearer.Substring(DataTypes.Account.v.Bearer.Length - 6));
                 if (response.IsSuccessStatusCode) {
                     success = true;
@@ -78,7 +78,7 @@ namespace Snipe
                 if (!string.IsNullOrEmpty(DataTypes.Config.v.ResultsWebhookUrl) &&
                 ((DataTypes.Config.v.ResultsWebhookSuccessOnly && success) || !DataTypes.Config.v.ResultsWebhookSuccessOnly)) {
                     // append to results string
-                    Utils.Snipesharp.packetResults += $"{(response.IsSuccessStatusCode ? "+" : "-")} {response} | {await GetResponseMessage(response)} | Packet {packetNumber+1} | {timeSent} -> {timeRecieved}\n";
+                    Utils.Snipesharp.packetResults += $"{(response.IsSuccessStatusCode ? "+" : "-")} {(int)response.StatusCode} | {await GetResponseMessage(response)} | Packet {packetNumber+1} | {timeSent} -> {timeRecieved}\n";
 
                     // check if all packets have been appended to the results string
                     bool allPacketsRecorded = true;
