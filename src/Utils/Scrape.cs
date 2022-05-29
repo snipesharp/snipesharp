@@ -44,17 +44,22 @@ namespace Utils
             // string content
             StringContent jsonContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
-            // request
+            // request until success
             HttpClient client = new HttpClient();
-            var response = await client.PostAsync("http://api.snipesharp.xyz:5150/getdropping", jsonContent);
+            while (true) {
+                var response = await client.PostAsync("http://api.snipesharp.xyz:5150/getdropping", jsonContent);
 
-            // handle failed request
-            if (!response.IsSuccessStatusCode) Cli.Output.ExitError("Failed to fetch popular name" + ((((int)response.StatusCode) == 429) ? ", try again in ~5 minutes" : ""));
+                // return if successful
+                if (response.IsSuccessStatusCode) {
+                    var deserialized = JsonSerializer.Deserialize<GetDroppingAPI>(await response.Content.ReadAsStringAsync());
+                    Cli.Output.Inform($"{SetText.Bold}{SetText.Blue}{deserialized.name}{SetText.ResetAll} has {SetText.Blue}{deserialized.searches}{SetText.ResetAll} NameMC searches");
 
-            var deserialized = JsonSerializer.Deserialize<GetDroppingAPI>(await response.Content.ReadAsStringAsync());
-            Cli.Output.Inform($"{SetText.Bold}{SetText.Blue}{deserialized.name}{SetText.ResetAll} has {SetText.Blue}{deserialized.searches}{SetText.ResetAll} NameMC searches");
-
-            return DataTypes.Config.v.PopLowercaseOnly ? deserialized.name.ToLower() : deserialized.name;
+                    return DataTypes.Config.v.PopLowercaseOnly ? deserialized.name.ToLower() : deserialized.name;
+                }
+                
+                Cli.Output.Error("Failed to fetch popular name" + ((((int)response.StatusCode) == 429) ? " due to rate limiting" : "") + ", trying again in ~3 minutes");
+                Thread.Sleep(((1000 * 60) * 3) + new Random().Next(2000, 10000)); // add randomness so that in case of multiple instances, not all instances send requests at the same time
+            }
         }
     }
     public class GetDroppingAPI {
