@@ -101,7 +101,7 @@ static async Task Initialize(string currentVersion) {
     FS.FileSystem.Log("Using config: " + System.Text.Json.JsonSerializer.Serialize(Config.v, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
 
     // install snipesharp
-    if (Core.arguments.ContainsKey("--install")) Snipesharp.Install();
+    if (Core.arguments.ContainsKey("--install")) FileSystem.Install();
 
     // execute auto update
     if (!Core.arguments.ContainsKey("--disable-auto-update")) FS.FileSystem.Log(await Utils.AutoUpdate.Update(currentVersion));
