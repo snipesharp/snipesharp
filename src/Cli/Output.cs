@@ -149,7 +149,7 @@ namespace Cli {
         }
 
         public static void ExitError(string message){
-            Error(message);
+            Error($"PID {Environment.ProcessId} {message}");
             Utils.DiscordRPC.Deinitialize();
             new Animatables.RainbowText(TFunnyErrors.GetRandom());
             Console.ReadKey();
