@@ -75,7 +75,8 @@ namespace Snipe
 
             FS.FileSystem.Log("Refreshing bearer");
             var result = await Auth.AuthMicrosoft(Account.v.MicrosoftEmail, Account.v.MicrosoftPassword);
-            Account.v.Bearer = result.bearer;
+            if (!string.IsNullOrEmpty(result.bearer)) Account.v.Bearer = result.bearer;
+            else Cli.Output.Error("Failed to reauthenticate, using old auth token");
             FS.FileSystem.UpdateAccount();
 
             SetText.DisplayCursor(false);
@@ -86,11 +87,10 @@ namespace Snipe
 
             FS.FileSystem.Log("Refreshing bearer");
             var bearer = await Auth.AuthMojang(Account.v.MojangEmail, Account.v.MojangPassword);
-            if (bearer != null) {
-                Account.v.Bearer = bearer;
-                FS.FileSystem.UpdateAccount();
-            }
+            if (!string.IsNullOrEmpty(bearer)) Account.v.Bearer = bearer;
+            else Cli.Output.Error("Failed to reauthenticate, using old auth token");
 
+            FS.FileSystem.UpdateAccount();
             SetText.DisplayCursor(false);
         }
     }
