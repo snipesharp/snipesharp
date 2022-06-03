@@ -120,6 +120,7 @@ namespace Cli {
                 "--" + SetText.Blue + "skip-gc-redeem".MakeGapRight(23) + SetText.ResetAll + $"Skips the giftcard redeeming process\n" +
                 
                 "\n\n" + $"{SetText.Blue}{SetText.Bold} EXPERIMENTAL {SetText.ResetAll}".Centered(true, '-') + "\n\n" +
+                "--" + SetText.Blue + "no-clear".MakeGapRight(23) + SetText.ResetAll + $"Doesn't clear the console on startup\n" + 
                 "--" + SetText.Blue + "periodically".MakeGapRight(23) + SetText.ResetAll + $"Snipes a name periodically, as often as defined in this argument ({SetText.Blue}INTEGER{SetText.ResetAll})\n" +
                 "--" + SetText.Red  + "test-rl".MakeGapRight(23) + SetText.ResetAll + $"Instantly sends name change packets for the name 'abc' to test rate limiting. Works well combined with --packet-count\n" +
                 "--" + SetText.Red  + "await-first-packet".MakeGapRight(23) + SetText.ResetAll + $"Sends the second name change packet after a response is received from the first one\n" +
