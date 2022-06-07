@@ -71,7 +71,7 @@ namespace Snipe
 
         public static async Task ReauthenticateMs(long waitTime) {
             // sleep until 5 mins before
-            await Task.Delay((int)waitTime - 299990);
+            await Task.Delay((int)waitTime - (Config.v.RefreshOffset - 10));
 
             FS.FileSystem.Log("Refreshing bearer");
             var result = await Auth.AuthMicrosoft(Account.v.MicrosoftEmail, Account.v.MicrosoftPassword);
@@ -83,7 +83,7 @@ namespace Snipe
         }
         public static async Task ReauthenticateMojang(long waitTime) {
             // sleep until 5 mins before
-            await Task.Delay((int)waitTime - 299990);
+            await Task.Delay((int)waitTime - (Config.v.RefreshOffset - 10));
 
             FS.FileSystem.Log("Refreshing bearer");
             var bearer = await Auth.AuthMojang(Account.v.MojangEmail, Account.v.MojangPassword);

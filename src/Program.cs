@@ -207,6 +207,14 @@ static async Task HandleArgs(string currentVersion) {
 
     /* CONFIG */
 
+    if (Core.arguments.ContainsKey("--refresh-offset")) {
+        if (int.TryParse(Core.arguments["--reauth-offset"].data!, out int reauthOffset)) {
+            Config.v.RefreshOffset = (reauthOffset * 1000) * 60;
+            Cli.Output.Inform($"RefreshOffset set to {reauthOffset}");
+        }
+        else Cli.Output.Error($"{Core.arguments["--spread"].data!} is not a valid PacketSpreadMs value");
+    }
+
     if (Core.arguments.ContainsKey("--debug")) Config.v.debug = true;
 
     if (Core.arguments.ContainsKey("--results-success-only")) {

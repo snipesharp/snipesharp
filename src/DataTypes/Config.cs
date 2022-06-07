@@ -32,6 +32,7 @@
         public string CustomDiscordWebhookUrl { get; set; } = "";
         public string DiscordWebhookUsername { get; set; } = Environment.UserName;
         public bool EnableBearerRefreshing {get;set;} = true;
+        public int RefreshOffset { get; set; } = 300000;
         public int SendPacketsCount { get; set; } = 3;
         public int PacketSpreadMs { get; set; } = 420;
         public bool AutoSkinChange { get; set; } = false;

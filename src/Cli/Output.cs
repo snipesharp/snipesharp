@@ -97,6 +97,7 @@ namespace Cli {
                 "--" + SetText.Blue + "spread".MakeGapRight(23) + SetText.ResetAll + $"Sets the PacketSpreadMs config value ({SetText.Blue}INTEGER{SetText.ResetAll})\n" +
                 "--" + SetText.Blue + "packet-count".MakeGapRight(23) + SetText.ResetAll + $"Sets the SendPacketsCount config value ({SetText.Blue}INTEGER{SetText.ResetAll})\n" +
                 "--" + SetText.Blue + "offset".MakeGapRight(23) + SetText.ResetAll + $"Sets the offset in milliseconds. Use value 'auto' or 'suggested' to use the suggested value ({SetText.Blue}INTEGER{SetText.ResetAll})\n" +
+                "--" + SetText.Blue + "refresh-offset".MakeGapRight(23) + SetText.ResetAll + $"Sets the Bearer Refresh offset in minutes. 5 minutes by default ({SetText.Blue}INTEGER{SetText.ResetAll})\n" +
                 "--" + SetText.Blue + "username".MakeGapRight(23) + SetText.ResetAll + $"Sets your display name in Discord webhooks, if they're enabled ({SetText.Blue}STRING{SetText.ResetAll})\n" +
                 "--" + SetText.Blue + "name".MakeGapRight(23) + SetText.ResetAll + $"Sets the name to snipe ({SetText.Blue}STRING / 3 / p / l{SetText.ResetAll})\n" +
                 
