@@ -20,8 +20,8 @@ namespace Snipe
 
         public static async Task ShootPeriodically(string name) {
             while (true) {
-                if (Cli.Core.arguments.ContainsKey("--email")) await Snipe.Sniper.ReauthenticateMs(300000);
-                else await Snipe.Sniper.ReauthenticateMojang(300000);
+                if (Cli.Core.arguments.ContainsKey("--email")) await Snipe.Sniper.ReauthenticateMs(Config.v.RefreshOffset);
+                else await Snipe.Sniper.ReauthenticateMojang(Config.v.RefreshOffset);
                 await Snipe.Sniper.Shoot(name);
                 Cli.Output.Inform($"Sniping {SetText.Blue}{SetText.Bold}{name}{SetText.ResetAll} again in {SetText.Blue}{SetText.Bold}{Config.v.interval!/60000}{SetText.ResetAll} minutes");
                 Thread.Sleep((int)Config.v.interval);
@@ -36,8 +36,8 @@ namespace Snipe
             var countDown = new CountDown(droptime, $"Sniping {SetText.DarkBlue + SetText.Bold}{name}{SetText.ResetAll} in " + "{TIME}");
 
             // wait for the time minus 5 minutes then reauthenticate // async but not awaited
-            if (Config.v.EnableBearerRefreshing && loginMethod == TAuth.AuthOptions.Microsoft && droptime > 300000) ReauthenticateMs(droptime);
-            if (Config.v.EnableBearerRefreshing && loginMethod == TAuth.AuthOptions.Mojang && droptime > 300000) ReauthenticateMojang(droptime);
+            if (Config.v.EnableBearerRefreshing && loginMethod == TAuth.AuthOptions.Microsoft && droptime > Config.v.RefreshOffset) ReauthenticateMs(droptime);
+            if (Config.v.EnableBearerRefreshing && loginMethod == TAuth.AuthOptions.Mojang && droptime > Config.v.RefreshOffset) ReauthenticateMojang(droptime);
 
             // get milliseconds to sleep
             int msToSleep = (int)TimeSpan.FromMilliseconds(droptime).TotalMilliseconds;
@@ -57,8 +57,8 @@ namespace Snipe
                 if (!Config.v.awaitFirstPacket && !Config.v.awaitPackets)
                     for (int i = 1; i < Config.v.SendPacketsCount; i++)
                         toPrint +=  (((i + 1) == Config.v.SendPacketsCount) ? $"{SetText.ResetAll} & {SetText.Gray}" : $"{SetText.ResetAll}, {SetText.Gray}") +
-                                    $"{now.AddMilliseconds(msToSleepWithoutCurrentMs + (DataTypes.Config.v.PacketSpreadMs * i)).Second}." +
-                                    $"{now.AddMilliseconds(msToSleepWithoutCurrentMs + (DataTypes.Config.v.PacketSpreadMs * i)).Millisecond}s";
+                                    $"{now.AddMilliseconds(msToSleepWithoutCurrentMs + (Config.v.PacketSpreadMs * i)).Second}." +
+                                    $"{now.AddMilliseconds(msToSleepWithoutCurrentMs + (Config.v.PacketSpreadMs * i)).Millisecond}s";
                 Cli.Output.Inform(toPrint);
             }
 
