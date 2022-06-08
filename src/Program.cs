@@ -208,7 +208,7 @@ static async Task HandleArgs(string currentVersion) {
     /* CONFIG */
 
     if (Core.arguments.ContainsKey("--refresh-offset")) {
-        if (int.TryParse(Core.arguments["--reauth-offset"].data!, out int reauthOffset)) {
+        if (int.TryParse(Core.arguments["--refresh-offset"].data!, out int reauthOffset)) {
             Config.v.RefreshOffset = (reauthOffset * 1000) * 60;
             Cli.Output.Inform($"RefreshOffset set to {reauthOffset}");
         }
