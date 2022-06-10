@@ -87,7 +87,7 @@
 - Configuration ([config.json](#configuration-file-locations-%EF%B8%8F) & In App)
   - Custom offset configured in app
   - Custom name configured in app
-  - Custom name list configured in [config.json](#configuration-file-locations-%EF%B8%8F)
+  - Custom name list configured in [names.json](#configuration-file-locations-%EF%B8%8F)
   - Custom packets sent amount configured in [config.json](#configuration-file-locations-%EF%B8%8F)
   - Custom delay between packets sent configured in [config.json](#configuration-file-locations-%EF%B8%8F)
 ### Post sniping
