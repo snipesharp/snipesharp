@@ -101,11 +101,12 @@ namespace Cli {
                 "--" + SetText.Blue + "username".MakeGapRight(23) + SetText.ResetAll + $"Sets your display name in Discord webhooks, if they're enabled ({SetText.Blue}STRING{SetText.ResetAll})\n" +
                 "--" + SetText.Blue + "name".MakeGapRight(23) + SetText.ResetAll + $"Sets the name to snipe ({SetText.Blue}STRING / 3 / p / l{SetText.ResetAll})\n" +
                 
-                "\n\n" + $"{SetText.Blue}{SetText.Bold} GETDROPPING API {SetText.ResetAll}".Centered(true, '-') + "\n\n" +
+                "\n\n" + $"{SetText.Blue}{SetText.Bold} POPULAR NAME SNIPING {SetText.ResetAll}".Centered(true, '-') + "\n\n" +
                 "--" + SetText.Blue + "pop-minsearches".MakeGapRight(23) + SetText.ResetAll + $"Sets the minimum NameMC search count the name has to have ({SetText.Blue}INTEGER (RANGE: 0-10000){SetText.ResetAll})\n" +
                 "--" + SetText.Blue + "pop-length".MakeGapRight(23) + SetText.ResetAll + $"Sets the min/max/eq length value according to PopLengthOption ({SetText.Blue}INTEGER (RANGE: 3-16){SetText.ResetAll})\n" +
                 "--" + SetText.Blue + "pop-lengthoption".MakeGapRight(23) + SetText.ResetAll + $"0 = none, 1 = Less or equal to PopLength, 2 = Equal to PopLength, 3 = Greater or equal to PopLength ({SetText.Blue}INTEGER (RANGE: 0-3){SetText.ResetAll})\n" +
                 "--" + SetText.Blue + "pop-language".MakeGapRight(23) + SetText.ResetAll + $"Sets the language the name has to be in ({SetText.Blue}STRING{SetText.ResetAll})\n" +
+                "--" + SetText.Blue + "pop-password".MakeGapRight(23) + SetText.ResetAll + $"Sets the password for authenticating with the GetDropping API, if it's password protected ({SetText.Blue}STRING{SetText.ResetAll})\n" +
                 "--" + SetText.Blue + "pop-lowercase".MakeGapRight(23) + SetText.ResetAll + $"Sets all popular names to lowercase\n" +
 
                 "\n\n" + $"{SetText.Blue}{SetText.Bold} AUTHENTICATING / LOGIN {SetText.ResetAll}".Centered(true, '-') + "\n\n" +
@@ -151,7 +152,7 @@ namespace Cli {
         }
 
         public static void ExitError(string message){
-            Error($"PID {Environment.ProcessId} {message}");
+            Error($"{message} (PID {Environment.ProcessId})");
             Utils.DiscordRPC.Deinitialize();
             new Animatables.RainbowText(TFunnyErrors.GetRandom());
             Console.ReadKey();

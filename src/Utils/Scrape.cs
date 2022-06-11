@@ -38,7 +38,8 @@ namespace Utils
                 minSearches = DataTypes.Config.v.PopSearches,
                 length = DataTypes.Config.v.PopLength,
                 lengthOption = DataTypes.Config.v.PopLengthOption,
-                language = DataTypes.Config.v.PopLanguage
+                language = DataTypes.Config.v.PopLanguage,
+                password = DataTypes.Config.v.PopPassword
             });
 
             // string content
@@ -56,6 +57,12 @@ namespace Utils
 
                     return DataTypes.Config.v.PopLowercaseOnly ? deserialized.name.ToLower() : deserialized.name;
                 }
+                
+                // exit if password is incorrect
+                if ((int)response.StatusCode == 403)
+                    if (string.IsNullOrEmpty(DataTypes.Config.v.PopPassword))
+                        Cli.Output.ExitError("The GetDropping API is currently password protected, use the --pop-password argument or edit the config.json file to authenticate");
+                    else Cli.Output.ExitError($"Failed to authenticate with GetDropping API using password \"{DataTypes.Config.v.PopPassword}\"");
                 
                 Cli.Output.Error("Failed to fetch popular name" + ((((int)response.StatusCode) == 429) ? " due to rate limiting" : "") + ", trying again in ~3 minutes");
                 Thread.Sleep(((1000 * 60) * 3) + new Random().Next(2000, 10000)); // add randomness so that in case of multiple instances, not all instances send requests at the same time

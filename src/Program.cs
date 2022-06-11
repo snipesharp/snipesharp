@@ -215,6 +215,11 @@ static async Task HandleArgs(string currentVersion) {
         else Cli.Output.Error($"{Core.arguments["--spread"].data!} is not a valid PacketSpreadMs value");
     }
 
+    if (Core.arguments.ContainsKey("--pop-password")) {
+        Config.v.PopPassword = Core.arguments["--pop-password"].data!;
+        Cli.Output.Inform($"PopPassword set to " + Core.arguments["--pop-password"].data!);
+    }
+
     if (Core.arguments.ContainsKey("--debug")) Config.v.debug = true;
 
     if (Core.arguments.ContainsKey("--results-success-only")) {
