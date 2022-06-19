@@ -96,7 +96,7 @@ namespace Snipe
                             $"`       Offset ` {DataTypes.Config.v.offset}ms\n" +
                             $"`         Ping ` {await Utils.Offset.AveragePing()}ms\n" +
                             $"**Results**:\n" +
-                            $"```diff\n{Utils.Snipesharp.packetResults}```"
+                            $"```diff\n{Utils.Snipesharp.packetResults}```", name
                         );
                         Utils.Snipesharp.packetResults = "";
                     }

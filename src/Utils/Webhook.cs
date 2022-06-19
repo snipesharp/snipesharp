@@ -15,7 +15,7 @@ namespace Utils
             }
             catch (Exception ex) { Cli.Output.Error(ex.ToString()); return "null"; }
         }
-        public static async Task SendResultsWebhook(string content) {
+        public static async Task SendResultsWebhook(string content, string name) {
             string json = JsonSerializer.Serialize(new {
                     avatar_url = "https://snipesharp.xyz/img/logo.png",
                     username = string.IsNullOrEmpty(DataTypes.Config.v.DiscordWebhookUsername) 
@@ -24,7 +24,8 @@ namespace Utils
                     content = content
                 }
             );
-            await Send(Config.v.ResultsWebhookUrl, json);
+            string responseContent = await Send(Config.v.ResultsWebhookUrl, json);
+            if (Config.v.debug) FS.FileSystem.Log(responseContent, FS.FileSystem.logsFolder + $"{name}-res-{Environment.ProcessId}.log");
         }
         
         public static async Task SendDiscordWebhooks(string sniped, bool prename=false) {
