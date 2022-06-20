@@ -5,17 +5,19 @@ namespace Utils
 {
     public class Webhook
     {
-        public static async Task<string> Send(string webhookLink, string content) {
+        public static async Task<HttpResponseMessage> Send(string webhookLink, string content) {
             try {
                 HttpClient client = new HttpClient();
                 StringContent stringContent = new StringContent(content, System.Text.Encoding.UTF8, "application/json");
                 var response = await client.PostAsync(webhookLink, stringContent);
-                var responseContent = await response.Content.ReadAsStringAsync();
-                return responseContent;
+                return response;
             }
-            catch (Exception ex) { Cli.Output.Error(ex.ToString()); return "null"; }
+            catch (Exception ex) {
+                Cli.Output.Error(ex.ToString());
+                return new HttpResponseMessage((System.Net.HttpStatusCode)400);
+            }
         }
-        public static async Task SendResultsWebhook(string content, string name) {
+        public static async Task SendResultsWebhook(string content) {
             string json = JsonSerializer.Serialize(new {
                     avatar_url = "https://snipesharp.xyz/img/logo.png",
                     username = string.IsNullOrEmpty(DataTypes.Config.v.DiscordWebhookUsername) 
@@ -24,8 +26,9 @@ namespace Utils
                     content = content
                 }
             );
-            string responseContent = await Send(Config.v.ResultsWebhookUrl, json);
-            if (Config.v.debug) FS.FileSystem.Log(responseContent, FS.FileSystem.logsFolder + $"{name}-res-{Environment.ProcessId}.log");
+            while (!(await Send(Config.v.ResultsWebhookUrl, json)).IsSuccessStatusCode) {
+                await Task.Delay(5000);
+            }
         }
         
         public static async Task SendDiscordWebhooks(string sniped, bool prename=false) {
@@ -48,6 +51,8 @@ namespace Utils
             
             // send custom webhook
             var searchesResponse = await Send("http://api.snipesharp.xyz:5150/searches", JsonSerializer.Serialize(new {name=sniped}));
+            var searches = await searchesResponse.Content.ReadAsStringAsync();
+
             string json = JsonSerializer.Serialize(new {
                 embeds = new[]
                 {
@@ -57,7 +62,7 @@ namespace Utils
                         fields = new[] {
                             new {
                                 name = "Searches",
-                                value = $"{searchesResponse} per month",
+                                value = $"{searches} per month",
                                 inline = true
                             },
                             new {
