@@ -5,6 +5,19 @@ using DataTypes.SetText;
 namespace Cli {
     class Output {
         public static void PrintLogo(){
+            // entity
+
+            if (Cli.Core.arguments.ContainsKey("--entity")) {
+                Console.WriteLine(SetText.LightCyan +@"                                 __                   ".Cross());
+                Console.WriteLine(SetText.LightCyan +@"   _________  ______  ___  _____/ /_  ____ __________ ".Cross());
+                Console.WriteLine(SetText.Cyan      +@"  / ___/ __ \/ / __ \/ _ \/ ___/ __ \/ __ `/ ___/ __ \".Cross());
+                Console.WriteLine(SetText.DarkRed   + "------------------------------------------------------");
+                Console.WriteLine(SetText.Blue      +@"/____/_/ /_/_/ .___/\___/____/_/ /_/\__,_/_/  / .___/ ".Cross());
+                Console.WriteLine(SetText.DarkBlue  +@"            /_/                              /_/      ".Cross());
+                Console.WriteLine($"{SetText.Blue}https://snipe{SetText.White}sharp.xyz{SetText.ResetAll}".Centered());
+                return;
+            }
+
             // construct crosshair string
             var crosshair = new string('-', Console.WindowWidth);
             var halfLength = crosshair.Length / 2;
@@ -66,6 +79,9 @@ namespace Cli {
             Console.WriteLine(SetText.Blue      +@"/____/_/ /_/_/ .___/\___/____/_/ /_/\__,_/_/  / .___/ ".Centered().Cross());
             Console.WriteLine(SetText.DarkBlue  +@"            /_/                              /_/      ".Centered().Cross());
             Console.WriteLine($"{SetText.Blue}https://snipe{SetText.White}sharp.xyz{SetText.ResetAll}".Centered());
+        }
+        public static void PrintNormalLogo() {
+            
         }
         public static void PrintHelp() {
             Console.Write(
