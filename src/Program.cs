@@ -12,6 +12,9 @@ using Snipe;
 // get and log snipesharp version
 string currentVersion = new Snipesharp().GetAssemblyVersion();
 
+// handle pre initialization args
+HandlePreInitArgs(currentVersion);
+
 // prepare everything and welcome the user
 await Initialize(currentVersion);
 
@@ -131,6 +134,18 @@ static async Task Initialize(string currentVersion) {
     if (Config.v.EnableDiscordRPC) Utils.DiscordRPC.Initialize();
 }
 
+static async void HandlePreInitArgs(string currentVersion) {
+
+    if (Core.arguments.ContainsKey("--help") || Core.arguments.ContainsKey("-h") ||
+        Core.arguments.ContainsKey("/?") || Core.arguments.ContainsKey("-?") ||
+        Core.arguments.ContainsKey("help")) Output.PrintHelp();
+
+    if (Core.arguments.ContainsKey("-v") || Core.arguments.ContainsKey("--version")) {
+        Output.Inform($"{currentVersion}");
+        Environment.Exit(0);
+    }
+}
+
 static async Task HandleArgs(string currentVersion) {
     // --prename handled in
     // --name handled in Snipesharp.cs
@@ -139,15 +154,6 @@ static async Task HandleArgs(string currentVersion) {
     // --await-first-packet handled in Sniper.cs
     // --offset handled in Names.cs
     // --disable-auto-update, --disable-discordrpc, --enable-discordrpc & --install handled in Initialize()
-
-    if (Core.arguments.ContainsKey("--help") || Core.arguments.ContainsKey("-h") ||
-        Core.arguments.ContainsKey("/?") || Core.arguments.ContainsKey("-?") ||
-        Core.arguments.ContainsKey("help")) Output.PrintHelp();
-
-    if (Core.arguments.ContainsKey("-v") || Core.arguments.ContainsKey("--version")) {
-        Output.Inform($"snipesharp {currentVersion}");
-        Environment.Exit(0);
-    }
 
     /* GETDROPPING API */
 
