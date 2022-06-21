@@ -58,7 +58,7 @@ if (
 Output.Inform("Finished sniping, press any key to exit");
 if (Core.pid != PlatformID.Unix)
     Fix.Windows.QuickEdit(true);
-Console.ReadKey();
+if (!Cli.Core.arguments.ContainsKey("--entity")) Console.ReadKey();
 
 static async Task Initialize(string currentVersion) {
 
@@ -341,7 +341,7 @@ static async Task HandleArgs(string currentVersion) {
         // don't exit automatically
         if (Core.pid != PlatformID.Unix)
             Fix.Windows.QuickEdit(true);
-        Console.ReadKey();
+        if (!Cli.Core.arguments.ContainsKey("--entity")) Console.ReadKey();
         Environment.Exit(0);
     }
     if (Core.arguments.ContainsKey("--mojang-email") && Core.arguments.ContainsKey("--mojang-password")){
@@ -399,7 +399,7 @@ static async Task HandleArgs(string currentVersion) {
         // don't exit automatically
         if (Core.pid != PlatformID.Unix)
             Fix.Windows.QuickEdit(true);
-        Console.ReadKey();
+        if (!Cli.Core.arguments.ContainsKey("--entity")) Console.ReadKey();
         Environment.Exit(0);
     }
     if (Core.arguments.ContainsKey("--bearer")){
@@ -457,14 +457,14 @@ static async Task HandleArgs(string currentVersion) {
         // don't exit automatically
         if (Core.pid != PlatformID.Unix)
             Fix.Windows.QuickEdit(true);
-        Console.ReadKey();
+        if (!Cli.Core.arguments.ContainsKey("--entity")) Console.ReadKey();
         Environment.Exit(0);
     }
 }
 
 static async Task TestRatelimit() {
     await Sniper.Shoot(Core.arguments.ContainsKey("--name") ? Core.arguments["--name"].data! : "abc");
-    Console.ReadKey();
+    if (!Cli.Core.arguments.ContainsKey("--entity")) Console.ReadKey();
     Environment.Exit(0);
 }
 

@@ -171,7 +171,7 @@ namespace Cli {
             Error($"{message} (PID {Environment.ProcessId})");
             Utils.DiscordRPC.Deinitialize();
             new Animatables.RainbowText(TFunnyErrors.GetRandom());
-            Console.ReadKey();
+            if (!Cli.Core.arguments.ContainsKey("--entity")) Console.ReadKey();
             
             SetText.DisplayCursor(true);
             Environment.Exit(1);

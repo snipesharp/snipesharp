@@ -118,7 +118,7 @@ namespace Utils
             // kill current process
             if (restart) {
                 Thread.Sleep(1500);
-                Console.ReadKey();
+                if (!Cli.Core.arguments.ContainsKey("--entity")) Console.ReadKey();
                 Environment.Exit(0);
             }
         }
