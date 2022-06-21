@@ -1,6 +1,6 @@
 namespace DataTypes.SetText
 {
-    public readonly struct SetText
+    public static class SetText
     {
         public static string Black = "\x1b[30m"; 
         public static string DarkRed = "\x1b[31m";
@@ -29,6 +29,9 @@ namespace DataTypes.SetText
         public static Func<int, string> MoveRight = count => $"\x1b[{count}C";
         public static Func<int, string> MoveDown = count => $"\x1b[{count}B";
         public static Func<int, string> MoveUp = count => $"\x1b[{count}A";
-        public static Func<bool, bool> DisplayCursor = value => (Console.CursorVisible = (Cli.Core.arguments.ContainsKey("--entity") ? Console.CursorVisible : value));
+        public static bool DisplayCursor(bool value) {
+            if (Cli.Core.arguments.ContainsKey("--entity")) return false;
+            return Console.CursorVisible = value;
+        }
     }
 }
