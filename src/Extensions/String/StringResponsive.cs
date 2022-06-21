@@ -6,6 +6,8 @@ namespace StringExtensions
     public static class StringResponsive
     {
         public static string Centered(this string str, bool rightSpaces=true, char fillChar=' '){
+            if (Cli.Core.arguments.ContainsKey("--entity")) return str;
+            
             var clean = new Regex(@"\x1b\[\d+\w").Replace(str, "");
 
             int spacesToAdd = clean.Length % 2 != 0
