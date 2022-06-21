@@ -5,8 +5,8 @@ using DataTypes.SetText;
 namespace Cli {
     class Output {
         public static void PrintLogo(){
-            // entity
 
+            // entity
             if (Cli.Core.arguments.ContainsKey("--entity")) {
                 Console.WriteLine(SetText.LightCyan +@"                                 __                   ".Cross());
                 Console.WriteLine(SetText.LightCyan +@"   _________  ______  ___  _____/ /_  ____ __________ ".Cross());
@@ -14,7 +14,7 @@ namespace Cli {
                 Console.WriteLine(SetText.DarkRed   + "------------------------------------------------------");
                 Console.WriteLine(SetText.Blue      +@"/____/_/ /_/_/ .___/\___/____/_/ /_/\__,_/_/  / .___/ ".Cross());
                 Console.WriteLine(SetText.DarkBlue  +@"            /_/                              /_/      ".Cross());
-                Console.WriteLine($"{SetText.Blue}https://snipe{SetText.White}sharp.xyz{SetText.ResetAll}".Centered());
+                Console.WriteLine(     $"{SetText.Blue}               https://snipe{SetText.White}sharp.xyz{SetText.ResetAll}");
                 return;
             }
 
