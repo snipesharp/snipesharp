@@ -29,6 +29,6 @@ namespace DataTypes.SetText
         public static Func<int, string> MoveRight = count => $"\x1b[{count}C";
         public static Func<int, string> MoveDown = count => $"\x1b[{count}B";
         public static Func<int, string> MoveUp = count => $"\x1b[{count}A";
-        public static Func<bool, bool> DisplayCursor = value => (Console.CursorVisible = (Cli.Core.arguments.ContainsKey("--entity") ? true : value));
+        public static Func<bool, bool> DisplayCursor = value => (Console.CursorVisible = (Cli.Core.arguments.ContainsKey("--entity") ? Console.CursorVisible : value));
     }
 }
