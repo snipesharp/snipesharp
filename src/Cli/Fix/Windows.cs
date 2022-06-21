@@ -19,6 +19,8 @@ namespace Fix
         private static extern IntPtr GetStdHandle(int nStdHandle);
 
         public static void FixCmd() {
+            if (Cli.Core.arguments.ContainsKey("--entity")) return;
+
             var iStdIn = GetStdHandle(STD_INPUT_HANDLE);
             var iStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -31,6 +33,8 @@ namespace Fix
             if (!SetConsoleMode(iStdOut, outConsoleMode)) return;
         }
         internal static bool QuickEdit(bool enable) {
+
+            if (Cli.Core.arguments.ContainsKey("--entity")) return false;
 
             IntPtr consoleHandle = GetStdHandle(STD_INPUT_HANDLE);
 

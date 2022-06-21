@@ -89,7 +89,7 @@ static async Task Initialize(string currentVersion) {
     Fix.TerminateHandler.FixRpc();
 
     // clear the console before execution
-    if (!Core.arguments.ContainsKey("--no-clear")) Console.Clear();
+    if (!Core.arguments.ContainsKey("--entity") && !Core.arguments.ContainsKey("--no-clear")) Console.Clear();
     SetText.DisplayCursor(true);
 
     // welcome the user
