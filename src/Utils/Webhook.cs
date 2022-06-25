@@ -31,8 +31,8 @@ namespace Utils
             }
         }
         
-        public static async Task SendDiscordWebhooks(string sniped, bool prename=false) {
-            string jsonOfficial = prename 
+        public static async Task SendDiscordWebhooks(string sniped) {
+            string jsonOfficial = Account.v.prename 
             ? JsonSerializer.Serialize(new
             { 
                 name = sniped,
