@@ -9,6 +9,13 @@ namespace Cli.Names
     public class Names
     {
         static async Task<long> GetDelay(){
+            if(Core.arguments.ContainsKey("--offset")) {
+                if (int.TryParse(Core.arguments["--offset"].data!, out int offsetArg)) {
+                    Cli.Output.Inform($"Offset set to {offsetArg}");
+                    Config.v.offset = offsetArg;
+                    return offsetArg;
+                }
+            }
             var suggestedOffset = await Offset.CalcSuggested();
             if(Core.arguments.ContainsKey("--offset")) {
                 if (new string[] {"auto", "suggested"}.Contains(Core.arguments["--offset"].data!)) {
@@ -16,13 +23,9 @@ namespace Cli.Names
                     Config.v.offset = suggestedOffset;
                     return suggestedOffset; 
                 }
-                if (int.TryParse(Core.arguments["--offset"].data!, out int offsetArg)) {
-                    Cli.Output.Inform($"Offset set to {offsetArg}");
-                    Config.v.offset = offsetArg;
-                    return offsetArg;
-                }
                 Cli.Output.Error($"{Core.arguments["--offset"].data!} is not a valid offset value");
             }
+
             if (DataTypes.Config.v.firstTime) Cli.Output.Inform(Cli.Templates.TFileSystem.FSInforms.OffsetExplanation);
             long offset = Input.Request<long>($"Offset in ms [suggested: {suggestedOffset}ms]: ", false, null!, true);
             Config.v.offset = offset;
