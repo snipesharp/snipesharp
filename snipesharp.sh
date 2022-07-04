@@ -17,7 +17,7 @@ snipe() {
     PASS=$(printf "%q" "$3")
     screen -S ss-pop$1 -dm
     screen -S ss-pop$1 -X stuff "snipesharp --name=p --spread=$SPREAD --offset=$4 --pop-length=4 --pop-minsearches=120 --email=$2 --password=$PASS --debug $5 $6 $7 $8 $9 \n"
-    sleep 15
+    sleep 25
     screen -S ss-3c$1 -dm
     screen -S ss-3c$1 -X stuff "snipesharp --name=3 --spread=$SPREAD --offset=$4 --email=$2 --password=$PASS --debug $5 $6 $7 $8 $9 \n"
 }
@@ -50,7 +50,7 @@ main() {
     grep -Ev '^#|^$' accs.txt | while read acc; do
         ((num++))
         snipe $num $acc
-        sleep 20
+        sleep 25
     done
 }
 
