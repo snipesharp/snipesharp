@@ -121,7 +121,7 @@ namespace Snipe
                     responseContent.Contains("CONSTRAINT_VIOLATION") ? "Invalid name" : "Unknown"
                 ) : "Invalid name");
                 case 401: return "Bearer expired or incorrect";
-                case 403: return "Name taken or not yet available";
+                case 403: return (DataTypes.Account.v.prename ? "Request blocked" : "Name taken or not yet available");
                 case 404: return "Not found";
                 case 429: return "Too many requests";
                 case 500: return "API timed out";
