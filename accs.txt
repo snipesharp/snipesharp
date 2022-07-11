@@ -1,0 +1,9 @@
+# Hello,  lines  that  start  with   a  #  are  comments,  you  don't  have
+# to    remove    them.    Insert    the    required    information   below
+# separated    by     space(s)     and     run     snipesharp.sh     again.
+# 
+# 
+# EMAIL                   PASSWORD        OFFSET      EXTRA ARGS (OPTIONAL)
+
+example@email.com         password        57          --refresh-offset=12
+example2@email.com        123pass!3       150         --prename

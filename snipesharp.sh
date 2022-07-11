@@ -6,7 +6,7 @@
 # The only requirement for using this script is to have snipesharp installed on the system. If
 # you have snipesharp downloaded as an executable but have it not installed on the system, you
 # can install it by cd-ing into the directory of the executable and running this command:
-# ./snipesharp --install
+# sudo ./snipesharp_linux-x86-64-vx.x.x --install
 #
 # It may also be worth mentioning that this script only works on unix systems and not Windows.
 
@@ -15,9 +15,11 @@ export SPREAD=76
 
 snipe() {
     PASS=$(printf "%q" "$3")
+    echo "Starting popular name sniping as $2 in screen session 'ss-pop$1'"
     screen -S ss-pop$1 -dm
     screen -S ss-pop$1 -X stuff "snipesharp --name=p --spread=$SPREAD --offset=$4 --pop-length=4 --pop-minsearches=120 --email=$2 --password=$PASS --debug $5 $6 $7 $8 $9 \n"
     sleep 25
+    echo "Starting 3 char name sniping as $2 in screen session 'ss-pop$1'"
     screen -S ss-3c$1 -dm
     screen -S ss-3c$1 -X stuff "snipesharp --name=3 --spread=$SPREAD --offset=$4 --email=$2 --password=$PASS --debug $5 $6 $7 $8 $9 \n"
 }
@@ -37,13 +39,27 @@ gen_accs_txt() {
     exit
 }
 
-main() {
-    [ -e accs.txt ] || gen_accs_txt
-
-    # KILL EXISTING SNIPESHARP SCREENS
+killScreens() {
+    echo -e "\x1b[0;90mKilling existing snipesharp screen sessions\x1b[0;37m"
     for f in /run/screen*/S-$USER/*.ss*; do
         screen -X -S "${f##*/}" quit
     done
+}
+
+noSnipesharp() {
+    echo -e "\x1b[0;31mNo instance of snipesharp was found to be installed\x1b[0;37m"
+    echo -e "\x1b[0;31mPlease install snipesharp to use this script\x1b[0;37m"
+    echo -e "If you downloaded snipesharp as an executable, run it as a \x1b[0;31msuperuser\x1b[0;37m with the '--install' argument to install it"
+    echo -e "Example: '\x1b[0;32msudo ./snipesharp_linux-x86-64-vx.x.x --install\x1b[0;37m'"
+    exit
+}
+
+main() {
+    [ -e /usr/bin/snipesharp ] || noSnipesharp
+    [ -e accs.txt ] || gen_accs_txt
+
+    # KILL EXISTING SNIPESHARP SCREENS
+    [ -z "$(ls /run/screen*/S-$USER/)" ] || killScreens
     sleep 1
 
     num=0
@@ -52,6 +68,8 @@ main() {
         snipe $num $acc
         sleep 25
     done
+
+    echo -e "\x1b[0;32mDone. View the launched screen sessions with 'screen -ls'\x1b[0;37m"
 }
 
 main
