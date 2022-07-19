@@ -21,8 +21,10 @@ function installLatest() {
     echo -n "Downloading snipesharp $(grep -o 'v[0-9]\.[0-9]\.[0-9]' $TEMP_FOLDER/latest | head -n 1)."
     wget -q $LINK -O $TEMP_FOLDER/snipesharp && echo -n "."
     chmod +x $TEMP_FOLDER/snipesharp &&         echo "."
-    sudo bash -c "exec '$TEMP_FOLDER/snipesharp' '--install'"
+    sudo bash -c "exec '$TEMP_FOLDER/snipesharp' '--install'" || doas bash -c "exec '$TEMP_FOLDER/snipesharp' '--install'" || exit 1
+    return 0
 }
 
 installLatest
 rm -rf $TEMP_FOLDER
+echo -e '\x1b[0;32mDone! You can now run snipesharp by typing "snipesharp" in the terminal.\x1b[0;37m'

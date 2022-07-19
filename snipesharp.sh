@@ -12,6 +12,7 @@
 
 # Edit this value
 export SPREAD=76
+export DIR=$(dirname -- "$0")
 
 snipe() {
     PASS=$(printf "%q" "$3")
@@ -25,17 +26,17 @@ snipe() {
 }
 
 gen_accs_txt() {
-    echo -e "\x1b[0;31mYou must populate accs.txt with accounts you wish to use along with the offset to use for each and optionally extra arguments for snipesharp\x1b[0;37m"
-    echo "An example accs.txt file has been written to $PWD/accs.txt"
-    echo "# Hello,  lines  that  start  with   a  #  are  comments,  you  don't  have" >> accs.txt &&
-    echo "# to    remove    them.    Insert    the    required    information   below" >> accs.txt &&
-    echo "# separated    by     space(s)     and     run     snipesharp.sh     again." >> accs.txt &&
-    echo "# " >> accs.txt &&
-    echo "# " >> accs.txt &&
-    echo "# EMAIL                   PASSWORD        OFFSET      EXTRA ARGS (OPTIONAL)" >> accs.txt &&
-    echo "" >> accs.txt &&
-    echo "example@email.com         password        57          --refresh-offset=12" >> accs.txt &&
-    echo "example2@email.com        123pass!3       150         --prename" >> accs.txt &&
+    echo -e "\x1b[0;31mYou must populate $DIR/accs.txt with accounts you wish to use along with the offset to use for each and optionally extra arguments for snipesharp\x1b[0;37m"
+    echo "An example $DIR/accs.txt file has been written to $PWD/accs.txt"
+    echo "# Hello,  lines  that  start  with   a  #  are  comments,  you  don't  have" >> $DIR/accs.txt &&
+    echo "# to    remove    them.    Insert    the    required    information   below" >> $DIR/accs.txt &&
+    echo "# separated    by     space(s)     and     run     snipesharp.sh     again." >> $DIR/accs.txt &&
+    echo "# " >> $DIR/accs.txt &&
+    echo "# " >> $DIR/accs.txt &&
+    echo "# EMAIL                   PASSWORD        OFFSET      EXTRA ARGS (OPTIONAL)" >> $DIR/accs.txt &&
+    echo "" >> $DIR/accs.txt &&
+    echo "example@email.com         password        57          --refresh-offset=12" >> $DIR/accs.txt &&
+    echo "example2@email.com        123pass!3       150         --prename" >> $DIR/accs.txt &&
     exit
 }
 
@@ -56,14 +57,14 @@ noSnipesharp() {
 
 main() {
     [ -e /usr/bin/snipesharp ] || noSnipesharp
-    [ -e accs.txt ] || gen_accs_txt
+    [ -e $DIR/accs.txt ] || gen_accs_txt
 
     # KILL EXISTING SNIPESHARP SCREENS
     [ -z "$(ls /run/screen*/S-$USER/)" ] || killScreens
     sleep 1
 
     num=0
-    grep -Ev '^#|^$' accs.txt | while read acc; do
+    grep -Ev '^#|^$' $DIR/accs.txt | while read acc; do
         ((num++))
         snipe $num $acc
         sleep 25
